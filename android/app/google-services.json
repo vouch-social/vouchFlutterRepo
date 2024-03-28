@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "227154710197",
+    "project_id": "konnekt-yq73qg",
+    "storage_bucket": "konnekt-yq73qg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:227154710197:android:2f139d68ddf615406038fc",
+        "android_client_info": {
+          "package_name": "social.vouch.relayt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANqjNthRtIDa-cliUT6XV0ijrWlBWmAgI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
