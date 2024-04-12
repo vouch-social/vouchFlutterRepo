@@ -1,5 +1,8 @@
 // ignore_for_file: overridden_fields, annotate_overrides
 
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -31,6 +34,17 @@ abstract class FlutterFlowTheme {
   late Color warning;
   late Color error;
   late Color info;
+  late Color accent5;
+  late Color black1;
+  late Color tertiary1;
+  late Color tertiary2;
+  late Color white;
+  late Color container1;
+  late Color container2;
+  late Color green1;
+  late Color container3;
+  late Color border1;
+  late Color border2;
 
   @Deprecated('Use displaySmallFamily instead')
   String get title1Family => displaySmallFamily;
@@ -91,6 +105,11 @@ abstract class FlutterFlowTheme {
   TextStyle get bodyMedium => typography.bodyMedium;
   String get bodySmallFamily => typography.bodySmallFamily;
   TextStyle get bodySmall => typography.bodySmall;
+  String get welcomeTitleFamily => typography.welcomeTitleFamily;
+  TextStyle get welcomeTitle1 => typography.welcomeTitle1;
+  String get welcomeTitleFamily2 => typography.welcomeTitleFamily2;
+  TextStyle get welcomeTitle2 => typography.welcomeTitle2;
+
 
   Typography get typography => ThemeTypography(this);
 }
@@ -107,10 +126,10 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color secondary = const Color(0xFF406B72);
   late Color tertiary = const Color(0xFF809B9E);
   late Color alternate = const Color(0xFFBFCDD0);
-  late Color primaryText = const Color(0xFF003943);
+  late Color primaryText = const Color(0xFF0E181B);
   late Color secondaryText = const Color(0xFFFAFEFF);
   late Color primaryBackground = const Color(0xFFFAFEFF);
-  late Color secondaryBackground = const Color(0xFF387F9D);
+  late Color secondaryBackground = const Color(0xFF003943);
   late Color accent1 = const Color(0xFFD7EFE9);
   late Color accent2 = const Color(0xFFE5EBEC);
   late Color accent3 = const Color(0xFFE0E0E0);
@@ -119,6 +138,18 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color warning = const Color(0xFFFCDC0C);
   late Color error = const Color(0xFFE21C3D);
   late Color info = const Color(0xFF1C4494);
+  late Color accent5 = const Color(0xFFF2F2F2);
+  late Color black1 = const Color(0xFF0A252B);
+  late Color tertiary1 = const Color(0xFF7F9B9E);
+  late Color tertiary2 = const Color(0xFF487C8A);
+  late Color white = const Color(0xFFFFFFFF);
+  late Color container1 = const Color(0xFFE5F7F6);
+  late Color container2 = const Color(0xFFDAE3FB);
+  late Color green1 = const Color(0xFF00AAA3);
+   late Color container3 = const Color(0xFFB4AAFF);
+   late Color border1 = const Color(0xFFE0ECEC);
+   late Color border2 = const Color(0xFFE9E9E9);
+
 }
 
 abstract class Typography {
@@ -152,6 +183,10 @@ abstract class Typography {
   TextStyle get bodyMedium;
   String get bodySmallFamily;
   TextStyle get bodySmall;
+  String get welcomeTitleFamily;
+  TextStyle get welcomeTitle1;
+  String get welcomeTitleFamily2;
+  TextStyle get welcomeTitle2;
 }
 
 class ThemeTypography extends Typography {
@@ -189,14 +224,14 @@ class ThemeTypography extends Typography {
         fontSize: 32.0,
       );
   String get headlineMediumFamily => 'Bricolage Grotesque';
-  TextStyle get headlineMedium => TextStyle(
+  TextStyle get headlineMedium => const TextStyle(
         fontFamily: 'Bricolage Grotesque',
         color: Color(0xFF303030),
         fontWeight: FontWeight.w500,
         fontSize: 22.0,
       );
   String get headlineSmallFamily => 'Bricolage Grotesque';
-  TextStyle get headlineSmall => TextStyle(
+  TextStyle get headlineSmall => const TextStyle(
         fontFamily: 'Bricolage Grotesque',
         color: Color(0xFF303030),
         fontWeight: FontWeight.w500,
@@ -210,14 +245,14 @@ class ThemeTypography extends Typography {
         fontSize: 22.0,
       );
   String get titleMediumFamily => 'Bricolage Grotesque';
-  TextStyle get titleMedium => TextStyle(
+  TextStyle get titleMedium => const TextStyle(
         fontFamily: 'Bricolage Grotesque',
         color: Color(0xFF757575),
         fontWeight: FontWeight.w500,
         fontSize: 18.0,
       );
   String get titleSmallFamily => 'Bricolage Grotesque';
-  TextStyle get titleSmall => TextStyle(
+  TextStyle get titleSmall => const TextStyle(
         fontFamily: 'Bricolage Grotesque',
         color: Color(0xFF616161),
         fontWeight: FontWeight.normal,
@@ -252,19 +287,34 @@ class ThemeTypography extends Typography {
         fontSize: 16.0,
       );
   String get bodyMediumFamily => 'Bricolage Grotesque';
-  TextStyle get bodyMedium => TextStyle(
+  TextStyle get bodyMedium => const TextStyle(
         fontFamily: 'Bricolage Grotesque',
         color: Color(0xFF303030),
         fontWeight: FontWeight.normal,
         fontSize: 14.0,
       );
   String get bodySmallFamily => 'Bricolage Grotesque';
-  TextStyle get bodySmall => TextStyle(
+  TextStyle get bodySmall => const TextStyle(
         fontFamily: 'Bricolage Grotesque',
         color: Color(0xFF424242),
         fontWeight: FontWeight.normal,
         fontSize: 14.0,
       );
+  String get welcomeTitleFamily => 'Bricolage Grotesque';
+  TextStyle get welcomeTitle1 => const TextStyle(
+    fontFamily: 'Bricolage Grotesque',
+    color: Color(0xFFFAFEFF),
+    fontWeight: FontWeight.w400,
+    fontSize: 40.0
+  );
+  String get welcomeTitleFamily2 => 'Bricolage Grotesque';
+  TextStyle get welcomeTitle2 => const TextStyle(
+      fontFamily: 'Bricolage Grotesque',
+      color: Color(0xFFFAFEFF),
+      fontWeight: FontWeight.w700,
+      fontSize: 40.0
+  );
+
 }
 
 extension TextStyleHelper on TextStyle {

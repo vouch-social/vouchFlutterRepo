@@ -1,3 +1,5 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vouch/new_code/contacts_call_logs/call_logs.dart';
+import 'package:vouch/new_code/home_page/new_home_page.dart';
 import 'auth/firebase_auth/firebase_user_provider.dart';
 import 'auth/firebase_auth/auth_util.dart';
 
@@ -22,12 +27,17 @@ import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
 
 import '/backend/firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'new_code/contacts_call_logs/contact_list_screen.dart';
+import 'new_code/onboarding/welcome_screen/welcome_screen.dart';
+
+SharedPreferences? prefs;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  /// for linkdin login url
   usePathUrlStrategy();
   await initFirebase();
-
+  await initSharedPreferences();
   final appState = FFAppState(); // Initialize FFAppState
   await appState.initializePersistedState();
 
@@ -41,6 +51,10 @@ void main() async {
     create: (context) => appState,
     child: MyApp(),
   ));
+}
+
+Future<void> initSharedPreferences() async {
+  prefs = await SharedPreferences.getInstance();
 }
 
 class MyApp extends StatefulWidget {
@@ -67,14 +81,13 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-
     _appStateNotifier = AppStateNotifier.instance;
     _router = createRouter(_appStateNotifier);
     userStream = vouchFirebaseUserStream()
       ..listen((user) => _appStateNotifier.update(user));
     jwtTokenStream.listen((_) {});
     Future.delayed(
-      Duration(milliseconds: 1000),
+      const Duration(milliseconds: 1000),
       () => _appStateNotifier.stopShowingSplashImage(),
     );
   }
@@ -95,31 +108,36 @@ class _MyAppState extends State<MyApp> {
       });
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Vouch',
-      localizationsDelegates: [
-        FFLocalizationsDelegate(),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      locale: _locale,
-      supportedLocales: const [
-        Locale('en'),
-      ],
-      theme: ThemeData(
-        brightness: Brightness.light,
-        useMaterial3: false,
-      ),
-      themeMode: _themeMode,
-      routerConfig: _router,
-      builder: (_, child) => DynamicLinksHandler(
-        router: _router,
-        child: child!,
-      ),
-    );
-  }
+  Widget build(BuildContext context) => ScreenUtilInit(
+        designSize: const Size(390, 844),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        ensureScreenSize: true,
+        builder: (context, _) => GetMaterialApp(
+          title: 'Vouch',
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: [
+            FFLocalizationsDelegate(),
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          locale: _locale,
+          supportedLocales: const [
+            Locale('en'),
+          ],
+          theme: ThemeData(
+            brightness: Brightness.light,
+            useMaterial3: false,
+          ),
+          themeMode: _themeMode,
+          builder: (_, child) => DynamicLinksHandler(
+            router: _router,
+            child: child!,
+          ),
+          home:  const WelcomeScreen(),
+        ),
+      );
 }
 
 class NavBarPage extends StatefulWidget {
@@ -152,7 +170,6 @@ class _NavBarPageState extends State<NavBarPage> {
       'Profile': ProfileWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
-
     final MediaQueryData queryData = MediaQuery.of(context);
 
     return Scaffold(
@@ -225,3 +242,57 @@ class _NavBarPageState extends State<NavBarPage> {
     );
   }
 }
+
+// GetMaterialApp(
+// title: 'Vouch',
+// debugShowCheckedModeBanner: false,
+// localizationsDelegates: [
+// FFLocalizationsDelegate(),
+// GlobalMaterialLocalizations.delegate,
+// GlobalWidgetsLocalizations.delegate,
+// GlobalCupertinoLocalizations.delegate,
+// ],
+// locale: _locale,
+// supportedLocales: const [
+// Locale('en'),
+// ],
+// theme: ThemeData(
+// brightness: Brightness.light,
+// useMaterial3: false,
+// ),
+// themeMode: _themeMode,
+// home: const NewHomePage(),
+// //home: NewHomePage(),
+// routerConfig: _router,
+// builder: (_, child) => DynamicLinksHandler(
+//   router: _router,
+//   child: child!,
+// ),
+// );
+
+// ScreenUtilInit(
+// designSize: const Size(390, 844),
+// minTextAdapt: true,
+// splitScreenMode: true,
+// ensureScreenSize: true,
+// builder: (context, _) => GetMaterialApp(
+// title: 'Vouch',
+// debugShowCheckedModeBanner: false,
+// localizationsDelegates: [
+// FFLocalizationsDelegate(),
+// GlobalMaterialLocalizations.delegate,
+// GlobalWidgetsLocalizations.delegate,
+// GlobalCupertinoLocalizations.delegate,
+// ],
+// locale: _locale,
+// supportedLocales: const [
+// Locale('en'),
+// ],
+// theme: ThemeData(
+// brightness: Brightness.light,
+// useMaterial3: false,
+// ),
+// themeMode: _themeMode,
+// home: const NewHomePage(),
+// ),
+// );

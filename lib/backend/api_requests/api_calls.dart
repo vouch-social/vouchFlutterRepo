@@ -12,13 +12,13 @@ const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 class StartVouchCall {
   static Future<ApiCallResponse> call({
     String? message = '',
-    dynamic? pathDetailsJson,
+    dynamic pathDetailsJson,
   }) async {
     final pathDetails = _serializeJson(pathDetailsJson);
     final ffApiRequestBody = '''
 {
-  "message": "${message}",
-  "pathNodes": ${pathDetails}
+  "message": "$message",
+  "pathNodes": $pathDetails
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'startVouch',
@@ -168,26 +168,26 @@ class UpdateContactsCall {
 class UpdateUserCall {
   static Future<ApiCallResponse> call({
     String? phone = '',
-    String? name = '',
+    // String? name = '',
     String? firebaseUserId = '',
-    String? photoURL = '',
-    String? userID = '',
+    // String? photoURL = '',
+    // String? userID = '',
     String? hashedPhone = '',
   }) async {
     final ffApiRequestBody = '''
 {
-  "phone": "${phone}",
-  "name": "${name}",
-  "firebaseID": "${firebaseUserId}",
-  "photoURL": "${photoURL}",
-  "userID": "${userID}",
-  "hashedPhone": "${hashedPhone}"
+  "phone": "$phone",
+  "firebaseID": "$firebaseUserId",
+  "hashedPhone": "$hashedPhone"
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'updateUser',
-      apiUrl: 'https://x8ki-letl-twmt.n7.xano.io/api:hIXAhZL0/user',
+      apiUrl: 'http://ec2-52-71-139-244.compute-1.amazonaws.com/api/auth/login',
       callType: ApiCallType.POST,
-      headers: {},
+      headers: {
+        'Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjkxODcwMDM0MjkwMSIsInN1YiI6NDUsImlhdCI6MTcxMjU3MjQyMiwiZXhwIjoxNzQ0MTMwMDIyfQ.ZiRcVsoDakk2I8hR9tfwuN0B3nt9zbT9IomdClTxoVw',
+        'Content-Type':'application/json'
+      },
       params: {},
       body: ffApiRequestBody,
       bodyType: BodyType.JSON,

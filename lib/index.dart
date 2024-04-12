@@ -14,25 +14,25 @@ export '/final_design/onboarding/permissions/permissions_widget.dart'
     show PermissionsWidget;
 export '/final_design/onboarding/import/import_widget.dart' show ImportWidget;
 export '/final_design/path_finding/search/search_widget.dart' show SearchWidget;
-export '/old/hurray/hurray_widget.dart' show HurrayWidget;
-export '/old/vouch/vouch_widget.dart' show VouchWidget;
-export '/old/user_message/user_message_widget.dart' show UserMessageWidget;
-export '/old/path_and_details_copy/path_and_details_copy_widget.dart'
-    show PathAndDetailsCopyWidget;
-export '/old/path_step_details_copy/path_step_details_copy_widget.dart'
-    show PathStepDetailsCopyWidget;
-export '/old/messages/messages_widget.dart' show MessagesWidget;
+// export '/old/hurray/hurray_widget.dart' show HurrayWidget;
+// export '/old/vouch/vouch_widget.dart' show VouchWidget;
+// export '/old/user_message/user_message_widget.dart' show UserMessageWidget;
+// export '/old/path_and_details_copy/path_and_details_copy_widget.dart'
+//     show PathAndDetailsCopyWidget;
+// export '/old/path_step_details_copy/path_step_details_copy_widget.dart'
+//     show PathStepDetailsCopyWidget;
+// export '/old/messages/messages_widget.dart' show MessagesWidget;
 export '/final_design/onboarding/linkedin/linkedin_widget.dart'
     show LinkedinWidget;
-export '/old/path_and_details_no_message/path_and_details_no_message_widget.dart'
-    show PathAndDetailsNoMessageWidget;
-export '/old/path_step_details_no_message/path_step_details_no_message_widget.dart'
-    show PathStepDetailsNoMessageWidget;
+// export '/old/path_and_details_no_message/path_and_details_no_message_widget.dart'
+//     show PathAndDetailsNoMessageWidget;
+// export '/old/path_step_details_no_message/path_step_details_no_message_widget.dart'
+//     show PathStepDetailsNoMessageWidget;
 export '/final_design/vouch_bot/vouch_bot/vouch_bot_widget.dart'
     show VouchBotWidget;
 export '/final_design/path_finding/navigation_animation/navigation_animation_widget.dart'
     show NavigationAnimationWidget;
-export '/old/path_carousel/path_carousel_widget.dart' show PathCarouselWidget;
+// export '/old/path_carousel/path_carousel_widget.dart' show PathCarouselWidget;
 export '/final_design/path_finding/path_carousel_new/path_carousel_new_widget.dart'
     show PathCarouselNewWidget;
 export '/bounty/all_bounty/all_bounty_widget.dart' show AllBountyWidget;

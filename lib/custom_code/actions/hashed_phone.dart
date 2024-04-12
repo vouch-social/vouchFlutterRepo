@@ -24,7 +24,22 @@ String cleanPhoneNumber(String phoneNumber) {
   return formattedPhoneNumber;
 }
 
-Future<void> hashedPhone(String? userPhone) async {
+extractCountryCode(String phoneNumber) {
+  String formattedPhoneNumber = phoneNumber.replaceAll(RegExp(r'[^\d]'), '');
+  String countryCode = '';
+
+  if (formattedPhoneNumber.length > 10) {
+    if (formattedPhoneNumber.startsWith('91')) {
+      countryCode = '91';
+    } else {
+      countryCode =
+          formattedPhoneNumber.substring(0, formattedPhoneNumber.length - 10);
+    }
+  }
+  return countryCode;
+}
+
+String hashedPhone(String? userPhone)  {
   if (userPhone != null && userPhone.isNotEmpty) {
     // Clean the phone number before hashing
     String cleanPhone = cleanPhoneNumber(userPhone);
@@ -35,7 +50,9 @@ Future<void> hashedPhone(String? userPhone) async {
 
     // Set the hashed phone number in FFAppState
     FFAppState().hashedPhone = hashedPhone.toString();
+    return hashedPhone.toString();
   } else {
     print("Phone number is null or empty");
+    return '';
   }
 }

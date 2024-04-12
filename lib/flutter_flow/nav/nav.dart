@@ -5,6 +5,10 @@ import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import '../../new_code/home_page/new_home_page.dart';
+import '../../new_code/onboarding/auth_screen/login_screen/login_screen.dart';
+import '../../new_code/onboarding/auth_screen/otp_screen/otp_screen.dart';
+import '../../new_code/onboarding/welcome_screen/welcome_screen.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 
@@ -86,14 +90,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) => _RouteErrorBuilder(
         state: state,
-        child: appStateNotifier.loggedIn ? NavBarPage() : WelcomeWidget(),
+        child: appStateNotifier.loggedIn ? NewHomePage() : WelcomeScreen(),
       ),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? NavBarPage() : WelcomeWidget(),
+              appStateNotifier.loggedIn ? NewHomePage() : WelcomeScreen(),
           routes: [
             FFRoute(
               name: 'editProfile',
@@ -108,7 +112,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   ? NavBarPage(initialPage: 'Home')
                   : NavBarPage(
                       initialPage: 'Home',
-                      page: HomeWidget(),
+                      page: NewHomePage(),
                     ),
             ),
             FFRoute(
@@ -128,17 +132,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             FFRoute(
               name: 'Welcome',
               path: 'Welcome',
-              builder: (context, params) => WelcomeWidget(),
+              builder: (context, params) => WelcomeScreen(),
             ),
             FFRoute(
               name: 'Login',
               path: 'login',
-              builder: (context, params) => LoginWidget(),
+              builder: (context, params) => LoginScreen(),
             ),
             FFRoute(
               name: 'OTP',
               path: 'OTP',
-              builder: (context, params) => OtpWidget(
+              builder: (context, params) => OtpScreen(
                 mobile: params.getParam('mobile', ParamType.String),
               ),
             ),
@@ -164,62 +168,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => SearchWidget(),
             ),
             FFRoute(
-              name: 'Hurray',
-              path: 'hurray',
-              builder: (context, params) => HurrayWidget(
-                scannedUser: params.getParam('scannedUser',
-                    ParamType.DocumentReference, false, ['users']),
-              ),
-            ),
-            FFRoute(
-              name: 'Vouch',
-              path: 'vouch',
-              builder: (context, params) => VouchWidget(
-                vouchRequest: params.getParam('vouchRequest', ParamType.JSON),
-              ),
-            ),
-            FFRoute(
-              name: 'userMessage',
-              path: 'userMessage',
-              builder: (context, params) => UserMessageWidget(),
-            ),
-            FFRoute(
-              name: 'pathAndDetailsCopy',
-              path: 'NewPathAndDetails',
-              requireAuth: true,
-              builder: (context, params) => PathAndDetailsCopyWidget(),
-            ),
-            FFRoute(
-              name: 'pathStepDetailsCopy',
-              path: 'NewPathStepDetails',
-              requireAuth: true,
-              builder: (context, params) => PathStepDetailsCopyWidget(
-                pathDetails: params.getParam('pathDetails', ParamType.JSON),
-              ),
-            ),
-            FFRoute(
-              name: 'messages',
-              path: 'messages',
-              builder: (context, params) => MessagesWidget(),
-            ),
-            FFRoute(
               name: 'Linkedin',
               path: 'linkedinLogin',
               builder: (context, params) => LinkedinWidget(),
-            ),
-            FFRoute(
-              name: 'pathAndDetailsNoMessage',
-              path: 'PathAndDetailsNoMessage',
-              requireAuth: true,
-              builder: (context, params) => PathAndDetailsNoMessageWidget(),
-            ),
-            FFRoute(
-              name: 'PathStepDetailsNoMessage',
-              path: 'PathStepDetailsNoMessage',
-              requireAuth: true,
-              builder: (context, params) => PathStepDetailsNoMessageWidget(
-                pathDetails: params.getParam('pathDetails', ParamType.JSON),
-              ),
             ),
             FFRoute(
               name: 'vouchBot',
@@ -235,12 +186,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               builder: (context, params) => NavigationAnimationWidget(
                 paths: params.getParam('paths', ParamType.JSON),
               ),
-            ),
-            FFRoute(
-              name: 'pathCarousel',
-              path: 'PathCarousel',
-              requireAuth: true,
-              builder: (context, params) => PathCarouselWidget(),
             ),
             FFRoute(
               name: 'pathCarouselNew',

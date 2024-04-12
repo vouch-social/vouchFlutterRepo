@@ -533,10 +533,10 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         linkedInHeadLine: _model.userNameController3.text,
                       ));
                       logFirebaseEvent('Button_backend_call');
-                      _model.userID = await UpdateUserCall.call(
-                        photoURL: currentUserPhoto,
-                        name: valueOrDefault(currentUserDocument?.userName, ''),
-                      );
+                      // _model.userID = await UpdateUserCall.call(
+                      //   photoURL: currentUserPhoto,
+                      //   name: valueOrDefault(currentUserDocument?.userName, ''),
+                      // );
                       logFirebaseEvent('Button_navigate_to');
 
                       context.pushNamed('Permissions');

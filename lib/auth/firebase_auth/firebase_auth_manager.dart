@@ -47,7 +47,7 @@ class FirebaseAuthManager extends AuthManager
     with
         EmailSignInManager,
         GoogleSignInManager,
-        AppleSignInManager,
+        // AppleSignInManager,
         AnonymousSignInManager,
         JwtSignInManager,
         GithubSignInManager,
@@ -158,9 +158,9 @@ class FirebaseAuthManager extends AuthManager
   ) =>
       _signInOrCreateAccount(context, anonymousSignInFunc, 'ANONYMOUS');
 
-  @override
-  Future<BaseAuthUser?> signInWithApple(BuildContext context) =>
-      _signInOrCreateAccount(context, appleSignIn, 'APPLE');
+  // @override
+  // Future<BaseAuthUser?> signInWithApple(BuildContext context) =>
+  //     _signInOrCreateAccount(context, appleSignIn, 'APPLE');
 
   @override
   Future<BaseAuthUser?> signInWithGoogle(BuildContext context) =>
@@ -219,7 +219,7 @@ class FirebaseAuthManager extends AuthManager
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phoneNumber,
       timeout:
-          Duration(seconds: 0), // Skips Android's default auto-verification
+          const Duration(seconds: 0), // Skips Android's default auto-verification
       verificationCompleted: (phoneAuthCredential) async {
         await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
         phoneAuthManager.update(() {

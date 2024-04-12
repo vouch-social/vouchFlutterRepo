@@ -72,7 +72,7 @@ class _NameWidgetState extends State<NameWidget> {
                 height: MediaQuery.sizeOf(context).height * 0.3,
                 decoration: BoxDecoration(
                   color: FlutterFlowTheme.of(context).primaryBackground,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(20.0),
                     bottomRight: Radius.circular(20.0),
                     topLeft: Radius.circular(0.0),
@@ -84,10 +84,10 @@ class _NameWidgetState extends State<NameWidget> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Align(
-                      alignment: AlignmentDirectional(-1.0, 0.0),
+                      alignment: const AlignmentDirectional(-1.0, 0.0),
                       child: Padding(
                         padding:
-                            EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 8.0),
+                            const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 8.0),
                         child: Text(
                           'Please enter your details',
                           textAlign: TextAlign.start,
@@ -503,13 +503,13 @@ class _NameWidgetState extends State<NameWidget> {
                     }
 
                     logFirebaseEvent('Button_backend_call');
-                    await UpdateUserCall.call(
-                      hashedPhone: FFAppState().hashedPhone,
-                      name: valueOrDefault(currentUserDocument?.userName, ''),
-                      photoURL: currentUserPhoto,
-                      phone: currentPhoneNumber,
-                      firebaseUserId: currentUserReference?.id,
-                    );
+                    // await UpdateUserCall.call(
+                    //   hashedPhone: FFAppState().hashedPhone,
+                    //   name: valueOrDefault(currentUserDocument?.userName, ''),
+                    //   photoURL: currentUserPhoto,
+                    //   phone: currentPhoneNumber,
+                    //   firebaseUserId: currentUserReference?.id,
+                    // );
                     logFirebaseEvent('Button_navigate_to');
 
                     context.pushNamed('Home');

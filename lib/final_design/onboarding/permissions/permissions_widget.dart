@@ -1,3 +1,9 @@
+import 'package:http/http.dart';
+import 'package:vouch/custom_code/actions/get_phone_contacts.dart';
+import 'package:vouch/new_code/backend/backend_constants.dart';
+
+import '../../../main.dart';
+import '../../../new_code/backend/models/user_data_model.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
@@ -35,19 +41,21 @@ class _PermissionsWidgetState extends State<PermissionsWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       logFirebaseEvent('PERMISSIONS_Permissions_ON_INIT_STATE');
       logFirebaseEvent('Permissions_backend_call');
-      _model.newUserID = await UpdateUserCall.call(
-        name: valueOrDefault(currentUserDocument?.userName, ''),
-        firebaseUserId: currentUserReference?.id,
-        phone: currentPhoneNumber,
-        photoURL: currentUserPhoto,
-        hashedPhone: FFAppState().hashedPhone,
-      );
-      logFirebaseEvent('Permissions_backend_call');
+      // _model.newUserID = await UpdateUserCall.call(
+      //   firebaseUserId: currentUserReference?.id,
+      //   phone: cleanPhoneNumber(currentPhoneNumber),
+      //   hashedPhone: FFAppState().hashedPhone,
+      // );
+      // logFirebaseEvent('Permissions_backend_call');
+      //
+      // await currentUserReference!.update(createUsersRecordData(
+      //   hashedPhone: FFAppState().hashedPhone,
+      // ));
 
-      await currentUserReference!.update(createUsersRecordData(
-        hashedPhone: FFAppState().hashedPhone,
-      ));
+      _model.sendUserData();
+      print(prefs?.getString(authToken));
     });
+
   }
 
   @override
@@ -114,7 +122,7 @@ class _PermissionsWidgetState extends State<PermissionsWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             24.0, 0.0, 24.0, 24.0),
                         child: Text(
-                          'Share the following persmissions so we can access & securely store your contacts',
+                          'Share the following permissions so we can access & securely store your contacts',
                           textAlign: TextAlign.start,
                           style: FlutterFlowTheme.of(context)
                               .titleLarge

@@ -82,6 +82,8 @@ class FFAppState extends ChangeNotifier {
     _scannedUserMessage = _value;
   }
 
+  ///JPLjtzCvO0TasImudwsD6LqWru63
+
   String _loginPhone = '';
   String get loginPhone => _loginPhone;
   set loginPhone(String _value) {
