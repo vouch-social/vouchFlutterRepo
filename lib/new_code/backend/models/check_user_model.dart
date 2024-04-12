@@ -50,46 +50,46 @@ class Data {
 }
 
 class User {
-  String createdAt;
-  String updatedAt;
-  String deletedAt;
-  int id;
+  String? createdAt;
+  String? updatedAt;
+  String? deletedAt;
+  int? id;
   dynamic userCreatedAt;
-  dynamic name;
-  String phone;
-  String firebaseid;
-  dynamic photourl;
-  dynamic graphid;
-  String hashedphone;
-  dynamic linkedinsub;
-  dynamic email;
-  dynamic vanityname;
-  dynamic localizedheadline;
-  bool contactsSync;
-  bool callLogsSync;
-  bool linkedinSync;
-  dynamic countryCode;
+  String? name;
+  String? phone;
+  String? firebaseid;
+  String? photourl;
+  String? graphid;
+  String? hashedphone;
+  String? linkedinsub;
+  String? email;
+  String? vanityname;
+  String? localizedheadline;
+  bool? contactsSync;
+  bool? callLogsSync;
+  bool? linkedinSync;
+  int? countryCode;
 
   User({
-    required this.createdAt,
-    required this.updatedAt,
-    required this.deletedAt,
-    required this.id,
-    required this.userCreatedAt,
-    required this.name,
-    required this.phone,
-    required this.firebaseid,
-    required this.photourl,
-    required this.graphid,
-    required this.hashedphone,
-    required this.linkedinsub,
-    required this.email,
-    required this.vanityname,
-    required this.localizedheadline,
-    required this.contactsSync,
-    required this.callLogsSync,
-    required this.linkedinSync,
-    required this.countryCode,
+     this.createdAt,
+     this.updatedAt,
+     this.deletedAt,
+     this.id,
+     this.userCreatedAt,
+     this.name,
+     this.phone,
+     this.firebaseid,
+     this.photourl,
+     this.graphid,
+     this.hashedphone,
+     this.linkedinsub,
+     this.email,
+     this.vanityname,
+     this.localizedheadline,
+     this.contactsSync,
+     this.callLogsSync,
+     this.linkedinSync,
+     this.countryCode,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(

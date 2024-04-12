@@ -44,15 +44,18 @@ class Data {
     required this.linkedinSync,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-    accessToken: json["access_token"],
-    user: User.fromJson(json["user"]),
-    userStatus: json["user_status"],
-    contactsSync: json["contacts_sync"],
-    callLogsSync: json["call_logs_sync"],
-    linkedinSync: json["linkedin_sync"],
-  );
-
+  factory Data.fromJson(Map<String, dynamic> json){
+    print("data.fromJson : ${json["user"]}");
+    return
+    Data(
+      accessToken: json["access_token"],
+      user: User.fromJson(json["user"]),
+      userStatus: json["user_status"],
+      contactsSync: json["contacts_sync"],
+      callLogsSync: json["call_logs_sync"],
+      linkedinSync: json["linkedin_sync"],
+    );
+  }
   Map<String, dynamic> toJson() => {
     "access_token": accessToken,
     "user": user.toJson(),
@@ -64,69 +67,72 @@ class Data {
 }
 
 class User {
-  String createdAt;
-  String updatedAt;
-  String deletedAt;
-  int id;
+  String? createdAt;
+  String? updatedAt;
+  String? deletedAt;
+  int? id;
   dynamic userCreatedAt;
-  dynamic name;
-  String phone;
-  String firebaseid;
-  dynamic photourl;
-  dynamic graphid;
-  String hashedphone;
-  dynamic linkedinsub;
-  dynamic email;
-  dynamic vanityname;
-  dynamic localizedheadline;
-  bool contactsSync;
-  bool callLogsSync;
-  bool linkedinSync;
-  int countryCode;
+  String? name;
+  String? phone;
+  String? firebaseid;
+  String? photourl;
+  String? graphid;
+  String? hashedphone;
+  String? linkedinsub;
+  String? email;
+  String? vanityname;
+  String? localizedheadline;
+  bool? contactsSync;
+  bool? callLogsSync;
+  bool? linkedinSync;
+  int? countryCode;
 
   User({
-    required this.createdAt,
-    required this.updatedAt,
-    required this.deletedAt,
-    required this.id,
-    required this.userCreatedAt,
-    required this.name,
-    required this.phone,
-    required this.firebaseid,
-    required this.photourl,
-    required this.graphid,
-    required this.hashedphone,
-    required this.linkedinsub,
-    required this.email,
-    required this.vanityname,
-    required this.localizedheadline,
-    required this.contactsSync,
-    required this.callLogsSync,
-    required this.linkedinSync,
-    required this.countryCode,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
+    this.id,
+    this.userCreatedAt,
+    this.name,
+    this.phone,
+    this.firebaseid,
+    this.photourl,
+    this.graphid,
+    this.hashedphone,
+    this.linkedinsub,
+    this.email,
+    this.vanityname,
+    this.localizedheadline,
+    this.contactsSync,
+    this.callLogsSync,
+    this.linkedinSync,
+    this.countryCode,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) => User(
-    createdAt: json["createdAt"],
-    updatedAt: json["updatedAt"],
-    deletedAt: json["deletedAt"],
-    id: json["id"],
-    userCreatedAt: json["created_at"],
-    name: json["name"],
-    phone: json["phone"],
-    firebaseid: json["firebaseid"],
-    photourl: json["photourl"],
-    graphid: json["graphid"],
-    hashedphone: json["hashedphone"],
-    linkedinsub: json["linkedinsub"],
-    email: json["email"],
-    vanityname: json["vanityname"],
-    localizedheadline: json["localizedheadline"],
-    contactsSync: json["contacts_sync"],
-    callLogsSync: json["call_logs_sync"],
-    linkedinSync: json["linkedin_sync"],
-    countryCode: json["country_code"],
-  );
+  factory User.fromJson(Map<String, dynamic> json) {
+    print("user.fromJson : $json");
+    return User(
+      createdAt: json["createdAt"],
+      updatedAt: json["updatedAt"],
+      deletedAt: json["deletedAt"],
+      id: json["id"],
+      userCreatedAt: json["created_at"],
+      name: json["name"],
+      phone: json["phone"],
+      firebaseid: json["firebaseid"],
+      photourl: json["photourl"],
+      graphid: json["graphid"],
+      hashedphone: json["hashedphone"],
+      linkedinsub: json["linkedinsub"],
+      email: json["email"],
+      vanityname: json["vanityname"],
+      localizedheadline: json["localizedheadline"],
+      contactsSync: json["contacts_sync"] == null ? null : json["contacts_sync"] as bool,
+      callLogsSync: json["call_logs_sync"] == null ? null : json["call_logs_sync"] as bool,
+      linkedinSync: json["linkedin_sync"] == null ? null : json["linkedin_sync"] as bool,
+      countryCode: json["country_code"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "createdAt": createdAt,

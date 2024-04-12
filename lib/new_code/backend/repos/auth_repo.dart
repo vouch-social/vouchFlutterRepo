@@ -28,12 +28,48 @@ class AuthRepository {
       dio.Response response = await _dioClient.postRequest(endPoint: '/api/auth/login', data: requestData,authToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjkxODcwMDM0MjkwMSIsInN1YiI6NDUsImlhdCI6MTcxMjU3MjQyMiwiZXhwIjoxNzQ0MTMwMDIyfQ.ZiRcVsoDakk2I8hR9tfwuN0B3nt9zbT9IomdClTxoVw');
 
       if (response.data != null) {
-        print("Data : ${response.data}");
+        print("Data : ${response.data}"); //   response.data =
+      //
+      //   {
+      //     "message": "Login Success",
+      //     "data": {
+      //       "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6Ijk5OTk5OTk5OTkiLCJzdWIiOjU3LCJpYXQiOjE3MTI5MTI1MTAsImV4cCI6MTc0NDQ3MDExMH0.9ALHx7g7v9bMF-VB7CpmhzAxYyyhGwZ3m00LajdKAPE",
+      //       "user": {
+      //         "createdAt": "April 9, 2024, 13:04:47",
+      //         "updatedAt": "April 9, 2024, 13:04:47",
+      //         "id": 57,
+      //         "created_at": "null",
+      //         "name": "null",
+      //         "phone": "9999999999",
+      //         "firebaseid": "awz0fDGReXZAbMrYOffsraKJwrm2",
+      //         "photourl": "null",
+      //         "graphid": "null",
+      //         "hashedphone": "ce3a598687c8d2e5aa6bedad20e059b4a78cca0adad7e563b07998d5cd226b8c",
+      //         "linkedinsub": "null",
+      //         "email": "null",
+      //         "vanityname": "null",
+      //         "localizedheadline": "null",
+      //         "contacts_sync": false,
+      //         "call_logs_sync": false,
+      //         "linkedin_sync": false,
+      //         "country_code": 91,
+      //         "deletedAt": "null"
+      //       },
+      //       "user_status": "old",
+      //       "contacts_sync": false,
+      //       "call_logs_sync": false,
+      //       "linkedin_sync": false
+      //     },
+      //     "status": true,
+      //     "meta": "null"
+      // };
+
+
+
         BaseResponse<UserModel> result = BaseResponse<UserModel>.fromJson(response.data, UserModel.fromJson);
-        print("Result: ${result.message}");
+        print(result);
         return result;
       } else {
-
         throw Exception('Response data is null');
       }
     } catch(error) {

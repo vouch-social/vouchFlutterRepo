@@ -10,6 +10,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vouch/new_code/contacts_call_logs/call_logs.dart';
 import 'package:vouch/new_code/home_page/new_home_page.dart';
+import 'package:vouch/new_code/onboarding/auth_screen/login_screen/login_screen.dart';
 import 'auth/firebase_auth/firebase_user_provider.dart';
 import 'auth/firebase_auth/auth_util.dart';
 
@@ -40,11 +41,6 @@ void main() async {
   await initSharedPreferences();
   final appState = FFAppState(); // Initialize FFAppState
   await appState.initializePersistedState();
-
-  if (!kIsWeb) {
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-  }
-
   await initializeFirebaseAppCheck();
 
   runApp(ChangeNotifierProvider(
@@ -135,7 +131,7 @@ class _MyAppState extends State<MyApp> {
             router: _router,
             child: child!,
           ),
-          home:  const PermissionsWidget(),
+          home:  const LoginScreen(),
         ),
       );
 }

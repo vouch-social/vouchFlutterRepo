@@ -144,6 +144,7 @@ dependencies:
   dio:
 #  pretty_dio_logger:
   intl_phone_field:
+  intl_phone_number_input: ^0.7.4
 
 
 

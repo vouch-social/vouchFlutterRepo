@@ -1,14 +1,14 @@
 class BaseResponse<T> {
   late bool status;
   late String message;
-  T? meta;
-  T? data;
+  dynamic meta;
+  dynamic data;
 
   BaseResponse({required this.status, required this.message, this.data,this.meta});
 
   factory BaseResponse.fromJson(
       Map<String, dynamic> json, T Function(Map<String, dynamic>) fromJson) {
-    print("Json : $json");
+    print("Json : ${json['data']}");
     return BaseResponse(
       status: json['status'],
       message: json['message'],
