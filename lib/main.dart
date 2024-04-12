@@ -165,6 +165,8 @@ class _NavBarPageState extends State<NavBarPage> {
       'Home': HomeWidget(),
       'Profile': ProfileWidget(),
     };
+
+    //NIRCOM - Remove Tabs
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
     final MediaQueryData queryData = MediaQuery.of(context);
 
@@ -238,57 +240,3 @@ class _NavBarPageState extends State<NavBarPage> {
     );
   }
 }
-
-// GetMaterialApp(
-// title: 'Vouch',
-// debugShowCheckedModeBanner: false,
-// localizationsDelegates: [
-// FFLocalizationsDelegate(),
-// GlobalMaterialLocalizations.delegate,
-// GlobalWidgetsLocalizations.delegate,
-// GlobalCupertinoLocalizations.delegate,
-// ],
-// locale: _locale,
-// supportedLocales: const [
-// Locale('en'),
-// ],
-// theme: ThemeData(
-// brightness: Brightness.light,
-// useMaterial3: false,
-// ),
-// themeMode: _themeMode,
-// home: const NewHomePage(),
-// //home: NewHomePage(),
-// routerConfig: _router,
-// builder: (_, child) => DynamicLinksHandler(
-//   router: _router,
-//   child: child!,
-// ),
-// );
-
-// ScreenUtilInit(
-// designSize: const Size(390, 844),
-// minTextAdapt: true,
-// splitScreenMode: true,
-// ensureScreenSize: true,
-// builder: (context, _) => GetMaterialApp(
-// title: 'Vouch',
-// debugShowCheckedModeBanner: false,
-// localizationsDelegates: [
-// FFLocalizationsDelegate(),
-// GlobalMaterialLocalizations.delegate,
-// GlobalWidgetsLocalizations.delegate,
-// GlobalCupertinoLocalizations.delegate,
-// ],
-// locale: _locale,
-// supportedLocales: const [
-// Locale('en'),
-// ],
-// theme: ThemeData(
-// brightness: Brightness.light,
-// useMaterial3: false,
-// ),
-// themeMode: _themeMode,
-// home: const NewHomePage(),
-// ),
-// );
