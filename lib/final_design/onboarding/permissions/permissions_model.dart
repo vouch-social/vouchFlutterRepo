@@ -51,12 +51,13 @@ class PermissionsModel extends FlutterFlowModel<PermissionsWidget> {
         );
 
         if (apiResult.status) {
+          print("Auth Tokennn: ${apiResult.data!.data.accessToken}");
           prefs?.setString(authToken, apiResult.data!.data.accessToken);
           print("Auth Tokennn: ${prefs?.getString(authToken)}");
           sendToken();
         }
       } else {
-        print('currentUserReference or firebaseid is null');
+        print('CurrentUserReference or firebaseId is null');
       }
     } catch (error) {
       print("MY Error : ${error}");

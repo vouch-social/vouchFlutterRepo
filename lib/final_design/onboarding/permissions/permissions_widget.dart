@@ -53,7 +53,7 @@ class _PermissionsWidgetState extends State<PermissionsWidget> {
       // ));
 
       _model.sendUserData();
-      print(prefs?.getString(authToken));
+
     });
 
   }
