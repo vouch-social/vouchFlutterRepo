@@ -162,7 +162,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Padding(
                 padding:
-                    const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 36.0),
+                    const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 28.0),
                 child: FFButtonWidget(
                   onPressed: () async {
                     logFirebaseEvent('LOGIN_PAGE_PROCEED_TO_O_T_P_BTN_ON_TAP');
@@ -213,7 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           useGoogleFonts: false,
                         ),
                     elevation: 3.0,
-                    borderRadius: BorderRadius.circular(8.0.w),
+                    borderRadius: BorderRadius.circular(12.0.w),
                   ),
                 ),
               ),

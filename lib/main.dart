@@ -29,6 +29,7 @@ import 'index.dart';
 
 import '/backend/firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'new_code/contacts_call_logs/contact_list_screen.dart';
+import 'new_code/onboarding/auth_screen/otp_screen/otp_screen.dart';
 import 'new_code/onboarding/welcome_screen/welcome_screen.dart';
 
 SharedPreferences? prefs;
@@ -131,7 +132,7 @@ class _MyAppState extends State<MyApp> {
             router: _router,
             child: child!,
           ),
-          home:  const LoginScreen(),
+          home:  const WelcomeScreen(),
         ),
       );
 }

@@ -71,168 +71,161 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        body: Container(
-          width: double.infinity,
-          height: MediaQuery.sizeOf(context).height * 1.0,
-          decoration: BoxDecoration(
-            color: FlutterFlowTheme.of(context).secondaryBackground,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    width: MediaQuery.sizeOf(context).width * 0.3,
-                    height: MediaQuery.sizeOf(context).height * 0.3,
-                    decoration: const BoxDecoration(),
-                    child: ClipRRect(
-                      child: Image.asset(
-                        'assets/images/logo_white_200.png',
-                        width: double.infinity,
-                        height: double.infinity,
-                        fit: BoxFit.contain,
-                      ),
+        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        body: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Align(
+                alignment: Alignment.center,
+                child: Container(
+                  width: MediaQuery.sizeOf(context).width * 0.3,
+                  height: MediaQuery.sizeOf(context).height * 0.3,
+                  decoration: const BoxDecoration(),
+                  child: ClipRRect(
+                    child: Image.asset(
+                      'assets/images/logo_white_200.png',
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
               ),
-              Padding(padding:  EdgeInsets.all(16.0.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  AutoSizeText(
-                      'Welcome to',
-                      textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context)
-                          .welcomeTitle1,
-                      minFontSize: 16.0,
+            ),
+            Padding(padding:  EdgeInsets.all(16.0.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AutoSizeText(
+                    'Welcome to',
+                    textAlign: TextAlign.center,
+                    style: FlutterFlowTheme.of(context)
+                        .welcomeTitle1,
+                    minFontSize: 16.0,
+                  ),
+                AutoSizeText(
+                    'Vouch',
+                    textAlign: TextAlign.center,
+                    style: FlutterFlowTheme.of(context)
+                        .welcomeTitle2,
+                    minFontSize: 16.0,
+                  ),
+                SizedBox(height: 24.h,),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.check,
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      size: 18.0.w,
                     ),
-                  AutoSizeText(
-                      'Vouch',
-                      textAlign: TextAlign.center,
-                      style: FlutterFlowTheme.of(context)
-                          .welcomeTitle2,
-                      minFontSize: 16.0,
-                    ),
-                  SizedBox(height: 24.h,),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.check,
-                        color: FlutterFlowTheme.of(context).secondaryText,
-                        size: 18.0.w,
-                      ),
-                      SizedBox(width: 8.0.w,),
-                      Expanded(
-                        child: AutoSizeText(
-                          'Search the world for people you want to connect',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                            fontFamily: 'Bricolage Grotesque',
-                            color: FlutterFlowTheme.of(context)
-                                .primaryBackground,
-                            fontSize: 14.0.w,
-                            fontWeight: FontWeight.w400,
-                            useGoogleFonts: false,
-                          ),
+                    SizedBox(width: 8.0.w,),
+                    Expanded(
+                      child: AutoSizeText(
+                        'Search the world for people you want to connect',
+                        style: FlutterFlowTheme.of(context)
+                            .bodyMedium
+                            .override(
+                          fontFamily: 'Bricolage Grotesque',
+                          color: FlutterFlowTheme.of(context)
+                              .primaryBackground,
+                          fontSize: 14.0.w,
+                          fontWeight: FontWeight.w400,
+                          useGoogleFonts: false,
                         ),
                       ),
-                    ],
-                  ),
-                  SizedBox(height: 12.h,),
-                  Row(
+                    ),
+                  ],
+                ),
+                SizedBox(height: 12.h,),
+                Row(
 
-                    children: [
-                      Icon(
-                        Icons.check,
-                        color: FlutterFlowTheme.of(context).secondaryText,
-                        size: 18.0.w,
-                      ),
-                      SizedBox(width: 8.0.w,),
-                      Expanded(
-                        child: AutoSizeText(
-                          'Discover new friends, and uncover new \nconnection paths',
-                          textAlign: TextAlign.start,
-                          style: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                            fontFamily: 'Bricolage Grotesque',
-                            color: FlutterFlowTheme.of(context)
-                                .primaryBackground,
-                            fontSize: 14.0.w,
-                            fontWeight: FontWeight.w400,
-                            useGoogleFonts: false,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 12.h,),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.check,
-                        color: FlutterFlowTheme.of(context).secondaryText,
-                        size: 18.0.w,
-                      ),
-                      SizedBox(width: 8.0.w,),
-                      Expanded(
-                        child: AutoSizeText(
-                          'Know your network, Grow your network!',
-                          style: FlutterFlowTheme.of(context)
-                              .bodyMedium
-                              .override(
-                            fontFamily: 'Bricolage Grotesque',
-                            color: FlutterFlowTheme.of(context)
-                                .primaryBackground,
-                            fontSize: 14.0.w,
-                            fontWeight: FontWeight.w400,
-                            useGoogleFonts: false,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Align(
-                    alignment: const AlignmentDirectional(0.0, 0.0),
-                    child: Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          0.0, 30.0, 0.0, 36.0),
-                      child: FFButtonWidget(
-                        onPressed: () async {
-                          logFirebaseEvent(
-                              'WELCOME_PAGE_GET_STARTED_BTN_ON_TAP');
-                          logFirebaseEvent('Button_navigate_to');
-                          Get.to(()=> const LoginScreen());
-                        },
-                        text: 'Get Started',
-                        options: FFButtonOptions(
-                          width: double.infinity,
-                          height: 60.0,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              1.0, 0.0, 0.0, 0.0),
-                          iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 0.0),
-                          color:
-                          FlutterFlowTheme.of(context).primaryBackground,
-                          textStyle: FlutterFlowTheme.of(context).titleLarge,
-                          elevation: 3.0,
-                          borderRadius: BorderRadius.circular(8.0.w),
+                  children: [
+                    Icon(
+                      Icons.check,
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      size: 18.0.w,
+                    ),
+                    SizedBox(width: 8.0.w,),
+                    Expanded(
+                      child: AutoSizeText(
+                        'Discover new friends, and uncover new \nconnection paths',
+                        textAlign: TextAlign.start,
+                        style: FlutterFlowTheme.of(context)
+                            .bodyMedium
+                            .override(
+                          fontFamily: 'Bricolage Grotesque',
+                          color: FlutterFlowTheme.of(context)
+                              .primaryBackground,
+                          fontSize: 14.0.w,
+                          fontWeight: FontWeight.w400,
+                          useGoogleFonts: false,
                         ),
                       ),
                     ),
+                  ],
+                ),
+                SizedBox(height: 12.h,),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.check,
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      size: 18.0.w,
+                    ),
+                    SizedBox(width: 8.0.w,),
+                    Expanded(
+                      child: AutoSizeText(
+                        'Know your network, Grow your network!',
+                        style: FlutterFlowTheme.of(context)
+                            .bodyMedium
+                            .override(
+                          fontFamily: 'Bricolage Grotesque',
+                          color: FlutterFlowTheme.of(context)
+                              .primaryBackground,
+                          fontSize: 14.0.w,
+                          fontWeight: FontWeight.w400,
+                          useGoogleFonts: false,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Align(
+                  alignment: const AlignmentDirectional(0.0, 0.0),
+                  child: Padding(
+                    padding:  EdgeInsetsDirectional.fromSTEB(
+                        0.0, 30.0.w, 0.0, 28.0.w),
+                    child: FFButtonWidget(
+                      onPressed: () async {
+                        logFirebaseEvent(
+                            'WELCOME_PAGE_GET_STARTED_BTN_ON_TAP');
+                        logFirebaseEvent('Button_navigate_to');
+                        Get.to(()=> const LoginScreen());
+                      },
+                      text: 'Get Started',
+                      options: FFButtonOptions(
+                        width: double.infinity,
+                        height: 64.0,
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            1.0, 0.0, 0.0, 0.0),
+                        iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 0.0, 0.0, 0.0),
+                        color:
+                        FlutterFlowTheme.of(context).primaryBackground,
+                        textStyle: FlutterFlowTheme.of(context).titleLarge,
+                        elevation: 3.0,
+                        borderRadius: BorderRadius.circular(12.0.w),
+                      ),
+                    ),
                   ),
-                ],
-              )
-              ),
-            ],
-          ),
+                ),
+              ],
+            )
+            ),
+          ],
         ),
       ),
     );
