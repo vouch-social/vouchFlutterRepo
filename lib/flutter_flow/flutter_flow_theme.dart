@@ -1,13 +1,13 @@
 // ignore_for_file: overridden_fields, annotate_overrides
 
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 abstract class FlutterFlowTheme {
+
   static FlutterFlowTheme of(BuildContext context) {
+    final Brightness brightness = MediaQuery.of(context).platformBrightness;
     return LightModeTheme();
   }
 
@@ -45,6 +45,7 @@ abstract class FlutterFlowTheme {
   late Color container3;
   late Color border1;
   late Color border2;
+  late Color containerBackground;
 
   @Deprecated('Use displaySmallFamily instead')
   String get title1Family => displaySmallFamily;
@@ -122,7 +123,7 @@ class LightModeTheme extends FlutterFlowTheme {
   @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
-  late Color primary = const Color(0xFF2F8FA9);
+  late Color primary =  const Color(0xFF2F8FA9) ;
   late Color secondary = const Color(0xFF406B72);
   late Color tertiary = const Color(0xFF809B9E);
   late Color alternate = const Color(0xFFBFCDD0);
@@ -130,6 +131,7 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color secondaryText = const Color(0xFFFAFEFF);
   late Color primaryBackground = const Color(0xFFFAFEFF);
   late Color secondaryBackground = const Color(0xFF003943);
+  late Color containerBackground =  const Color(0xFF153C47);
   late Color accent1 = const Color(0xFFD7EFE9);
   late Color accent2 = const Color(0xFFE5EBEC);
   late Color accent3 = const Color(0xFFE0E0E0);

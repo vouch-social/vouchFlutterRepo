@@ -15,6 +15,7 @@ class LoginModel extends FlutterFlowModel<LoginScreen> {
   // State field(s) for phoneNumber widget.
   FocusNode? phoneNumberFocusNode2;
   TextEditingController? phoneNumberController2;
+  TextEditingController? phoneNumberController3;
   String? Function(BuildContext, String?)? phoneNumberController2Validator;
 
   /// Initialization and disposal methods.
@@ -30,6 +31,7 @@ class LoginModel extends FlutterFlowModel<LoginScreen> {
 
     phoneNumberFocusNode2?.dispose();
     phoneNumberController2?.dispose();
+    phoneNumberController3?.dispose();
   }
 
 /// Action blocks are added here.

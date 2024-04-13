@@ -223,10 +223,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           FlutterFlowTheme.of(context).primaryBackground,
                           textStyle: FlutterFlowTheme.of(context).titleLarge,
                           elevation: 3.0,
-                          borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context)
-                                .primaryBackground,
-                          ),
                           borderRadius: BorderRadius.circular(8.0.w),
                         ),
                       ),

@@ -14,8 +14,9 @@ import '../../../home_page/new_home_page.dart';
 import 'otp_model.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key,this.mobile,});
+  const OtpScreen({super.key,this.mobile, this.countryCode,});
   final String? mobile;
+  final String? countryCode;
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -101,7 +102,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       padding:
                       const EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 24.0),
                       child: Text(
-                        '+91-${widget.mobile}',
+                        '${widget.countryCode}-${widget.mobile}',
                         textAlign: TextAlign.start,
                         style: FlutterFlowTheme.of(context).titleLarge.override(
                           fontFamily: 'Bricolage Grotesque',
@@ -348,7 +349,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   }
 
                   logFirebaseEvent('Button_navigate_to');
-                  Get.offAll(() => PermissionsWidget());
+                  Get.offAll(() => const NewHomePage());
                   //context.goNamedAuth('Permissions', context.mounted);
                 },
                 text: 'Verify OTP',
