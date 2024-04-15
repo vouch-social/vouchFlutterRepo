@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:vouch/new_code/home_page/new_home_page.dart';
 import 'package:vouch/new_code/onboarding/auth_screen/login_screen/login_screen.dart';
+import 'package:vouch/new_code/onboarding/customize_profile/goals_screen.dart';
 import 'package:vouch/new_code/onboarding/permissions/contacts_call_logs/upload_success.dart';
 import 'package:vouch/new_code/onboarding/permissions/permissions_screen.dart';
 import 'auth/firebase_auth/firebase_user_provider.dart';
@@ -32,6 +33,7 @@ import 'index.dart';
 import '/backend/firebase_dynamic_links/firebase_dynamic_links.dart';
 
 import 'new_code/onboarding/auth_screen/otp_screen/otp_screen.dart';
+import 'new_code/onboarding/linkdin/linkdin_screen.dart';
 import 'new_code/onboarding/welcome_screen/welcome_screen.dart';
 
 SharedPreferences? prefs;
@@ -134,7 +136,7 @@ class _MyAppState extends State<MyApp> {
             router: _router,
             child: child!,
           ),
-          home:  const WelcomeScreen(),
+          home:  const GoalsScreen(),
         ),
       );
 }
