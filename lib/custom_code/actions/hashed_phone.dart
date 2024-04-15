@@ -13,14 +13,6 @@ import 'package:crypto/crypto.dart';
 
 String cleanPhoneNumber(String phoneNumber) {
   String formattedPhoneNumber = phoneNumber.replaceAll(RegExp(r'[^\d]'), '');
-  if (formattedPhoneNumber.length > 10 &&
-      formattedPhoneNumber.startsWith('91')) {
-    formattedPhoneNumber = formattedPhoneNumber.substring(2);
-  }
-  if (formattedPhoneNumber.length > 10) {
-    formattedPhoneNumber =
-        formattedPhoneNumber.substring(formattedPhoneNumber.length - 10);
-  }
   return formattedPhoneNumber;
 }
 
@@ -39,13 +31,12 @@ extractCountryCode(String phoneNumber) {
   return countryCode;
 }
 
-String hashedPhone(String? userPhone)  {
+String hashedPhone(String? userPhone,String? userPhoneCC)  {
   if (userPhone != null && userPhone.isNotEmpty) {
     // Clean the phone number before hashing
-    String cleanPhone = cleanPhoneNumber(userPhone);
-
+    String phone = "$userPhoneCC$userPhone";
     // Convert the cleaned phone number to bytes and hash it
-    var bytes = utf8.encode(cleanPhone);
+    var bytes = utf8.encode(phone);
     var hashedPhone = sha256.convert(bytes);
 
     // Set the hashed phone number in FFAppState

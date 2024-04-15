@@ -143,7 +143,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               name: 'OTP',
               path: 'OTP',
               builder: (context, params) => OtpScreen(
-                mobile: params.getParam('mobile', ParamType.String),
+                mobileWOCC: params.getParam('mobile', ParamType.String),
               ),
             ),
             FFRoute(

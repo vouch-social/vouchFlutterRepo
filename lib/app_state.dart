@@ -22,7 +22,7 @@ class FFAppState extends ChangeNotifier {
   Future initializePersistedState() async {
     prefs = await SharedPreferences.getInstance();
     _safeInit(() {
-      _loginPhone = prefs.getString('ff_loginPhone') ?? _loginPhone;
+      _loginPhoneWOCC = prefs.getString('ff_loginPhone') ?? _loginPhoneWOCC;
     });
     _safeInit(() {
       _hashedPhone = prefs.getString('ff_hashedPhone') ?? _hashedPhone;
@@ -84,12 +84,23 @@ class FFAppState extends ChangeNotifier {
 
   ///JPLjtzCvO0TasImudwsD6LqWru63
 
-  String _loginPhone = '';
-  String get loginPhone => _loginPhone;
-  set loginPhone(String _value) {
-    _loginPhone = _value;
+  String _loginPhoneWOCC = '';
+  String get loginPhoneWOCC => _loginPhoneWOCC;
+  set loginPhoneWOCC(String _value) {
+    _loginPhoneWOCC = _value;
     prefs.setString('ff_loginPhone', _value);
   }
+
+  String _loginPhoneCC = '';
+  String get loginPhoneCC => _loginPhoneCC;
+  set loginPhoneCC(String _value) {
+    _loginPhoneCC = _value;
+    prefs.setString('ff_loginPhone', _value);
+  }
+
+
+
+
 
   String _hashedPhone =
       '501ffdb122a1e51ef0926828d0ad093144c07e7ed4906a85d9e1b033cad947c1';

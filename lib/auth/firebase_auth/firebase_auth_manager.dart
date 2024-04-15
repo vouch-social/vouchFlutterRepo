@@ -204,12 +204,6 @@ class FirebaseAuthManager extends AuthManager
     required void Function(BuildContext) onCodeSent,
   }) async {
     phoneAuthManager.update(() => phoneAuthManager.onCodeSent = onCodeSent);
-    if (kIsWeb) {
-      phoneAuthManager.webPhoneAuthConfirmationResult =
-          await FirebaseAuth.instance.signInWithPhoneNumber(phoneNumber);
-      phoneAuthManager.update(() => phoneAuthManager.triggerOnCodeSent = true);
-      return;
-    }
     final completer = Completer<bool>();
     // If you'd like auto-verification, without the user having to enter the SMS
     // code manually. Follow these instructions:

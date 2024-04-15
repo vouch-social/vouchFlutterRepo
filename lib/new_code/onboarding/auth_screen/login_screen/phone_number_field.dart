@@ -69,7 +69,7 @@ Widget phoneInputField(model,context){
         fontSize: 18.w,
         fontWeight: FontWeight.w300,
         fontFamily: 'Bricolage Grotesque',
-        color: FlutterFlowTheme.of(context).primaryText,
+        color: FlutterFlowTheme.of(context).primaryBackground,
       ),
     ),
     autoValidateMode: AutovalidateMode.onUserInteraction,

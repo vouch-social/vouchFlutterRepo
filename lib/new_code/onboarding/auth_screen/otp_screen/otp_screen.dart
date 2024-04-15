@@ -11,12 +11,12 @@ import '../../../../auth/firebase_auth/auth_util.dart';
 import '../../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../../flutter_flow/flutter_flow_timer.dart';
 import '../../../../flutter_flow/flutter_flow_widgets.dart';
-import '../../../home_page/new_home_page.dart';
+import '../../permissions/permissions_screen.dart';
 import 'otp_model.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key,this.mobile, this.countryCode,});
-  final String? mobile;
+  const OtpScreen({super.key,this.mobileWOCC, this.countryCode,});
+  final String? mobileWOCC;
   final String? countryCode;
 
   @override
@@ -90,7 +90,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 minFontSize: 16.0,
                   ),
                   AutoSizeText(
-                    '${widget.countryCode}-${widget.mobile}',
+                    '${widget.countryCode}-${widget.mobileWOCC}',
                     textAlign: TextAlign.start,
                     style: FlutterFlowTheme.of(context).titleLarge.override(
                       color: FlutterFlowTheme.of(context)
@@ -133,9 +133,12 @@ class _OtpScreenState extends State<OtpScreen> {
                       FlutterFlowTheme.of(context).primaryBackground,
                       obscureText: false,
                       hintCharacter: 'x',
-                      // hintStyle: TextStyle(
-                      //   color: FlutterFlowTheme.of(context).primaryBackground,
-                      // ),
+                      hintStyle: TextStyle(
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        fontSize: 18.0.w,
+                        fontFamily: 'Bricolage Grotesque',
+                        fontWeight: FontWeight.w600,
+                      ),
                       keyboardType: TextInputType.number,
                       pinTheme: PinTheme(
                         fieldHeight: 52.0.h,
@@ -247,27 +250,17 @@ class _OtpScreenState extends State<OtpScreen> {
                                   logFirebaseEvent(
                                       'OTP_PAGE_Text_z4z0y37v_ON_TAP');
                                   logFirebaseEvent('Text_auth');
-                                  final phoneNumberVal = '+91${widget.mobile}';
-                                  if (phoneNumberVal.isEmpty ||
-                                      !phoneNumberVal.startsWith('+')) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text(
-                                            'Phone Number is required and has to start with +.'),
-                                      ),
-                                    );
-                                    return;
-                                  }
+                                  final phoneAuthWCC = '${widget.countryCode}${widget.mobileWOCC}';
                                   await authManager.beginPhoneAuth(
                                     context: context,
-                                    phoneNumber: phoneNumberVal,
+                                    phoneNumber: phoneAuthWCC,
                                     onCodeSent: (context) async {
                                       context.goNamedAuth(
                                         'OTP',
                                         context.mounted,
                                         queryParameters: {
                                           'mobile': serializeParam(
-                                            widget.mobile,
+                                            widget.mobileWOCC,
                                             ParamType.String,
                                           ),
                                         }.withoutNulls,
@@ -320,6 +313,7 @@ class _OtpScreenState extends State<OtpScreen> {
                               color:
                               FlutterFlowTheme.of(context).primaryBackground,
                               fontSize: 14.0,
+                              decoration: TextDecoration.underline,
                               useGoogleFonts: false,
                             ),
                         )
@@ -354,7 +348,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     }
 
                     logFirebaseEvent('Button_navigate_to');
-                    Get.offAll(() => const NewHomePage());
+                    Get.offAll(() =>  PermissionsScreen(mobileWOCC: widget.mobileWOCC,countryCode: widget.countryCode,));
                     //context.goNamedAuth('Permissions', context.mounted);
                   },
                   text: 'Submit OTP',

@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
+import 'package:vouch/app_state.dart';
 import 'package:vouch/flutter_flow/flutter_flow_util.dart';
 import 'package:vouch/new_code/onboarding/auth_screen/login_screen/phone_number_field.dart';
 import 'package:vouch/new_code/onboarding/auth_screen/otp_screen/otp_screen.dart';
@@ -167,14 +168,17 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () async {
                     logFirebaseEvent('LOGIN_PAGE_PROCEED_TO_O_T_P_BTN_ON_TAP');
                     logFirebaseEvent('Button_update_app_state');
-                    FFAppState().loginPhone =
+                    FFAppState().loginPhoneWOCC =
                         '${_model.phoneNumberController2?.text}';
+                    FFAppState().loginPhoneCC =
+                    '${_model.phoneNumberController1?.text}';
                     logFirebaseEvent('Button_custom_action');
                     await actions.hashedPhone(
-                      FFAppState().loginPhone,
+                      FFAppState().loginPhoneWOCC,
+                      FFAppState().loginPhoneCC,
                     );
                     logFirebaseEvent('Button_auth');
-                    final phoneNumberVal = FFAppState().loginPhone;
+                    final phoneNumberVal = FFAppState().loginPhoneWOCC;
                     if (phoneNumberVal.isEmpty ||
                         !phoneNumberVal.startsWith('+')) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -190,7 +194,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       phoneNumber: phoneNumberVal,
                       onCodeSent: (context) async {
                         Get.to(() => OtpScreen(
-                              mobile: removeCountryCode(_model.phoneNumberController2.text,_model.phoneNumberController1.text),
+                              mobileWOCC: removeCountryCode(_model.phoneNumberController2.text,_model.phoneNumberController1.text),
                               countryCode: _model.phoneNumberController1.text,
                             ));
                       },

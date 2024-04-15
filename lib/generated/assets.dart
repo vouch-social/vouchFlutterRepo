@@ -2,7 +2,10 @@
 class Assets {
   Assets._();
 
+  static const String assetsCleanedPhoneBook = 'assets/cleaned_phoneBook.svg';
+  static const String assetsContactsPng = 'assets/contacts_png.png';
   static const String assetsImage951 = 'assets/image951.png';
+  static const String assetsLock = 'assets/lock.svg';
   static const String assetsUserIcon = 'assets/user_icon.svg';
   static const String audiosFavicon = 'assets/audios/favicon.png';
   static const String fontsBricolageGrotesque24ptBold = 'assets/fonts/BricolageGrotesque_24pt-Bold.ttf';

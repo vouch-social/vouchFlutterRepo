@@ -37,11 +37,9 @@ class _LinkedinWidgetState extends State<LinkedinWidget> {
       logFirebaseEvent('LINKEDIN_PAGE_Linkedin_ON_INIT_STATE');
       logFirebaseEvent('Linkedin_start_periodic_action');
       _model.instantTimer = InstantTimer.periodic(
-        duration: Duration(milliseconds: 4000),
+        duration: const Duration(milliseconds: 4000),
         callback: (timer) async {
           if (valueOrDefault(currentUserDocument?.linkedInvanityName, '') !=
-                  null &&
-              valueOrDefault(currentUserDocument?.linkedInvanityName, '') !=
                   '') {
             logFirebaseEvent('Linkedin_navigate_to');
 
