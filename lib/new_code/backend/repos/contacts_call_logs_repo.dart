@@ -19,14 +19,13 @@ class ContactsCallLogsRepo {
           endPoint: '/api/call-logs/saveCallLogs',
           data: data,
           authToken: prefs?.getString(authToken));
-      print("Response 11: $response");
+      print("sendCallLogs: $response");
     } catch (error) {
       print("Error 2 :$error");
     }
   }
 
   Future<void> sendContacts(dynamic data
-      // String? hashedPhone, List<myContact> contacts
       ) async {
     try {
       dio.Response response = await _dioClient.postRequest(
@@ -34,7 +33,7 @@ class ContactsCallLogsRepo {
           data: data,
           authToken: prefs?.getString(authToken));
 
-      print("Response : $response");
+      print("sendContacts : $response");
     } catch (error) {
       print("Error 3 :$error");
     }

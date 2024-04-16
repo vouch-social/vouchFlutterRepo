@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:call_log/call_log.dart';
-import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/contact.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -36,67 +36,27 @@ class _ImportScreenState extends State<ImportScreen> {
     if (status.isGranted) {
       List<Contact> allContacts = await myGetContacts();
       setState(() {
-        _contacts = allContacts.take(1).toList();
+        _contacts = allContacts.take(2).toList();
         sendContactsData(_contacts);
       });
     }
   }
 
   void sendContactsData(List<Contact> _contacts) async {
-    Map<String, dynamic> ItemtoJson(Item item) {
-      return {
-        'label': item.label,
-        'value': item.value,
-      };
-    }
-    Map<String, dynamic> AddresstoJson(PostalAddress postalAddress) {
-      return {
-        'label': postalAddress.label,
-        'street': postalAddress.street,
-        'city': postalAddress.city,
-        'postcode': postalAddress.postcode,
-        'region': postalAddress.region,
-        'country': postalAddress.country,
-      };
-    }
-
-    Map<String, dynamic> ContactToJson(Contact contact) {
-      return {
-        'identifier': contact.identifier,
-        'displayName': contact.displayName,
-        'givenName': contact.givenName,
-        'middleName': contact.middleName,
-        'prefix': contact.prefix,
-        'suffix': contact.suffix,
-        'familyName': contact.familyName,
-        'company': contact.company,
-        'jobTitle': contact.jobTitle,
-        'androidAccountTypeRaw': contact.androidAccountTypeRaw,
-        'androidAccountName': contact.androidAccountName,
-        'emails': contact.emails?.map((email) => ItemtoJson(email)).toList(),
-        'phones': contact.phones?.map((phone) => ItemtoJson(phone)).toList(),
-        'postalAddresses': contact.postalAddresses?.map((address) => AddresstoJson(address)).toList(),
-        'avatar': contact.avatar,
-        'birthday': contact.birthday?.toIso8601String(),
-        'androidAccountType': contact.androidAccountType?.toString(),
-      };
-    }
-
-
 
 
     List<Map<String, dynamic>> myContactListToJson(List<Contact> contacts) {
-      return contacts.map((contact) => ContactToJson(contact)).toList();
+      return contacts.map((contact) => contact.toJson()).toList();
     }
 
     Map<String, dynamic> data = {
-      "hashedPhone": hashedPhone,
+      "hashedPhone": hashedPhone(widget.mobileWOCC,
+          widget.countryCode),
       "contacts": myContactListToJson(_contacts)
     };
+    print(data);
     try {
-      await repository.sendContacts(data
-          // hashedPhone(widget.mobileWOCC,widget.countryCode,), _contacts
-          );
+      await repository.sendContacts(data);
     } catch (error) {
       print("Error 1: $error");
     }

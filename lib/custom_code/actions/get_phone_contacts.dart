@@ -1,16 +1,15 @@
 // Automatic FlutterFlow imports
+import 'package:flutter_contacts/contact.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
+
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'index.dart'; // Imports other custom actions
-import 'package:flutter/material.dart';
 // Begin custom action code
 // DO NOT REMOVE OR MODIFY THE CODE ABOVE!
 
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
-import 'package:contacts_service/contacts_service.dart';
 
 Future<List<UserContactStruct>> getPhoneContacts() async {
   FFAppState().ContactListIterable = false;
@@ -19,13 +18,13 @@ Future<List<UserContactStruct>> getPhoneContacts() async {
   FFAppState().hashedContactCount = 0;
 
   try {
-    Iterable<Contact> contacts = await ContactsService.getContacts();
+    Iterable<Contact> contacts = await FlutterContacts.getContacts();
 
     for (Contact contact in contacts) {
-      String contactName = contact.displayName ?? "Unknown";
+      String contactName = contact.displayName;
 
       // Iterate over all phone numbers of the contact
-      for (Item phoneNumber in contact.phones!) {
+      for (dynamic phoneNumber in contact.phones) {
         String? phoneNumberValue = phoneNumber.value;
 
         if (phoneNumberValue != null) {
