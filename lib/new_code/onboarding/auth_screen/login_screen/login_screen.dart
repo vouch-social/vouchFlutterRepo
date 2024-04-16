@@ -135,30 +135,31 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 24.h,
                   ),
 
-
-                  Container(
-                    width: double.infinity,
-                    height: 80.h,
-                    padding: EdgeInsets.all(8.0.w),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8.0.w)),
-                      color: FlutterFlowTheme.of(context).containerBackground,
-                    ),
-                    child: Stack(children: [
-                      Container(
-                       decoration:  BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(8.0.w)),
-                          color: Colors.white,
-                        ),
-                        height: 40.h,
-                        width: 108.w,
-
+                  Stack(children: [
+                    Container(
+                      width: double.infinity,
+                      height: 64.h,
+                      padding: EdgeInsets.all(8.0.w),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0.w)),
+                        color: FlutterFlowTheme.of(context).containerBackground,
                       ),
-                      phoneInputField(_model, context),
+                    ),
+                    Container(
+                      margin: EdgeInsets.all(8.0.w),
+                      decoration:  BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0.w)),
+                        color: Colors.white,
+                      ),
+                      height: 46.h,
+                      width: 108.w,
+
+                    ),
+                    phoneInputField(_model, context),
 
 
-                    ]),
-                  )
+                  ]),
+
                 ],
               ),
               Padding(
