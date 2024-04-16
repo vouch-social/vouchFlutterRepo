@@ -136,7 +136,7 @@ class _MyAppState extends State<MyApp> {
             router: _router,
             child: child!,
           ),
-          home:  const GoalsScreen(),
+          home:  const WelcomeScreen(),
         ),
       );
 }

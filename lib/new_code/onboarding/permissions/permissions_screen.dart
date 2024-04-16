@@ -6,7 +6,7 @@ import 'package:get/get_navigation/get_navigation.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:vouch/generated/assets.dart';
 import 'package:vouch/new_code/common_widgets/vector.dart';
-import 'package:vouch/new_code/onboarding/permissions/contacts_call_logs/import_contact_list_screen.dart';
+import 'package:vouch/new_code/onboarding/permissions/contacts_call_logs/import_screen.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
