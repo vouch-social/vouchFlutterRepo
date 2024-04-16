@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:call_log/call_log.dart';
+import 'package:contacts_service/contacts_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
@@ -19,9 +20,9 @@ class ImportScreen extends StatefulWidget {
 }
 
 class _ImportScreenState extends State<ImportScreen> {
-  final CallLogsRepo repository = CallLogsRepo();
-  List<myContact> allContacts = [];
-  List<myContact> contacts = [];
+  final ContactsCallLogsRepo repository = ContactsCallLogsRepo();
+  List<Contact> _contacts = [];
+  List<CallLogEntry> _callLogs = [];
 
   @override
   void initState() {
@@ -33,34 +34,78 @@ class _ImportScreenState extends State<ImportScreen> {
   Future<void> _fetchContacts() async {
     var status = await Permission.contacts.request();
     if (status.isGranted) {
-      await getContacts();
+      List<Contact> allContacts = await myGetContacts();
+      setState(() {
+        _contacts = allContacts.take(1).toList();
+        sendContactsData(_contacts);
+      });
     }
   }
 
-  Future<void> getContacts() async {
-     allContacts = await ExtendedFlutterContacts.getContactsAndConvertToBase64();
-    contacts = allContacts.take(1).toList();
-    setState(() {
-      sendContactsData();
-    });
-  }
+  void sendContactsData(List<Contact> _contacts) async {
+    Map<String, dynamic> ItemtoJson(Item item) {
+      return {
+        'label': item.label,
+        'value': item.value,
+      };
+    }
+    Map<String, dynamic> AddresstoJson(PostalAddress postalAddress) {
+      return {
+        'label': postalAddress.label,
+        'street': postalAddress.street,
+        'city': postalAddress.city,
+        'postcode': postalAddress.postcode,
+        'region': postalAddress.region,
+        'country': postalAddress.country,
+      };
+    }
 
-  void sendContactsData() async {
+    Map<String, dynamic> ContactToJson(Contact contact) {
+      return {
+        'identifier': contact.identifier,
+        'displayName': contact.displayName,
+        'givenName': contact.givenName,
+        'middleName': contact.middleName,
+        'prefix': contact.prefix,
+        'suffix': contact.suffix,
+        'familyName': contact.familyName,
+        'company': contact.company,
+        'jobTitle': contact.jobTitle,
+        'androidAccountTypeRaw': contact.androidAccountTypeRaw,
+        'androidAccountName': contact.androidAccountName,
+        'emails': contact.emails?.map((email) => ItemtoJson(email)).toList(),
+        'phones': contact.phones?.map((phone) => ItemtoJson(phone)).toList(),
+        'postalAddresses': contact.postalAddresses?.map((address) => AddresstoJson(address)).toList(),
+        'avatar': contact.avatar,
+        'birthday': contact.birthday?.toIso8601String(),
+        'androidAccountType': contact.androidAccountType?.toString(),
+      };
+    }
 
+
+
+
+    List<Map<String, dynamic>> myContactListToJson(List<Contact> contacts) {
+      return contacts.map((contact) => ContactToJson(contact)).toList();
+    }
+
+    Map<String, dynamic> data = {
+      "hashedPhone": hashedPhone,
+      "contacts": myContactListToJson(_contacts)
+    };
     try {
-      await repository.sendContacts(
-          hashedPhone(widget.mobileWOCC,widget.countryCode,), contacts );
+      await repository.sendContacts(data
+          // hashedPhone(widget.mobileWOCC,widget.countryCode,), _contacts
+          );
     } catch (error) {
       print("Error 1: $error");
     }
   }
 
-  List<CallLogEntry> _callLogs = [];
-
   Future<void> _fetchCallLogs() async {
     var status = await Permission.phone.request();
     if (status.isGranted) {
-      List<CallLogEntry> logs = await _getCallLogs();
+      List<CallLogEntry> logs = await getCallLogs();
       setState(() {
         _callLogs = logs;
         sendCallLogsData(_callLogs);
@@ -68,13 +113,7 @@ class _ImportScreenState extends State<ImportScreen> {
     }
   }
 
-  Future<List<CallLogEntry>> _getCallLogs() async {
-    Iterable<CallLogEntry> entries = await CallLog.get();
-    return entries.toList();
-  }
-
   void sendCallLogsData(List<CallLogEntry> _callLogs) async {
-
     Map<String, dynamic> callLogEntryToJson(CallLogEntry callLog) {
       return {
         'name': callLog.name ?? "",
@@ -92,12 +131,17 @@ class _ImportScreenState extends State<ImportScreen> {
     }
 
     List<Map<String, dynamic>> myCallListToJson(List<CallLogEntry> callLogs) {
-      return callLogs.map((callLog)
-      => callLogEntryToJson(callLog)).take(10).toList()
-      ;
+      return callLogs
+          .map((callLog) => callLogEntryToJson(callLog))
+          .take(10)
+          .toList();
     }
+
     var data = {
-      "hashedPhone": hashedPhone(widget.mobileWOCC,widget.countryCode,),
+      "hashedPhone": hashedPhone(
+        widget.mobileWOCC,
+        widget.countryCode,
+      ),
       "callLogs": myCallListToJson(_callLogs)
     };
     try {
