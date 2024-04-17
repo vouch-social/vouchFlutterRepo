@@ -16,13 +16,13 @@ Widget phoneInputField(model, context) {
       model.phoneNumberController1.text = number.dialCode!;
     },
     selectorTextStyle: TextStyle(
-      color: FlutterFlowTheme.of(context).primaryText,
+      color: FlutterFlowTheme.of(context).fixedBlack,
       fontSize: 22.w,
       fontWeight: FontWeight.w400,
       fontFamily: 'Bricolage Grotesque',
       backgroundColor: Colors.white,
     ),
-    cursorColor: FlutterFlowTheme.of(context).primaryBackground,
+    cursorColor: FlutterFlowTheme.of(context).primary,
     // scrollPadding: const EdgeInsets.all(20.0),
     initialValue: number,
     autoFocus: true,
@@ -38,7 +38,7 @@ Widget phoneInputField(model, context) {
       fontSize: 22.w,
       fontWeight: FontWeight.w400,
       fontFamily: 'Bricolage Grotesque',
-      color: FlutterFlowTheme.of(context).primaryBackground,
+      color: FlutterFlowTheme.of(context).primaryText,
     ),
     focusNode: model.phoneNumberFocusNode2,
     inputBorder: InputBorder.none,
@@ -48,20 +48,20 @@ Widget phoneInputField(model, context) {
         borderRadius: BorderRadius.all(Radius.circular(8.0.w)),
         borderSide: BorderSide(
             strokeAlign: BorderSide.strokeAlignCenter,
-            color: FlutterFlowTheme.of(context).containerBackground),
+            color: FlutterFlowTheme.of(context).textFieldBackground),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(8.0.w)),
         borderSide: BorderSide(
             strokeAlign: BorderSide.strokeAlignCenter,
-            color: FlutterFlowTheme.of(context).containerBackground),
+            color: FlutterFlowTheme.of(context).textFieldBackground),
       ),
       hintText: "Enter mobile number",
       hintStyle: TextStyle(
         fontSize: 18.w,
         fontWeight: FontWeight.w300,
         fontFamily: 'Bricolage Grotesque',
-        color: FlutterFlowTheme.of(context).primaryBackground.withAlpha(51),
+        color: FlutterFlowTheme.of(context).primaryText.withAlpha(51),
       ),
     ),
     autoValidateMode: AutovalidateMode.onUserInteraction,

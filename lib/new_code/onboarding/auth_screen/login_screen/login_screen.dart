@@ -69,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: Padding(
           padding: EdgeInsets.all(16.0.w),
           child: Column(
@@ -91,27 +91,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       AutoSizeText(
                         'Enter your',
                         textAlign: TextAlign.start,
-                        style: FlutterFlowTheme.of(context).titleLarge.override(
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              fontFamily: 'Bricolage Grotesque',
-                              fontSize: 32.0,
-                              fontWeight: FontWeight.w600,
-                              useGoogleFonts: false,
-                            ),
+                        style: FlutterFlowTheme.of(context).displaySmall
+                        ,
                         minFontSize: 16.0,
                       ),
                       AutoSizeText(
                         'Mobile Number',
                         textAlign: TextAlign.start,
-                        style: FlutterFlowTheme.of(context).titleLarge.override(
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              fontFamily: 'Bricolage Grotesque',
-                              fontSize: 32.0,
-                              fontWeight: FontWeight.w600,
-                              useGoogleFonts: false,
-                            ),
+                        style: FlutterFlowTheme.of(context).displayLarge,
                         minFontSize: 16.0,
                       ),
                       SizedBox(
@@ -120,14 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       AutoSizeText(
                         'OTP will be sent to your mobile number for \nverification',
                         textAlign: TextAlign.start,
-                        style: FlutterFlowTheme.of(context).titleLarge.override(
-                              fontFamily: 'Bricolage Grotesque',
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 14.0,
-                              useGoogleFonts: false,
-                            ),
+                        style: FlutterFlowTheme.of(context).titleSmall,
                       ),
                     ],
                   ),
@@ -142,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: EdgeInsets.all(8.0.w),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(8.0.w)),
-                        color: FlutterFlowTheme.of(context).containerBackground,
+                        color: FlutterFlowTheme.of(context).textFieldBackground,
                       ),
                     ),
                     Container(
@@ -202,24 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   },
                   text: 'Proceed OTP',
-                  options: FFButtonOptions(
-                    width: double.infinity,
-                    height: 64.0.h,
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 0.0, 0.0, 0.0),
-                    iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Bricolage Grotesque',
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          fontSize: 22.0.w,
-                          fontWeight: FontWeight.w500,
-                          useGoogleFonts: false,
-                        ),
-                    elevation: 3.0,
-                    borderRadius: BorderRadius.circular(12.0.w),
-                  ),
+                  options: CTAButton(context),
                 ),
               ),
             ],

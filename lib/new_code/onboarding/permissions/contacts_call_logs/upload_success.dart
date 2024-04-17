@@ -16,7 +16,7 @@ class _ContactUploadSuccessState extends State<ContactUploadSuccess> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(16.0.h),
@@ -32,7 +32,7 @@ class _ContactUploadSuccessState extends State<ContactUploadSuccess> {
                   height: 176.0.w,
                   width: 176.0.w,
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryBackground,
+                    color: FlutterFlowTheme.of(context).fixedWhite,
                     borderRadius: BorderRadius.circular(16.0),
                   ),
                   child: Center(
@@ -51,36 +51,18 @@ class _ContactUploadSuccessState extends State<ContactUploadSuccess> {
               ),
               AutoSizeText(
                 "Successful!",
-                style: FlutterFlowTheme.of(context).titleLarge.override(
-                      fontFamily: 'Bricolage Grotesque',
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.w500,
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                      useGoogleFonts: false,
-                    ),
+                style: FlutterFlowTheme.of(context).displayMedium,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AutoSizeText(
                     "1024 ",
-                    style: FlutterFlowTheme.of(context).titleLarge.override(
-                      fontFamily: 'Bricolage Grotesque',
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.w700,
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                      useGoogleFonts: false,
-                    ),
+                    style: FlutterFlowTheme.of(context).headlineLarge
                   ),
                       AutoSizeText(
                         "contacts imported",
-                        style: FlutterFlowTheme.of(context).titleLarge.override(
-                          fontFamily: 'Bricolage Grotesque',
-                          fontSize: 22.0,
-                          fontWeight: FontWeight.w500,
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          useGoogleFonts: false,
-                        ),
+                        style: FlutterFlowTheme.of(context).headlineMedium
                       ),
                 ],
               )

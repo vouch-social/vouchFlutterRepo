@@ -76,7 +76,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: Padding(
           padding: EdgeInsets.all(16.0.w),
           child: Column(
@@ -96,7 +96,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                       height: 176.0.w,
                       width: 176.0.w,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        color: FlutterFlowTheme.of(context).fixedWhite,
                         borderRadius: BorderRadius.circular(16.0),
                       ),
                       child: Center(
@@ -112,26 +112,14 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                   SizedBox(height: 224.0.h),
                   AutoSizeText(
                     'Contacts Permission',
-                    style: FlutterFlowTheme.of(context).titleLarge.override(
-                          fontFamily: 'Bricolage Grotesque',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.w600,
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          useGoogleFonts: false,
-                        ),
+                    style: FlutterFlowTheme.of(context).displayMedium,
                   ),
                   SizedBox(
                     height: 8.0.h,
                   ),
                   AutoSizeText(
                     'So that we can build your Vouch network',
-                    style: FlutterFlowTheme.of(context).labelMedium.override(
-                          fontFamily: 'Bricolage Grotesque',
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w400,
-                          useGoogleFonts: false,
-                        ),
+                    style: FlutterFlowTheme.of(context).titleSmall
                   ),
                   SizedBox(
                     height: 28.0.h,
@@ -141,7 +129,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                     children: [
                       Icon(
                         Icons.check,
-                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        color: FlutterFlowTheme.of(context).primaryText,
                         size: 18.0,
                       ),
                       SizedBox(
@@ -149,14 +137,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                       ),
                       AutoSizeText(
                         'All phone book data is encrypted',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Bricolage Grotesque',
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.w400,
-                              useGoogleFonts: false,
-                            ),
+                        style: FlutterFlowTheme.of(context).labelSmall
                       ),
                     ],
                   ),
@@ -168,7 +149,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                     children: [
                       Icon(
                         Icons.check,
-                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        color: FlutterFlowTheme.of(context).primaryText,
                         size: 18.0,
                       ),
                       SizedBox(
@@ -176,14 +157,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                       ),
                       AutoSizeText(
                         'We will never store your contacts details',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Bricolage Grotesque',
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.w400,
-                              useGoogleFonts: false,
-                            ),
+                        style: FlutterFlowTheme.of(context).labelSmall,
                       ),
                     ],
                   ),
@@ -207,25 +181,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                       Get.to(() => ImportScreen(mobileWOCC: widget.mobileWOCC,countryCode: widget.countryCode,));
                     },
                     text: 'Start building network',
-                    options: FFButtonOptions(
-                      width: double.infinity,
-                      height: 64.0.h,
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                      textStyle:
-                          FlutterFlowTheme.of(context).titleSmall.override(
-                                fontFamily: 'Bricolage Grotesque',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                fontSize: 22.0,
-                                fontWeight: FontWeight.w500,
-                                useGoogleFonts: false,
-                              ),
-                      elevation: 3.0,
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
+                    options: CTAButton(context)
                   ),
                   SizedBox(
                     height: 16.0.h,
@@ -241,14 +197,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                       ),
                       AutoSizeText(
                         '256 bit encrypted',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                              fontFamily: 'Bricolage Grotesque',
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w500,
-                              useGoogleFonts: false,
-                            ),
+                        style: FlutterFlowTheme.of(context).labelExtraSmall
                       ),
                     ],
                   ),

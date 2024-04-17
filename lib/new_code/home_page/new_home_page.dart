@@ -67,7 +67,7 @@ class _NewHomePageState extends State<NewHomePage> {
                       height: 44.h,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30.0.w),
-                          color: FlutterFlowTheme.of(context).accent5),
+                          color: FlutterFlowTheme.of(context).accent4),
                       child: Padding(
                         padding: EdgeInsets.all(12.w),
                         child: vector(Assets.assetsUserIcon,
@@ -479,7 +479,7 @@ class RemindersListView extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(
-                            color: FlutterFlowTheme.of(context).tertiary2,
+                            color: FlutterFlowTheme.of(context).fixedWhite,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w400,
                             fontFamily: 'Bricolage Grotesque',
@@ -519,7 +519,7 @@ class RemindersListView extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                               style: TextStyle(
-                                color: FlutterFlowTheme.of(context).tertiary1,
+                                color: FlutterFlowTheme.of(context).fixedBlack,
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w400,
                                 fontFamily: 'Bricolage Grotesque',
@@ -531,7 +531,7 @@ class RemindersListView extends StatelessWidget {
                         GestureDetector(
                           child: Icon(
                             Icons.arrow_forward_ios,
-                            color: FlutterFlowTheme.of(context).tertiary1,
+                            color: FlutterFlowTheme.of(context).fixedBlack,
                           ),
                         ),
                       ],

@@ -114,7 +114,7 @@ class _ImportScreenState extends State<ImportScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(16.0.h),
@@ -153,14 +153,7 @@ class _ImportScreenState extends State<ImportScreen> {
                     SizedBox(height: 48.0.h),
                     AutoSizeText(
                       'Importing Contacts',
-                      style: FlutterFlowTheme.of(context).titleLarge.override(
-                            fontFamily: 'Bricolage Grotesque',
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.w600,
-                            color:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            useGoogleFonts: false,
-                          ),
+                      style: FlutterFlowTheme.of(context).displayMedium
                     ),
                     SizedBox(
                       height: 8.0.h,
@@ -168,14 +161,7 @@ class _ImportScreenState extends State<ImportScreen> {
                     AutoSizeText(
                       textAlign: TextAlign.center,
                       'Your contacts are safe & we will never store\nphone number information of any\n of your contacts',
-                      style: FlutterFlowTheme.of(context).labelMedium.override(
-                            fontFamily: 'Bricolage Grotesque',
-                            color:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.w400,
-                            useGoogleFonts: false,
-                          ),
+                      style: FlutterFlowTheme.of(context).titleSmall,
                     ),
                   ],
                 ),

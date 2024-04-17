@@ -11,9 +11,6 @@ import '../../../flutter_flow/flutter_flow_util.dart';
 import '../../../flutter_flow/flutter_flow_widgets.dart';
 import '../auth_screen/login_screen/login_screen.dart';
 
-
-
-
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
 
@@ -71,7 +68,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -103,14 +100,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     'Welcome to',
                     textAlign: TextAlign.center,
                     style: FlutterFlowTheme.of(context)
-                        .welcomeTitle1,
+                        .welcomeTitleNormal,
                     minFontSize: 16.0,
                   ),
                 AutoSizeText(
                     'Vouch',
                     textAlign: TextAlign.center,
                     style: FlutterFlowTheme.of(context)
-                        .welcomeTitle2,
+                        .welcomeTitleBold
+                  ,
                     minFontSize: 16.0,
                   ),
                 SizedBox(height: 24.h,),
@@ -118,7 +116,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   children: [
                     Icon(
                       Icons.check,
-                      color: FlutterFlowTheme.of(context).secondaryText,
+                      color: FlutterFlowTheme.of(context).primaryText,
                       size: 18.0.w,
                     ),
                     SizedBox(width: 8.0.w,),
@@ -126,15 +124,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       child: AutoSizeText(
                         'Search the world for people you want to connect',
                         style: FlutterFlowTheme.of(context)
-                            .bodyMedium
-                            .override(
-                          fontFamily: 'Bricolage Grotesque',
-                          color: FlutterFlowTheme.of(context)
-                              .primaryBackground,
-                          fontSize: 14.0.w,
-                          fontWeight: FontWeight.w400,
-                          useGoogleFonts: false,
-                        ),
+                            .bodySmall
+
                       ),
                     ),
                   ],
@@ -145,7 +136,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   children: [
                     Icon(
                       Icons.check,
-                      color: FlutterFlowTheme.of(context).secondaryText,
+                      color: FlutterFlowTheme.of(context).primaryText,
                       size: 18.0.w,
                     ),
                     SizedBox(width: 8.0.w,),
@@ -154,15 +145,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         'Discover new friends, and uncover new \nconnection paths',
                         textAlign: TextAlign.start,
                         style: FlutterFlowTheme.of(context)
-                            .bodyMedium
-                            .override(
-                          fontFamily: 'Bricolage Grotesque',
-                          color: FlutterFlowTheme.of(context)
-                              .primaryBackground,
-                          fontSize: 14.0.w,
-                          fontWeight: FontWeight.w400,
-                          useGoogleFonts: false,
-                        ),
+                            .bodySmall
                       ),
                     ),
                   ],
@@ -172,7 +155,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   children: [
                     Icon(
                       Icons.check,
-                      color: FlutterFlowTheme.of(context).secondaryText,
+                      color: FlutterFlowTheme.of(context).primaryText,
                       size: 18.0.w,
                     ),
                     SizedBox(width: 8.0.w,),
@@ -180,15 +163,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       child: AutoSizeText(
                         'Know your network, Grow your network!',
                         style: FlutterFlowTheme.of(context)
-                            .bodyMedium
-                            .override(
-                          fontFamily: 'Bricolage Grotesque',
-                          color: FlutterFlowTheme.of(context)
-                              .primaryBackground,
-                          fontSize: 14.0.w,
-                          fontWeight: FontWeight.w400,
-                          useGoogleFonts: false,
-                        ),
+                            .bodySmall
                       ),
                     ),
                   ],
@@ -206,19 +181,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         Get.to(()=> const LoginScreen());
                       },
                       text: 'Get Started',
-                      options: FFButtonOptions(
-                        width: double.infinity,
-                        height: 64.0,
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            1.0, 0.0, 0.0, 0.0),
-                        iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 0.0, 0.0),
-                        color:
-                        FlutterFlowTheme.of(context).primaryBackground,
-                        textStyle: FlutterFlowTheme.of(context).titleLarge,
-                        elevation: 3.0,
-                        borderRadius: BorderRadius.circular(12.0.w),
-                      ),
+                      options: CTAButton(context),
                     ),
                   ),
                 ),

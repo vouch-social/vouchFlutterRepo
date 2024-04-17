@@ -1,6 +1,9 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+
+import 'flutter_flow_theme.dart';
 
 class FFButtonOptions {
   const FFButtonOptions({
@@ -270,6 +273,18 @@ extension _WithoutColorExtension on TextStyle {
         // package: _package,
         overflow: overflow,
       );
+}
+
+FFButtonOptions CTAButton(context){
+  return
+    FFButtonOptions(
+      width: double.infinity,
+      height: 64.0.w,
+      color: FlutterFlowTheme.of(context).ffButton,
+      textStyle: FlutterFlowTheme.of(context).titleLarge,
+      elevation: 3.0,
+      borderRadius: BorderRadius.circular(12.0.w),
+    );
 }
 
 // Slightly hacky method of getting the layout width of the provided text.

@@ -23,7 +23,7 @@ class _LinkdinScreenState extends State<LinkdinScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: Padding(
         padding: EdgeInsets.all(16.0.w),
         child: Column(
@@ -43,7 +43,7 @@ class _LinkdinScreenState extends State<LinkdinScreen> {
                       height: 176.0.w,
                       width: 176.0.w,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        color: FlutterFlowTheme.of(context).fixedWhite,
                         borderRadius: BorderRadius.circular(16.0),
                       ),
 
@@ -52,26 +52,14 @@ class _LinkdinScreenState extends State<LinkdinScreen> {
                 SizedBox(height: 220.0.h),
                 AutoSizeText(
                   'LinkedIn Sync',
-                  style: FlutterFlowTheme.of(context).titleLarge.override(
-                    fontFamily: 'Bricolage Grotesque',
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.w600,
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                    useGoogleFonts: false,
-                  ),
+                  style: FlutterFlowTheme.of(context).displayMedium
                 ),
                 SizedBox(
                   height: 8.0.h,
                 ),
                 AutoSizeText(
                   'Link your Linkedin for a smarter Vouch\nexperience',
-                  style: FlutterFlowTheme.of(context).labelMedium.override(
-                    fontFamily: 'Bricolage Grotesque',
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w400,
-                    useGoogleFonts: false,
-                  ),
+                  style: FlutterFlowTheme.of(context).titleSmall
                 ),
                 SizedBox(
                   height: 12.0.h,
@@ -81,7 +69,7 @@ class _LinkdinScreenState extends State<LinkdinScreen> {
                   children: [
                     Icon(
                       Icons.check,
-                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      color: FlutterFlowTheme.of(context).primaryText,
                       size: 18.0,
                     ),
                     SizedBox(
@@ -89,14 +77,7 @@ class _LinkdinScreenState extends State<LinkdinScreen> {
                     ),
                     AutoSizeText(
                       'Well use your Linkedin photo, name, and email',
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        fontFamily: 'Bricolage Grotesque',
-                        color: FlutterFlowTheme.of(context)
-                            .primaryBackground,
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w400,
-                        useGoogleFonts: false,
-                      ),
+                      style: FlutterFlowTheme.of(context).labelSmall
                     ),
                   ],
                 ),
@@ -108,7 +89,7 @@ class _LinkdinScreenState extends State<LinkdinScreen> {
                   children: [
                     Icon(
                       Icons.check,
-                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      color: FlutterFlowTheme.of(context).primaryText,
                       size: 18.0,
                     ),
                     SizedBox(
@@ -116,14 +97,7 @@ class _LinkdinScreenState extends State<LinkdinScreen> {
                     ),
                     AutoSizeText(
                       'Your background sharpens our search accuracy',
-                      style: FlutterFlowTheme.of(context).bodyMedium.override(
-                        fontFamily: 'Bricolage Grotesque',
-                        color: FlutterFlowTheme.of(context)
-                            .primaryBackground,
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w400,
-                        useGoogleFonts: false,
-                      ),
+                      style: FlutterFlowTheme.of(context).labelSmall
                     ),
                   ],
                 ),
@@ -145,25 +119,7 @@ class _LinkdinScreenState extends State<LinkdinScreen> {
                     Get.to(() => LinkedinWidget());
                   },
                   text: 'Sync Linkedin',
-                  options: FFButtonOptions(
-                    width: double.infinity,
-                    height: 64.0.h,
-                    padding:
-                    const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    iconPadding:
-                    const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                    textStyle:
-                    FlutterFlowTheme.of(context).titleSmall.override(
-                      fontFamily: 'Bricolage Grotesque',
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.w500,
-                      useGoogleFonts: false,
-                    ),
-                    elevation: 3.0,
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
+                  options: CTAButton(context)
                 ),
                 SizedBox(
                   height: 16.0.h,
@@ -171,15 +127,7 @@ class _LinkdinScreenState extends State<LinkdinScreen> {
                     Center(
                       child: AutoSizeText(
                         'I want to customise profile my self',
-                        style: FlutterFlowTheme.of(context).bodyMedium.override(
-                          fontFamily: 'Bricolage Grotesque',
-                          color: FlutterFlowTheme.of(context)
-                              .primaryBackground,
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.w500,
-                          decoration: TextDecoration.underline,
-                          useGoogleFonts: false,
-                        ),
+                        style: FlutterFlowTheme.of(context).labelExtraSmall
                       ),
                     ),
 

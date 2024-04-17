@@ -60,7 +60,7 @@ class _OtpScreenState extends State<OtpScreen> {
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: Padding(
           padding:  EdgeInsets.all(16.0.w),
           child: Column(
@@ -79,27 +79,13 @@ class _OtpScreenState extends State<OtpScreen> {
                   AutoSizeText(
                     'Enter OTP sent to',
                     textAlign: TextAlign.start,
-                    style: FlutterFlowTheme.of(context).titleLarge.override(
-                      color: FlutterFlowTheme.of(context)
-                          .primaryBackground,
-                      fontFamily: 'Bricolage Grotesque',
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.w400,
-                      useGoogleFonts: false,
-                    ),
+                    style: FlutterFlowTheme.of(context).displaySmall,
                 minFontSize: 16.0,
                   ),
                   AutoSizeText(
                     '${widget.countryCode}-${widget.mobileWOCC}',
                     textAlign: TextAlign.start,
-                    style: FlutterFlowTheme.of(context).titleLarge.override(
-                      color: FlutterFlowTheme.of(context)
-                          .primaryBackground,
-                      fontFamily: 'Bricolage Grotesque',
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.w700,
-                      useGoogleFonts: false,
-                    ),
+                    style: FlutterFlowTheme.of(context).displayLarge,
                     minFontSize: 16.0,
                   ),
                 ],
@@ -120,7 +106,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           .override(
                         fontFamily: 'Bricolage Grotesque',
                         color:
-                        FlutterFlowTheme.of(context).primaryBackground,
+                        FlutterFlowTheme.of(context).primaryText,
                         useGoogleFonts: false,
                       ),
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -130,11 +116,11 @@ class _OtpScreenState extends State<OtpScreen> {
                       errorTextSpace: 12.0.w,
                       showCursor: true,
                       cursorColor:
-                      FlutterFlowTheme.of(context).primaryBackground,
+                      FlutterFlowTheme.of(context).primaryText.withAlpha(51),
                       obscureText: false,
                       hintCharacter: 'x',
                       hintStyle: TextStyle(
-                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        color: FlutterFlowTheme.of(context).primaryText.withAlpha(51),
                         fontSize: 18.0.w,
                         fontFamily: 'Bricolage Grotesque',
                         fontWeight: FontWeight.w600,
@@ -146,13 +132,13 @@ class _OtpScreenState extends State<OtpScreen> {
                         borderWidth: 0.0,
                         borderRadius:  BorderRadius.circular(8.0.w),
                         shape: PinCodeFieldShape.box,
-                        activeColor: FlutterFlowTheme.of(context).containerBackground,
-                        inactiveColor: FlutterFlowTheme.of(context).containerBackground,
-                        selectedColor: FlutterFlowTheme.of(context).containerBackground,
-                        activeFillColor: FlutterFlowTheme.of(context).containerBackground,
-                        inactiveFillColor: FlutterFlowTheme.of(context).containerBackground,
+                        activeColor: FlutterFlowTheme.of(context).textFieldBackground,
+                        inactiveColor: FlutterFlowTheme.of(context).textFieldBackground,
+                        selectedColor: FlutterFlowTheme.of(context).textFieldBackground,
+                        activeFillColor: FlutterFlowTheme.of(context).textFieldBackground,
+                        inactiveFillColor: FlutterFlowTheme.of(context).textFieldBackground,
                         selectedFillColor:
-                        FlutterFlowTheme.of(context).containerBackground,
+                        FlutterFlowTheme.of(context).textFieldBackground,
                       ),
                       controller: _model.pinCodeController,
                       onChanged: (_) {},
@@ -352,23 +338,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     //context.goNamedAuth('Permissions', context.mounted);
                   },
                   text: 'Submit OTP',
-                  options: FFButtonOptions(
-                    width: double.infinity,
-                    height: 64.0.h,
-                    padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    iconPadding:
-                    const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                    textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                      fontFamily: 'Bricolage Grotesque',
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      fontSize: 22.0.h,
-                      fontWeight: FontWeight.w500,
-                      useGoogleFonts: false,
-                    ),
-                    elevation: 3.0,
-                    borderRadius: BorderRadius.circular(12.0.w),
-                  ),
+                  options: CTAButton(context),
                 ),
               ),
             ],

@@ -229,7 +229,7 @@ class _GoalsScreenState extends State<GoalsScreen> with TickerProviderStateMixin
                         useGoogleFonts: false,
                       ),
                     ),
-                    backgroundColor: FlutterFlowTheme.of(context).containerBackground,
+                    backgroundColor: FlutterFlowTheme.of(context).textFieldBackground,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                       side: BorderSide.none,
@@ -248,7 +248,7 @@ class _GoalsScreenState extends State<GoalsScreen> with TickerProviderStateMixin
                           useGoogleFonts: false,
                         ),
                       ),
-                      backgroundColor: FlutterFlowTheme.of(context).containerBackground,
+                      backgroundColor: FlutterFlowTheme.of(context).textFieldBackground,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                         side: BorderSide.none,
@@ -269,7 +269,7 @@ class _GoalsScreenState extends State<GoalsScreen> with TickerProviderStateMixin
                         useGoogleFonts: false,
                       ),
                     ),
-                    backgroundColor: FlutterFlowTheme.of(context).containerBackground,
+                    backgroundColor: FlutterFlowTheme.of(context).textFieldBackground,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                       side: BorderSide.none,
@@ -288,7 +288,7 @@ class _GoalsScreenState extends State<GoalsScreen> with TickerProviderStateMixin
                         useGoogleFonts: false,
                       ),
                     ),
-                    backgroundColor: FlutterFlowTheme.of(context).containerBackground,
+                    backgroundColor: FlutterFlowTheme.of(context).textFieldBackground,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                       side: BorderSide.none,
@@ -307,7 +307,7 @@ class _GoalsScreenState extends State<GoalsScreen> with TickerProviderStateMixin
                         useGoogleFonts: false,
                       ),
                     ),
-                    backgroundColor: FlutterFlowTheme.of(context).containerBackground,
+                    backgroundColor: FlutterFlowTheme.of(context).textFieldBackground,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                       side: BorderSide.none,
@@ -328,7 +328,7 @@ class _GoalsScreenState extends State<GoalsScreen> with TickerProviderStateMixin
                         useGoogleFonts: false,
                       ),
                     ),
-                    backgroundColor: FlutterFlowTheme.of(context).containerBackground,
+                    backgroundColor: FlutterFlowTheme.of(context).textFieldBackground,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                       side: BorderSide.none,
@@ -347,7 +347,7 @@ class _GoalsScreenState extends State<GoalsScreen> with TickerProviderStateMixin
                         useGoogleFonts: false,
                       ),
                     ),
-                    backgroundColor: FlutterFlowTheme.of(context).containerBackground,
+                    backgroundColor: FlutterFlowTheme.of(context).textFieldBackground,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(28.0),
                       side: BorderSide.none,
