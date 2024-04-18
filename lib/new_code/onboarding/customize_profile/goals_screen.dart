@@ -2,13 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
-import 'package:vouch/new_code/home_page/new_home_page.dart';
-
-import '../../../backend/firebase_analytics/analytics.dart';
-import '../../../final_design/onboarding/linkedin/linkedin_widget.dart';
 import '../../../flutter_flow/flutter_flow_widgets.dart';
+import 'goals_controller.dart';
 
 class GoalsScreen extends StatefulWidget {
   const GoalsScreen({super.key});
@@ -17,13 +13,20 @@ class GoalsScreen extends StatefulWidget {
   State<GoalsScreen> createState() => _GoalsScreenState();
 }
 
-class _GoalsScreenState extends State<GoalsScreen> with TickerProviderStateMixin {
+class _GoalsScreenState extends State<GoalsScreen>
+    with TickerProviderStateMixin {
+  // final controller = Get.put(GoalsController());
+  late List<TextEditingController> controllers;
   late TabController _tabController;
+  int _currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
+    controllers = List.generate(3, (index) => TextEditingController());
+
     _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(_handleTabSelection);
   }
 
   @override
@@ -32,370 +35,201 @@ class _GoalsScreenState extends State<GoalsScreen> with TickerProviderStateMixin
     super.dispose();
   }
 
+  void _handleTabSelection() {
+    setState(() {
+      _currentIndex = _tabController.index;
+    });
+  }
 
+  void _handleChipSelection(String text) {
+    setState(() {
+      controllers[_currentIndex].text = text;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
-        child: Padding(
-          padding:  EdgeInsets.all(16.0.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 64.0.h,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(16.0.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 64.0.h,
+                  ),
+                  AutoSizeText('Set your goal',
+                      style: FlutterFlowTheme.of(context).displayMedium),
+                  SizedBox(
+                    height: 8.0.h,
+                  ),
+                  AutoSizeText(
+                      'Please set at least 3 goals. You will have the\nability to edit your choices at any point.',
+                      style: FlutterFlowTheme.of(context).titleSmall),
+                  SizedBox(
+                    height: 16.0.h,
+                  ),
+                ],
               ),
-              AutoSizeText(
-                'Hey Nirant',
-                style: FlutterFlowTheme.of(context).titleLarge.override(
-                  fontFamily: 'Bricolage Grotesque',
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.w400,
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  useGoogleFonts: false,
+            ),
+            TabBar(
+              controller: _tabController,
+              indicatorColor: Colors.transparent,
+              automaticIndicatorColorAdjustment: false,
+              padding: EdgeInsets.all(16.0.w),
+              labelPadding: EdgeInsets.zero,
+              tabs: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.0.w),
+                    color: _currentIndex >= 0
+                        ? FlutterFlowTheme.of(context).ffButton
+                        : FlutterFlowTheme.of(context).ffButton.withAlpha(51),
+                  ),
+                  margin: EdgeInsets.only(right: 6.0.w),
+                  height: 4,
                 ),
-              ),
-              AutoSizeText(
-                'good morning,',
-                style: FlutterFlowTheme.of(context).titleLarge.override(
-                  fontFamily: 'Bricolage Grotesque',
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.w600,
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  useGoogleFonts: false,
+                Container(
+                  margin: EdgeInsets.only(right: 2.0.w, left: 2.0.w),
+                  height: 4,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.0.w),
+                      color: _currentIndex >= 1
+                          ? FlutterFlowTheme.of(context).ffButton
+                          : FlutterFlowTheme.of(context)
+                              .ffButton
+                              .withAlpha(51)),
                 ),
-              ),
-              SizedBox(
-                height: 24.0.h,
-              ),
-              AutoSizeText(
-                'Set your goal',
-                style: FlutterFlowTheme.of(context).titleLarge.override(
-                  fontFamily: 'Bricolage Grotesque',
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.w600,
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  useGoogleFonts: false,
+                Container(
+                  margin: EdgeInsets.only(left: 6.0.w),
+                  height: 4,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.0.w),
+                    color: _currentIndex >= 2
+                        ? FlutterFlowTheme.of(context).ffButton
+                        : FlutterFlowTheme.of(context).ffButton.withAlpha(51),
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 8.0.h,
-              ),
-              AutoSizeText(
-                'Please set at least 3 goals. You will have the\nability to edit your choices at any point.',
-                style: FlutterFlowTheme.of(context).titleLarge.override(
-                  fontFamily: 'Bricolage Grotesque',
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w400,
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  useGoogleFonts: false,
-                ),
-              ),
-              SizedBox(
-                height: 16.0.h,
-              ),
-          // Container(
-          //   decoration: BoxDecoration(
-          //     borderRadius: BorderRadius.circular(8.0.w),
-          //     border: Border.all(),// Border radius
-          //   ),
-          //   child: TextField(
-          //     minLines: 3,
-          //     maxLines: 5,
-          //     decoration: InputDecoration(
-          //       filled: true,
-          //       fillColor: Color(0xFFEBF2F4),
-          //       contentPadding: EdgeInsets.all(12.0.w),
-          //       hintText: 'Type here...',
-          //       hintStyle: TextStyle(
-          //         fontFamily: 'Bricolage Grotesque',
-          //         color: FlutterFlowTheme.of(context).primaryText,
-          //         fontWeight: FontWeight.w300,
-          //         fontSize: 14.0,
-          //       ),
-          //       border: OutlineInputBorder(
-          //         borderRadius: BorderRadius.circular(8.0.w),
-          //         borderSide: BorderSide.none
-          //       )
-          //     ),
-          //   ),
-          // ),
-              TabBar(
+              ],
+              indicatorSize: TabBarIndicatorSize.tab,
+            ),
+            Expanded(
+              child: TabBarView(
+                physics: const BouncingScrollPhysics(),
                 controller: _tabController,
-                //indicatorColor: Colors.yellow,
-                unselectedLabelColor: Colors.blue,
-                tabs: [
-                  Container(
-                   decoration:  BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                     color: Colors.red
-                    ),
-                  ),
-                  Container(height: 4,
-                    width: 140,decoration:  BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0)
-                    ),),
-                  Container(height: 4,
-                    width: 140,decoration:  BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0)
-                    ),),
-                ],
-                indicatorWeight: .50,
-                // indicator: BoxDecoration(
-                //   //color: Colors.yellow,
-                //     borderRadius: BorderRadius.circular(8.0)
-                // ),
-                labelColor: Colors.red,
-              ),
-              Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8.0),
-                      child:
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0.w),
-                          border: Border.all(),// Border radius
-                        ),
-                        child: TextField(
-                          minLines: 3,
-                          maxLines: 5,
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Color(0xFFEBF2F4),
-                            contentPadding: EdgeInsets.all(12.0.w),
-                            hintText: 'Type here...',
-                            hintStyle: TextStyle(
-                              fontFamily: 'Bricolage Grotesque',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              fontWeight: FontWeight.w300,
-                              fontSize: 14.0,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0.w),
-                              borderSide: BorderSide.none
-                            )
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        // Replace this with content for Tab 2
-                        child: Text('Tab 2 Content'),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        // Replace this with content for Tab 3
-                        child: Text('Tab 3 Content'),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 16.0.h,
-              ),
-              AutoSizeText(
-                'Example:',
-                style: FlutterFlowTheme.of(context).titleLarge.override(
-                  fontFamily: 'Bricolage Grotesque',
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w400,
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  useGoogleFonts: false,
-                ),
-              ),
-              SizedBox(
-                height: 8.0.h,
-              ),
-              Row(
                 children: [
-                  Chip(
-                    label: AutoSizeText('I want to buy a 2nd car',
-                      style: FlutterFlowTheme.of(context).titleLarge.override(
-                        fontFamily: 'Bricolage Grotesque',
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w400,
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                        useGoogleFonts: false,
-                      ),
-                    ),
-                    backgroundColor: FlutterFlowTheme.of(context).textFieldBackground,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                      side: BorderSide.none,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 8.0.h,
-                  ),
-                    Chip(
-                      label: AutoSizeText('Find Math tutor',
-                        style: FlutterFlowTheme.of(context).titleLarge.override(
-                          fontFamily: 'Bricolage Grotesque',
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.w400,
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          useGoogleFonts: false,
-                        ),
-                      ),
-                      backgroundColor: FlutterFlowTheme.of(context).textFieldBackground,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        side: BorderSide.none,
-                      ),
-                    ),
-                  ],
-                  ),
-
-              Row(
-                children: [
-                  Chip(
-                    label: AutoSizeText('Pet boarding services',
-                      style: FlutterFlowTheme.of(context).titleLarge.override(
-                        fontFamily: 'Bricolage Grotesque',
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w400,
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                        useGoogleFonts: false,
-                      ),
-                    ),
-                    backgroundColor: FlutterFlowTheme.of(context).textFieldBackground,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                      side: BorderSide.none,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 8.0.h,
-                  ),
-                  Chip(
-                    label: AutoSizeText('Macbook reseller',
-                      style: FlutterFlowTheme.of(context).titleLarge.override(
-                        fontFamily: 'Bricolage Grotesque',
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w400,
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                        useGoogleFonts: false,
-                      ),
-                    ),
-                    backgroundColor: FlutterFlowTheme.of(context).textFieldBackground,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                      side: BorderSide.none,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 8.0.h,
-                  ),
-                  Chip(
-                    label: AutoSizeText('Home',
-                      style: FlutterFlowTheme.of(context).titleLarge.override(
-                        fontFamily: 'Bricolage Grotesque',
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w400,
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                        useGoogleFonts: false,
-                      ),
-                    ),
-                    backgroundColor: FlutterFlowTheme.of(context).textFieldBackground,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                      side: BorderSide.none,
-                    ),
-                  ),
+                  _tab(_currentIndex, context),
+                  _tab(_currentIndex, context),
+                  _tab(_currentIndex, context),
                 ],
               ),
-
-              Row(
-                children: [
-                  Chip(
-                    label: AutoSizeText('Ux designer jobs in bangalore',
-                      style: FlutterFlowTheme.of(context).titleLarge.override(
-                        fontFamily: 'Bricolage Grotesque',
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w400,
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                        useGoogleFonts: false,
-                      ),
-                    ),
-                    backgroundColor: FlutterFlowTheme.of(context).textFieldBackground,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                      side: BorderSide.none,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 8.0.h,
-                  ),
-                  Chip(
-                    label: AutoSizeText('Mobile repair services',
-                      style: FlutterFlowTheme.of(context).titleLarge.override(
-                        fontFamily: 'Bricolage Grotesque',
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w400,
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                        useGoogleFonts: false,
-                      ),
-                    ),
-                    backgroundColor: FlutterFlowTheme.of(context).textFieldBackground,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(28.0),
-                      side: BorderSide.none,
-                    ),
-                  ),
-                ],
-              ),
-
-              const Spacer(),
-              FFButtonWidget(
-                onPressed: () async {
-                  // logFirebaseEvent(
-                  //     'PERMISSIONS_START_BUILDING_NETWORK_BTN_O');
-                  // logFirebaseEvent('Button_request_permissions');
-                  // logFirebaseEvent('Button_navigate_to');
-                  if (_tabController.index < 2) {
-                    _tabController.animateTo(_tabController.index + 1);
-                  }
-                  
-                },
-                text: 'Next',
-                options: FFButtonOptions(
-                  width: double.infinity,
-                  height: 64.0.h,
-                  padding:
-                  const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  iconPadding:
-                  const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                  textStyle:
-                  FlutterFlowTheme.of(context).titleSmall.override(
-                    fontFamily: 'Bricolage Grotesque',
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.w500,
-                    useGoogleFonts: false,
-                  ),
-                  elevation: 3.0,
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-              ),
-              SizedBox(
-                height: 28.0.h,
-              )
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  Widget _tab(_currentIndex, context) {
+    return Container(
+      padding: EdgeInsets.all(16.0.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 16.0.h,
+          ),
+          AutoSizeText("Type your Goal 0${_currentIndex + 1}",
+              style: FlutterFlowTheme.of(context).titleLarge),
+          SizedBox(height: 12.0.h),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.0.w),
+              // Border radius
+            ),
+            child: TextFormField(
+              controller: controllers[_currentIndex],
+              minLines: 3,
+              maxLines: 5,
+              style: FlutterFlowTheme.of(context).labelSmall,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: FlutterFlowTheme.of(context).textFieldBackground,
+                contentPadding: EdgeInsets.all(12.0.w),
+                hintText: "Type here...",
+                hintStyle: FlutterFlowTheme.of(context).labelSmall,
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0.w),
+                    borderSide: BorderSide.none),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 16.0.h,
+          ),
+          AutoSizeText('Example:',
+              style: FlutterFlowTheme.of(context).titleSmall),
+          SizedBox(
+            height: 8.0.h,
+          ),
+          Wrap(
+            spacing: 8.0,
+            children: [
+              _buildChip('I want to buy a 2nd car'),
+              _buildChip('I want to sdfgfd buy a 2nd car'),
+              _buildChip('I buy a 2nd car'),
+              _buildChip('I want to buy car'),
+              _buildChip('Find Math tutor'),
+            ],
+          ),
+          const Spacer(),
+          FFButtonWidget(
+              onPressed: () async {
+                if (_tabController.index < 2) {
+                  _tabController.animateTo(_tabController.index + 1);
+                }
+              },
+              text: _currentIndex == 2 ? 'Finish' : 'Next',
+              options: CTAButton(context)),
+          SizedBox(
+            height: 16.0.h,
+          ),
+          Center(
+            child: GestureDetector(
+              onTap: () {},
+              child: AutoSizeText(
+                "Skip for now",
+                style: FlutterFlowTheme.of(context).labelExtraSmall,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildChip(String label) {
+    return GestureDetector(
+      onTap: () {
+        _handleChipSelection(label);
+      },
+      child: Chip(
+        // color: MaterialStateProperty.all(FlutterFlowTheme.of(context).textFieldBackground),
+        backgroundColor:
+        MediaQuery.of(context).platformBrightness == Brightness.dark ?
+        
+        FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9):
+        FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
+        label: AutoSizeText(label,
+
+            style: FlutterFlowTheme.of(context).labelExtraSmall,
+      ),
+    ),);
   }
 }

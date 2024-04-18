@@ -117,6 +117,7 @@ abstract class FlutterFlowTheme {
   String get welcomeTitleFamily => typography.welcomeTitleFamily;
   TextStyle get welcomeTitleNormal => typography.welcomeTitleNormal;
   TextStyle get welcomeTitleBold => typography.welcomeTitleBold;
+  TextStyle get buttonText => typography.buttonText;
 
   Typography get typography => ThemeTypography(this);
 }
@@ -137,7 +138,7 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color secondaryText = const Color(0xFFFAFEFF);
   late Color primaryBackground = const Color(0xFFFAFEFF);
   late Color secondaryBackground = const Color(0xFF003943);
-  late Color textFieldBackground = const Color(0xFFf3f3f2);
+  late Color textFieldBackground = const Color(0x19003943);
   late Color ffButton = const Color(0xFF2F8FA9);
   late Color accent1 = const Color(0xFFD7EFE9);
   late Color accent2 = const Color(0xFFE5EBEC);
@@ -174,7 +175,9 @@ class DarkModeTheme extends FlutterFlowTheme {
   late Color secondaryText = const Color(0xFF003943);
   late Color primaryBackground = const Color(0xFF003943);
   late Color secondaryBackground = const Color(0xFFFAFEFF);
-  late Color textFieldBackground = const Color(0xFF153C47);
+  late Color textFieldBackground = const Color(0x19FAFEFF);
+
+  // late Color textFieldBackground = const Color(0xFFFF0000);
   late Color ffButton = const Color(0xFFFAFEFF);
   late Color accent1 = const Color(0xFFD7EFE9);
   late Color accent2 = const Color(0xFFE5EBEC);
@@ -234,6 +237,8 @@ abstract class Typography {
   String get welcomeTitleFamily;
   TextStyle get welcomeTitleNormal;
   TextStyle get welcomeTitleBold;
+
+  TextStyle get buttonText;
 }
 
 class ThemeTypography extends Typography {
@@ -270,34 +275,35 @@ class ThemeTypography extends Typography {
         fontSize: 22.0,
       );
   String get headlineMediumFamily => 'Bricolage Grotesque';
-  TextStyle get headlineMedium =>  TextStyle(
+  TextStyle get headlineMedium => TextStyle(
         fontFamily: 'Bricolage Grotesque',
-    color: theme.primaryText,
+        color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 22.0,
       );
   String get headlineSmallFamily => 'Bricolage Grotesque';
-  TextStyle get headlineSmall =>  TextStyle(
+  TextStyle get headlineSmall => TextStyle(
         fontFamily: 'Bricolage Grotesque',
-    color: theme.primaryText,
+        color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 22.0,
       );
   String get titleLargeFamily => 'Bricolage Grotesque';
   TextStyle get titleLarge => TextStyle(
         fontFamily: 'Bricolage Grotesque',
-        color: theme.secondaryText,
-        fontWeight: FontWeight.w500,
+        color: theme.primaryText,
+        fontWeight: FontWeight.w600,
         fontSize: 16.0,
       );
   String get titleMediumFamily => 'Bricolage Grotesque';
-  TextStyle get titleMedium =>  TextStyle(
-        fontFamily: 'Bricolage Grotesque',color: theme.primaryText,
+  TextStyle get titleMedium => TextStyle(
+        fontFamily: 'Bricolage Grotesque',
+        color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 16.0,
       );
   String get titleSmallFamily => 'Bricolage Grotesque';
-  TextStyle get titleSmall =>  TextStyle(
+  TextStyle get titleSmall => TextStyle(
         fontFamily: 'Bricolage Grotesque',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
@@ -315,7 +321,7 @@ class ThemeTypography extends Typography {
         fontFamily: 'Bricolage Grotesque',
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
-        fontSize: 12.0,
+        fontSize: 14.0,
       );
   String get labelSmallFamily => 'Bricolage Grotesque';
   TextStyle get labelSmall => TextStyle(
@@ -326,11 +332,11 @@ class ThemeTypography extends Typography {
       );
   String get labelExtraSmallFamily => 'Bricolage Grotesque';
   TextStyle get labelExtraSmall => TextStyle(
-    fontFamily: 'Bricolage Grotesque',
-    color: theme.primaryText,
-    fontWeight: FontWeight.w500,
-    fontSize: 12.0,
-  );
+        fontFamily: 'Bricolage Grotesque',
+        color: theme.primaryText,
+        fontWeight: FontWeight.w500,
+        fontSize: 12.0,
+      );
   String get bodyLargeFamily => 'Bricolage Grotesque';
   TextStyle get bodyLarge => TextStyle(
         fontFamily: 'Bricolage Grotesque',
@@ -346,24 +352,28 @@ class ThemeTypography extends Typography {
         fontSize: 14.0,
       );
   String get bodySmallFamily => 'Bricolage Grotesque';
-  TextStyle get bodySmall =>  TextStyle(
+  TextStyle get bodySmall => TextStyle(
         fontFamily: 'Bricolage Grotesque',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 14.0.w,
       );
   String get welcomeTitleFamily => 'Bricolage Grotesque';
-  TextStyle get welcomeTitleNormal =>  TextStyle(
+  TextStyle get welcomeTitleNormal => TextStyle(
       fontFamily: 'Bricolage Grotesque',
       color: theme.primaryText,
       fontWeight: FontWeight.w400,
-      fontSize: 40.0
-  );
-  TextStyle get welcomeTitleBold =>  TextStyle(
+      fontSize: 40.0);
+  TextStyle get welcomeTitleBold => TextStyle(
       fontFamily: 'Bricolage Grotesque',
       color: theme.primaryText,
       fontWeight: FontWeight.w700,
       fontSize: 40.0);
+  TextStyle get buttonText => TextStyle(
+      fontFamily: 'Bricolage Grotesque',
+      color: theme.secondaryText,
+      fontWeight: FontWeight.w500,
+      fontSize: 22.0);
 }
 
 extension TextStyleHelper on TextStyle {
