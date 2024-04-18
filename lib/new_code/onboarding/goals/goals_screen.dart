@@ -1,3 +1,5 @@
+
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,7 +17,7 @@ class GoalsScreen extends StatefulWidget {
 
 class _GoalsScreenState extends State<GoalsScreen>
     with TickerProviderStateMixin {
-  // final controller = Get.put(GoalsController());
+   final controller = Get.put(GoalsController());
   late List<TextEditingController> controllers;
   late TabController _tabController;
   int _currentIndex = 0;
@@ -103,8 +105,8 @@ class _GoalsScreenState extends State<GoalsScreen>
                       color: _currentIndex >= 1
                           ? FlutterFlowTheme.of(context).ffButton
                           : FlutterFlowTheme.of(context)
-                              .ffButton
-                              .withAlpha(51)),
+                          .ffButton
+                          .withAlpha(51)),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 6.0.w),
@@ -191,9 +193,35 @@ class _GoalsScreenState extends State<GoalsScreen>
           const Spacer(),
           FFButtonWidget(
               onPressed: () async {
-                if (_tabController.index < 2) {
+
+
+
+
+
+
+
+                if(controllers[0].text.isEmpty && _tabController.index == 1){
+                  //_tabController.animateTo(_tabController.index = 0);
+                  Get.snackbar("Alert", "Please Type your goal 01");
+                }else{
+                  _tabController.animateTo(_tabController.index +1  );
+                }
+                if(controllers[1].text.isEmpty && _tabController.index == 2){
+                  //_tabController.animateTo(_tabController.index = 1);
+                  Get.snackbar("Alert", "Please Type your goal 02");
+                }else{
                   _tabController.animateTo(_tabController.index + 1);
                 }
+                if(controllers[3].text.isEmpty && _tabController.index == 2){
+                  Get.snackbar("Alert", "Please Type your goal 03");
+                }
+                if (_tabController.index < 2 && controllers[0].text.isNotEmpty || controllers[1].text.isNotEmpty) {
+                  _tabController.animateTo(_tabController.index + 1);
+                }
+                if(controllers[3].text.isNotEmpty && controllers[2].text.isNotEmpty && controllers[3].text.isNotEmpty){
+                  controller.sendUserGoalsController();
+                }
+
               },
               text: _currentIndex == 2 ? 'Finish' : 'Next',
               options: CTAButton(context)),
@@ -223,13 +251,15 @@ class _GoalsScreenState extends State<GoalsScreen>
         // color: MaterialStateProperty.all(FlutterFlowTheme.of(context).textFieldBackground),
         backgroundColor:
         MediaQuery.of(context).platformBrightness == Brightness.dark ?
-        
+
         FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9):
         FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
         label: AutoSizeText(label,
 
-            style: FlutterFlowTheme.of(context).labelExtraSmall,
-      ),
-    ),);
+          style: FlutterFlowTheme.of(context).labelExtraSmall,
+        ),
+      ),);
   }
 }
+
+

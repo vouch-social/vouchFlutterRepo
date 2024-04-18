@@ -5,6 +5,7 @@ class Assets {
   static const String assetsCleanedPhoneBook = 'assets/cleaned_phoneBook.svg';
   static const String assetsContactsPng = 'assets/contacts_png.png';
   static const String assetsImage951 = 'assets/image951.png';
+  static const String assetsLinkdinSvg = 'assets/linkdin_svg.svg';
   static const String assetsLock = 'assets/lock.svg';
   static const String assetsUserIcon = 'assets/user_icon.svg';
   static const String audiosFavicon = 'assets/audios/favicon.png';
@@ -23,6 +24,7 @@ class Assets {
   static const String imagesLogoWhite200 = 'assets/images/logo_white_200.png';
   static const String imagesPath1404 = 'assets/images/path1404.png';
   static const String lottieAnimationsFavicon = 'assets/lottie_animations/favicon.png';
+  static const String lottieAnimationsSuccessAnimation = 'assets/lottie_animations/success_animation.json';
   static const String pdfsFavicon = 'assets/pdfs/favicon.png';
   static const String riveAnimationsFavicon = 'assets/rive_animations/favicon.png';
   static const String videosFavicon = 'assets/videos/favicon.png';

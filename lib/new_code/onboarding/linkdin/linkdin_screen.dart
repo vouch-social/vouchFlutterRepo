@@ -39,27 +39,27 @@ class _LinkdinScreenState extends State<LinkdinScreen> {
                 ),
                 Center(
                   child: Container(
-                      alignment: Alignment.center,
-                      height: 176.0.w,
-                      width: 176.0.w,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).fixedWhite,
-                        borderRadius: BorderRadius.circular(16.0),
-                      ),
+                    alignment: Alignment.center,
+                    height: 176.0.w,
+                    width: 176.0.w,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).fixedWhite,
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
 
                   ),
                 ),
                 SizedBox(height: 220.0.h),
                 AutoSizeText(
-                  'LinkedIn Sync',
-                  style: FlutterFlowTheme.of(context).displayMedium
+                    'LinkedIn Sync',
+                    style: FlutterFlowTheme.of(context).displayMedium
                 ),
                 SizedBox(
                   height: 8.0.h,
                 ),
                 AutoSizeText(
-                  'Link your Linkedin for a smarter Vouch\nexperience',
-                  style: FlutterFlowTheme.of(context).titleSmall
+                    'Link your Linkedin for a smarter Vouch\nexperience',
+                    style: FlutterFlowTheme.of(context).titleSmall
                 ),
                 SizedBox(
                   height: 12.0.h,
@@ -76,8 +76,8 @@ class _LinkdinScreenState extends State<LinkdinScreen> {
                       width: 8.0.w,
                     ),
                     AutoSizeText(
-                      'Well use your Linkedin photo, name, and email',
-                      style: FlutterFlowTheme.of(context).labelSmall
+                        'Well use your Linkedin photo, name, and email',
+                        style: FlutterFlowTheme.of(context).labelSmall
                     ),
                   ],
                 ),
@@ -96,8 +96,8 @@ class _LinkdinScreenState extends State<LinkdinScreen> {
                       width: 8.0.w,
                     ),
                     AutoSizeText(
-                      'Your background sharpens our search accuracy',
-                      style: FlutterFlowTheme.of(context).labelSmall
+                        'Your background sharpens our search accuracy',
+                        style: FlutterFlowTheme.of(context).labelSmall
                     ),
                   ],
                 ),
@@ -110,26 +110,26 @@ class _LinkdinScreenState extends State<LinkdinScreen> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 FFButtonWidget(
-                  onPressed: () async {
-                    logFirebaseEvent(
-                        'PERMISSIONS_START_BUILDING_NETWORK_BTN_O');
-                    logFirebaseEvent('Button_request_permissions');
-                    logFirebaseEvent('Button_navigate_to');
+                    onPressed: () async {
+                      logFirebaseEvent(
+                          'PERMISSIONS_START_BUILDING_NETWORK_BTN_O');
+                      logFirebaseEvent('Button_request_permissions');
+                      logFirebaseEvent('Button_navigate_to');
 
-                    Get.to(() => LinkedinWidget());
-                  },
-                  text: 'Sync Linkedin',
-                  options: CTAButton(context)
+                      Get.to(() => LinkedinWidget());
+                    },
+                    text: 'Sync Linkedin',
+                    options: CTAButton(context)
                 ),
                 SizedBox(
                   height: 16.0.h,
                 ),
-                    Center(
-                      child: AutoSizeText(
-                        'I want to customise profile my self',
-                        style: FlutterFlowTheme.of(context).labelExtraSmall
-                      ),
-                    ),
+                Center(
+                  child: AutoSizeText(
+                      'I want to customise profile my self',
+                      style: FlutterFlowTheme.of(context).labelExtraSmall
+                  ),
+                ),
 
               ],
             ),

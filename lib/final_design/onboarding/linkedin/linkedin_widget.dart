@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:vouch/new_code/home_page/new_home_page.dart';
 
+import '../../../main.dart';
+import '../../../new_code/backend/backend_constants.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
@@ -107,7 +109,7 @@ class _LinkedinWidgetState extends State<LinkedinWidget> {
         body: SafeArea(
           child: FlutterFlowWebView(
             content:
-                'https://www.linkedin.com/oauth/v2/authorization?response_type=code&scope=openid,profile,email,r_basicprofile&client_id=86s8a2pvd36qob&redirect_uri=https://dev5747.d3ccozniz1kwv7.amplifyapp.com&state=${FFAppState().hashedPhone}',
+                'https://www.linkedin.com/oauth/v2/authorization?response_type=code&scope=openid,profile,email,r_basicprofile&client_id=86s8a2pvd36qob&redirect_uri=https://dev5747.d3ccozniz1kwv7.amplifyapp.com&state=${prefs?.getString(loggedInUserHashedPhone)}',
             bypass: true,
             height: MediaQuery.sizeOf(context).height * 1.0,
             verticalScroll: false,
