@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:vouch/new_code/home_page/new_home_page.dart';
 import 'package:vouch/new_code/onboarding/auth_screen/login_screen/login_screen.dart';
+import 'package:vouch/new_code/onboarding/customize_profile/user_details.dart';
 import 'package:vouch/new_code/onboarding/goals/goals_screen.dart';
 import 'package:vouch/new_code/onboarding/permissions/contacts_call_logs/upload_success.dart';
 import 'package:vouch/new_code/onboarding/permissions/permissions_screen.dart';
@@ -136,7 +137,7 @@ class _MyAppState extends State<MyApp> {
             router: _router,
             child: child!,
           ),
-          home:  const GoalsScreen(),
+          home:  const WelcomeScreen(),
         ),
       );
 }

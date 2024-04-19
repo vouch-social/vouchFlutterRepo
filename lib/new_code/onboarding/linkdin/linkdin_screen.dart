@@ -1,10 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
+import 'package:vouch/new_code/onboarding/customize_profile/user_details.dart';
 
 import '../../../backend/firebase_analytics/analytics.dart';
 import '../../../final_design/onboarding/linkedin/linkedin_widget.dart';
@@ -124,10 +126,14 @@ class _LinkdinScreenState extends State<LinkdinScreen> {
                 SizedBox(
                   height: 16.0.h,
                 ),
-                Center(
-                  child: AutoSizeText(
-                      'I want to customise profile my self',
-                      style: FlutterFlowTheme.of(context).labelExtraSmall
+                GestureDetector(
+                  onTap: () {Get.to(() => UserDetails());
+                  },
+                  child: Center(
+                    child: AutoSizeText(
+                        'I want to customise profile my self',
+                        style: FlutterFlowTheme.of(context).labelExtraSmall
+                    ),
                   ),
                 ),
 

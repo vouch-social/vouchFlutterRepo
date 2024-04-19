@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:choose_input_chips/choose_input_chips.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -16,7 +17,6 @@ import 'package:vouch/new_code/onboarding/customize_profile/user_details_control
 import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../flutter_flow/flutter_flow_widgets.dart';
 import '../linkdin/linkdin_screen.dart';
-
 
 class UserDetails extends StatefulWidget {
   const UserDetails({super.key});
@@ -61,6 +61,44 @@ class _UserDetailsState extends State<UserDetails> {
 
   @override
   Widget build(BuildContext context) {
+    const mockResults = <Tags>[
+      Tags(
+        'John Doe',
+      ),
+      Tags(
+        'Paul',
+      ),
+      Tags(
+        'Fred',
+      ),
+      Tags(
+        'Brian',
+      ),
+      Tags(
+        'John',
+      ),
+      Tags(
+        'Thomas',
+      ),
+      Tags(
+        'Nelly',
+      ),
+      Tags(
+        'Marie',
+      ),
+      Tags(
+        'Charlie',
+      ),
+      Tags(
+        'Diana',
+      ),
+      Tags(
+        'Ernie',
+      ),
+      Tags(
+        'Gina',
+      ),
+    ];
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -73,92 +111,67 @@ class _UserDetailsState extends State<UserDetails> {
               SizedBox(
                 height: 64.0.h,
               ),
-              AutoSizeText(
-                'Hello',
-                style: FlutterFlowTheme.of(context).titleLarge.override(
-                      fontFamily: 'Bricolage Grotesque',
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.w400,
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      useGoogleFonts: false,
-                    ),
-              ),
+              AutoSizeText('Hello',
+                  style: FlutterFlowTheme.of(context).headlineLarge),
               AutoSizeText(
                 'Please update your details',
-                style: FlutterFlowTheme.of(context).titleLarge.override(
-                      fontFamily: 'Bricolage Grotesque',
-                      fontSize: 22.0,
-                      fontWeight: FontWeight.w600,
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      useGoogleFonts: false,
-                    ),
+                style: FlutterFlowTheme.of(context).headlineMedium,
               ),
               SizedBox(
                 height: 32.h,
               ),
               Center(
                 child: Stack(
+                  alignment: Alignment.bottomRight,
                   children: [
                     Container(
                       height: 128.h,
                       width: 128.h,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(60.w),
-                        color: FlutterFlowTheme.of(context).container1,
+                        color: FlutterFlowTheme.of(context).textFieldBackground,
                       ),
                       child: Center(
                         child: _imageFile != null
                             ? ClipOval(
-                              child: Image.file(
-                                _imageFile!,
-                                fit: BoxFit.cover,
-                                height: 128.h,
-                                width: 128,
-                              ),
-                            )
+                                child: Image.file(
+                                  _imageFile!,
+                                  fit: BoxFit.cover,
+                                  height: 128.h,
+                                  width: 128,
+                                ),
+                              )
                             : Text(
-                                'V',
+                                'NR',
                                 style: FlutterFlowTheme.of(context)
-                                    .titleLarge
-                                    .override(
-                                      fontFamily: 'Bricolage Grotesque',
-                                      fontSize: 60.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      useGoogleFonts: false,
-                                    ),
+                                    .welcomeTitleNormal,
                               ),
                       ),
                     ),
-                    Positioned(
-                      bottom: 8.0,
-                      left: 96.0,
-                      child: GestureDetector(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return CustomImageSourceDialog(
-                                onGalleryTap: _getImageFromGallery,
-                                onCameraTap: _getImageFromCamera,
-                              );
-                            },
-                          );
-                        },
-                        child: Container(
-                          height: 32,
-                          width: 32,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(40.0),
-                              color: FlutterFlowTheme.of(context).primary),
-                          child: Center(
-                              child: Icon(
-                            Icons.camera_alt_rounded,
-                            color:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                          )),
-                        ),
+                    GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CustomImageSourceDialog(
+                              onGalleryTap: _getImageFromGallery,
+                              onCameraTap: _getImageFromCamera,
+                            );
+                          },
+                        );
+                      },
+                      child: Container(
+                        height: 32.0.h,
+                        width: 32.0.h,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(40.0.w),
+                            color: FlutterFlowTheme.of(context).ffButton),
+                        child: Center(
+                            child: Icon(
+                          size: 20.0,
+                          Icons.camera_alt_rounded,
+                          color: FlutterFlowTheme.of(context).secondaryText,
+                        )),
                       ),
                     )
                   ],
@@ -187,62 +200,99 @@ class _UserDetailsState extends State<UserDetails> {
                   color: Colors.transparent,
                   child: Stack(children: [
                     Container(
-                      height: 56.0,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: TextFormField(
-                        readOnly: true,
-                        decoration: InputDecoration(
-                          alignLabelWithHint: true,
-                          labelText: 'Tags',
-                          floatingLabelStyle:
-                              FlutterFlowTheme.of(context).titleLarge.override(
-                                    fontFamily: 'Bricolage Grotesque',
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w400,
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    useGoogleFonts: false,
-                                  ),
-                          labelStyle:
-                              FlutterFlowTheme.of(context).titleLarge.override(
-                                    fontFamily: 'Bricolage Grotesque',
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w400,
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    useGoogleFonts: false,
-                                  ),
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground
-                                  .withAlpha(76),
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground
-                                  .withAlpha(76),
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
+                        height: 72.0,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
-                      ),
-                    ),
+                        child: ChipsInput(
+                          initialValue: _controller.tagsController,
+                          suggestionsBoxMaxHeight: 180.0.h,
+                          suggestionsBoxDecoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .primaryBackground),
+                          maxChips: 3,
+                          decoration: InputDecoration(
+                            // filled: true,
+                            // fillColor: FlutterFlowTheme.of(context)
+                            //     .textFieldBackground,
+                            labelText: "Tags",
+                            floatingLabelStyle:
+                                FlutterFlowTheme.of(context).bodyLarge,
+                            labelStyle: FlutterFlowTheme.of(context).bodyLarge,
+                            floatingLabelBehavior: FloatingLabelBehavior.always,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                          findSuggestions: (String query) {
+                            if (query.isNotEmpty) {
+                              var lowercaseQuery = query.toLowerCase();
+                              final results = mockResults.where((profile) {
+                                return profile.tags
+                                    .toLowerCase()
+                                    .contains(query.toLowerCase());
+                              }).toList(growable: false)
+                                ..sort((a, b) => a.tags
+                                    .toLowerCase()
+                                    .indexOf(lowercaseQuery)
+                                    .compareTo(b.tags
+                                        .toLowerCase()
+                                        .indexOf(lowercaseQuery)));
+                              return results;
+                            }
+                            return mockResults;
+                          },
+                          onChanged: (List<Tags> tags) {
+                            _controller.tagsController.value = tags;
+                            print("Tags : ${_controller.tagsController}");
+                          },
+                          chipBuilder: (context, state, Tags profile) {
+                            return InputChip(
+                              backgroundColor: MediaQuery.of(context).platformBrightness == Brightness.dark ?
+                              FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9):
+                              FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
+                              labelStyle: FlutterFlowTheme.of(context).labelSmall,
+                              key: ObjectKey(profile),
+                              label: Text(profile.tags),
+                              onDeleted: () => state.deleteChip(profile),
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                            );
+                          },
+                          suggestionBuilder: (context, state, Tags profile) {
+                            return Wrap(children: [
+                              InputChip(
+                                backgroundColor: MediaQuery.of(context).platformBrightness == Brightness.dark ?
+                                FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9):
+                                FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
+                                labelStyle: FlutterFlowTheme.of(context).labelSmall,
+                                elevation: 0,
+                                key: ObjectKey(profile),
+                                label: Text(profile.tags),
+                                onPressed: () =>
+                                    state.selectSuggestion(profile),
+                              ),
+                            ]);
+                          },
+                        )),
                     GestureDetector(
                       onTap: () {
                         Get.to(() => TagsScreen());
                       },
                       child: Container(
-                        height: 56,
+                        height: 72,
                         color: Colors.transparent,
                       ),
                     ),
@@ -251,43 +301,38 @@ class _UserDetailsState extends State<UserDetails> {
               ),
               const Spacer(),
               FFButtonWidget(
-                onPressed: () async {
-                  // logFirebaseEvent(
-                  //     'PERMISSIONS_START_BUILDING_NETWORK_BTN_O');
-                  // logFirebaseEvent('Button_request_permissions');
-                  // logFirebaseEvent('Button_navigate_to');
+                  onPressed: () async {
+                    // logFirebaseEvent(
+                    //     'PERMISSIONS_START_BUILDING_NETWORK_BTN_O');
+                    // logFirebaseEvent('Button_request_permissions');
+                    // logFirebaseEvent('Button_navigate_to');
 
-                  const GetSnackBar(title: "Alert",message: "Please fill your Name",);
-                  // if(_controller.nameController.text.isEmpty ){
-                  //   const GetSnackBar(title: "Alert",message: "Please fill your Name",);
-                  // }else if( _controller.headlineController.text.isEmpty){
-                  //   const GetSnackBar(title: "Alert",message: "Please fill the Headline",);
-                  //   print("Null Data is There");
-                  // }
-                  // else{
-                  //   Get.to(() => TagsScreen());
-                  // }
-                },
-                text: 'Update Your Profile',
-                options: FFButtonOptions(
-                  width: double.infinity,
-                  height: 64.0.h,
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  iconPadding:
-                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  color: FlutterFlowTheme.of(context).primary,
-                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                        fontFamily: 'Bricolage Grotesque',
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.w500,
-                        useGoogleFonts: false,
-                      ),
-                  elevation: 3.0,
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-              ),
+                    //const GetSnackBar(title: "Alert",message: "Please fill your Name",);
+                    if (_controller.nameController.text.isEmpty) {
+                      const GetSnackBar(
+                        title: "Alert",
+                        message: "Please fill your Name",
+                      );
+                    } else if (_controller.headlineController.text.isEmpty) {
+                      const GetSnackBar(
+                        title: "Alert",
+                        message: "Please fill the Headline",
+                      );
+                      print("Null Data is There");
+                    } else if (_controller.tagsController.isEmpty) {
+                      const GetSnackBar(
+                        title: "Alert",
+                        message: "Please fill your Tags",
+                      );
+                      Get.to(TagsScreen());
+                    } else if (_controller.nameController.text.isNotEmpty &&
+                        _controller.headlineController.text.isNotEmpty &&
+                        _controller.tagsController.isNotEmpty) {
+                      await _controller.saveUserController();
+                    }
+                  },
+                  text: 'Update Your Profile',
+                  options: CTAButton(context)),
               SizedBox(
                 height: 12.0.h,
               ),
@@ -306,13 +351,7 @@ class _UserDetailsState extends State<UserDetails> {
                     ),
                     AutoSizeText(
                       'Go back and update LinkedIn',
-                      style: FlutterFlowTheme.of(context).titleSmall.override(
-                          fontFamily: 'Bricolage Grotesque',
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.w500,
-                          useGoogleFonts: false,
-                          decoration: TextDecoration.underline),
+                      style: FlutterFlowTheme.of(context).labelExtraSmall,
                     )
                   ],
                 ),
@@ -344,40 +383,28 @@ class CustomTextField extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: TextFormField(
+        style: FlutterFlowTheme.of(context).headlineSmall,
         controller: controller,
         cursorColor: FlutterFlowTheme.of(context).secondaryBackground,
         decoration: InputDecoration(
+          // filled: true,
+          // fillColor: FlutterFlowTheme.of(context).textFieldBackground,
           alignLabelWithHint: true,
           labelText: label,
-          floatingLabelStyle: FlutterFlowTheme.of(context).titleLarge.override(
-                fontFamily: 'Bricolage Grotesque',
-                fontSize: 16.0,
-                fontWeight: FontWeight.w400,
-                color: FlutterFlowTheme.of(context).secondaryBackground,
-                useGoogleFonts: false,
-              ),
+          floatingLabelStyle: FlutterFlowTheme.of(context).titleSmall,
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          labelStyle: FlutterFlowTheme.of(context).titleLarge.override(
-                fontFamily: 'Bricolage Grotesque',
-                fontSize: 16.0,
-                fontWeight: FontWeight.w400,
-                color: FlutterFlowTheme.of(context).secondaryBackground,
-                useGoogleFonts: false,
-              ),
+          labelStyle: FlutterFlowTheme.of(context).titleSmall,
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: FlutterFlowTheme.of(context)
-                  .secondaryBackground
-                  .withAlpha(76),
-              width: 1.0,
-            ),
+                color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
+                style: BorderStyle.solid,
+                width: 1.0,
+                ),
             borderRadius: BorderRadius.circular(8.0),
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: FlutterFlowTheme.of(context)
-                  .secondaryBackground
-                  .withAlpha(76),
+              color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
               width: 1.0,
             ),
             borderRadius: BorderRadius.circular(8.0),

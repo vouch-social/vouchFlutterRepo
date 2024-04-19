@@ -1,4 +1,6 @@
+import 'package:get/get.dart';
 import 'package:vouch/new_code/backend/backend_constants.dart';
+import 'package:vouch/new_code/onboarding/linkdin/linkdin_screen.dart';
 import '../../../main.dart';
 import '../network/dio_client.dart';
 import 'package:dio/dio.dart' as dio;
@@ -19,6 +21,8 @@ class ContactsCallLogsRepo {
           endPoint: '/api/call-logs/saveCallLogs',
           data: data,
           authToken: prefs?.getString(authToken));
+      prefs?.setBool(sendCallLogsResponse, response.data['status']);
+      checkImport();
       print("sendCallLogs: $response");
     } catch (error) {
       print("Error 2 :$error");
@@ -32,10 +36,20 @@ class ContactsCallLogsRepo {
           endPoint: '/api/contacts/saveContacts',
           data: data,
           authToken: prefs?.getString(authToken));
-
+      prefs?.setBool(sendContactsResponse, response.data['status']);
+      checkImport();
       print("sendContacts : $response");
     } catch (error) {
       print("Error 3 :$error");
     }
   }
 }
+
+checkImport() {
+  bool? isCallLog = prefs?.getBool(sendCallLogsResponse);
+  bool? isContactLog = prefs?.getBool(sendContactsResponse);
+  if (isCallLog != null && isContactLog != null && isCallLog && isContactLog) {
+    Get.to(() => LinkdinScreen());
+  }
+}
+

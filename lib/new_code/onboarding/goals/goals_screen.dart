@@ -18,15 +18,12 @@ class GoalsScreen extends StatefulWidget {
 class _GoalsScreenState extends State<GoalsScreen>
     with TickerProviderStateMixin {
    final controller = Get.put(GoalsController());
-  late List<TextEditingController> controllers;
   late TabController _tabController;
   int _currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    controllers = List.generate(3, (index) => TextEditingController());
-
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(_handleTabSelection);
   }
@@ -45,7 +42,7 @@ class _GoalsScreenState extends State<GoalsScreen>
 
   void _handleChipSelection(String text) {
     setState(() {
-      controllers[_currentIndex].text = text;
+      controller.controller[_currentIndex].text = text;
     });
   }
 
@@ -156,7 +153,7 @@ class _GoalsScreenState extends State<GoalsScreen>
               // Border radius
             ),
             child: TextFormField(
-              controller: controllers[_currentIndex],
+              controller: controller.controller[_currentIndex],
               minLines: 3,
               maxLines: 5,
               style: FlutterFlowTheme.of(context).labelSmall,
@@ -184,7 +181,7 @@ class _GoalsScreenState extends State<GoalsScreen>
             spacing: 8.0,
             children: [
               _buildChip('I want to buy a 2nd car'),
-              _buildChip('I want to sdfgfd buy a 2nd car'),
+              _buildChip('I want to buy a 2nd car'),
               _buildChip('I buy a 2nd car'),
               _buildChip('I want to buy car'),
               _buildChip('Find Math tutor'),
@@ -194,49 +191,55 @@ class _GoalsScreenState extends State<GoalsScreen>
           FFButtonWidget(
               onPressed: () async {
 
-
-
-
-
-
-
-                if(controllers[0].text.isEmpty && _tabController.index == 1){
-                  //_tabController.animateTo(_tabController.index = 0);
-                  Get.snackbar("Alert", "Please Type your goal 01");
-                }else{
-                  _tabController.animateTo(_tabController.index +1  );
-                }
-                if(controllers[1].text.isEmpty && _tabController.index == 2){
-                  //_tabController.animateTo(_tabController.index = 1);
-                  Get.snackbar("Alert", "Please Type your goal 02");
-                }else{
+                if (_tabController.index < 2 ) {
                   _tabController.animateTo(_tabController.index + 1);
                 }
-                if(controllers[3].text.isEmpty && _tabController.index == 2){
-                  Get.snackbar("Alert", "Please Type your goal 03");
-                }
-                if (_tabController.index < 2 && controllers[0].text.isNotEmpty || controllers[1].text.isNotEmpty) {
-                  _tabController.animateTo(_tabController.index + 1);
-                }
-                if(controllers[3].text.isNotEmpty && controllers[2].text.isNotEmpty && controllers[3].text.isNotEmpty){
+                if(_tabController.index == 2 && controller.controller[0].text.isNotEmpty && controller.controller[1].text.isNotEmpty && controller.controller[2].text.isNotEmpty){
                   controller.sendUserGoalsController();
+                }else{
+                  if(controller.controller[0].text.isEmpty){
+                    const GetSnackBar(
+                      title: "Alert",
+                      message: "Please fill your goal 01",
+                    );
+                  } if(controller.controller[1].text.isEmpty){
+                    const GetSnackBar(
+                      title: "Alert",
+                      message: "Please fill your goal 02",
+                    );
+                  } if(controller.controller[2].text.isEmpty){
+                    const GetSnackBar(
+                      title: "Alert",
+                      message: "Please fill your goal 02",
+                    );
+                  }
                 }
 
               },
               text: _currentIndex == 2 ? 'Finish' : 'Next',
               options: CTAButton(context)),
-          SizedBox(
-            height: 16.0.h,
-          ),
-          Center(
-            child: GestureDetector(
-              onTap: () {},
-              child: AutoSizeText(
-                "Skip for now",
-                style: FlutterFlowTheme.of(context).labelExtraSmall,
+
+          _currentIndex == 0 || _currentIndex == 1 ?
+          Column(
+            children: [
+              SizedBox(
+                height: 16.0.h,
               ),
-            ),
-          ),
+              Center(
+                child: GestureDetector(
+                  onTap: () {},
+                  child: AutoSizeText(
+                    "Skip for now",
+                    style: FlutterFlowTheme.of(context).labelExtraSmall,
+                  ),
+                ),
+              ),
+            ],
+          )
+              : SizedBox(
+            height: 28.h,
+          )
+
         ],
       ),
     );

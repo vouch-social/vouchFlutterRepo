@@ -14,7 +14,11 @@ class GoalsController extends GetxController{
   Future<void> sendUserGoalsController() async {
     try {
       var data = {
-        "goals": controller
+        "goals": [
+          controller[0].text,
+          controller[1].text,
+          controller[2].text
+        ]
       };
       print("DATA : $data");
 

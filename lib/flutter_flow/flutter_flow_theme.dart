@@ -278,7 +278,7 @@ class ThemeTypography extends Typography {
   TextStyle get headlineMedium => TextStyle(
         fontFamily: 'Bricolage Grotesque',
         color: theme.primaryText,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w600,
         fontSize: 22.0,
       );
   String get headlineSmallFamily => 'Bricolage Grotesque';

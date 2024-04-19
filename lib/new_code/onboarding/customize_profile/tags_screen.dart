@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:choose_input_chips/choose_input_chips.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -60,7 +59,9 @@ class _TagsScreenState extends State<TagsScreen> {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     child: ChipsInput(
-                      suggestionsBoxMaxHeight: 200.0.h,
+                      textStyle: FlutterFlowTheme.of(context).titleSmall,
+                      initialValue : _controller.tagsController,
+                      suggestionsBoxMaxHeight: 180.0.h,
                       suggestionsBoxDecoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).primaryBackground
                       ),
@@ -68,36 +69,20 @@ class _TagsScreenState extends State<TagsScreen> {
                       decoration: InputDecoration(
                         labelText: "Tags",
                         floatingLabelStyle:
-                        FlutterFlowTheme.of(context).titleLarge.override(
-                          fontFamily: 'Bricolage Grotesque',
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w400,
-                          color: FlutterFlowTheme.of(context)
-                              .secondaryBackground,
-                          useGoogleFonts: false,
-                        ),
+                        FlutterFlowTheme.of(context).bodyLarge,
                         labelStyle:
-                        FlutterFlowTheme.of(context).titleLarge.override(
-                          fontFamily: 'Bricolage Grotesque',
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w400,
-                          color: FlutterFlowTheme.of(context)
-                              .secondaryBackground,
-                          useGoogleFonts: false,
-                        ),
+                        FlutterFlowTheme.of(context).bodyLarge,
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
+                            color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
                             width: 1.0,
                           ),
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
+                            color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
                             width: 1.0,
                           ),
                           borderRadius: BorderRadius.circular(8.0),
@@ -126,6 +111,10 @@ class _TagsScreenState extends State<TagsScreen> {
 
                       chipBuilder: (context, state, Tags profile) {
                         return InputChip(
+                          labelStyle: FlutterFlowTheme.of(context).labelSmall,
+                          backgroundColor: MediaQuery.of(context).platformBrightness == Brightness.dark ?
+                          FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9):
+                          FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
                           key: ObjectKey(profile),
                           label: Text(profile.tags),
                           onDeleted: () => state.deleteChip(profile),
@@ -135,6 +124,11 @@ class _TagsScreenState extends State<TagsScreen> {
                       suggestionBuilder: (context,state, Tags profile) {
                         return Wrap(
                           children: [InputChip(
+                            backgroundColor: MediaQuery.of(context).platformBrightness == Brightness.dark ?
+                            FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9):
+                            FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
+                            labelStyle: FlutterFlowTheme.of(context).labelSmall,
+                            elevation: 0,
                                   key: ObjectKey(profile),
                                   label: Text(profile.tags),
                             onPressed: () => state.selectSuggestion(profile),
@@ -161,30 +155,13 @@ class _TagsScreenState extends State<TagsScreen> {
                           'Please Choose Your Tags'),
                     );
                   }else {
-                    print("${_controller.tagsController}");
-                    await _controller.saveUserController();
+                    print("Tags 1: ${_controller.tagsController}");
+                   Get.back();
                     //_controller.sendUserAttributesController();
                   }
                 },
                 text: 'Update Your Profile',
-                options: FFButtonOptions(
-                  width: double.infinity,
-                  height: 64.0.h,
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  iconPadding:
-                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                  color: FlutterFlowTheme.of(context).primary,
-                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
-                        fontFamily: 'Bricolage Grotesque',
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.w500,
-                        useGoogleFonts: false,
-                      ),
-                  elevation: 3.0,
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
+                options: CTAButton(context),
               ),
             ],
           ),
