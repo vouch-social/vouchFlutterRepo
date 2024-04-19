@@ -111,8 +111,8 @@ class _UserDetailsState extends State<UserDetails> {
               SizedBox(
                 height: 64.0.h,
               ),
-              AutoSizeText('Hello',
-                  style: FlutterFlowTheme.of(context).headlineLarge),
+              // AutoSizeText('Hello',
+              //     style: FlutterFlowTheme.of(context).headlineLarge),
               AutoSizeText(
                 'Please update your details',
                 style: FlutterFlowTheme.of(context).headlineMedium,
@@ -128,8 +128,12 @@ class _UserDetailsState extends State<UserDetails> {
                       height: 128.h,
                       width: 128.h,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(60.w),
-                        color: FlutterFlowTheme.of(context).textFieldBackground,
+                        borderRadius: BorderRadius.circular(64.w),
+                        color: FlutterFlowTheme.of(context).ffButton,
+                        border: Border.all(
+                          style: BorderStyle.solid,
+                          color: FlutterFlowTheme.of(context).textFieldBackground,
+                        )
                       ),
                       child: Center(
                         child: _imageFile != null
@@ -161,10 +165,11 @@ class _UserDetailsState extends State<UserDetails> {
                         );
                       },
                       child: Container(
+                        margin: EdgeInsets.all(4.0.w),
                         height: 32.0.h,
                         width: 32.0.h,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(40.0.w),
+                            borderRadius: BorderRadius.circular(16.0.w),
                             color: FlutterFlowTheme.of(context).ffButton),
                         child: Center(
                             child: Icon(
@@ -207,11 +212,11 @@ class _UserDetailsState extends State<UserDetails> {
                         ),
                         child: ChipsInput(
                           initialValue: _controller.tagsController,
-                          suggestionsBoxMaxHeight: 180.0.h,
-                          suggestionsBoxDecoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground),
-                          maxChips: 3,
+                          // suggestionsBoxMaxHeight: 180.0.h,
+                          // suggestionsBoxDecoration: BoxDecoration(
+                          //     color: FlutterFlowTheme.of(context)
+                          //         .primaryBackground),
+                          // maxChips: 3,
                           decoration: InputDecoration(
                             // filled: true,
                             // fillColor: FlutterFlowTheme.of(context)
@@ -221,6 +226,15 @@ class _UserDetailsState extends State<UserDetails> {
                                 FlutterFlowTheme.of(context).bodyLarge,
                             labelStyle: FlutterFlowTheme.of(context).bodyLarge,
                             floatingLabelBehavior: FloatingLabelBehavior.always,
+                            // border: OutlineInputBorder(
+                            //     borderSide: BorderSide(
+                            //           color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
+                            //           width: 1.0,
+                            //         ),
+                            //         borderRadius: BorderRadius.circular(8.0),
+                            //
+                            // ),
+
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
@@ -228,13 +242,13 @@ class _UserDetailsState extends State<UserDetails> {
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
+                            // focusedBorder: OutlineInputBorder(
+                            //   borderSide: BorderSide(
+                            //     color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
+                            //     width: 1.0,
+                            //   ),
+                            //   borderRadius: BorderRadius.circular(8.0),
+                            // ),
                           ),
                           findSuggestions: (String query) {
                             if (query.isNotEmpty) {
@@ -344,14 +358,17 @@ class _UserDetailsState extends State<UserDetails> {
                     SvgPicture.asset(
                       Assets.assetsLinkdinSvg,
                       height: 16.0.h,
-                      width: 16.0.h,
+                      width: 16.0.w,
                     ),
                     SizedBox(
                       width: 8.0.w,
                     ),
                     AutoSizeText(
                       'Go back and update LinkedIn',
-                      style: FlutterFlowTheme.of(context).labelExtraSmall,
+                      style: FlutterFlowTheme.of(context).labelExtraSmall.override(
+                        useGoogleFonts: false,
+                        decoration: TextDecoration.underline
+                      ),
                     )
                   ],
                 ),

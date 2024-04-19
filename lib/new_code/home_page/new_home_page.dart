@@ -1,3 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -44,21 +46,14 @@ class _NewHomePageState extends State<NewHomePage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      AutoSizeText(
                         "Hey Nirant",
-                        style: TextStyle(
-                            fontSize: 22.sp,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Bricolage Grotesque',
-                            color: FlutterFlowTheme.of(context).primaryText),
+                        style:
+                             FlutterFlowTheme.of(context).headlineLarge,
                       ),
-                      Text(
+                      AutoSizeText(
                         "good morning,",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 22.sp,
-                            fontFamily: 'Bricolage Grotesque',
-                            color: FlutterFlowTheme.of(context).primaryText),
+                        style: FlutterFlowTheme.of(context).headlineMedium,
                       ),
                     ],
                   ),
@@ -76,7 +71,7 @@ class _NewHomePageState extends State<NewHomePage> {
                 ],
               ),
               SizedBox(
-                height: 12.sp,
+                height: 12.0.h,
               ),
 
               // const ImageText(),
@@ -98,18 +93,12 @@ class _NewHomePageState extends State<NewHomePage> {
                         SizedBox(height: 4.h),
                         SizedBox(
                           width: 60.w,
-                          child: Text(
+                          child: AutoSizeText(
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
-                            textScaler: MediaQuery.textScalerOf(context),
                             'Chitranjan Ramakuru',
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontFamily: 'Bricolage Grotesque',
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryText),
+                            style: FlutterFlowTheme.of(context).labelExtraSmall,
                           ),
                         )
                       ],
@@ -131,18 +120,12 @@ class _NewHomePageState extends State<NewHomePage> {
                         SizedBox(height: 4.h),
                         SizedBox(
                           width: 60.w,
-                          child: Text(
-                            textScaler: MediaQuery.textScalerOf(context),
+                          child: AutoSizeText(
                             'Chitranjan Ramakuru',
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontFamily: 'Bricolage Grotesque',
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryText),
+                            style: FlutterFlowTheme.of(context).labelExtraSmall,
                           ),
                         )
                       ],
@@ -164,18 +147,12 @@ class _NewHomePageState extends State<NewHomePage> {
                         SizedBox(height: 4.h),
                         SizedBox(
                           width: 60.w,
-                          child: Text(
-                            textScaler: MediaQuery.textScalerOf(context),
+                          child: AutoSizeText(
                             'Chitranjan Ramakuru',
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontFamily: 'Bricolage Grotesque',
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryText),
+                            style: FlutterFlowTheme.of(context).labelExtraSmall,
                           ),
                         )
                       ],
@@ -197,18 +174,12 @@ class _NewHomePageState extends State<NewHomePage> {
                         SizedBox(height: 4.h),
                         SizedBox(
                           width: 60.w,
-                          child: Text(
-                            textScaler: MediaQuery.textScalerOf(context),
+                          child: AutoSizeText(
                             'Chitranjan Ramakuru',
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontFamily: 'Bricolage Grotesque',
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
-                                color:
-                                    FlutterFlowTheme.of(context).primaryText),
+                            style: FlutterFlowTheme.of(context).labelExtraSmall,
                           ),
                         )
                       ],
@@ -218,28 +189,17 @@ class _NewHomePageState extends State<NewHomePage> {
                 ],
               ),
               SizedBox(
-                height: 12.0.h,
+                height: 24.0.h,
               ),
               Align(
                 alignment: Alignment.topLeft,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Our",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 22.sp,
-                          fontFamily: 'Bricolage Grotesque',
-                          color: FlutterFlowTheme.of(context).primaryText),
-                    ),
-                    Text(
-                      "recommendations",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 22.sp,
-                          fontFamily: 'Bricolage Grotesque',
-                          color: FlutterFlowTheme.of(context).primaryText),
+                    AutoSizeText(
+                      "Our Recommendations",
+                      style: FlutterFlowTheme.of(context).headlineLarge,
+
                     ),
                   ],
                 ),
@@ -279,19 +239,14 @@ class _NewHomePageState extends State<NewHomePage> {
                               SizedBox(
                                 height: 8.0.h,
                               ),
-                              Text(
+                              AutoSizeText(
                                 "Nirant Ramakuru",
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
-                                style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w600,
-                                    fontFamily: 'Bricolage Grotesque',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText),
+                                style: FlutterFlowTheme.of(context).titleLarge,
                               ),
                               SizedBox(height: 4.0.h),
-                              Text(
+                              AutoSizeText(
                                 'Strategy Leader | Entrepreneur',
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
@@ -309,42 +264,22 @@ class _NewHomePageState extends State<NewHomePage> {
                 ),
               ),
               SizedBox(
-                height: 8.h,
+                height: 24.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Your",
-                          style: TextStyle(
-                              fontSize: 22.sp,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Bricolage Grotesque',
-                              color: FlutterFlowTheme.of(context).primaryText)),
-                      Text("reminders",
-                          style: TextStyle(
-                              fontSize: 22.sp,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'Bricolage Grotesque',
-                              color: FlutterFlowTheme.of(context).primaryText)),
-                    ],
-                  ),
-                  TextButton(
-                      onPressed: () {},
+                  AutoSizeText("Your Reminders",
+                      style: FlutterFlowTheme.of(context).headlineLarge,
+                                     ),
+                  GestureDetector(
+                      onTap: () {},
                       child:
-                          Text(
+                          AutoSizeText(
                             "View All",
-                            style: TextStyle(
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Bricolage Grotesque',
-                                color:
-                                    FlutterFlowTheme.of(context).primaryText),
-                          )
-
-                      )
+                            style: FlutterFlowTheme.of(context).labelExtraSmall
+                      ),
+                  )
                 ],
               ),
               SizedBox(
@@ -365,7 +300,7 @@ class _NewHomePageState extends State<NewHomePage> {
                       width: 50.w,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30.w),
-                          color: FlutterFlowTheme.of(context).green1),
+                          color: FlutterFlowTheme.of(context).primary),
                       child: Icon(
                         Icons.add,
                         color: FlutterFlowTheme.of(context).white,
@@ -392,26 +327,27 @@ class RoundedTextField extends StatelessWidget {
       onTap: () {
         Get.to(() => const SearchScreen());
       },
-      child: Container(
-        height: 50.h,
-        width: MediaQuery.of(context).size.width - 88.w,
-        padding: EdgeInsets.symmetric(horizontal: 16.0.w),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30.0.w),
-          color: Colors.white,
-          border: Border.all(color: FlutterFlowTheme.of(context).border1),
-        ),
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            'Type, talk, ask?',
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-            style: TextStyle(
-              color: FlutterFlowTheme.of(context).primaryText,
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w400,
-              fontFamily: 'Bricolage Grotesque',
+      child: Hero(
+        tag: "Search",
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            height: 50.h,
+            width: MediaQuery.of(context).size.width - 88.w,
+            padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30.0.w),
+              color: FlutterFlowTheme.of(context).textFieldBackground,
+              //border: Border.all(color: FlutterFlowTheme.of(context).textFieldBackground),
+            ),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: AutoSizeText(
+                'Type, talk, ask?',
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: FlutterFlowTheme.of(context).titleSmall
+              ),
             ),
           ),
         ),
@@ -462,25 +398,25 @@ class RemindersListView extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        AutoSizeText(
                           "Bhaagyasree Kuruvilla",
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(
                             color: FlutterFlowTheme.of(context).primaryText,
-                            fontSize: 16.sp,
+                            fontSize: 16.w,
                             fontWeight: FontWeight.w600,
                             fontFamily: 'Bricolage Grotesque',
                           ),
                         ),
                         SizedBox(height: 4.h),
-                        Text(
+                        AutoSizeText(
                           "#CEO #businessman",
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(
                             color: FlutterFlowTheme.of(context).fixedWhite,
-                            fontSize: 12.sp,
+                            fontSize: 12.w,
                             fontWeight: FontWeight.w400,
                             fontFamily: 'Bricolage Grotesque',
                           ),
@@ -499,14 +435,14 @@ class RemindersListView extends StatelessWidget {
                                 color: reminderColors[index],
                               ),
                               child: Center(
-                                child: Text(
+                                child: AutoSizeText(
                                   "Birthday",
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                   style: TextStyle(
                                     color:
                                     FlutterFlowTheme.of(context).primaryText,
-                                    fontSize: 10.sp,
+                                    fontSize: 10.w,
                                     fontWeight: FontWeight.w400,
                                     fontFamily: 'Bricolage Grotesque',
                                   ),
@@ -514,7 +450,7 @@ class RemindersListView extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: 4.0.h),
-                            Text(
+                            AutoSizeText(
                               "Tomorrow",
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
@@ -531,7 +467,8 @@ class RemindersListView extends StatelessWidget {
                         GestureDetector(
                           child: Icon(
                             Icons.arrow_forward_ios,
-                            color: FlutterFlowTheme.of(context).fixedBlack,
+
+                            color: FlutterFlowTheme.of(context).primaryText,
                           ),
                         ),
                       ],

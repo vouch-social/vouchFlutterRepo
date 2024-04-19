@@ -48,7 +48,15 @@ class _LinkdinScreenState extends State<LinkdinScreen> {
                       color: FlutterFlowTheme.of(context).fixedWhite,
                       borderRadius: BorderRadius.circular(16.0),
                     ),
-
+                    child: Center(
+                      child: Lottie.network(
+                        'https://lottie.host/402107ed-d14b-4d9c-a3d5-e127a9521d53/jfN47dVtlR.json',
+                        height: 124.0.h,
+                        fit: BoxFit.cover,
+                        frameRate: FrameRate(30.0),
+                        animate: true,
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(height: 220.0.h),
@@ -132,7 +140,10 @@ class _LinkdinScreenState extends State<LinkdinScreen> {
                   child: Center(
                     child: AutoSizeText(
                         'I want to customise profile my self',
-                        style: FlutterFlowTheme.of(context).labelExtraSmall
+                        style: FlutterFlowTheme.of(context).labelExtraSmall.override(
+                          useGoogleFonts: false,
+                          decoration: TextDecoration.underline,
+                        )
                     ),
                   ),
                 ),

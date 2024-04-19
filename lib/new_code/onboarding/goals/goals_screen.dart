@@ -1,5 +1,3 @@
-
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -71,9 +69,6 @@ class _GoalsScreenState extends State<GoalsScreen>
                   AutoSizeText(
                       'Please set at least 3 goals. You will have the\nability to edit your choices at any point.',
                       style: FlutterFlowTheme.of(context).titleSmall),
-                  SizedBox(
-                    height: 16.0.h,
-                  ),
                 ],
               ),
             ),
@@ -81,7 +76,7 @@ class _GoalsScreenState extends State<GoalsScreen>
               controller: _tabController,
               indicatorColor: Colors.transparent,
               automaticIndicatorColorAdjustment: false,
-              padding: EdgeInsets.all(16.0.w),
+              padding: EdgeInsets.fromLTRB(16.0.w,0.0.w,16.0.w,0),
               labelPadding: EdgeInsets.zero,
               tabs: [
                 Container(
@@ -141,9 +136,6 @@ class _GoalsScreenState extends State<GoalsScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: 16.0.h,
-          ),
           AutoSizeText("Type your Goal 0${_currentIndex + 1}",
               style: FlutterFlowTheme.of(context).titleLarge),
           SizedBox(height: 12.0.h),
@@ -230,7 +222,10 @@ class _GoalsScreenState extends State<GoalsScreen>
                   onTap: () {},
                   child: AutoSizeText(
                     "Skip for now",
-                    style: FlutterFlowTheme.of(context).labelExtraSmall,
+                    style: FlutterFlowTheme.of(context).labelExtraSmall.override(
+                        useGoogleFonts: false,
+                        decoration: TextDecoration.underline
+                    ),
                   ),
                 ),
               ),

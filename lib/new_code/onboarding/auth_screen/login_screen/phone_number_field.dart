@@ -17,7 +17,7 @@ Widget phoneInputField(model, context) {
     },
     selectorTextStyle: TextStyle(
       color: FlutterFlowTheme.of(context).fixedBlack,
-      fontSize: 22.w,
+      fontSize: 22.0.w,
       fontWeight: FontWeight.w400,
       fontFamily: 'Bricolage Grotesque',
       backgroundColor: Colors.white,
@@ -34,27 +34,28 @@ Widget phoneInputField(model, context) {
       setSelectorButtonAsPrefixIcon: true,
       leadingPadding: 20.0.w,
     ),
-    textStyle: TextStyle(
-      fontSize: 22.w,
-      fontWeight: FontWeight.w400,
-      fontFamily: 'Bricolage Grotesque',
-      color: FlutterFlowTheme.of(context).primaryText,
-    ),
+    textStyle: FlutterFlowTheme.of(context).headlineLarge,
     focusNode: model.phoneNumberFocusNode2,
-    inputBorder: InputBorder.none,
+    // inputBorder: InputBorder.none,
+
     inputDecoration: InputDecoration(
       errorText: '',
-      errorBorder: OutlineInputBorder(
+      // errorBorder: OutlineInputBorder(
+      //   borderRadius: BorderRadius.all(Radius.circular(8.0.w)),
+      //   // borderSide: BorderSide(
+      //   //     strokeAlign: BorderSide.strokeAlignCenter,
+      //   //     color: FlutterFlowTheme.of(context).textFieldBackground),
+      // ),
+      // focusedErrorBorder:
+      // OutlineInputBorder(
+      //   borderRadius: BorderRadius.all(Radius.circular(8.0.w)),
+      //   // borderSide: BorderSide(
+      //   //     strokeAlign: BorderSide.strokeAlignCenter,
+      //   //     color: FlutterFlowTheme.of(context).textFieldBackground),
+      // ),
+      border: OutlineInputBorder(
+        borderSide: BorderSide.none,
         borderRadius: BorderRadius.all(Radius.circular(8.0.w)),
-        borderSide: BorderSide(
-            strokeAlign: BorderSide.strokeAlignCenter,
-            color: FlutterFlowTheme.of(context).textFieldBackground),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(8.0.w)),
-        borderSide: BorderSide(
-            strokeAlign: BorderSide.strokeAlignCenter,
-            color: FlutterFlowTheme.of(context).textFieldBackground),
       ),
       hintText: "Enter mobile number",
       hintStyle: TextStyle(

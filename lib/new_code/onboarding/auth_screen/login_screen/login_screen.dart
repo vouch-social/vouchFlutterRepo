@@ -119,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Container(
                       width: double.infinity,
                       height: 64.h,
-                      padding: EdgeInsets.all(8.0.w),
+                      // padding: EdgeInsets.all(8.0.w),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(8.0.w)),
                         color: FlutterFlowTheme.of(context).textFieldBackground,

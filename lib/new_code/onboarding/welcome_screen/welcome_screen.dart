@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:vouch/new_code/onboarding/welcome_screen/welcome_model.dart';
@@ -78,16 +79,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               child: Align(
                 alignment: Alignment.center,
                 child: Container(
-                  width: MediaQuery.sizeOf(context).width * 0.3,
-                  height: MediaQuery.sizeOf(context).height * 0.3,
-                  decoration: const BoxDecoration(),
-                  child: ClipRRect(
-                    child: Image.asset(
-                      'assets/images/logo_white_200.png',
-                      width: double.infinity,
-                      height: double.infinity,
-                      fit: BoxFit.contain,
-                    ),
+                  height: 180.0.h,
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                  ),
+                  child: SvgPicture.asset(
+                    'assets/welcomeLogo.svg',
+                    color: FlutterFlowTheme.of(context).ffButton,
                   ),
                 ),
               ),
