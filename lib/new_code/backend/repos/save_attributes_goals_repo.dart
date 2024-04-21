@@ -24,7 +24,7 @@ class AttributesGoalsRepo{
       dio.Response response = await _dioClient.postRequest(
           endPoint: '/api/user/save-user',
           data: data,
-          authToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6Ijk5MTE4OTE0OTIiLCJzdWIiOjQ1LCJpYXQiOjE3MTM0MzQwMDIsImV4cCI6MTc0NDk5MTYwMn0.g1oGq_w406U9__BY6Q9ry_6DE90j5iosn6C7fcE6lmE");
+          authToken: prefs?.getString(authToken));
       print("saveUser: $response");
       BaseResponse<SaveUserModel> result = BaseResponse.fromJson(
           response.data, SaveUserModel.fromJson);
@@ -42,7 +42,7 @@ class AttributesGoalsRepo{
       dio.Response response = await _dioClient.postRequest(
           endPoint: '/api/user/save-goals',
           data: data,
-          authToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6Ijk5MTE4OTE0OTIiLCJzdWIiOjQ1LCJpYXQiOjE3MTM0MzQwMDIsImV4cCI6MTc0NDk5MTYwMn0.g1oGq_w406U9__BY6Q9ry_6DE90j5iosn6C7fcE6lmE");
+          authToken: prefs?.getString(authToken));
       BaseResponse<AttributesModel> result = BaseResponse.fromJson(
           response.data, AttributesModel.fromJson);
       print("sendGoals: $response");
@@ -59,7 +59,7 @@ class AttributesGoalsRepo{
       dio.Response response = await _dioClient.postRequest(
           endPoint: '/api/user/save-attributes',
           data: data,
-          authToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6Ijk5MTE4OTE0OTIiLCJzdWIiOjQ1LCJpYXQiOjE3MTM0MzQwMDIsImV4cCI6MTc0NDk5MTYwMn0.g1oGq_w406U9__BY6Q9ry_6DE90j5iosn6C7fcE6lmE");
+          authToken: prefs?.getString(authToken));
       BaseResponse<AttributesModel> result = BaseResponse.fromJson(
           response.data, AttributesModel.fromJson);
       print("sendAttributes: $response");

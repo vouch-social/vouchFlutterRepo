@@ -19,7 +19,7 @@ class UserDetailsController extends GetxController {
       var data = {
         "name" : nameController.text,
         "localizedheadline" : headlineController.text,
-        "photourl": "/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAYGBgYHBgcICAcKCwoLCg8ODAwODxYQERAREBYiFRkVFRkVIh4kHhweJB42KiYmKjY",
+        "photourl": imageController.text,
       };
       print("DATA : $data");
 
