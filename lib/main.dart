@@ -1,4 +1,9 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/gestures.dart';
@@ -13,6 +18,7 @@ import 'package:vouch/new_code/home_page/new_home_page.dart';
 import 'package:vouch/new_code/onboarding/auth_screen/login_screen/login_screen.dart';
 import 'package:vouch/new_code/onboarding/customize_profile/user_details.dart';
 import 'package:vouch/new_code/onboarding/goals/goals_screen.dart';
+import 'package:vouch/new_code/onboarding/permissions/contacts_call_logs/import_screen.dart';
 import 'package:vouch/new_code/onboarding/permissions/contacts_call_logs/upload_success.dart';
 import 'package:vouch/new_code/onboarding/permissions/permissions_screen.dart';
 import 'auth/firebase_auth/firebase_user_provider.dart';
@@ -20,6 +26,7 @@ import 'auth/firebase_auth/auth_util.dart';
 
 import 'backend/push_notifications/push_notifications_util.dart';
 import 'backend/firebase/firebase_config.dart';
+import 'checkAuth.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
@@ -33,6 +40,10 @@ import 'index.dart';
 
 import '/backend/firebase_dynamic_links/firebase_dynamic_links.dart';
 
+import 'new_code/backend/models/base_response.dart';
+import 'new_code/backend/models/check_user_model.dart';
+import 'new_code/backend/repos/auth_repo.dart';
+import 'new_code/onboarding/auth_screen/login_screen/components/country_code_remover.dart';
 import 'new_code/onboarding/auth_screen/otp_screen/otp_screen.dart';
 import 'new_code/onboarding/linkdin/linkdin_screen.dart';
 import 'new_code/onboarding/welcome_screen/welcome_screen.dart';
@@ -41,6 +52,7 @@ SharedPreferences? prefs;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   /// for linkdin login url
   usePathUrlStrategy();
   await initFirebase();
@@ -116,29 +128,37 @@ class _MyAppState extends State<MyApp> {
         splitScreenMode: true,
         ensureScreenSize: true,
         builder: (context, _) => GetMaterialApp(
-          title: 'Vouch',
-          debugShowCheckedModeBanner: false,
-          localizationsDelegates: [
-            FFLocalizationsDelegate(),
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          locale: _locale,
-          supportedLocales: const [
-            Locale('en'),
-          ],
-          theme: ThemeData(
-            brightness: Brightness.light,
-            useMaterial3: false,
-          ),
-          themeMode: _themeMode,
-          builder: (_, child) => DynamicLinksHandler(
-            router: _router,
-            child: child!,
-          ),
-          home:  WelcomeScreen(),
-        ),
+            title: 'Vouch',
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: [
+              FFLocalizationsDelegate(),
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            locale: _locale,
+            supportedLocales: const [
+              Locale('en'),
+            ],
+            theme: ThemeData(
+              brightness: Brightness.light,
+              useMaterial3: false,
+            ),
+            themeMode: _themeMode,
+            builder: (_, child) => DynamicLinksHandler(
+                  router: _router,
+                  child: child!,
+                ),
+            home: FutureBuilder<bool>(
+              future: isUserLoggedIn(),
+              builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                if (snapshot.data == true) {
+                  return newCustomNav();
+                } else {
+                  return WelcomeScreen();
+                }
+              },
+            )),
       );
 }
 

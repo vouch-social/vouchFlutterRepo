@@ -148,7 +148,7 @@ class _UserDetailsState extends State<UserDetails> {
                             : Text(
                                 'NR',
                                 style: FlutterFlowTheme.of(context)
-                                    .welcomeTitleNormal,
+                                    .buttonText,
                               ),
                       ),
                     ),
@@ -212,11 +212,7 @@ class _UserDetailsState extends State<UserDetails> {
                         ),
                         child: ChipsInput(
                           initialValue: _controller.tagsController,
-                          // suggestionsBoxMaxHeight: 180.0.h,
-                          // suggestionsBoxDecoration: BoxDecoration(
-                          //     color: FlutterFlowTheme.of(context)
-                          //         .primaryBackground),
-                          // maxChips: 3,
+                          textStyle: FlutterFlowTheme.of(context).labelExtraSmall,
                           decoration: InputDecoration(
                             // filled: true,
                             // fillColor: FlutterFlowTheme.of(context)
@@ -226,15 +222,6 @@ class _UserDetailsState extends State<UserDetails> {
                                 FlutterFlowTheme.of(context).bodyLarge,
                             labelStyle: FlutterFlowTheme.of(context).bodyLarge,
                             floatingLabelBehavior: FloatingLabelBehavior.always,
-                            // border: OutlineInputBorder(
-                            //     borderSide: BorderSide(
-                            //           color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
-                            //           width: 1.0,
-                            //         ),
-                            //         borderRadius: BorderRadius.circular(8.0),
-                            //
-                            // ),
-
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),

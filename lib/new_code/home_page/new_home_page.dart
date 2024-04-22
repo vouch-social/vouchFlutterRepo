@@ -1,11 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/new_code/common_widgets/vector.dart';
-import 'package:vouch/new_code/home_page/search_screen.dart';
+import 'package:vouch/new_code/home_page/search_screen/search_screen.dart';
+import 'package:vouch/new_code/home_page/settings/settings_screen.dart';
 
 import '../../generated/assets.dart';
 
@@ -17,6 +21,7 @@ class NewHomePage extends StatefulWidget {
 }
 
 class _NewHomePageState extends State<NewHomePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context,
@@ -32,6 +37,7 @@ class _NewHomePageState extends State<NewHomePage> {
     ];
 
     return Scaffold(
+      key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
@@ -48,8 +54,7 @@ class _NewHomePageState extends State<NewHomePage> {
                     children: [
                       AutoSizeText(
                         "Hey Nirant",
-                        style:
-                             FlutterFlowTheme.of(context).headlineLarge,
+                        style: FlutterFlowTheme.of(context).headlineLarge,
                       ),
                       AutoSizeText(
                         "good morning,",
@@ -57,17 +62,27 @@ class _NewHomePageState extends State<NewHomePage> {
                       ),
                     ],
                   ),
-                  Container(
-                      width: 44.w,
-                      height: 44.h,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30.0.w),
-                          color: FlutterFlowTheme.of(context).accent4),
-                      child: Padding(
-                        padding: EdgeInsets.all(12.w),
-                        child: vector(Assets.assetsUserIcon,
-                            height: 20.h, width: 20.w),
-                      ))
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(
+                        () => SettingsScreen(),
+                        transition: Transition.rightToLeftWithFade,
+                        duration: Duration(milliseconds: 500),
+                        //curve: Curves.easeInOut,
+                      );
+                    },
+                    child: Container(
+                        width: 44.w,
+                        height: 44.h,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30.0.w),
+                            color: FlutterFlowTheme.of(context).accent4),
+                        child: Padding(
+                          padding: EdgeInsets.all(12.w),
+                          child: vector(Assets.assetsUserIcon,
+                              height: 20.h, width: 20.w),
+                        )),
+                  )
                 ],
               ),
               SizedBox(
@@ -199,7 +214,6 @@ class _NewHomePageState extends State<NewHomePage> {
                     AutoSizeText(
                       "Our Recommendations",
                       style: FlutterFlowTheme.of(context).headlineLarge,
-
                     ),
                   ],
                 ),
@@ -269,16 +283,14 @@ class _NewHomePageState extends State<NewHomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  AutoSizeText("Your Reminders",
-                      style: FlutterFlowTheme.of(context).headlineLarge,
-                                     ),
+                  AutoSizeText(
+                    "Your Reminders",
+                    style: FlutterFlowTheme.of(context).headlineLarge,
+                  ),
                   GestureDetector(
-                      onTap: () {},
-                      child:
-                          AutoSizeText(
-                            "View All",
-                            style: FlutterFlowTheme.of(context).labelExtraSmall
-                      ),
+                    onTap: () {},
+                    child: AutoSizeText("View All",
+                        style: FlutterFlowTheme.of(context).labelExtraSmall),
                   )
                 ],
               ),
@@ -342,12 +354,10 @@ class RoundedTextField extends StatelessWidget {
             ),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: AutoSizeText(
-                'Type, talk, ask?',
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: FlutterFlowTheme.of(context).titleSmall
-              ),
+              child: AutoSizeText('Type, talk, ask?',
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: FlutterFlowTheme.of(context).titleSmall),
             ),
           ),
         ),
@@ -440,8 +450,8 @@ class RemindersListView extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 1,
                                   style: TextStyle(
-                                    color:
-                                    FlutterFlowTheme.of(context).primaryText,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
                                     fontSize: 10.w,
                                     fontWeight: FontWeight.w400,
                                     fontFamily: 'Bricolage Grotesque',
@@ -467,7 +477,6 @@ class RemindersListView extends StatelessWidget {
                         GestureDetector(
                           child: Icon(
                             Icons.arrow_forward_ios,
-
                             color: FlutterFlowTheme.of(context).primaryText,
                           ),
                         ),
@@ -490,5 +499,3 @@ class RemindersListView extends StatelessWidget {
     );
   }
 }
-
-

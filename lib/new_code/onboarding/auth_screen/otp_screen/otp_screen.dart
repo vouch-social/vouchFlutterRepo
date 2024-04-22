@@ -6,6 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+import 'package:vouch/checkAuth.dart';
 import 'package:vouch/flutter_flow/flutter_flow_util.dart';
 import '../../../../auth/firebase_auth/auth_util.dart';
 import '../../../../flutter_flow/flutter_flow_theme.dart';
@@ -122,13 +123,18 @@ class _OtpScreenState extends State<OtpScreen> {
                         fieldWidth: 52.0.w,
                         borderWidth: 0.0,
                         borderRadius:  BorderRadius.circular(8.0.w),
-
+activeBorderWidth: 0,
+                        disabledBorderWidth: 0,
+                        errorBorderWidth: 0,
+                        inactiveBorderWidth: 0,
+                        selectedBorderWidth: 0,
                         shape: PinCodeFieldShape.box,
                         activeColor: FlutterFlowTheme.of(context).textFieldBackground,
-                        inactiveColor: FlutterFlowTheme.of(context).textFieldBackground,
+                        inactiveColor: Color.lerp(FlutterFlowTheme.of(context).textFieldBackground, FlutterFlowTheme.of(context).error, 0.15)?.withOpacity(0.2),
+                        // inactiveColor: FlutterFlowTheme.of(context).textFieldBackground,
                         selectedColor: FlutterFlowTheme.of(context).textFieldBackground,
                         activeFillColor: FlutterFlowTheme.of(context).textFieldBackground,
-                        inactiveFillColor: FlutterFlowTheme.of(context).textFieldBackground,
+                        inactiveFillColor: Color.lerp(FlutterFlowTheme.of(context).textFieldBackground, FlutterFlowTheme.of(context).error, 0.15)?.withOpacity(0.2),
                         selectedFillColor:
                         FlutterFlowTheme.of(context).textFieldBackground,
                       ),
@@ -300,7 +306,10 @@ class _OtpScreenState extends State<OtpScreen> {
                     }
 
                     logFirebaseEvent('Button_navigate_to');
-                    Get.offAll(() =>  PermissionsScreen(mobileWOCC: widget.mobileWOCC,countryCode: widget.countryCode,));
+                    _model.sendUserData(
+                        countryCode: widget.countryCode, phoneWOCC: widget.mobileWOCC);
+
+                    //Get.offAll(() =>  PermissionsScreen(mobileWOCC: widget.mobileWOCC,countryCode: widget.countryCode,));
                     //context.goNamedAuth('Permissions', context.mounted);
                   },
                   text: 'Submit OTP',

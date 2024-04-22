@@ -1,8 +1,12 @@
 import 'package:get/get.dart';
 import 'package:vouch/new_code/home_page/new_home_page.dart';
-
+import 'package:vouch/new_code/onboarding/goals/goals_screen.dart';
 import '../../../main.dart';
 import '../../../new_code/backend/backend_constants.dart';
+import '../../../new_code/backend/models/base_response.dart';
+import '../../../new_code/backend/models/check_user_model.dart';
+import '../../../new_code/backend/repos/auth_repo.dart';
+import '../../../new_code/onboarding/auth_screen/login_screen/components/country_code_remover.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
@@ -30,7 +34,9 @@ class _LinkedinWidgetState extends State<LinkedinWidget> {
   late LinkedinModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-
+  final AuthRepository repository = AuthRepository();
+  late bool isLinkedinSync;
+  int counter = 0;
   @override
   void initState() {
     super.initState();
@@ -39,49 +45,51 @@ class _LinkedinWidgetState extends State<LinkedinWidget> {
     logFirebaseEvent('screen_view', parameters: {'screen_name': 'Linkedin'});
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      var data = {
+        'phone': cleanPhone(currentPhoneNumber),
+        // 'phone':'919999999999'
+      };
       logFirebaseEvent('LINKEDIN_PAGE_Linkedin_ON_INIT_STATE');
       logFirebaseEvent('Linkedin_start_periodic_action');
       _model.instantTimer = InstantTimer.periodic(
         duration: const Duration(milliseconds: 4000),
         callback: (timer) async {
-          if (valueOrDefault(currentUserDocument?.linkedInvanityName, '') !=
-                  '') {
+
+          try {
+            BaseResponse<CheckUserModel> apiResult =
+            await repository.sendTokenToServer(data['phone']!);
+           isLinkedinSync =  apiResult.data.data.linkedinSync;
+            if (apiResult.status) {
+              print('Api Result : ${apiResult}');
+
+
+            } else {
+              print("No Access TokenFound");
+            }
+          } catch (error) {
+            print(error);
+          }
+          if (
+          //valueOrDefault(currentUserDocument?.linkedInvanityName, '') != ''
+          isLinkedinSync
+          ) {
             logFirebaseEvent('Linkedin_navigate_to');
 
-            Get.to(() => NewHomePage());
+            Get.to(() => GoalsScreen());
 
             logFirebaseEvent('Linkedin_stop_periodic_action');
             _model.instantTimer?.cancel();
-          } else {
+          } else if(counter == 5) {
+            logFirebaseEvent('Linkedin_navigate_to');
+            Get.to(() => GoalsScreen());
+          }else{
             logFirebaseEvent('Linkedin_backend_call');
-            _model.apiResult237 = await GetUserFromHashedPhoneCall.call(
-              hashedPhone: valueOrDefault(currentUserDocument?.hashedPhone, ''),
-            );
-            if ((_model.apiResult237?.succeeded ?? true)) {
-              logFirebaseEvent('Linkedin_backend_call');
-
-              await currentUserReference!.update(createUsersRecordData(
-                email: GetUserFromHashedPhoneCall.email(
-                  (_model.apiResult237?.jsonBody ?? ''),
-                ),
-                userName: GetUserFromHashedPhoneCall.name(
-                  (_model.apiResult237?.jsonBody ?? ''),
-                ),
-                photoUrl: GetUserFromHashedPhoneCall.photoURL(
-                  (_model.apiResult237?.jsonBody ?? ''),
-                ),
-                linkedInvanityName: GetUserFromHashedPhoneCall.vanityName(
-                  (_model.apiResult237?.jsonBody ?? ''),
-                ),
-                linkedInHeadLine: GetUserFromHashedPhoneCall.localizedHeadline(
-                  (_model.apiResult237?.jsonBody ?? ''),
-                ),
-                linkedInSub: GetUserFromHashedPhoneCall.linkedInSub(
-                  (_model.apiResult237?.jsonBody ?? ''),
-                ),
-              ));
-            }
+            print("Counter :$counter");
+            // _model.apiResult237 = await GetUserFromHashedPhoneCall.call(
+            //   hashedPhone: valueOrDefault(currentUserDocument?.hashedPhone, ''),
+            // );
           }
+          counter ++;
         },
         startImmediately: false,
       );

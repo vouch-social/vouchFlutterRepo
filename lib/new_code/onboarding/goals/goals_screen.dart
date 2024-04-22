@@ -54,7 +54,7 @@ class _GoalsScreenState extends State<GoalsScreen>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.all(16.0.w),
+              padding: EdgeInsets.symmetric(vertical: 0.0.w,horizontal: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -69,6 +69,9 @@ class _GoalsScreenState extends State<GoalsScreen>
                   AutoSizeText(
                       'Please set at least 3 goals. You will have the\nability to edit your choices at any point.',
                       style: FlutterFlowTheme.of(context).titleSmall),
+                  SizedBox(
+                    height: 16.0.h,
+                  )
                 ],
               ),
             ),

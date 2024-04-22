@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../flutter_flow/flutter_flow_theme.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import '../../../flutter_flow/flutter_flow_theme.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -11,6 +12,11 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+
+  final _controller = Get.put(SearchController());
+  bool _showSendIcon = false;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +44,11 @@ class _SearchScreenState extends State<SearchScreen> {
                           child: TextFormField(
                             autofocus: true,
                             cursorColor: FlutterFlowTheme.of(context).primaryText,
+                            onChanged: (text) {
+                              setState(() {
+                                _showSendIcon = text.isNotEmpty;
+                              });
+                            },
                             decoration: InputDecoration(
                               hintText: "Type,talk,ask?",
                               hintStyle: FlutterFlowTheme.of(context).titleSmall,
@@ -63,11 +74,16 @@ class _SearchScreenState extends State<SearchScreen> {
                           borderRadius: BorderRadius.circular(30.w),
                           color: FlutterFlowTheme.of(context).primary),
                       child: Icon(
-                        Icons.add,
-                        color: FlutterFlowTheme.of(context).white,
+                        _showSendIcon ? Icons.send : Icons.add, color: FlutterFlowTheme.of(context).white,
                       ),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      if (_showSendIcon) {
+
+                      } else {
+
+                      }
+                    },
                   )
                 ]
               )

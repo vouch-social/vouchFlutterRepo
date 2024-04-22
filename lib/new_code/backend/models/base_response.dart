@@ -8,7 +8,7 @@ class BaseResponse<T> {
 
   factory BaseResponse.fromJson(
       Map<String, dynamic> json, T Function(Map<String, dynamic>) fromJson) {
-    print("Json : ${json['data']}");
+    //print("Json : ${json['data']}");
     return BaseResponse(
       status: json['status'],
       message: json['message'],

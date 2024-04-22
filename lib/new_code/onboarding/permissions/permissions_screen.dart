@@ -54,8 +54,6 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
       //   hashedPhone: FFAppState().hashedPhone,
       // ));
 
-      _model.sendUserData(
-          countryCode: widget.countryCode, phoneWOCC: widget.mobileWOCC);
     });
   }
 

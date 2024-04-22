@@ -282,7 +282,7 @@ FFButtonOptions CTAButton(context){
       height: 64.0.w,
       color: FlutterFlowTheme.of(context).ffButton,
       textStyle: FlutterFlowTheme.of(context).buttonText,
-      elevation: 3.0,
+      elevation: 0.0,
       borderRadius: BorderRadius.circular(12.0.w),
     );
 }

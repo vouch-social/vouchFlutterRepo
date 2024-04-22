@@ -65,6 +65,7 @@ class _TagsScreenState extends State<TagsScreen> {
                       suggestionsBoxDecoration: BoxDecoration(
                         color: FlutterFlowTheme.of(context).primaryBackground
                       ),
+
                       maxChips: 3,
                       decoration: InputDecoration(
                         labelText: "Tags",
@@ -111,6 +112,7 @@ class _TagsScreenState extends State<TagsScreen> {
 
                       chipBuilder: (context, state, Tags profile) {
                         return InputChip(
+                          deleteIcon : Icon(Icons.clear,color: FlutterFlowTheme.of(context).primaryText,size: 16.0.h,),
                           labelStyle: FlutterFlowTheme.of(context).labelSmall,
                           backgroundColor: MediaQuery.of(context).platformBrightness == Brightness.dark ?
                           FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9):

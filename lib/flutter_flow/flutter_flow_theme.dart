@@ -9,7 +9,6 @@ import 'package:google_fonts/google_fonts.dart';
 abstract class FlutterFlowTheme {
   static FlutterFlowTheme of(BuildContext context) {
     final Brightness brightness = MediaQuery.of(context).platformBrightness;
-    print(brightness);
     if (brightness == Brightness.dark) {
       return DarkModeTheme();
     }

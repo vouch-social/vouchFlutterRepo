@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:vouch/checkAuth.dart';
+import 'package:vouch/new_code/home_page/new_home_page.dart';
 import 'package:vouch/new_code/onboarding/welcome_screen/welcome_model.dart';
 import '../../../auth/base_auth_user_provider.dart';
 import '../../../flutter_flow/flutter_flow_theme.dart';
@@ -35,17 +37,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       logFirebaseEvent('WELCOME_PAGE_Welcome_ON_INIT_STATE');
       if (loggedIn) {
         logFirebaseEvent('Welcome_navigate_to');
-
-        context.goNamed(
-          'Home',
-          extra: <String, dynamic>{
-            kTransitionInfoKey: const TransitionInfo(
-              hasTransition: true,
-              transitionType: PageTransitionType.fade,
-              duration: Duration(milliseconds: 0),
-            ),
-          },
-        );
+        //Get.to(() => NewHomePage());
+        // context.goNamed(
+        //   'Home',
+        //   extra: <String, dynamic>{
+        //     kTransitionInfoKey: const TransitionInfo(
+        //       hasTransition: true,
+        //       transitionType: PageTransitionType.fade,
+        //       duration: Duration(milliseconds: 0),
+        //     ),
+        //   },
+        // );
 
         return;
       } else {
