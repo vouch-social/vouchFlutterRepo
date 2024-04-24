@@ -154,7 +154,6 @@ class _PathsScreenState extends State<PathsScreen> {
                         child: AutoSizeText(
                           widget.pathsModel.data.paths[0].path[0].attributes.length == 0 ?
                           "Dummy Attribute" :
-
                           widget.pathsModel.data.paths[0].path[0].attributes[0].toString(),
                           style: FlutterFlowTheme.of(context).labelExtraSmall.override(
                               useGoogleFonts: false,

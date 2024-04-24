@@ -11,7 +11,7 @@ class HomeController extends GetxController{
   Future<void> getPathsList() async {
     var data = {
       "searchedHashedPhone":
-      "501ffdb122a1e51ef0926828d0ad093144c07e7ed4906a85d9e1b033cad947c1"
+      "1287462312a906808001e076166750f8407124a3bdf51364102aeae6ec389138"
     };
     try {
       BaseResponse<PathsModel> apiResult =

@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/new_code/common_widgets/vector.dart';
+import 'package:vouch/new_code/home_page/bounty_screen.dart';
 import 'package:vouch/new_code/home_page/home_page_controller.dart';
 import 'package:vouch/new_code/home_page/paths_screen/paths_screen.dart';
 import 'package:vouch/new_code/home_page/search_screen/search_screen.dart';
@@ -396,7 +397,9 @@ class _NewHomePageState extends State<NewHomePage> {
                         color: FlutterFlowTheme.of(context).white,
                       ),
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Get.to(() => BountyScreen());
+                    },
                   )
                 ],
               )
