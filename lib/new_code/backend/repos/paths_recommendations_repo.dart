@@ -42,7 +42,7 @@ class PathsRepository {
 
     try{
       dio.Response response = await _dioClient.postRequest(endPoint: '/api/pathnodes/search-path', data: data,
-        authToken: '${prefs!.getString(authToken)}',);
+        authToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6Ijg3MDAzNDI5MDEiLCJzdWIiOjQ1LCJpYXQiOjE3MTM5NDQxMzgsImV4cCI6MTc0NTUwMTczOH0.9RmJBEXabOvdXdFrGyxpTK3M08n-jb9eChklRlXckcU',);
       print('DIO RES Get Paths $response');
       if (response.data != null) {
         BaseResponse<PathsModel> result = BaseResponse<PathsModel>.fromJson(response.data, PathsModel.fromJson,);

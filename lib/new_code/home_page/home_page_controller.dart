@@ -13,13 +13,12 @@ class HomeController extends GetxController{
       "searchedHashedPhone":
       "501ffdb122a1e51ef0926828d0ad093144c07e7ed4906a85d9e1b033cad947c1"
     };
-
     try {
       BaseResponse<PathsModel> apiResult =
       await repository.getPaths(data);
       if (apiResult.status) {
         print('Api Result : ${apiResult.message}');
-        Get.to(PathsScreen(pathsModel: apiResult.data));
+        Get.to(() => PathsScreen(pathsModel: apiResult.data));
         //return apiResult.data;
       }
     } catch (error) {
