@@ -34,7 +34,6 @@ class _SearchScreenState extends State<SearchScreen> {
                     child: Material(
                       color: Colors.transparent,
                       child: Container(
-                          height: 52.h,
                           width: MediaQuery.of(context).size.width - 88.w,
                           padding: EdgeInsets.symmetric(horizontal: 12.0.w),
                           decoration: BoxDecoration(
@@ -42,11 +41,14 @@ class _SearchScreenState extends State<SearchScreen> {
                             color: FlutterFlowTheme.of(context).textFieldBackground,
                           ),
                           child: TextFormField(
+                            style: FlutterFlowTheme.of(context).titleSmall,
+                            minLines: 1,
+                            maxLines: 4,
                             autofocus: true,
                             cursorColor: FlutterFlowTheme.of(context).primaryText,
                             onChanged: (text) {
                               setState(() {
-                                _showSendIcon = text.isNotEmpty;
+                                _showSendIcon = text.removeAllWhitespace.isNotEmpty;
                               });
                             },
                             decoration: InputDecoration(

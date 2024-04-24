@@ -195,11 +195,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.to(() => const LoginScreen());
+                  //Get.to(() => const LoginScreen());
                 },
                 child: AutoSizeText(
                   'LogOut',
-                  style: FlutterFlowTheme.of(context).titleLarge,
+                  style: FlutterFlowTheme.of(context).labelSmall,
                 ),
               ),
               SizedBox(

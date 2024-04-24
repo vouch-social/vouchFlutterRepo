@@ -126,7 +126,7 @@ class _UserDetailsState extends State<UserDetails> {
                   children: [
                     Container(
                       height: 128.h,
-                      width: 128.h,
+                      width: 128.w,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(64.w),
                         color: FlutterFlowTheme.of(context).ffButton,
@@ -142,7 +142,7 @@ class _UserDetailsState extends State<UserDetails> {
                                   _imageFile!,
                                   fit: BoxFit.cover,
                                   height: 128.h,
-                                  width: 128,
+                                  width: 128.w,
                                 ),
                               )
                             : Text(

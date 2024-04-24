@@ -199,6 +199,7 @@ flutter:
     - assets/lottie_animations/
     - assets/rive_animations/
     - assets/pdfs/
+    - lib/new_code/home_page/paths_screen/paths_screen.dart
   fonts:
     - family: 'Bricolage Grotesque'
       fonts:

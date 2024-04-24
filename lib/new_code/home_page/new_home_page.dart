@@ -8,6 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/new_code/common_widgets/vector.dart';
+import 'package:vouch/new_code/home_page/home_page_controller.dart';
+import 'package:vouch/new_code/home_page/paths_screen/paths_screen.dart';
 import 'package:vouch/new_code/home_page/search_screen/search_screen.dart';
 import 'package:vouch/new_code/home_page/settings/settings_screen.dart';
 
@@ -22,6 +24,7 @@ class NewHomePage extends StatefulWidget {
 
 class _NewHomePageState extends State<NewHomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context,
@@ -34,6 +37,31 @@ class _NewHomePageState extends State<NewHomePage> {
       FlutterFlowTheme.of(context).container2,
       FlutterFlowTheme.of(context).container3,
       FlutterFlowTheme.of(context).container2,
+    ];
+
+    final List<String> names = [
+      'Nirant Ramakuru',
+      "Abhiram Bali",
+      'Shivani Narashimhan',
+      'Kumar Sharma'
+    ];
+    final List<String> images = [
+      'assets/image951.png',
+      "assets/image951.png",
+      'assets/image951.png',
+      'assets/image951.png'
+    ];
+    final List<String> headLine = [
+      'Strategy Builder | Leader',
+      "Car Dealer | Used Car Seller",
+      'Flutter Developer | Student',
+      'Web Designer | @ Vouch'
+    ];
+    final List<String> goals = [
+      'Want to find a driver for my car',
+      "Find a maths tutor",
+      'Find a DotNet Developer',
+      'Want to buy a second hand car'
     ];
 
     return Scaffold(
@@ -222,58 +250,108 @@ class _NewHomePageState extends State<NewHomePage> {
                 height: 8.0.h,
               ),
               SizedBox(
-                height: 120.h,
+                height: 144.h,
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   itemCount: colors.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                        height: 110.h,
-                        width: 200.w,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.0.w),
-                            color: colors[index]),
-                        margin: EdgeInsets.only(right: 8.0.w, top: 8.w),
-                        child: Padding(
-                          padding: EdgeInsets.all(12.0.w),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 36.w,
-                                height: 36.h,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30.0.w),
-                                  color: Colors.grey,
+                    return GestureDetector(
+                      onTap: () {
+                         controller.getPathsList();
+
+                      },
+                      child: Container(
+                          height: 120.h,
+                          width: 200.w,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12.0.w),
+                              color: colors[index]),
+                          margin: EdgeInsets.only(right: 8.0.w, top: 8.w),
+                          child: Padding(
+                            padding: EdgeInsets.all(12.0.w),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Hero(
+                                  tag:"image:$index",
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child:
+                                    Container(
+                                      width: 36.w,
+                                      height: 36.h,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(30.0.w),
+                                        color: Colors.grey,
+                                      ),
+                                      child: Image.asset(images[index]),
+                                    ),
+                                  ),
                                 ),
-                                child: Image.asset('assets/image951.png'),
-                              ),
-                              SizedBox(
-                                height: 8.0.h,
-                              ),
-                              AutoSizeText(
-                                "Nirant Ramakuru",
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                style: FlutterFlowTheme.of(context).titleLarge,
-                              ),
-                              SizedBox(height: 4.0.h),
-                              AutoSizeText(
-                                'Strategy Leader | Entrepreneur',
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 1,
-                                style: TextStyle(
-                                    fontSize: 11.sp,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'Bricolage Grotesque',
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText),
-                              )
-                            ],
-                          ),
-                        ));
+                                SizedBox(
+                                  height: 8.0.h,
+                                ),
+                                Hero(
+                                  tag: "name:$index",
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: AutoSizeText(
+                                      names[index],
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      style: FlutterFlowTheme.of(context)
+                                          .titleLarge
+                                          .override(
+                                            color: FlutterFlowTheme.of(context)
+                                                .fixedBlack,
+                                            useGoogleFonts: false,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 4.0.h),
+                                Hero(
+                                  tag: "headline:$index",
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: AutoSizeText(headLine[index],
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                        style: FlutterFlowTheme.of(context)
+                                            .labelExtraSmall
+                                            .override(
+                                                color: FlutterFlowTheme.of(context)
+                                                    .fixedBlack,
+                                                useGoogleFonts: false,
+                                                fontWeight: FontWeight.w300)),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 16.0.h,
+                                ),
+                                Hero(
+                                  tag: "goal:$index",
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: AutoSizeText(
+                                      goals[index],
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                        style: FlutterFlowTheme.of(context)
+                                            .labelExtraSmall
+                                            .override(
+                                                color: FlutterFlowTheme.of(context)
+                                                    .fixedBlack,
+                                                useGoogleFonts: false,
+                                                fontWeight: FontWeight.w400)),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )),
+                    );
                   },
                 ),
               ),

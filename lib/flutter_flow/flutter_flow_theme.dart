@@ -191,8 +191,8 @@ class DarkModeTheme extends FlutterFlowTheme {
   late Color fixedBlack = const Color(0xFF003943);
   late Color fixedWhite = const Color(0xFFFAFEFF);
   late Color white = const Color(0xFFFFFFFF);
-  late Color container1 = const Color(0xFFE5F7F6);
-  late Color container2 = const Color(0xFFDAE3FB);
+  late Color container1 = const Color(0xFFE5ECFF);
+  late Color container2 = const Color(0xFFFDEDED);
   late Color green1 = const Color(0xFF00AAA3);
   late Color container3 = const Color(0xFFB4AAFF);
   late Color border1 = const Color(0xFFE0ECEC);
