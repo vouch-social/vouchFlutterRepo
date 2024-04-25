@@ -15,6 +15,7 @@ import 'package:vouch/new_code/home_page/search_screen/search_screen.dart';
 import 'package:vouch/new_code/home_page/settings/settings_screen.dart';
 
 import '../../generated/assets.dart';
+import '../common_widgets/myAppBar.dart';
 
 class NewHomePage extends StatefulWidget {
   const NewHomePage({super.key});
@@ -66,6 +67,7 @@ class _NewHomePageState extends State<NewHomePage> {
     ];
 
     return Scaffold(
+      appBar: CustomAppBar(),
       key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -91,27 +93,7 @@ class _NewHomePageState extends State<NewHomePage> {
                       ),
                     ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.to(
-                        () => SettingsScreen(),
-                        transition: Transition.rightToLeftWithFade,
-                        duration: Duration(milliseconds: 500),
-                        //curve: Curves.easeInOut,
-                      );
-                    },
-                    child: Container(
-                        width: 44.w,
-                        height: 44.h,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30.0.w),
-                            color: FlutterFlowTheme.of(context).accent4),
-                        child: Padding(
-                          padding: EdgeInsets.all(12.w),
-                          child: vector(Assets.assetsUserIcon,
-                              height: 20.h, width: 20.w),
-                        )),
-                  )
+
                 ],
               ),
               SizedBox(
