@@ -7,15 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:vouch/flutter_flow/flutter_flow_widgets.dart';
 import 'package:vouch/generated/assets.dart';
+import 'package:vouch/new_code/home_page/paths_screen/path_success_screen.dart';
+import 'package:vouch/new_code/home_page/paths_screen/paths_controller.dart';
 
 import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../backend/models/paths_model.dart';
 
 class PathListView extends StatefulWidget {
-  final PathsModel pathsModel;
-  const PathListView({super.key, required this.pathsModel});
+  final AllPaths allPaths;
+  const PathListView({super.key, required this.allPaths});
 
   @override
   State<PathListView> createState() => _PathListViewState();
@@ -31,7 +34,7 @@ class _PathListViewState extends State<PathListView>
   void initState() {
     super.initState();
     _tabController = TabController(
-      length:  widget.pathsModel.data.finalPaths,
+      length: widget.allPaths.finalPaths,
       vsync: this,
     );
 
@@ -50,6 +53,8 @@ class _PathListViewState extends State<PathListView>
     });
   }
 
+  final pathController = Get.put(PathsController());
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -63,8 +68,15 @@ class _PathListViewState extends State<PathListView>
             child: TabBarView(
               controller: _tabController,
               children: List.generate(
-                widget.pathsModel.data.finalPaths,
-                (index) => MyListView(paths: widget.pathsModel.data.paths[index],totalCount: widget.pathsModel.data.finalPaths, index: index,),
+                widget.allPaths.finalPaths,
+                (index) => MyListView(
+                  paths: widget.allPaths.singlePathList[index],
+                  totalCount: widget.allPaths.finalPaths,
+                  index: index,
+                  onPressed: (data) {
+                    print('Button pressed in tab $index with data: $data');
+                  },
+                ),
               ),
             ),
           ),
@@ -77,7 +89,7 @@ class _PathListViewState extends State<PathListView>
               padding: EdgeInsets.all(16.0.w),
               labelPadding: EdgeInsets.zero,
               tabs: List.generate(
-                widget.pathsModel.data.finalPaths,
+                widget.allPaths.finalPaths,
                 (index) => Container(
                   margin: EdgeInsets.only(right: 4.0.w),
                   height: 4,
@@ -96,7 +108,30 @@ class _PathListViewState extends State<PathListView>
           Padding(
             padding: EdgeInsets.fromLTRB(16.0.h, 0, 16.0.h, 16.0.h),
             child: FFButtonWidget(
-                text: "CTA", onPressed: () {}, options: CTAButton(context)),
+                text: "CTA",
+                onPressed: () {
+                  // Call the callback function with the relevant data
+                  if (_tabController != null) {
+                    final int currentIndex = _tabController!.index;
+                    final data = widget.allPaths.singlePathList[currentIndex];
+                    MyListView(
+                      paths: widget.allPaths.singlePathList[currentIndex],
+                      totalCount: widget.allPaths.finalPaths,
+                      index: currentIndex,
+                      onPressed: (data) async{
+                        print(
+                            'Button pressed in tab $currentIndex with data: ${jsonEncode(data.pathNode)}');
+                        print(
+                            'Button pressed in tab $currentIndex with strength: ${(data.strength)}');
+                        print(
+                            'Button pressed in tab $currentIndex with length: ${(data.length)}');
+                        Get.to(PathSuccessScreen());
+                       await pathController.sendPath(pathList:jsonEncode(data.pathNode), strength: (data.strength), length: (data.length));
+                      },
+                    ).onPressed(data);
+                  }
+                },
+                options: CTAButton(context)),
           )
         ],
       ),
@@ -106,12 +141,16 @@ class _PathListViewState extends State<PathListView>
 
 class MyListView extends StatelessWidget {
   //final List<String> items = List<String>.generate(10, (i) => "Item $i");
-  final DataPath paths;
+  final SinglePath paths;
   final int totalCount;
   final int index;
+  final Function(SinglePath) onPressed;
   const MyListView({
     super.key,
-    required this.paths, required this.totalCount, required this.index,
+    required this.paths,
+    required this.totalCount,
+    required this.index,
+    required this.onPressed,
   });
 
   @override
@@ -136,7 +175,7 @@ class MyListView extends StatelessWidget {
                 ),
                 padding: EdgeInsets.all(4.0.h),
                 child: Text(
-                  "${index+1}/$totalCount",
+                  "${index + 1}/$totalCount",
                   style: FlutterFlowTheme.of(context).labelLarge.override(
                       useGoogleFonts: false,
                       color: FlutterFlowTheme.of(context).fixedWhite),
@@ -247,17 +286,14 @@ class MyListView extends StatelessWidget {
                             radius: 25.0,
                             backgroundColor:
                                 FlutterFlowTheme.of(context).fixedWhite,
-                            child:  CircleAvatar(
-                              backgroundImage:
-
-                              NetworkImage(
-                                  'https://images.unsplash.com/photo-1545987796-200677ee1011?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-                              ) ,
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                   paths.pathNode[index].image ?? 'https://images.unsplash.com/photo-1545987796-200677ee1011?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
                               // backgroundColor: Colors.transparent,
                               radius: 24.0,
                             ),
                           ),
-              paths.path[index].isRegistered
+                          paths.pathNode[index].isRegistered
                               ? Container(
                                   alignment: Alignment.center,
                                   height: 20.0.h,
@@ -284,7 +320,7 @@ class MyListView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "${paths.path[index].name}",
+                            "${paths.pathNode[index].name}",
                             style: FlutterFlowTheme.of(context)
                                 .labelMedium
                                 .override(
@@ -300,7 +336,7 @@ class MyListView extends StatelessWidget {
                             child: Text(
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
-                              "${paths.path[index].heading}",
+                              "${paths.pathNode[index].heading}",
                               style: FlutterFlowTheme.of(context)
                                   .labelExtraSmall
                                   .override(

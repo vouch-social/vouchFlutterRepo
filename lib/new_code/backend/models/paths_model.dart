@@ -4,78 +4,62 @@
 
 import 'dart:convert';
 
-PathsModel pathsModelFromJson(String str) =>
-    PathsModel.fromJson(json.decode(str));
+AllPaths pathsModelFromJson(String str) =>
+    AllPaths.fromJson(json.decode(str));
 
-String pathsModelToJson(PathsModel data) => json.encode(data.toJson());
+String pathsModelToJson(AllPaths data) => json.encode(data.toJson());
 
-class PathsModel {
-  Data data;
-
-  PathsModel({
-    required this.data,
-  });
-
-  factory PathsModel.fromJson(Map<String, dynamic> json) => PathsModel(
-        data: Data.fromJson(json),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "data": data.toJson(),
-      };
-}
-
-class Data {
-  List<DataPath> paths;
+class AllPaths {
+  List<SinglePath> singlePathList;
   int numPaths;
   int finalPaths;
 
-  Data({
-    required this.paths,
+  AllPaths({
+    required this.singlePathList,
     required this.numPaths,
     required this.finalPaths,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-        paths:
-            List<DataPath>.from(json["paths"].map((x) => DataPath.fromJson(x))),
+  factory AllPaths.fromJson(Map<String, dynamic> json) => AllPaths(
+        singlePathList:
+            List<SinglePath>.from(json["paths"].map((x) => SinglePath.fromJson(x))),
         numPaths: json["numPaths"],
         finalPaths: json["finalPaths"],
       );
 
   Map<String, dynamic> toJson() => {
-        "paths": List<dynamic>.from(paths.map((x) => x.toJson())),
+        "paths": List<dynamic>.from(singlePathList.map((x) => x.toJson())),
         "numPaths": numPaths,
         "finalPaths": finalPaths,
       };
 }
 
-class DataPath {
-  List<PathPath> path;
+class SinglePath {
+  List<PathNode> pathNode;
   int length;
   double strength;
 
-  DataPath({
-    required this.path,
+  SinglePath({
+    required this.pathNode,
     required this.length,
     required this.strength,
   });
 
-  factory DataPath.fromJson(Map<String, dynamic> json) => DataPath(
-        path:
-            List<PathPath>.from(json["path"].map((x) => PathPath.fromJson(x))),
+  factory SinglePath.fromJson(Map<String, dynamic> json) => SinglePath(
+        pathNode:
+            List<PathNode>.from(json["path"].map((x) => PathNode.fromJson(x))),
         length: json["length"],
         strength: json["strength"]?.toDouble(),
       );
 
   Map<String, dynamic> toJson() => {
-        "path": List<dynamic>.from(path.map((x) => x.toJson())),
+        "path": List<dynamic>.from(pathNode.map((x) => x.toJson())),
         "length": length,
         "strength": strength,
       };
 }
 
-class PathPath {
+class PathNode {
   dynamic name;
   dynamic contactHashedPhone;
   double strengthToNext;
@@ -84,7 +68,7 @@ class PathPath {
   dynamic image = 'https://media.licdn.com/dms/image/C5603AQEFnqHFu0ougw/profile-displayphoto-shrink_100_100/0/1517460846161?e=1715212800&v=beta&t=3d7rHcIDt_64AW55zFyWNnBhdeN_YtMMVuSE-qbRmVA';
   List<Attribute> attributes;
 
-  PathPath({
+  PathNode({
     this.name,
     this.contactHashedPhone,
     required this.strengthToNext,
@@ -94,7 +78,7 @@ class PathPath {
     required this.attributes,
   });
 
-  factory PathPath.fromJson(Map<String, dynamic> json) => PathPath(
+  factory PathNode.fromJson(Map<String, dynamic> json) => PathNode(
         name: json["name"],
         contactHashedPhone: json["contactHashedPhone"],
         strengthToNext: json["strengthToNext"]?.toDouble(),

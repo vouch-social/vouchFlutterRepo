@@ -38,14 +38,14 @@ class PathsRepository {
 
 
 
-  Future<BaseResponse<PathsModel>> getPaths(dynamic data) async {
+  Future<BaseResponse<AllPaths>> getPaths(dynamic data) async {
 
     try{
       dio.Response response = await _dioClient.postRequest(endPoint: '/api/pathnodes/search-path', data: data,
         authToken: '${prefs!.getString(authToken)}',);
       print('DIO RES Get Paths $response');
       if (response.data != null) {
-        BaseResponse<PathsModel> result = BaseResponse<PathsModel>.fromJson(response.data, PathsModel.fromJson,);
+        BaseResponse<AllPaths> result = BaseResponse<AllPaths>.fromJson(response.data, AllPaths.fromJson,);
         return result;
       } else {
         throw Exception('Response data is null');
@@ -55,5 +55,24 @@ class PathsRepository {
       rethrow;
     }
   }
+
+  Future<BaseResponse<AllPaths>> sendSelectedPath(dynamic data) async {
+
+    try{
+      dio.Response response = await _dioClient.postRequest(endPoint: '/api/pathnodes/selected-path', data: data,
+        authToken: '${prefs!.getString(authToken)}',);
+      print('DIO RES Send Paths $response');
+      if (response.data != null) {
+        BaseResponse<AllPaths> result = BaseResponse<AllPaths>.fromJson(response.data, AllPaths.fromJson,);
+        return result;
+      } else {
+        throw Exception('Response data is null');
+      }
+    } catch (error) {
+      print(error);
+      rethrow;
+    }
+  }
+
 
 }
