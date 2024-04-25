@@ -155,7 +155,7 @@ class _MyAppState extends State<MyApp> {
                 if (snapshot.data == true) {
                   return newCustomNav();
                 } else {
-                  return WelcomeScreen();
+                  return const WelcomeScreen();
                 }
               },
             )),

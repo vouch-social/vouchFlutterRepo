@@ -306,7 +306,7 @@ activeBorderWidth: 0,
                     }
 
                     logFirebaseEvent('Button_navigate_to');
-                    _model.sendUserData(
+                     _model.sendUserData(
                         countryCode: widget.countryCode, phoneWOCC: widget.mobileWOCC);
 
                     //Get.offAll(() =>  PermissionsScreen(mobileWOCC: widget.mobileWOCC,countryCode: widget.countryCode,));

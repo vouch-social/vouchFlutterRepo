@@ -14,11 +14,11 @@ class HomeController extends GetxController{
       "1287462312a906808001e076166750f8407124a3bdf51364102aeae6ec389138"
     };
     try {
-      BaseResponse<PathsModel> apiResult =
+      BaseResponse<AllPaths> apiResult =
       await repository.getPaths(data);
       if (apiResult.status) {
         print('Api Result : ${apiResult.message}');
-        Get.to(() => PathsScreen(pathsModel: apiResult.data));
+        Get.to(() => PathsScreen(allPaths: apiResult.data));
         //return apiResult.data;
       }
     } catch (error) {

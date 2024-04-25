@@ -2,13 +2,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:vouch/new_code/home_page/bounty_controller.dart';
 import 'package:vouch/new_code/home_page/settings/settings_screen.dart';
 
-import '../../flutter_flow/flutter_flow_theme.dart';
-import '../../flutter_flow/flutter_flow_widgets.dart';
-import '../../generated/assets.dart';
-import '../common_widgets/vector.dart';
+import '../../../flutter_flow/flutter_flow_theme.dart';
+import '../../../flutter_flow/flutter_flow_widgets.dart';
+import '../../../generated/assets.dart';
+import '../../common_widgets/vector.dart';
+import 'bounty_controller.dart';
 
 class BountyScreen extends StatefulWidget {
   const BountyScreen({super.key});
@@ -42,6 +42,8 @@ class _BountyScreenState extends State<BountyScreen> {
       print(controller.responseTimeController.text);
     });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +126,7 @@ class _BountyScreenState extends State<BountyScreen> {
               ),
               child: TextFormField(
                 controller: controller.linkedinUrlController,
-                minLines: 1,
+                minLines: 2,
                 maxLines: 4,
                 style: FlutterFlowTheme.of(context).labelSmall,
                 cursorColor: FlutterFlowTheme.of(context).primaryText,
@@ -161,9 +163,6 @@ class _BountyScreenState extends State<BountyScreen> {
                 _buildChip("Investment"),
               ],
             ),
-            SizedBox(
-              height: 8.0.h,
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -183,15 +182,16 @@ class _BountyScreenState extends State<BountyScreen> {
             SizedBox(
               height: 16.0.h,
             ),
-            Slider(
+            Slider.adaptive(
+              activeColor: FlutterFlowTheme.of(context).container1,
               divisions: 2,
               value: sliderValue,
               onChanged: _onSliderChanged,
             ),
 
-            SizedBox(
-              height: 12.0.h,
-            ),
+            // SizedBox(
+            //   height: 12.0.h,
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -199,21 +199,21 @@ class _BountyScreenState extends State<BountyScreen> {
                 style: FlutterFlowTheme.of(context).labelExtraSmall.override(
                   useGoogleFonts: false,
                   fontWeight: FontWeight.w400,
-                  color: sliderValue == 0.0 ? FlutterFlowTheme.of(context).primaryText.withOpacity(0.4) : Colors.yellow
+                  color: sliderValue == 0.0 ? FlutterFlowTheme.of(context).primary : FlutterFlowTheme.of(context).primaryText.withOpacity(0.4)
                 ),
                 ),
                 AutoSizeText('With in\n24 hrs',
                   style: FlutterFlowTheme.of(context).labelExtraSmall.override(
                       useGoogleFonts: false,
                       fontWeight: FontWeight.w400,
-                      color: sliderValue == 0.5 ? FlutterFlowTheme.of(context).primaryText.withOpacity(0.4) : Colors.red
+                      color: sliderValue == 0.5 ? FlutterFlowTheme.of(context).primary : FlutterFlowTheme.of(context).primaryText.withOpacity(0.4)
                   ),
                 ),
                 AutoSizeText('With in\n72 hrs',
                   style: FlutterFlowTheme.of(context).labelExtraSmall.override(
                       useGoogleFonts: false,
                       fontWeight: FontWeight.w400,
-                      color: sliderValue == 1 ? FlutterFlowTheme.of(context).primaryText.withOpacity(0.4) : Colors.purpleAccent
+                      color: sliderValue == 1 ? FlutterFlowTheme.of(context).primary : FlutterFlowTheme.of(context).primaryText.withOpacity(0.4)
                   ),
                 ),
               ],
@@ -234,21 +234,24 @@ class _BountyScreenState extends State<BountyScreen> {
     );
   }
   Widget _buildChip(String label) {
+    final bool isSelected = controller.bountyContextController.text == label;
+
     return GestureDetector(
       onTap: () {
         _handleChipSelection(label);
       },
       child: Chip(
         elevation: 0.0,
-        // color: MaterialStateProperty.all(FlutterFlowTheme.of(context).textFieldBackground),
-        backgroundColor:
-        MediaQuery.of(context).platformBrightness == Brightness.dark ?
-
-        FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9):
-        FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
-        label: AutoSizeText(label,
-
-          style: FlutterFlowTheme.of(context).labelExtraSmall,
+        backgroundColor: isSelected
+            ? FlutterFlowTheme.of(context).accent1
+            : MediaQuery.of(context).platformBrightness == Brightness.dark
+            ? FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9)
+            : FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
+        label: AutoSizeText(
+          label,
+          style: isSelected
+              ? FlutterFlowTheme.of(context).labelExtraSmall.copyWith(color: FlutterFlowTheme.of(context).fixedBlack)
+              : FlutterFlowTheme.of(context).labelExtraSmall,
         ),
       ),);
   }
