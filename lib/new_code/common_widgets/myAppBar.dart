@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:vouch/new_code/common_widgets/history.dart';
+import 'package:vouch/new_code/home_page/history_screen/history.dart';
 import 'package:vouch/new_code/common_widgets/vector.dart';
 
 import '../../flutter_flow/flutter_flow_theme.dart';
@@ -95,7 +95,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ? GestureDetector(
                 onTap: () {
                   Get.to(
-                        () => historyScreen(),
+                        () => HistoryScreen(),
                     transition: Transition.rightToLeft,
                     duration: Duration(milliseconds: 500),
                     //curve: Curves.easeInOut,

@@ -1,24 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
-import '../../flutter_flow/flutter_flow_theme.dart';
-import 'myAppBar.dart';
+import '../../../flutter_flow/flutter_flow_theme.dart';
+import '../../backend/models/my_raised_bounty_history_model.dart';
+import '../../common_widgets/myAppBar.dart';
+import 'history_controller.dart';
+import 'my_bounty_history.dart';
 
-class historyScreen extends StatefulWidget {
-  const historyScreen({super.key});
+class HistoryScreen extends StatefulWidget {
+  const HistoryScreen({super.key});
 
   @override
-  State<historyScreen> createState() => _historyScreenState();
+  State<HistoryScreen> createState() => _HistoryScreenState();
 }
 
 
-class _historyScreenState extends State<historyScreen> with TickerProviderStateMixin {
+class _HistoryScreenState extends State<HistoryScreen> with TickerProviderStateMixin {
+  late final MyBountyHistoryModel myBountyHistoryModel;
+
   late TabController _tabController;
   int _currentIndex = 0;
+
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(_handleTabSelection);
   }
 
@@ -27,6 +35,7 @@ class _historyScreenState extends State<historyScreen> with TickerProviderStateM
     _tabController.dispose();
     super.dispose();
   }
+
 
   void _handleTabSelection() {
     setState(() {
@@ -58,7 +67,6 @@ class _historyScreenState extends State<historyScreen> with TickerProviderStateM
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-
                   "My Bounties",
                   style: FlutterFlowTheme.of(context).titleSmall,
                 ),
@@ -78,10 +86,7 @@ class _historyScreenState extends State<historyScreen> with TickerProviderStateM
               physics: const BouncingScrollPhysics(),
               controller: _tabController,
               children: [
-
-                Container(
-                  color: Colors.yellow,
-                )     ,
+                MyRaisedBountyHistory(),
             Container(
             color: Colors.black,
           )
@@ -90,7 +95,6 @@ class _historyScreenState extends State<historyScreen> with TickerProviderStateM
           ),
         ],
       ),
-    )
-      ;
+    );
   }
 }

@@ -20,29 +20,30 @@ class BountyScreen extends StatefulWidget {
 }
 
 class _BountyScreenState extends State<BountyScreen> {
-  double sliderValue = 0.0;
+  int sliderValue = 2;
   final controller = Get.put(BountyController());
   void _handleChipSelection(String text) {
     setState(() {
-      controller.bountyContextController.text = text;
-      print(controller.bountyContextController.text);
+      controller.toggleChipSelection(text);
+      print(controller.selectedContexts);
     });
   }
 
   void _onSliderChanged(double value) {
     setState(() {
-     sliderValue = value;
-      if (value == 0.0) {
-        controller.responseTimeController.text = 'Immediately less than 24 hrs';
-      } else if (value == 0.5) {
-        controller.responseTimeController.text = 'Within 24 hrs';
-      } else if (value == 1.0) {
-        controller.responseTimeController.text = 'Within 72 hrs';
+      if (value <= 0.33) {
+        controller.updateResponseTime(ResponseTime.Immediately);
+        sliderValue = 1;
+      } else if (value <= 0.66) {
+        controller.updateResponseTime(ResponseTime.Within24Hrs);
+        sliderValue = 2;
+      } else {
+        controller.updateResponseTime(ResponseTime.Within72Hrs);
+        sliderValue = 3;
       }
-      print("Slider value $sliderValue");
-      print(controller.responseTimeController.text);
     });
   }
+
 
 
 
@@ -142,7 +143,8 @@ class _BountyScreenState extends State<BountyScreen> {
               inactiveColor: FlutterFlowTheme.of(context).pastelBlue,
               thumbColor : FlutterFlowTheme.of(context).primaryText,
               divisions: 2,
-              value: sliderValue,
+
+              value: (sliderValue-1)/2,
               onChanged: _onSliderChanged,
             ),
 
@@ -180,6 +182,7 @@ class _BountyScreenState extends State<BountyScreen> {
             const Spacer(),
             FFButtonWidget(
                 onPressed: () async {
+                  await controller.sendRaisedBounty(sliderValue);
                 },
                 text: 'Ask Network',
                 options: CTAButton(context)),
@@ -193,7 +196,7 @@ class _BountyScreenState extends State<BountyScreen> {
     );
   }
   Widget _buildChip(String label) {
-    final bool isSelected = controller.bountyContextController.text == label;
+    final bool isSelected = controller.selectedContexts.contains(label);
 
     return GestureDetector(
       onTap: () {

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:vouch/bounty/raise_bounty/raise_bounty_widget.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/new_code/common_widgets/bountyWidget.dart';
 import 'package:vouch/new_code/home_page/bounty_screen/bounty_controller.dart';
@@ -391,7 +392,7 @@ class _NewHomePageState extends State<NewHomePage> {
                       ),
                     ),
                     onTap: () {
-                      Get.to(() => BountyContainer());
+                      Get.to(() => BountyScreen());
                     },
                   )
                 ],

@@ -109,28 +109,52 @@ class _PathListViewState extends State<PathListView>
             padding: EdgeInsets.fromLTRB(16.0.h, 0, 16.0.h, 16.0.h),
             child: FFButtonWidget(
                 text: "CTA",
-                onPressed: () {
+                onPressed: () async{
                   // Call the callback function with the relevant data
                   if (_tabController != null) {
                     final int currentIndex = _tabController!.index;
                     final data = widget.allPaths.singlePathList[currentIndex];
-                    MyListView(
+
+                    Map<String, dynamic> pathNodeToMap(PathNode node) {
+                      return {
+                        "name": node.name,
+                        "contactHashedPhone": node.contactHashedPhone,
+                        "strengthToNext": node.strengthToNext,
+                        "isRegistered": node.isRegistered,
+                        "heading": node.heading,
+                        "image": node.image,
+                        "attributes": node.attributes.map((attr) => {
+                          "createdAt": attr.createdAt,
+                          "updatedAt": attr.updatedAt,
+                          "id": attr.id,
+                          "userId": attr.userId,
+                          "attributes": attr.attributes,
+                        }).toList(),
+                      };
+                    }
+
+
+                    await MyListView(
                       paths: widget.allPaths.singlePathList[currentIndex],
                       totalCount: widget.allPaths.finalPaths,
                       index: currentIndex,
-                      onPressed: (data) async{
+                      onPressed: (data) async {
+                        print("PathList : ${data.pathNode.map((node) => pathNodeToMap(node)).toList()}");
                         print(
-                            'Button pressed in tab $currentIndex with data: ${jsonEncode(data.pathNode)}');
-                        print(
-                            'Button pressed in tab $currentIndex with strength: ${(data.strength)}');
-                        print(
-                            'Button pressed in tab $currentIndex with length: ${(data.length)}');
-                        Get.to(PathSuccessScreen());
-                       await pathController.sendPath(pathList:jsonEncode(data.pathNode), strength: (data.strength), length: (data.length));
+                            'Button pressed in tab $currentIndex with data: ${jsonEncode(data.pathNode)}'
+                        );
+                        print('Button pressed in tab $currentIndex with strength: ${(data.strength)}');
+                        print('Button pressed in tab $currentIndex with length: ${(data.length)}');
+                        await pathController.sendPath(
+                            pathList: data.pathNode.map((node) => pathNodeToMap(node)).toList(),
+                            strength: data.strength,
+                            length: data.length
+                        );
                       },
                     ).onPressed(data);
                   }
                 },
+
                 options: CTAButton(context)),
           )
         ],
