@@ -14,7 +14,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showBackButton;
   final bool showProfileButton;
   final String title;
-
+  final Color backgroundColor;
   final bool showHistoryButton;
   final bool showNotificationButton;
 
@@ -24,6 +24,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     Key? key,
     this.showBackButton = false,
     this.title = "",
+    this.backgroundColor = Colors.transparent,
     this.showProfileButton = true,
     this.onSettingsButtonPressed,
     this.showHistoryButton = true,
@@ -33,7 +34,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      backgroundColor: backgroundColor == Colors.transparent ? FlutterFlowTheme.of(context).primaryBackground : backgroundColor,
       elevation: 0,
       leading: showBackButton
           ? GestureDetector(

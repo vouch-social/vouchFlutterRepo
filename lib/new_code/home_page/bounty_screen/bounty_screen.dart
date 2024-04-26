@@ -1,7 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:vouch/new_code/common_widgets/myAppBar.dart';
 import 'package:vouch/new_code/home_page/settings/settings_screen.dart';
 
 import '../../../flutter_flow/flutter_flow_theme.dart';
@@ -18,7 +20,6 @@ class BountyScreen extends StatefulWidget {
 }
 
 class _BountyScreenState extends State<BountyScreen> {
-
   double sliderValue = 0.0;
   final controller = Get.put(BountyController());
   void _handleChipSelection(String text) {
@@ -48,6 +49,9 @@ class _BountyScreenState extends State<BountyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(
+        showBackButton: true,
+      ),
       resizeToAvoidBottomInset: false,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
@@ -56,49 +60,6 @@ class _BountyScreenState extends State<BountyScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
           children:  [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: (){
-                    Get.back();
-                  },
-                  child: Container(
-                    height: 44,
-                    width: 44,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(22.0.w),
-                        color: FlutterFlowTheme.of(context).fixedWhite,
-                        border: Border.all(
-                            color: FlutterFlowTheme.of(context).fixedBlack.withOpacity(.20)
-                        )
-                    ),
-                    child: Center(
-                      child: Icon(Icons.arrow_back,color: FlutterFlowTheme.of(context).fixedBlack,),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: (){
-                    Get.to( () => const SettingsScreen());
-                  },
-                  child: Container(
-                      width: 44.w,
-                      height: 44.h,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30.0.w),
-                          color: FlutterFlowTheme.of(context).accent4),
-                      child: Padding(
-                        padding: EdgeInsets.all(12.w),
-                        child: vector(Assets.assetsUserIcon,
-                            height: 20.h, width: 20.w),
-                      )),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
             AutoSizeText(
               'Raise a new',
               style: FlutterFlowTheme.of(context).headlineLarge,
@@ -154,23 +115,17 @@ class _BountyScreenState extends State<BountyScreen> {
             SizedBox(
               height: 16.0.h,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+            Wrap(
+              spacing: 4.0.w,
+              children : [
                 _buildChip("CA Farm"),
                 _buildChip("Business"),
                 _buildChip("Personal"),
                 _buildChip("Investment"),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
                 _buildChip("Research"),
                 _buildChip("Volunteering"),
                 _buildChip("Blood Donation"),
                 _buildChip("Other"),
-
               ],
             ),
             SizedBox(
@@ -183,15 +138,19 @@ class _BountyScreenState extends State<BountyScreen> {
               height: 16.0.h,
             ),
             Slider.adaptive(
-              activeColor: FlutterFlowTheme.of(context).container1,
+              activeColor: FlutterFlowTheme.of(context).sliderActive,
+              inactiveColor: FlutterFlowTheme.of(context).pastelBlue,
+              thumbColor : FlutterFlowTheme.of(context).primaryText,
               divisions: 2,
               value: sliderValue,
               onChanged: _onSliderChanged,
             ),
 
-            // SizedBox(
-            //   height: 12.0.h,
-            // ),
+
+            SizedBox(
+              height: 12.0.h,
+            ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -247,7 +206,7 @@ class _BountyScreenState extends State<BountyScreen> {
             : MediaQuery.of(context).platformBrightness == Brightness.dark
             ? FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9)
             : FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
-        label: AutoSizeText(
+        label: Text(
           label,
           style: isSelected
               ? FlutterFlowTheme.of(context).labelExtraSmall.copyWith(color: FlutterFlowTheme.of(context).fixedBlack)

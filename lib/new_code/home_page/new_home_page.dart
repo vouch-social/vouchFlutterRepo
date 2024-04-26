@@ -7,8 +7,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
-import 'package:vouch/new_code/common_widgets/vector.dart';
-import 'package:vouch/new_code/home_page/bounty_screen.dart';
+import 'package:vouch/new_code/common_widgets/bountyWidget.dart';
+import 'package:vouch/new_code/home_page/bounty_screen/bounty_controller.dart';
 import 'package:vouch/new_code/home_page/home_page_controller.dart';
 import 'package:vouch/new_code/home_page/paths_screen/paths_screen.dart';
 import 'package:vouch/new_code/home_page/search_screen/search_screen.dart';
@@ -16,6 +16,7 @@ import 'package:vouch/new_code/home_page/settings/settings_screen.dart';
 
 import '../../generated/assets.dart';
 import '../common_widgets/myAppBar.dart';
+import 'bounty_screen/bounty_screen.dart';
 
 class NewHomePage extends StatefulWidget {
   const NewHomePage({super.key});
@@ -93,7 +94,6 @@ class _NewHomePageState extends State<NewHomePage> {
                       ),
                     ],
                   ),
-
                 ],
               ),
               SizedBox(
@@ -242,8 +242,7 @@ class _NewHomePageState extends State<NewHomePage> {
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
                       onTap: () {
-                         controller.getPathsList();
-
+                        controller.getPathsList();
                       },
                       child: Container(
                           height: 120.h,
@@ -258,15 +257,15 @@ class _NewHomePageState extends State<NewHomePage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Hero(
-                                  tag:"image:$index",
+                                  tag: "image:$index",
                                   child: Material(
                                     color: Colors.transparent,
-                                    child:
-                                    Container(
+                                    child: Container(
                                       width: 36.w,
                                       height: 36.h,
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(30.0.w),
+                                        borderRadius:
+                                            BorderRadius.circular(30.0.w),
                                         color: Colors.grey,
                                       ),
                                       child: Image.asset(images[index]),
@@ -305,8 +304,9 @@ class _NewHomePageState extends State<NewHomePage> {
                                         style: FlutterFlowTheme.of(context)
                                             .labelExtraSmall
                                             .override(
-                                                color: FlutterFlowTheme.of(context)
-                                                    .fixedBlack,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .fixedBlack,
                                                 useGoogleFonts: false,
                                                 fontWeight: FontWeight.w300)),
                                   ),
@@ -318,15 +318,15 @@ class _NewHomePageState extends State<NewHomePage> {
                                   tag: "goal:$index",
                                   child: Material(
                                     color: Colors.transparent,
-                                    child: AutoSizeText(
-                                      goals[index],
+                                    child: AutoSizeText(goals[index],
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1,
                                         style: FlutterFlowTheme.of(context)
                                             .labelExtraSmall
                                             .override(
-                                                color: FlutterFlowTheme.of(context)
-                                                    .fixedBlack,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .fixedBlack,
                                                 useGoogleFonts: false,
                                                 fontWeight: FontWeight.w400)),
                                   ),
@@ -345,7 +345,7 @@ class _NewHomePageState extends State<NewHomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   AutoSizeText(
-                    "Your Reminders",
+                    "Updates",
                     style: FlutterFlowTheme.of(context).headlineLarge,
                   ),
                   GestureDetector(
@@ -359,8 +359,19 @@ class _NewHomePageState extends State<NewHomePage> {
                 height: 16.0.h,
               ),
               const RemindersListView(),
+              // SizedBox(
+              //   height: 8.0.h,
+              // ),
+              Row(
+                children: [
+                  AutoSizeText(
+                    "Requests",
+                    style: FlutterFlowTheme.of(context).headlineLarge,
+                  ),
 
-              const Spacer(),
+                ],
+              ),
+               const Spacer(),
               Row(
                 children: [
                   const RoundedTextField(),
@@ -380,7 +391,7 @@ class _NewHomePageState extends State<NewHomePage> {
                       ),
                     ),
                     onTap: () {
-                      Get.to(() => BountyScreen());
+                      Get.to(() => BountyContainer());
                     },
                   )
                 ],
@@ -449,8 +460,7 @@ class RemindersListView extends StatelessWidget {
       FlutterFlowTheme.of(context).container2,
     ];
 
-    return Container(
-      height: 192.h,
+    return Expanded(
       child: ListView.separated(
         itemBuilder: (BuildContext context, int index) {
           return Container(
@@ -472,7 +482,7 @@ class RemindersListView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         AutoSizeText(
-                          "Bhaagyasree Kuruvilla",
+                          "Find Camera repairman",
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(
@@ -484,7 +494,7 @@ class RemindersListView extends StatelessWidget {
                         ),
                         SizedBox(height: 4.h),
                         AutoSizeText(
-                          "#CEO #businessman",
+                          "Shantanu accepted vouch request",
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                           style: TextStyle(
@@ -497,54 +507,9 @@ class RemindersListView extends StatelessWidget {
                       ],
                     ),
                     const Spacer(),
-                    Row(
-                      children: [
-                        Column(
-                          children: [
-                            Container(
-                              padding: EdgeInsets.all(4.0.w),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6.00.w),
-                                color: reminderColors[index],
-                              ),
-                              child: Center(
-                                child: AutoSizeText(
-                                  "Birthday",
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                  style: TextStyle(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    fontSize: 10.w,
-                                    fontWeight: FontWeight.w400,
-                                    fontFamily: 'Bricolage Grotesque',
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 4.0.h),
-                            AutoSizeText(
-                              "Tomorrow",
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style: TextStyle(
-                                color: FlutterFlowTheme.of(context).fixedBlack,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Bricolage Grotesque',
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(width: 8.0.w),
-                        GestureDetector(
-                          child: Icon(
-                            Icons.arrow_forward_ios,
-                            color: FlutterFlowTheme.of(context).primaryText,
-                          ),
-                        ),
-                      ],
-                    ),
+                    AutoSizeText(
+                      '10:10 AM',style: FlutterFlowTheme.of(context).labelExtraSmall,
+                    )
                   ],
                 ),
               ],
@@ -557,7 +522,7 @@ class RemindersListView extends StatelessWidget {
             thickness: 1.sp,
           );
         },
-        itemCount: 3,
+        itemCount: 2,
       ),
     );
   }

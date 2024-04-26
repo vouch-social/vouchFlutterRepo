@@ -64,6 +64,7 @@ class PathNode {
   dynamic contactHashedPhone;
   double strengthToNext;
   bool isRegistered;
+  dynamic status;
   dynamic heading;
   dynamic image = 'https://media.licdn.com/dms/image/C5603AQEFnqHFu0ougw/profile-displayphoto-shrink_100_100/0/1517460846161?e=1715212800&v=beta&t=3d7rHcIDt_64AW55zFyWNnBhdeN_YtMMVuSE-qbRmVA';
   List<Attribute> attributes;
@@ -74,6 +75,7 @@ class PathNode {
     required this.strengthToNext,
     required this.isRegistered,
     required this.heading,
+    this.status,
     required this.image,
     required this.attributes,
   });
@@ -85,6 +87,7 @@ class PathNode {
         isRegistered: json["isRegistered"],
         heading: json["heading"],
         image: json["image"],
+        status: json["status"],
         attributes: List<Attribute>.from(
             json["attributes"].map((x) => Attribute.fromJson(x))),
       );
@@ -96,6 +99,7 @@ class PathNode {
         "isRegistered": isRegistered,
         "heading": heading,
         "image": image,
+        "status": status,
         "attributes": List<dynamic>.from(attributes.map((x) => x.toJson())),
       };
 }

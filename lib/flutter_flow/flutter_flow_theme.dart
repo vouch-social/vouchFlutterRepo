@@ -51,6 +51,8 @@ abstract class FlutterFlowTheme {
   late Color border1;
   late Color border2;
   late Color textFieldBackground;
+  late Color sliderActive;
+  late Color pastelBlue;
 
   @Deprecated('Use displaySmallFamily instead')
   String get title1Family => displaySmallFamily;
@@ -156,6 +158,8 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color container3 = const Color(0xFFB4AAFF);
   late Color border1 = const Color(0xFFE0ECEC);
   late Color border2 = const Color(0xFFE9E9E9);
+  late Color sliderActive = const Color(0xFFC1CFF6);
+  late Color pastelBlue = const Color(0xFFE5ECFF);
 }
 
 class DarkModeTheme extends FlutterFlowTheme {
@@ -197,6 +201,8 @@ class DarkModeTheme extends FlutterFlowTheme {
   late Color container3 = const Color(0xFFB4AAFF);
   late Color border1 = const Color(0xFFE0ECEC);
   late Color border2 = const Color(0xFFE9E9E9);
+  late Color sliderActive = const Color(0xFFC1CFF6);
+  late Color pastelBlue = const Color(0xFFE5ECFF);
 }
 
 abstract class Typography {

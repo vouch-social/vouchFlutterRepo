@@ -332,19 +332,22 @@ class MyListView extends StatelessWidget {
                             height: 4.0.h,
                           ),
                           SizedBox(
-                            width: 200.w,
-                            child: Text(
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              "${paths.pathNode[index].heading}",
-                              style: FlutterFlowTheme.of(context)
-                                  .labelExtraSmall
-                                  .override(
-                                    fontWeight: FontWeight.w400,
-                                    useGoogleFonts: false,
-                                    color:
-                                        FlutterFlowTheme.of(context).fixedWhite,
-                                  ),
+                            width: 240.w,
+                            child: Padding(
+                              padding:  EdgeInsets.only(right: 48.0.w),
+                              child: Text(
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                "${paths.pathNode[index].heading}",
+                                style: FlutterFlowTheme.of(context)
+                                    .labelExtraSmall
+                                    .override(
+                                      fontWeight: FontWeight.w400,
+                                      useGoogleFonts: false,
+                                      color:
+                                          FlutterFlowTheme.of(context).fixedWhite,
+                                    ),
+                              ),
                             ),
                           )
                         ],
