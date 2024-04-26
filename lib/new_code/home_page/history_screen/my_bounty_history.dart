@@ -17,43 +17,46 @@ class MyRaisedBountyHistory extends StatefulWidget {
 class _MyRaisedBountyHistoryState extends State<MyRaisedBountyHistory> {
   final controller = Get.put(BountyController());
   var bountyHistory;
-@override
-  void initState() {
 
-    // TODO: implement initState
-  print("Controller: $controller");
-    super.initState();
-  }
   @override
-  void setState(VoidCallback fn) async{
-    bountyHistory = await controller.getBountyHistory();
-    // TODO: implement setState
-    super.setState(fn);
+  void initState() {
+    super.initState();
+    fetchBountyHistory();
   }
-  late final MyBountyHistoryModel myBountyHistoryModel;
+
+  void fetchBountyHistory() async {
+    var fetchedBountyHistory = await controller.getBountyHistory();
+    setState(() {
+      bountyHistory = fetchedBountyHistory.data.myBountyListData;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    print("BountyHistory : $bountyHistory");
     return Scaffold(
-      body: ListView.builder(
-        itemCount: 3,
+      body: bountyHistory == null
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+        itemCount: bountyHistory?.length ?? 0,
         itemBuilder: (BuildContext context, int index) {
+          var bounty = bountyHistory[index];
           return Container(
             color: FlutterFlowTheme.of(context).container3,
             width: double.infinity,
             padding: EdgeInsets.all(16.0.w),
             child: Column(
               children: [
-                Text('ID: ${bountyHistory.data}'),
-                Text('User ID: '),
-                Text('Message: '),
-                Text('Tags: '),
-                Text('Urgency ID: '),
-                Text('Expiry:'),
-                Text('Created At: '),
-                Text('Updated At: '),
+                Text('ID: ${bounty.id}'),
+                Text('User ID: ${bounty.userId}'),
+                Text('Message: ${bounty.message}'),
+                Text('Tags: ${bounty.tags.join(', ')}'),
+                Text('Urgency ID: ${bounty.urgencyId}'),
+                Text('Expiry: ${bounty.expiry}'),
+                Text('Created At: ${bounty.createdAt}'),
+                Text('Updated At: ${bounty.updatedAt}'),
               ],
-            )
+            ),
           );
         },
       ),
