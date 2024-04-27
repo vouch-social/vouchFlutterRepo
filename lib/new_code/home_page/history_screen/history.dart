@@ -6,8 +6,9 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../backend/models/my_raised_bounty_history_model.dart';
 import '../../common_widgets/myAppBar.dart';
-import 'history_controller.dart';
+import 'my_bounty_history_controller.dart';
 import 'my_bounty_history.dart';
+import 'my_vouch_history.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({super.key});
@@ -87,9 +88,7 @@ class _HistoryScreenState extends State<HistoryScreen> with TickerProviderStateM
               controller: _tabController,
               children: [
                 MyRaisedBountyHistory(),
-            Container(
-            color: Colors.black,
-          )
+                MyVouchHistory(),
               ],
             ),
           ),

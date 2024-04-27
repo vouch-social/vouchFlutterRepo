@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
-import 'package:vouch/new_code/home_page/history_screen/history_controller.dart';
+import 'package:vouch/new_code/home_page/history_screen/my_bounty_history_controller.dart';
 
 import '../../backend/models/my_raised_bounty_history_model.dart';
 
@@ -36,7 +36,7 @@ class _MyRaisedBountyHistoryState extends State<MyRaisedBountyHistory> {
     print("BountyHistory : $bountyHistory");
     return Scaffold(
       body: bountyHistory == null
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
         itemCount: bountyHistory?.length ?? 0,
         itemBuilder: (BuildContext context, int index) {
