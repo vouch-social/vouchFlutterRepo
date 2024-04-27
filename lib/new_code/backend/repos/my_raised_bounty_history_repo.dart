@@ -5,9 +5,9 @@ import '../models/base_response.dart';
 import '../models/my_raised_bounty_history_model.dart';
 import '../network/dio_client.dart';
 
-
 class MyBountyHistoryRepository {
-  static final MyBountyHistoryRepository _instance = MyBountyHistoryRepository._internal();
+  static final MyBountyHistoryRepository _instance =
+      MyBountyHistoryRepository._internal();
   late final DioClient _dioClient;
 
   MyBountyHistoryRepository._internal() {
@@ -15,14 +15,20 @@ class MyBountyHistoryRepository {
   }
   factory MyBountyHistoryRepository() => _instance;
 
-  
   Future<BaseResponse<MyBountyHistoryModel>> getHistory() async {
-
-    try{
-      dio.Response response = await _dioClient.getRequest(endPoint: '/api/bounty/myBounty', bearerToken: '${prefs!.getString(authToken)}', data: null,);
+    try {
+      dio.Response response = await _dioClient.getRequest(
+        endPoint: '/api/bounty/myBounty',
+        bearerToken: '${prefs!.getString(authToken)}',
+        data: null,
+      );
       print('DIO RES My Bounty History $response');
       if (response.data != null) {
-        BaseResponse<MyBountyHistoryModel> result = BaseResponse<MyBountyHistoryModel>.fromJson(response.data, MyBountyHistoryModel.fromJson,);
+        BaseResponse<MyBountyHistoryModel> result =
+            BaseResponse<MyBountyHistoryModel>.fromJson(
+          response.data,
+          MyBountyHistoryModel.fromJson,
+        );
         return result;
       } else {
         throw Exception('Response data is null');
@@ -32,5 +38,4 @@ class MyBountyHistoryRepository {
       rethrow;
     }
   }
-
 }

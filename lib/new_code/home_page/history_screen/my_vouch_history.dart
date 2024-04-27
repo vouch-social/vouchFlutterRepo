@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../../../flutter_flow/flutter_flow_theme.dart';
-import '../bounty_screen/bounty_controller.dart';
 import 'my_vouch_history_controller.dart';
 
 class MyVouchHistory extends StatefulWidget {
@@ -21,19 +20,18 @@ class _MyVouchHistoryState extends State<MyVouchHistory> {
   @override
   void initState() {
     super.initState();
-    fetchBountyHistory();
+    fetchVouchHistory();
   }
 
-  void fetchBountyHistory() async {
-    var fetchedBountyHistory = await controller.getVouchHistory();
+  void fetchVouchHistory() async {
+    var fetchedVouchHistory = await controller.getVouchHistory();
     setState(() {
-      vouchHistory = fetchedBountyHistory.data.mySelectedPathListData;
+      vouchHistory = fetchedVouchHistory.data.mySelectedPathListData;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    print("Vouch: $vouchHistory");
     return Scaffold(
       body: vouchHistory == null
           ? const Center(child: CircularProgressIndicator())
@@ -47,15 +45,15 @@ class _MyVouchHistoryState extends State<MyVouchHistory> {
                   padding: EdgeInsets.all(16.0.w),
                   child: Column(
                     children: [
-                      Text('ID: ${vouch[index].id}'),
-                      Text('User ID: ${vouch.userId}'),
-                      Text('Message: ${vouch.message}'),
-                      Text('Tags: ${vouch.status}'),
-                      Text('Urgency ID: ${vouch.pathlength}'),
-                      Text('StartNode: ${vouch.startnode}'),
-                      Text('EndNode: ${vouch.endnode}'),
-                      Text('Created At: ${vouch.createdAt}'),
-                      Text('Updated At: ${vouch.updatedAt}'),
+                      Text('ID: ${vouch.id ?? "blank"}'),
+                      Text('User ID: ${vouch.userId ?? "blank"}'),
+                      Text('Message: ${vouch.message ?? "blank"}'),
+                      Text('Tags: ${vouch.status ?? "blank"}'),
+                      Text('Urgency ID: ${vouch.pathlength ?? "blank"}'),
+                      Text('StartNode: ${vouch.startnode ?? "blank"}'),
+                      Text('EndNode: ${vouch.endnode ?? "blank"}'),
+                      Text('Created At: ${vouch.createdAt ?? "blank"}'),
+                      Text('Updated At: ${vouch.updatedAt ?? "blank"}'),
                     ],
                   ),
                 );

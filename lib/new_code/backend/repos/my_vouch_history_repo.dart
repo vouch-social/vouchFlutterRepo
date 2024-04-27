@@ -6,8 +6,7 @@ import '../models/my_vouch_history_model.dart';
 import '../network/dio_client.dart';
 
 class MyVouchRepository {
-  static final MyVouchRepository _instance =
-  MyVouchRepository._internal();
+  static final MyVouchRepository _instance = MyVouchRepository._internal();
   late final DioClient _dioClient;
 
   MyVouchRepository._internal() {
@@ -19,13 +18,13 @@ class MyVouchRepository {
     try {
       dio.Response response = await _dioClient.getRequest(
         endPoint: '/api/pathnodes/mySelectedPath',
-        data: null,
         bearerToken: '${prefs!.getString(authToken)}',
+        data: null,
       );
       print('DIO RES My Vouch History $response');
       if (response.data != null) {
         BaseResponse<MyVouchHistoryModel> result =
-        BaseResponse<MyVouchHistoryModel>.fromJson(
+            BaseResponse<MyVouchHistoryModel>.fromJson(
           response.data,
           MyVouchHistoryModel.fromJson,
         );

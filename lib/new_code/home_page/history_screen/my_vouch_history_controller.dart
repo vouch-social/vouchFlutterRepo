@@ -17,8 +17,6 @@ class VouchController extends GetxController {
       BaseResponse<MyVouchHistoryModel> apiResult =
       await repository.getMyVouch();
       if (apiResult.status) {
-        print('Api Result My Vouch History : ${apiResult.message}');
-        print("My Vouch History : ${apiResult.data.data.myBountyListData[0].id}");
         return apiResult.data;
       }
       return apiResult.data;
