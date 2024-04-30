@@ -338,7 +338,7 @@ class _UserDetailsState extends State<UserDetails> {
                 height: 12.0.h,
               ),
               GestureDetector(
-                onTap: () => Get.to(() => const LinkdinScreen()),
+                onTap: () => Get.to(() => const LinkedinScreen()),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

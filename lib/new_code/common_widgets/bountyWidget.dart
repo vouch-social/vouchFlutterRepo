@@ -26,161 +26,165 @@ class _BountyContainerState extends State<BountyContainer> {
 Widget bountyWidget(context){
   return Container(
     width: double.infinity,
-    height: 220.0.h,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(16.0.w),
-          color: FlutterFlowTheme.of(context).pastelBlue
+          color: FlutterFlowTheme.of(context).primaryBackground,
+      border: Border.all(color: FlutterFlowTheme.of(context).textFieldBackground)
     ),
     padding: EdgeInsets.all(12.0.w),
     child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              height: 36.0.h,
-              width: 36.0.w,
+              height: 40.0.h,
+              width: 40.0.w,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(18.0.w)
+                borderRadius: BorderRadius.circular(20.0.w),
               ),
               child: CircleAvatar(
-                child: Image.asset(Assets.assetsImage951)
+                child: Image.asset(Assets.assetsImage951,
+                fit: BoxFit.fill,
+                ),
               ),
             ),
             SizedBox(width: 8.0.w,),
-            Column(
-              children: [
-                AutoSizeText(
-                  'Shivani Narasimhan',style: FlutterFlowTheme.of(context).bodyLarge.override(
-                  useGoogleFonts: false,
-                  color: FlutterFlowTheme.of(context).fixedBlack
-                ),
-                ),
-                // SizedBox(
-                //   height: 4.0.h,
-                // ),
-                AutoSizeText(
-                  'car dealer | used car sell',style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                    useGoogleFonts: false,
-                    color: FlutterFlowTheme.of(context).fixedBlack
-                ),
-                ),
-              ],
+            AutoSizeText(
+              'Shivani Narasimhan',style: FlutterFlowTheme.of(context).bodyLarge
             ),
             Spacer(),
-            AutoSizeText('urgent',
+            AutoSizeText('Immediately',
                 style: FlutterFlowTheme.of(context).labelExtraSmall.override(
                     useGoogleFonts: false,
-                    color: FlutterFlowTheme.of(context).green1.withOpacity(0.3)
+                    color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.3)
                 )
             )
           ],
         ),
-        SizedBox(height: 12.0.h,),
-        Padding(
-          padding:  EdgeInsets.only(left: 36.0),
-          child: Row(
-            children: [
-              Container(
-                height: 32.0.h,
-                //width: 84.0.w,
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(4.0.w),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16.0.w),
-                    color: FlutterFlowTheme.of(context).textFieldBackground
-                ),
-                child: AutoSizeText(
-                    'Volunteering',
-                    style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                        useGoogleFonts: false,
-                        color: FlutterFlowTheme.of(context).fixedBlack,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w400
-                    )
-                ),
-              ),
-              SizedBox(width: 8.0.w,),
-              Container(
-                height: 32.0.h,
-                width: 84.0.w,
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(4.0.w),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16.0.w),
-                    color: FlutterFlowTheme.of(context).textFieldBackground
-                ),
-                child: AutoSizeText(
-                    'Volunteering',
-                    style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                        useGoogleFonts: false,
-                        color: FlutterFlowTheme.of(context).fixedBlack,
-                        fontSize: 10.sp,
-                        fontWeight: FontWeight.w400
-                    )
-                ),
-              )
-            ],
-          ),
+       SizedBox(height: 8.0.h,),
+        Divider(
+          color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.2),
+          height: 0.0,
         ),
         SizedBox(
-          height: 16.0.h,
+          height: 8.0.h,
         ),
-        Container(
-          color: FlutterFlowTheme.of(context).textFieldBackground.withOpacity(0.50),
-          child: AutoSizeText(
-            'Want to find driver for car delivery, Want to find driver for car delivery, Want to find driver for car delivery,  Want to find driver for car delivery,  Want to find driver for car delivery,  Want to find driver for car delivery,  '
-         ,style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-              useGoogleFonts: false,
-              color: FlutterFlowTheme.of(context).fixedBlack.withOpacity(0.5),
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w400
-          )
-          ),
+        AutoSizeText('Want to Connect with IT company CEO for business consulting and services.',
+        style: FlutterFlowTheme.of(context).labelExtraSmall.override(
+          useGoogleFonts: false,
+          fontSize: 10.sp,
+          fontWeight: FontWeight.w400,),
         ),
-        const Spacer(),
+        SizedBox(height: 8.0.h,),
         Row(
-          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.all(4.0.w),
+              padding: EdgeInsets.symmetric(vertical: 4.0.w,horizontal: 12.0.w),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16.0.w),
-                  color: FlutterFlowTheme.of(context).container3
+                  color: FlutterFlowTheme.of(context).green1.withOpacity(0.9)
               ),
               child: AutoSizeText(
-                  'Hunt',
+                  'Business',
                   style: FlutterFlowTheme.of(context).labelExtraSmall.override(
                       useGoogleFonts: false,
-                      color: FlutterFlowTheme.of(context).fixedBlack,
-                      fontSize: 10.sp,
+                      color: FlutterFlowTheme.of(context).primaryText,
+                      fontSize: 10,
                       fontWeight: FontWeight.w400
                   )
               ),
             ),
-            SizedBox(
-              width: 8.0.w,
-            ),
+            SizedBox(width: 8.0.w,),
             Container(
-
               alignment: Alignment.center,
-              padding: EdgeInsets.all(4.0.w),
+              padding: EdgeInsets.symmetric(vertical: 4.0.w,horizontal: 12.0.w),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16.0.w),
-                  color: FlutterFlowTheme.of(context).container3
+                  color: FlutterFlowTheme.of(context).green1.withOpacity(0.9)
               ),
               child: AutoSizeText(
-                  'Ignore',
+                  'Volunteering',
                   style: FlutterFlowTheme.of(context).labelExtraSmall.override(
                       useGoogleFonts: false,
-                      color: FlutterFlowTheme.of(context).fixedBlack,
-                      fontWeight: FontWeight.w400,
-                    fontSize: 10.sp,
-
+                      color: FlutterFlowTheme.of(context).primaryText,
+                      fontSize: 10.sp,
+                      fontWeight: FontWeight.w400
                   )
               ),
             )
+          ],
+        ),
+        SizedBox(
+          height: 8.0.h,
+        ),
+        Divider(
+          color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.2),
+          height: 0.0,
+        ),
+        SizedBox(
+          height: 12.0.h,
+        ),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.access_time,size: 16.0.w,color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.3),),
+                SizedBox(
+                  width: 4.0.w,
+                ),
+                AutoSizeText('22 Min ago',style: FlutterFlowTheme.of(context).labelExtraSmall.override(
+                    useGoogleFonts: false,
+                    fontWeight: FontWeight.w400,
+                    color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.3)
+                ),),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+
+
+                Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(horizontal: 12.0.w,vertical: 6.0.h),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.0.w),
+                      color: Colors.transparent,
+                    border: Border.all(color: FlutterFlowTheme.of(context).primaryText)
+                  ),
+                  child: AutoSizeText(
+                      'Ignore',
+                      style: FlutterFlowTheme.of(context).labelExtraSmall.override(
+                          useGoogleFonts: false,
+                          fontWeight: FontWeight.w400,
+                      )
+                  ),
+                ),
+                SizedBox(
+                  width: 8.0.w,
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(horizontal: 12.0.w,vertical: 6.0.h),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4.0.w),
+                    color: FlutterFlowTheme.of(context).ffButton,
+                  ),
+                  child: AutoSizeText(
+                      'Hunt',
+                      style: FlutterFlowTheme.of(context).buttonText.override(
+                          useGoogleFonts: false,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w400)),
+                ),
+              ],
+            ),
           ],
         )
       ],

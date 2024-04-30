@@ -2,7 +2,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vouch/new_code/backend/models/check_user_model.dart';
-import 'package:vouch/new_code/home_page/new_home_page.dart';
+import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
 
 import '../../../custom_code/actions/get_phone_contacts.dart';
 import '../../../main.dart';

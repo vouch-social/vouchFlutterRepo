@@ -14,14 +14,14 @@ import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../flutter_flow/flutter_flow_widgets.dart';
 import '../../../generated/assets.dart';
 
-class LinkdinScreen extends StatefulWidget {
-  const LinkdinScreen({super.key});
+class LinkedinScreen extends StatefulWidget {
+  const LinkedinScreen({super.key});
 
   @override
-  State<LinkdinScreen> createState() => _LinkdinScreenState();
+  State<LinkedinScreen> createState() => _LinkedinScreenState();
 }
 
-class _LinkdinScreenState extends State<LinkdinScreen> {
+class _LinkedinScreenState extends State<LinkedinScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

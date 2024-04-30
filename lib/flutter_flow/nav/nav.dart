@@ -5,7 +5,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
-import '../../new_code/home_page/new_home_page.dart';
+import '../../new_code/home_page/HomePage/new_home_page.dart';
 import '../../new_code/onboarding/auth_screen/login_screen/login_screen.dart';
 import '../../new_code/onboarding/auth_screen/otp_screen/otp_screen.dart';
 import '../../new_code/onboarding/welcome_screen/welcome_screen.dart';

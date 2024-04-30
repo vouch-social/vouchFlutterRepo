@@ -49,7 +49,7 @@ checkImport() {
   bool? isCallLog = prefs?.getBool(sendCallLogsResponse);
   bool? isContactLog = prefs?.getBool(sendContactsResponse);
   if (isCallLog != null && isContactLog != null && isCallLog && isContactLog) {
-    Get.to(() => LinkdinScreen());
+    Get.to(() => LinkedinScreen());
   }
 }
 

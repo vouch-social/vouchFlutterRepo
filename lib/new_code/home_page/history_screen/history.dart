@@ -46,6 +46,7 @@ class _HistoryScreenState extends State<HistoryScreen> with TickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: CustomAppBar(
         showHistoryButton: false,
         showBackButton: true,

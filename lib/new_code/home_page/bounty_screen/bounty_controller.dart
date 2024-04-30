@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:vouch/new_code/home_page/new_home_page.dart';
+import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
 import '../../backend/models/base_response.dart';
 import '../../backend/models/raise_bounty_model.dart';
 import '../../backend/repos/raise_bounty_repo.dart';

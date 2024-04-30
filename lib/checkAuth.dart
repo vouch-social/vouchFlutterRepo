@@ -7,7 +7,7 @@ import 'new_code/backend/backend_constants.dart';
 import 'new_code/backend/models/base_response.dart';
 import 'new_code/backend/models/check_user_model.dart';
 import 'new_code/backend/repos/auth_repo.dart';
-import 'new_code/home_page/new_home_page.dart';
+import 'new_code/home_page/HomePage/new_home_page.dart';
 import 'new_code/onboarding/auth_screen/login_screen/components/country_code_remover.dart';
 import 'new_code/onboarding/goals/goals_screen.dart';
 import 'new_code/onboarding/linkdin/linkdin_screen.dart';
@@ -64,7 +64,7 @@ Widget newCustomNav(){
       future: pageName(),
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
         if (snapshot.data == "linkedInPending") {
-          return LinkdinScreen();
+          return LinkedinScreen();
         }
         return NewHomePage();
       });

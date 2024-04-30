@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:vouch/new_code/home_page/new_home_page.dart';
+import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
 
 import '../../../flutter_flow/flutter_flow_theme.dart';
 

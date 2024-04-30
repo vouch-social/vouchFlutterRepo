@@ -14,7 +14,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:vouch/new_code/home_page/new_home_page.dart';
+import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
 import 'package:vouch/new_code/onboarding/auth_screen/login_screen/login_screen.dart';
 import 'package:vouch/new_code/onboarding/customize_profile/user_details.dart';
 import 'package:vouch/new_code/onboarding/goals/goals_screen.dart';

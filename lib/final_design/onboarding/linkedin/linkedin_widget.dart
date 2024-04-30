@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:vouch/new_code/home_page/new_home_page.dart';
+import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
 import 'package:vouch/new_code/onboarding/goals/goals_screen.dart';
 import '../../../main.dart';
 import '../../../new_code/backend/backend_constants.dart';
