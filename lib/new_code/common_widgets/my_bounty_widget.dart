@@ -1,4 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:date_time_format/date_time_format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -6,27 +8,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/generated/assets.dart';
 
-class MyBountyContainer extends StatefulWidget {
-  const MyBountyContainer({super.key});
+import '../../main.dart';
+import '../backend/backend_constants.dart';
 
-  @override
-  State<MyBountyContainer> createState() => _MyBountyContainerState();
-}
-
-class _MyBountyContainerState extends State<MyBountyContainer> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Center(child: myBountyWidget(context)),
-      ),
-    );
-  }
-}
-
-Widget myBountyWidget(context) {
+Widget myBountyWidget(context, bounty) {
+  print(bounty.expiry);
   return Padding(
     padding: EdgeInsets.symmetric(vertical: 8.0.w),
     child: Container(
@@ -44,23 +30,22 @@ Widget myBountyWidget(context) {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                height: 40.0.h,
-                width: 40.0.w,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.0.w),
-                ),
-                child: CircleAvatar(
-                  child: Image.asset(
-                    Assets.assetsImage951,
-                    fit: BoxFit.fill,
-                  ),
+              CircleAvatar(
+                radius: 20.0.w,
+                child: prefs!.getString(imageUrl) != 'null'
+                    ? Image.network(
+                  imageUrl,
+                  fit: BoxFit.fill,
+                )
+                    : Image.asset(
+                  Assets.assetsImage951,
+                  fit: BoxFit.fill,
                 ),
               ),
               SizedBox(
                 width: 8.0.w,
               ),
-              AutoSizeText('Shivani Narasimhan',
+              AutoSizeText('${prefs!.getString(userName)}',
                   style: FlutterFlowTheme.of(context).bodyLarge),
               Spacer(),
               Row(
@@ -75,8 +60,14 @@ Widget myBountyWidget(context) {
                   SizedBox(
                     width: 4.0.w,
                   ),
+
                   AutoSizeText(
-                    '22 Min ago',
+                    DateTimeFormat.relative(
+                      relativeTo: DateTime.now(),
+                        DateTime.fromMillisecondsSinceEpoch(bounty.expiry*1000),
+                        ifNow: "Just Now..",
+                        appendIfAfter: 'ago'
+                    ),
                     style: FlutterFlowTheme.of(context)
                         .labelExtraSmall
                         .override(
@@ -94,7 +85,7 @@ Widget myBountyWidget(context) {
             height: 16.0.h,
           ),
           AutoSizeText(
-            'Want to Connect with IT company CEO for business consulting and services.',
+            '${bounty.message}',
             style: FlutterFlowTheme.of(context).labelExtraSmall.override(
                   useGoogleFonts: false,
                   fontSize: 10.sp,
@@ -110,72 +101,8 @@ Widget myBountyWidget(context) {
             children: [
               Row(
                 children: [
-                  SizedBox(
-                    width: 48,
-                    height: 24,
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          left: 0,
-                          child: Container(
-                            height: 24,
-                            width: 24,
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: CircleAvatar(
-                              child: Image.asset(Assets.assetsImage951),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          left: 12,
-                          child: Container(
-                            height: 24,
-                            width: 24,
-                            decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: CircleAvatar(
-                              child: Image.asset(Assets.assetsImage951),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          left: 24,
-                          child: Container(
-                            height: 24,
-                            width: 24,
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: CircleAvatar(
-                              child: Image.asset(Assets.assetsImage951),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(width: 8.0.w,),
-                  Container(
-                    //padding: EdgeInsets.only(right: 24),
-                    width: 120,
-                    child: AutoSizeText(
-                      'Animesh, Ankit and 5 others are hunting',
-                      minFontSize: 0.0,
-                      style: FlutterFlowTheme.of(context).bodyLarge.override(
-                          useGoogleFonts: false,
-                          color: FlutterFlowTheme.of(context)
-                              .primaryText
-                              .withOpacity(0.5),
-                          fontSize: 8.0,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ),
+                  hunters(bounty.hunters,context),
+
                 ],
               ),
               //Spacer(),
@@ -228,4 +155,121 @@ Widget myBountyWidget(context) {
       ),
     ),
   );
+}
+
+
+Widget hunters(hunters,context) {
+  if (hunters.length == 0) {
+    return SizedBox(
+      width: 48,
+      height: 24,
+      child: AutoSizeText("Nobody is hunting", minFontSize: 0.0,
+        style: FlutterFlowTheme
+            .of(context)
+            .bodyLarge
+            .override(
+            useGoogleFonts: false,
+            color: FlutterFlowTheme
+                .of(context)
+                .primaryText
+                .withOpacity(0.5),
+            fontSize: 8.0,
+            fontWeight: FontWeight.w400),
+
+      ),
+    );
+  } else {
+    return Row(
+      children: [
+        SizedBox(
+          width: 48,
+          height: 24,
+          child: Stack(
+            children: [
+              hunters.length == 1 ?
+              Positioned(
+                left: 0,
+                child: Container(
+                  height: 24,
+                  width: 24,
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: CircleAvatar(
+                    child:
+                    hunters[0].user.photourl != null && hunters[0].user.photourl.startsWith('http')
+                    ? Image.network(hunters[0].user.photourl)
+                        :Image.asset(Assets.assetsImage951)
+                  ),
+                ),
+              ) : Container(),
+              hunters.length == 2 ?
+              Positioned(
+                left: 12,
+                child: Container(
+                  height: 24,
+                  width: 24,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: CircleAvatar(
+                    child: hunters[1].user.photourl != null && hunters[1].user.photourl.startsWith('http')
+                        ? Image.network(hunters[1].user.photourl)
+                        // : hunters[1].user.photourl != null
+                        : Image.asset(Assets.assetsImage951)
+                  ),
+                ),
+              ) : Container(),
+              hunters.length >= 3 ?
+              Positioned(
+                left: 24,
+                child: Container(
+                  height: 24,
+                  width: 24,
+                  decoration: BoxDecoration(
+                    color: Colors.green,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: CircleAvatar(
+                    child:
+                    hunters[1].user.photourl != null && hunters[1].user.photourl.startsWith('http')
+                    ? Image.network(hunters[2].user.photourl)
+                        : Image.asset(Assets.assetsImage951)
+                  ),
+                ),
+              ) : Container()
+            ],
+          ),
+        ),
+        SizedBox(width: 8.0.w,),
+        Container(
+          //padding: EdgeInsets.only(right: 24),
+          width: 120,
+          child: AutoSizeText(
+            hunters.length == 1 ?
+            '${getFirstName(hunters[0].user.name)} is hunting' :
+            hunters.length == 2 ?
+            '${getFirstName(hunters[0].user.name)} & ${getFirstName(hunters[1].user.name)} are hunting' :
+            hunters.length >= 3 ?
+            '${getFirstName(hunters[0].user.name)}, ${getFirstName(hunters[1].user.name)} & ${hunters.length-2} more are hunting':"",
+            minFontSize: 0.0,
+            style: FlutterFlowTheme.of(context).bodyLarge.override(
+                useGoogleFonts: false,
+                color: FlutterFlowTheme.of(context)
+                    .primaryText
+                    .withOpacity(0.5),
+                fontSize: 8.0,
+                fontWeight: FontWeight.w400),
+          ),
+        ),
+      ],
+    );
+  }
+}
+String getFirstName(String fullName) {
+  List<String> nameParts = fullName.split(' ');
+  String firstName = nameParts.isNotEmpty ? nameParts[0] : '';
+  return firstName;
 }

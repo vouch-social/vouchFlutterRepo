@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:vouch/bounty/raise_bounty/raise_bounty_widget.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/new_code/common_widgets/bountyWidget.dart';
@@ -32,9 +33,26 @@ class NewHomePage extends StatefulWidget {
 }
 
 class _NewHomePageState extends State<NewHomePage> {
+  final feedsController = Get.put(FeedsController());
+  var vouchFeedsData;
+  var bountyFeeedsData;
+  @override
+  void initState() {
+    super.initState();
+    fetchFeeds();
+  }
+
+  void fetchFeeds() async {
+    var fetchedFeeds = await feedsController.getHomePageFeeds();
+    setState(() {
+      vouchFeedsData = fetchedFeeds.vouches;
+      bountyFeeedsData = fetchedFeeds.bounties;
+    });
+  }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final controller = Get.put(HomeController());
-  final feedsController = Get.put(FeedsController());
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context,
@@ -80,7 +98,8 @@ class _NewHomePageState extends State<NewHomePage> {
       resizeToAvoidBottomInset: false,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(left: 16.0.w,right: 16.0.w,bottom: 16.0.h,top: 0),
+        padding: EdgeInsets.only(
+            left: 16.0.w, right: 16.0.w, bottom: 16.0.h, top: 0),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -100,9 +119,7 @@ class _NewHomePageState extends State<NewHomePage> {
                   color: FlutterFlowTheme.of(context).secondaryText,
                 ),
               ),
-              onTap: () {
-                Get.to(() => MyBountyContainer());
-              },
+              onTap: () {},
             )
           ],
         ),
@@ -111,7 +128,7 @@ class _NewHomePageState extends State<NewHomePage> {
         child: Padding(
           padding: EdgeInsets.all(16.0.w),
           child: SingleChildScrollView(
-            // primary: false,
+            physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -284,9 +301,15 @@ class _NewHomePageState extends State<NewHomePage> {
                           controller.getPathsList();
                         },
                         child: Container(
-                            height: 120.h,
                             width: 200.w,
                             decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 2.0.w,
+                                      blurRadius: 4.0.w,
+                                      offset: Offset(0, 3))
+                                ],
                                 borderRadius: BorderRadius.circular(12.0.w),
                                 color: colors[index]),
                             margin: EdgeInsets.only(right: 8.0.w, top: 8.w),
@@ -410,184 +433,29 @@ class _NewHomePageState extends State<NewHomePage> {
                     ),
                   ],
                 ),
-                SizedBox(height: 16.0.h,),
-                VouchListView(),
                 SizedBox(
-                  height: 16.0.h,
+                  height: 8.0.h,
                 ),
-            ListView.builder(
-                itemCount: 2,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (BuildContext context, int index){
-                  return Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16.0.w),
-                        color: FlutterFlowTheme.of(context).primaryBackground,
-                        border: Border.all(color: FlutterFlowTheme.of(context).textFieldBackground)
-                    ),
-                    padding: EdgeInsets.all(12.0.w),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              height: 40.0.h,
-                              width: 40.0.w,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.0.w),
-                              ),
-                              child: CircleAvatar(
-                                child: Image.asset(Assets.assetsImage951,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 8.0.w,),
-                            AutoSizeText(
-                                'Shivani Narasimhan',style: FlutterFlowTheme.of(context).bodyLarge
-                            ),
-                            Spacer(),
-                            AutoSizeText('Immediately',
-                                style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                                    useGoogleFonts: false,
-                                    color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.3)
-                                )
-                            )
-                          ],
-                        ),
-                        SizedBox(height: 8.0.h,),
-                        Divider(
-                          color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.2),
-                          height: 0.0,
-                        ),
-                        SizedBox(
-                          height: 8.0.h,
-                        ),
-                        AutoSizeText('Want to Connect with IT company CEO for business consulting and services.',
-                          style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                            useGoogleFonts: false,
-                            fontSize: 10.sp,
-                            fontWeight: FontWeight.w400,),
-                        ),
-                        SizedBox(height: 8.0.h,),
-                        Row(
-                          children: [
-                            Container(
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.symmetric(vertical: 4.0.w,horizontal: 12.0.w),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16.0.w),
-                                  color: FlutterFlowTheme.of(context).green1.withOpacity(0.9)
-                              ),
-                              child: AutoSizeText(
-                                  'Business',
-                                  style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                                      useGoogleFonts: false,
-                                      color: FlutterFlowTheme.of(context).primaryText,
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w400
-                                  )
-                              ),
-                            ),
-                            SizedBox(width: 8.0.w,),
-                            Container(
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.symmetric(vertical: 4.0.w,horizontal: 12.0.w),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16.0.w),
-                                  color: FlutterFlowTheme.of(context).green1.withOpacity(0.9)
-                              ),
-                              child: AutoSizeText(
-                                  'Volunteering',
-                                  style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                                      useGoogleFonts: false,
-                                      color: FlutterFlowTheme.of(context).primaryText,
-                                      fontSize: 10.sp,
-                                      fontWeight: FontWeight.w400
-                                  )
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 8.0.h,
-                        ),
-                        Divider(
-                          color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.2),
-                          height: 0.0,
-                        ),
-                        SizedBox(
-                          height: 12.0.h,
-                        ),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.access_time,size: 16.0.w,color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.3),),
-                                SizedBox(
-                                  width: 4.0.w,
-                                ),
-                                AutoSizeText('22 Min ago',style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                                    useGoogleFonts: false,
-                                    fontWeight: FontWeight.w400,
-                                    color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.3)
-                                ),),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-
-
-                                Container(
-                                  alignment: Alignment.center,
-                                  padding: EdgeInsets.symmetric(horizontal: 12.0.w,vertical: 6.0.h),
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(4.0.w),
-                                      color: Colors.transparent,
-                                      border: Border.all(color: FlutterFlowTheme.of(context).primaryText)
-                                  ),
-                                  child: AutoSizeText(
-                                      'Ignore',
-                                      style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                                        useGoogleFonts: false,
-                                        fontWeight: FontWeight.w400,
-                                      )
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 8.0.w,
-                                ),
-                                Container(
-                                  alignment: Alignment.center,
-                                  padding: EdgeInsets.symmetric(horizontal: 12.0.w,vertical: 6.0.h),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(4.0.w),
-                                    color: FlutterFlowTheme.of(context).ffButton,
-                                  ),
-                                  child: AutoSizeText(
-                                      'Hunt',
-                                      style: FlutterFlowTheme.of(context).buttonText.override(
-                                          useGoogleFonts: false,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w400)),
-                                ),
-                              ],
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  );
-                })
-
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: vouchFeedsData?.length ?? 0,
+                    itemBuilder: (BuildContext context, int index) {
+                      return feedsVouchWidget(context);
+                    }),
+                SizedBox(
+                  height: 8.0.h,
+                ),
+                ListView.builder(
+                    itemCount: bountyFeeedsData?.length ?? 0,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (BuildContext context, int index) {
+                      var bounty = bountyFeeedsData[index];
+                      return Skeletonizer(
+                          enabled: feedsController.isLoading.value,
+                          child: bountyWidget(context, bounty));
+                    })
               ],
             ),
           ),
@@ -654,6 +522,7 @@ class RemindersListView extends StatelessWidget {
     ];
 
     return ListView.separated(
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemBuilder: (BuildContext context, int index) {
         return Container(
@@ -740,381 +609,4 @@ class RemindersListView extends StatelessWidget {
       itemCount: 2,
     );
   }
-}
-
-class VouchListView extends StatelessWidget{
-  const VouchListView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-   return ListView.builder(
-     shrinkWrap: true,
-       physics: NeverScrollableScrollPhysics(),
-       itemCount: 2,
-       itemBuilder: (BuildContext context , int index){
-         return Container(
-           width: double.infinity,
-           decoration: BoxDecoration(
-               borderRadius: BorderRadius.circular(16.0.w),
-               color: FlutterFlowTheme.of(context).primaryBackground,
-               border: Border.all(color: FlutterFlowTheme.of(context).textFieldBackground)
-           ),
-           padding: EdgeInsets.symmetric(horizontal: 12.0.w, vertical: 16.0.h),
-           child: Column(
-             crossAxisAlignment: CrossAxisAlignment.start,
-             mainAxisAlignment: MainAxisAlignment.start,
-             children: [
-               SizedBox(
-                 height: 76,
-                 child: ListView.builder(
-                   scrollDirection: Axis.horizontal,
-                   itemCount: 4,
-                   //shrinkWrap: true,
-                   itemBuilder: (context, index) {
-                     return Row(
-                       crossAxisAlignment: CrossAxisAlignment.center,
-                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                       children: [
-                         GestureDetector(
-                           child: Column(
-                             crossAxisAlignment: CrossAxisAlignment.start,
-                             children: [
-                               Row(
-                                 children: [
-                                   Container(
-                                     width: 40.w,
-                                     height: 40.h,
-                                     decoration: BoxDecoration(
-                                       borderRadius: BorderRadius.circular(20.0.w),
-                                     ),
-                                     child: CircleAvatar(
-                                       //backgroundColor: Colors.transparent,
-                                       child: Image.asset(
-                                         'assets/image951.png',
-                                         fit: BoxFit.cover,
-                                       ),
-                                     ),
-                                   ),
-                                   Visibility(
-                                     visible: index != 3 ? true : false,
-                                     child: Stack(
-                                       alignment: Alignment.center,
-                                       children: [
-                                         Container(
-                                             height: 4.0.h,
-                                             width: 56.0.w,
-                                             color: index == 0
-                                                 ? FlutterFlowTheme.of(context).primary
-                                                 : FlutterFlowTheme.of(context)
-                                                 .primaryText
-                                                 .withOpacity(0.3)),
-                                         Visibility(
-                                           visible: index == 0 ? true : false,
-                                           child: SvgPicture.asset(
-                                             "assets/check_vouch_svg.svg",
-                                             fit: BoxFit.cover,
-                                           ),
-                                         ),
-                                       ],
-                                     ),
-                                   ),
-                                 ],
-                               ),
-                               SizedBox(height: 4.0.h),
-                               SizedBox(
-                                 width: 40.w,
-                                 child: AutoSizeText(
-                                   'Samar Reddy',
-                                   overflow: TextOverflow.ellipsis,
-                                   maxLines: 2,
-                                   textAlign: TextAlign.center,
-                                   style: FlutterFlowTheme.of(context)
-                                       .labelExtraSmall
-                                       .override(
-                                     useGoogleFonts: false,
-                                     fontSize: 10.sp,
-                                   ),
-                                 ),
-                               ),
-                             ],
-                           ),
-                           onTap: () {},
-                         ),
-                       ],
-                     );
-                   },
-                 ),
-               ),
-               SizedBox(
-                 height: 16.0.h,
-               ),
-               AutoSizeText(
-                 minFontSize: 0.0,
-                 'Want to Connect with IT company CEO for business consulting and services. Want to Connect with IT company CEO for business consulting and services.',
-                 style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                   useGoogleFonts: false,
-                   fontSize: 12.sp,
-                   fontWeight: FontWeight.w400,
-                 ),
-               ),
-               SizedBox(
-                 height: 16.0.h,
-               ),
-               Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 children: [
-                   Row(
-                     children: [
-                       Icon(
-                         Icons.access_time,
-                         size: 16.0.w,
-                         color:
-                         FlutterFlowTheme.of(context).primaryText.withOpacity(0.3),
-                       ),
-                       SizedBox(
-                         width: 4.0.w,
-                       ),
-                       AutoSizeText(
-                         DateTimeFormat.relative(
-                             DateTime.now().subtract(Duration(minutes: 50)),
-                             ifNow: "Just Now..",
-                             appendIfAfter: 'ago'
-                         )
-                         ,
-                         style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                             useGoogleFonts: false,
-                             fontWeight: FontWeight.w400,
-                             color: FlutterFlowTheme.of(context)
-                                 .primaryText
-                                 .withOpacity(0.3)),
-                       ),
-                     ],
-                   ),
-                   Row(
-                     mainAxisAlignment: MainAxisAlignment.end,
-                     children: [
-                       Container(
-                         alignment: Alignment.center,
-                         padding:
-                         EdgeInsets.symmetric(horizontal: 12.0.w, vertical: 8.0.h),
-                         decoration: BoxDecoration(
-                             borderRadius: BorderRadius.circular(4.0.w),
-                             color: FlutterFlowTheme.of(context).ffButton),
-                         child: AutoSizeText('Vouch',
-                             style: FlutterFlowTheme.of(context)
-                                 .buttonText.override(
-                                 useGoogleFonts: false,
-                                 fontSize: 12.sp,
-                                 fontWeight: FontWeight.w400)),
-                       ),
-                       SizedBox(
-                         width: 8.0.w,
-                       ),
-                       Container(
-                         alignment: Alignment.center,
-                         padding:
-                         EdgeInsets.symmetric(horizontal: 12.0.w, vertical: 6.0.h),
-                         decoration: BoxDecoration(
-                             borderRadius: BorderRadius.circular(4.0.w),
-                             color: Colors.transparent,
-                             border: Border.all(
-                                 color: FlutterFlowTheme.of(context).primaryText)),
-                         child: AutoSizeText('Ignore',
-                             style:
-                             FlutterFlowTheme.of(context).labelExtraSmall.override(
-                               useGoogleFonts: false,
-                               fontWeight: FontWeight.w400,
-                             )),
-                       )
-                     ],
-                   ),
-                 ],
-               )
-             ],
-           ),
-         );
-       });
-  }
-
-}
-
-class BountyListView extends StatelessWidget{
-  const BountyListView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: 2,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        itemBuilder: (BuildContext context, int index){
-      return Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16.0.w),
-            color: FlutterFlowTheme.of(context).primaryBackground,
-            border: Border.all(color: FlutterFlowTheme.of(context).textFieldBackground)
-        ),
-        padding: EdgeInsets.all(12.0.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  height: 40.0.h,
-                  width: 40.0.w,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0.w),
-                  ),
-                  child: CircleAvatar(
-                    child: Image.asset(Assets.assetsImage951,
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-                SizedBox(width: 8.0.w,),
-                AutoSizeText(
-                    'Shivani Narasimhan',style: FlutterFlowTheme.of(context).bodyLarge
-                ),
-                Spacer(),
-                AutoSizeText('Immediately',
-                    style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                        useGoogleFonts: false,
-                        color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.3)
-                    )
-                )
-              ],
-            ),
-            SizedBox(height: 8.0.h,),
-            Divider(
-              color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.2),
-              height: 0.0,
-            ),
-            SizedBox(
-              height: 8.0.h,
-            ),
-            AutoSizeText('Want to Connect with IT company CEO for business consulting and services.',
-              style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                useGoogleFonts: false,
-                fontSize: 10.sp,
-                fontWeight: FontWeight.w400,),
-            ),
-            SizedBox(height: 8.0.h,),
-            Row(
-              children: [
-                Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(vertical: 4.0.w,horizontal: 12.0.w),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16.0.w),
-                      color: FlutterFlowTheme.of(context).green1.withOpacity(0.9)
-                  ),
-                  child: AutoSizeText(
-                      'Business',
-                      style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                          useGoogleFonts: false,
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          fontSize: 10,
-                          fontWeight: FontWeight.w400
-                      )
-                  ),
-                ),
-                SizedBox(width: 8.0.w,),
-                Container(
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(vertical: 4.0.w,horizontal: 12.0.w),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16.0.w),
-                      color: FlutterFlowTheme.of(context).green1.withOpacity(0.9)
-                  ),
-                  child: AutoSizeText(
-                      'Volunteering',
-                      style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                          useGoogleFonts: false,
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          fontSize: 10.sp,
-                          fontWeight: FontWeight.w400
-                      )
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: 8.0.h,
-            ),
-            Divider(
-              color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.2),
-              height: 0.0,
-            ),
-            SizedBox(
-              height: 12.0.h,
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.access_time,size: 16.0.w,color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.3),),
-                    SizedBox(
-                      width: 4.0.w,
-                    ),
-                    AutoSizeText('22 Min ago',style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                        useGoogleFonts: false,
-                        fontWeight: FontWeight.w400,
-                        color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.3)
-                    ),),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-
-
-                    Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.symmetric(horizontal: 12.0.w,vertical: 6.0.h),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4.0.w),
-                          color: Colors.transparent,
-                          border: Border.all(color: FlutterFlowTheme.of(context).primaryText)
-                      ),
-                      child: AutoSizeText(
-                          'Ignore',
-                          style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                            useGoogleFonts: false,
-                            fontWeight: FontWeight.w400,
-                          )
-                      ),
-                    ),
-                    SizedBox(
-                      width: 8.0.w,
-                    ),
-                    Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.symmetric(horizontal: 12.0.w,vertical: 6.0.h),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4.0.w),
-                        color: FlutterFlowTheme.of(context).ffButton,
-                      ),
-                      child: AutoSizeText(
-                          'Hunt',
-                          style: FlutterFlowTheme.of(context).buttonText.override(
-                              useGoogleFonts: false,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400)),
-                    ),
-                  ],
-                ),
-              ],
-            )
-          ],
-        ),
-      );
-    });
-  }
-
 }

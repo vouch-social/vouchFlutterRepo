@@ -37,6 +37,7 @@ class Bounty {
   int expiry;
   DateTime createdAt;
   DateTime updatedAt;
+  User user;
 
   Bounty({
     required this.id,
@@ -47,6 +48,7 @@ class Bounty {
     required this.expiry,
     required this.createdAt,
     required this.updatedAt,
+    required this.user,
   });
 
   factory Bounty.fromJson(Map<String, dynamic> json) => Bounty(
@@ -58,6 +60,7 @@ class Bounty {
     expiry: json["expiry"],
     createdAt: DateTime.parse(json["createdAt"]),
     updatedAt: DateTime.parse(json["updatedAt"]),
+    user: User.fromJson(json["user"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -69,6 +72,31 @@ class Bounty {
     "expiry": expiry,
     "createdAt": createdAt.toIso8601String(),
     "updatedAt": updatedAt.toIso8601String(),
+    "user": user.toJson(),
+  };
+}
+
+class User {
+  String name;
+  dynamic photourl;
+  dynamic localizedheadline;
+
+  User({
+    required this.name,
+     this.photourl,
+     this.localizedheadline,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) => User(
+    name: json["name"],
+    photourl: json["photourl"],
+    localizedheadline: json["localizedheadline"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "name": name,
+    "photourl": photourl,
+    "localizedheadline": localizedheadline,
   };
 }
 

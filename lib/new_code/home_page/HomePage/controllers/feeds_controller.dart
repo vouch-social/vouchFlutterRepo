@@ -6,19 +6,24 @@ import '../../../backend/models/base_response.dart';
 
 class FeedsController extends GetxController{
   final HomePageFeedsRepository repository = HomePageFeedsRepository();
-
-  Future<void> getHomePageFeeds() async {
+  var isLoading = false.obs;
+  Future<FeedsModel> getHomePageFeeds() async {
+    isLoading(true);
     try {
       BaseResponse<FeedsModel> apiResult =
       await repository.getFeeds();
       if (apiResult.status) {
         print('Api Result Feeds Controller: ${apiResult.message}');
 
+        isLoading(false);
         return apiResult.data;
       }
+      return apiResult.data;
     } catch (error) {
       print("Error Feeds : $error");
       rethrow;
+    } finally{
+      isLoading(false);
     }
   }
 

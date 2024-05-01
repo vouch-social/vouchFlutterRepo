@@ -8,3 +8,5 @@ const String initScreen = "initScreen";
 const String user = "user";
 const String sendContactsResponse = "sendContactsResponse";
 const String sendCallLogsResponse = "sendCallLogsResponse";
+const String userName = "userName";
+const String imageUrl = "imageUrl";

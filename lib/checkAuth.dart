@@ -32,6 +32,12 @@ Future<bool> checkUser() async {
   try {
     BaseResponse<CheckUserModel> apiResult =
         await repository.sendTokenToServer(data['phone']!);
+    if(apiResult.status){
+      prefs?.setString(userName, apiResult.data!.data.user.name);
+      print("User Name: ${prefs?.getString(userName)}");
+      prefs?.setString(imageUrl, apiResult.data!.data.user.photourl ?? 'null');
+      print("imageUrl: ${prefs?.getString(imageUrl)}");
+    }
     return apiResult.status;
   } catch (error) {
     print(error);
