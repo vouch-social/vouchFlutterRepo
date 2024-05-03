@@ -3,7 +3,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get_utils/get_utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 abstract class FlutterFlowTheme {
@@ -132,16 +131,46 @@ class LightModeTheme extends FlutterFlowTheme {
   @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
-  late Color primary = const Color(0xFF2F8FA9);
+  // late Color primary = const Color(0xFF2F8FA9);
+  // late Color secondary = const Color(0xFF406B72);
+  // late Color tertiary = const Color(0xFF809B9E);
+  // late Color alternate = const Color(0xFFBFCDD0);
+  // late Color primaryText = const Color(0xFF00232A);
+  // late Color secondaryText = const Color(0xFFFAFEFF);
+  // late Color primaryBackground = const Color(0xFFFAFEFF);
+  // late Color secondaryBackground = const Color(0xFF00232A);
+  // late Color textFieldBackground = const Color(0x1900232A);
+  // late Color ffButton = const Color(0xFF2F8FA9);
+  // late Color accent1 = const Color(0xFFD7EFE9);
+  // late Color accent2 = const Color(0xFFE5EBEC);
+  // late Color accent3 = const Color(0xFFE0E0E0);
+  // late Color accent4 = const Color(0xFFEEEEEE);
+  // late Color success = const Color(0xFF04A24C);
+  // late Color warning = const Color(0xFFFCDC0C);
+  // late Color error = const Color(0xFFE21C3D);
+  // late Color info = const Color(0xFF1C4494);
+  // late Color fixedBlack = const Color(0xFF00232A);
+  // late Color fixedWhite = const Color(0xFFFAFEFF);
+  // late Color white = const Color(0xFFFFFFFF);
+  // late Color container1 = const Color(0xFFE5F7F6);
+  // late Color container2 = const Color(0xFFDAE3FB);
+  // late Color green1 = const Color(0xFF00AAA3);
+  // late Color container3 = const Color(0xFFB4AAFF);
+  // late Color border1 = const Color(0xFFE0ECEC);
+  // late Color border2 = const Color(0xFFE9E9E9);
+  // late Color sliderActive = const Color(0xFFC1CFF6);
+  // late Color pastelBlue = const Color(0xFFE5ECFF);
+  // late Color pastelTint = const Color(0xFFE5F7F6);
+  late Color primary = const Color(0xFF2A7590);
   late Color secondary = const Color(0xFF406B72);
   late Color tertiary = const Color(0xFF809B9E);
   late Color alternate = const Color(0xFFBFCDD0);
-  late Color primaryText = const Color(0xFF00232A);
+  late Color primaryText = const Color(0xFF071318);
   late Color secondaryText = const Color(0xFFFAFEFF);
   late Color primaryBackground = const Color(0xFFFAFEFF);
-  late Color secondaryBackground = const Color(0xFF00232A);
-  late Color textFieldBackground = const Color(0x1900232A);
-  late Color ffButton = const Color(0xFF2F8FA9);
+  late Color secondaryBackground = const Color(0xFF142b38);
+  late Color textFieldBackground = const Color(0xFFF0FAFB);
+  late Color ffButton = const Color(0xFF2A7590);
   late Color accent1 = const Color(0xFFD7EFE9);
   late Color accent2 = const Color(0xFFE5EBEC);
   late Color accent3 = const Color(0xFFE0E0E0);
@@ -150,7 +179,7 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color warning = const Color(0xFFFCDC0C);
   late Color error = const Color(0xFFE21C3D);
   late Color info = const Color(0xFF1C4494);
-  late Color fixedBlack = const Color(0xFF00232A);
+  late Color fixedBlack = const Color(0xFF142b38);
   late Color fixedWhite = const Color(0xFFFAFEFF);
   late Color white = const Color(0xFFFFFFFF);
   late Color container1 = const Color(0xFFE5F7F6);
@@ -172,13 +201,13 @@ class DarkModeTheme extends FlutterFlowTheme {
   @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
-  late Color primary = const Color(0xFF2F8FA9);
-  late Color secondary = const Color(0xFF406B72);
-  late Color tertiary = const Color(0xFF809B9E);
-  late Color alternate = const Color(0xFFBFCDD0);
-  late Color primaryText = const Color(0xFFBCBFBF);
+  late Color primary = const Color(0xFF2A7590);
+  late Color secondary = const Color(0xFF406B72); /// not used
+  late Color tertiary = const Color(0xFF809B9E); /// not used
+  late Color alternate = const Color(0xFFBFCDD0); /// not used
+  late Color primaryText = const Color(0xFFECF0F1);
   late Color secondaryText = const Color(0xFF00232A);
-  late Color primaryBackground = const Color(0xFF00181C);
+  late Color primaryBackground = const Color(0xFF071318);
   late Color secondaryBackground = const Color(0xFFFAFEFF);
   late Color textFieldBackground = const Color(0x19FAFEFF);
 

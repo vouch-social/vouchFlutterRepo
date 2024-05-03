@@ -15,7 +15,9 @@ class FeedsController extends GetxController{
       if (apiResult.status) {
         print('Api Result Feeds Controller: ${apiResult.message}');
 
-        isLoading(false);
+        Future.delayed(const Duration(milliseconds: 300), () {
+          isLoading(false);
+        });
         return apiResult.data;
       }
       return apiResult.data;
@@ -23,7 +25,9 @@ class FeedsController extends GetxController{
       print("Error Feeds : $error");
       rethrow;
     } finally{
-      isLoading(false);
+      Future.delayed(const Duration(milliseconds: 300), () {
+        isLoading(false);
+      });
     }
   }
 

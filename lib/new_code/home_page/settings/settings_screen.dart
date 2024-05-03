@@ -1,14 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/generated/assets.dart';
+import 'package:vouch/main.dart';
+import 'package:vouch/new_code/backend/backend_constants.dart';
 import 'package:vouch/new_code/home_page/settings/edit_goals/edit_goals_screen.dart';
 import 'package:vouch/new_code/home_page/settings/edit_profile/edit_profile_screen.dart';
-import 'package:vouch/new_code/onboarding/auth_screen/login_screen/login_screen.dart';
 import 'package:vouch/new_code/onboarding/linkdin/linkdin_screen.dart';
 
 import '../../common_widgets/myAppBar.dart';
@@ -54,18 +53,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               Row(
                 children: [
-                  Container(
-                    height: 44,
-                    width: 44,
-                    child: ClipRRect(
-                      child: Image.asset(Assets.assetsImage951),
-                    ),
-                  ),
+                  CircleAvatar(
+                    radius: 22.0,
+                    backgroundColor: Colors.transparent,
+                    child:
+                    prefs?.getString(imageUrl) == 'null' ?
+                    Image.asset(Assets.assetsImage951) :
+                    Image.network("${prefs!.getString(imageUrl)}"), ),
                   SizedBox(
                     width: 16.0.w,
                   ),
                   AutoSizeText(
-                    "Nirant Ramakuru",
+                    '${prefs?.getString(userName)}',
                     style: FlutterFlowTheme.of(context).headlineLarge,
                   ),
                   const Spacer(),

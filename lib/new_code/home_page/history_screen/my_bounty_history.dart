@@ -40,7 +40,7 @@ class _MyRaisedBountyHistoryState extends State<MyRaisedBountyHistory> {
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: Obx(
         () => Skeletonizer(
-          enabled: controller.isLoading.value,
+          enabled : controller.isLoading.value,
           child : ListView.builder(
           padding: EdgeInsets.symmetric(horizontal: 16.0.w),
           itemCount: bountyHistory?.length ?? 0,

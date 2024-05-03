@@ -423,7 +423,7 @@ class CustomImageSourceDialog extends StatelessWidget {
   final VoidCallback onGalleryTap;
   final VoidCallback onCameraTap;
 
-  const CustomImageSourceDialog({
+  const CustomImageSourceDialog({super.key,
     required this.onGalleryTap,
     required this.onCameraTap,
   });
@@ -431,26 +431,57 @@ class CustomImageSourceDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Choose Image Source"),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ListTile(
-            title: Text("Gallery"),
-            onTap: () {
-              onGalleryTap();
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            title: Text("Camera"),
-            onTap: () {
-              onCameraTap();
-              Navigator.pop(context);
-            },
-          ),
-        ],
+      alignment: Alignment.center,
+      actionsPadding: EdgeInsets.all(24.0.w),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0.w)
       ),
-    );
+      actions: [
+        Center(
+          child: Text("Choose Image Source",
+              style: FlutterFlowTheme.of(context).titleLarge
+          ),
+        ),
+        SizedBox(
+          height: 24.0.h,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: (){
+                onGalleryTap();
+                Navigator.pop(context);
+              },
+              child: Column(
+                children: [
+                  const Icon(Icons.photo,size: 20,),
+                  SizedBox(height: 4.0.h,),
+                  Text("Gallery",
+                    style: FlutterFlowTheme.of(context).labelSmall,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(width: 32.0.w,),
+            GestureDetector(
+              onTap: (){
+                onCameraTap();
+                Navigator.pop(context);
+              },
+              child: Column(
+                children: [
+                  const Icon(Icons.camera_alt_outlined,size: 20,),
+                  SizedBox(height: 4.0.h,),
+                  Text("Camera",
+                    style: FlutterFlowTheme.of(context).labelSmall,
+
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ],    );
   }
 }

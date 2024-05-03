@@ -441,7 +441,12 @@ class _NewHomePageState extends State<NewHomePage> {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: vouchFeedsData?.length ?? 0,
                     itemBuilder: (BuildContext context, int index) {
-                      return feedsVouchWidget(context);
+                      var vouch = vouchFeedsData[index];
+                      return Obx(
+                          () => Skeletonizer(
+                            enabled: feedsController.isLoading.value,
+                            child: feedsVouchWidget(context, vouch)),
+                      );
                     }),
                 SizedBox(
                   height: 8.0.h,
@@ -452,9 +457,11 @@ class _NewHomePageState extends State<NewHomePage> {
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (BuildContext context, int index) {
                       var bounty = bountyFeeedsData[index];
-                      return Skeletonizer(
-                          enabled: feedsController.isLoading.value,
-                          child: bountyWidget(context, bounty));
+                      return Obx(
+                          () =>  Skeletonizer(
+                            enabled: feedsController.isLoading.value,
+                            child: bountyWidget(context, bounty)),
+                      );
                     })
               ],
             ),
@@ -547,12 +554,7 @@ class RemindersListView extends StatelessWidget {
                         "Find Camera repairman",
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
-                        style: TextStyle(
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          fontSize: 16.w,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'Bricolage Grotesque',
-                        ),
+                        style: FlutterFlowTheme.of(context).bodyLarge
                       ),
                       SizedBox(height: 4.h),
                       AutoSizeText(

@@ -1,110 +1,14 @@
-// To parse this JSON data, do
-//
-//     final feedsModel = feedsModelFromJson(jsonString);
-
 import 'dart:convert';
 
-FeedsModel feedsModelFromJson(String str) => FeedsModel.fromJson(json.decode(str));
+VouchAcceptModel vouchAcceptModelFromJson(String str) => VouchAcceptModel.fromJson(json.decode(str));
 
-String feedsModelToJson(FeedsModel data) => json.encode(data.toJson());
+String vouchAcceptModelToJson(VouchAcceptModel data) => json.encode(data.toJson());
 
-class FeedsModel {
-  List<Bounty> bounties;
-  List<Vouch> vouches;
-
-  FeedsModel({
-    required this.bounties,
-    required this.vouches,
-  });
-
-  factory FeedsModel.fromJson(Map<String, dynamic> json) => FeedsModel(
-    bounties: List<Bounty>.from(json["bounties"].map((x) => Bounty.fromJson(x))),
-    vouches: List<Vouch>.from(json["vouches"].map((x) => Vouch.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "bounties": List<dynamic>.from(bounties.map((x) => x.toJson())),
-    "vouches": List<dynamic>.from(vouches.map((x) => x.toJson())),
-  };
-}
-
-class Bounty {
-  int id;
-  int userId;
-  String message;
-  List<String> tags;
-  int urgencyId;
-  int expiry;
-  DateTime createdAt;
-  DateTime updatedAt;
-  User user;
-
-  Bounty({
-    required this.id,
-    required this.userId,
-    required this.message,
-    required this.tags,
-    required this.urgencyId,
-    required this.expiry,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.user,
-  });
-
-  factory Bounty.fromJson(Map<String, dynamic> json) => Bounty(
-    id: json["id"],
-    userId: json["user_id"],
-    message: json["message"],
-    tags: List<String>.from(json["tags"].map((x) => x)),
-    urgencyId: json["urgency_id"],
-    expiry: json["expiry"],
-    createdAt: DateTime.parse(json["createdAt"]),
-    updatedAt: DateTime.parse(json["updatedAt"]),
-    user: User.fromJson(json["user"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "id": id,
-    "user_id": userId,
-    "message": message,
-    "tags": List<dynamic>.from(tags.map((x) => x)),
-    "urgency_id": urgencyId,
-    "expiry": expiry,
-    "createdAt": createdAt.toIso8601String(),
-    "updatedAt": updatedAt.toIso8601String(),
-    "user": user.toJson(),
-  };
-}
-
-class User {
-  String name;
-  dynamic photourl;
-  dynamic localizedheadline;
-
-  User({
-    required this.name,
-     this.photourl,
-     this.localizedheadline,
-  });
-
-  factory User.fromJson(Map<String, dynamic> json) => User(
-    name: json["name"],
-    photourl: json["photourl"],
-    localizedheadline: json["localizedheadline"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "name": name,
-    "photourl": photourl,
-    "localizedheadline": localizedheadline,
-  };
-}
-
-class Vouch {
+class VouchAcceptModel {
   String createdAt;
   String updatedAt;
   int id;
-  dynamic vouchCreatedAt;
+  String vouchAcceptModelCreatedAt;
   String message;
   String status;
   int pathlength;
@@ -115,11 +19,11 @@ class Vouch {
   int userId;
   PathData pathData;
 
-  Vouch({
+  VouchAcceptModel({
     required this.createdAt,
     required this.updatedAt,
     required this.id,
-    required this.vouchCreatedAt,
+    required this.vouchAcceptModelCreatedAt,
     required this.message,
     required this.status,
     required this.pathlength,
@@ -131,11 +35,11 @@ class Vouch {
     required this.pathData,
   });
 
-  factory Vouch.fromJson(Map<String, dynamic> json) => Vouch(
+  factory VouchAcceptModel.fromJson(Map<String, dynamic> json) => VouchAcceptModel(
     createdAt: json["createdAt"],
     updatedAt: json["updatedAt"],
     id: json["id"],
-    vouchCreatedAt: json["created_at"],
+    vouchAcceptModelCreatedAt: json["created_at"],
     message: json["message"],
     status: json["status"],
     pathlength: json["pathlength"],
@@ -151,7 +55,7 @@ class Vouch {
     "createdAt": createdAt,
     "updatedAt": updatedAt,
     "id": id,
-    "created_at": vouchCreatedAt,
+    "created_at": vouchAcceptModelCreatedAt,
     "message": message,
     "status": status,
     "pathlength": pathlength,

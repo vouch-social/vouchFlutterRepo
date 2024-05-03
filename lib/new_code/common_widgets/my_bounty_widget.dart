@@ -1,12 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_time_format/date_time_format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/generated/assets.dart';
+import 'package:vouch/new_code/home_page/history_screen/hunters_list_page.dart';
 
 import '../../main.dart';
 import '../backend/backend_constants.dart';
@@ -31,6 +31,7 @@ Widget myBountyWidget(context, bounty) {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
+                backgroundColor: Colors.transparent,
                 radius: 20.0.w,
                 child: prefs!.getString(imageUrl) != 'null'
                     ? Image.network(
@@ -101,8 +102,11 @@ Widget myBountyWidget(context, bounty) {
             children: [
               Row(
                 children: [
-                  hunters(bounty.hunters,context),
-
+                  GestureDetector(
+                      onTap: (){
+                        Get.to(() => HuntersListScreen(hunters: bounty.hunters,));
+                      },
+                      child: hunters(bounty.hunters,context)),
                 ],
               ),
               //Spacer(),
@@ -186,65 +190,47 @@ Widget hunters(hunters,context) {
           height: 24,
           child: Stack(
             children: [
-              hunters.length == 1 ?
+              hunters.length >= 1 ?
               Positioned(
                 left: 0,
-                child: Container(
-                  height: 24,
-                  width: 24,
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: CircleAvatar(
-                    child:
-                    hunters[0].user.photourl != null && hunters[0].user.photourl.startsWith('http')
-                    ? Image.network(hunters[0].user.photourl)
-                        :Image.asset(Assets.assetsImage951)
-                  ),
+                child: CircleAvatar(
+                  radius: 12.0.w,
+                    backgroundColor: Colors.transparent,
+                  child:
+                  hunters[0].user.photourl != null && hunters[0].user.photourl.startsWith('http')
+                  ? Image.network(hunters[0].user.photourl)
+                      :Image.asset(Assets.assetsImage951)
                 ),
               ) : Container(),
-              hunters.length == 2 ?
+              hunters.length >= 2 ?
               Positioned(
                 left: 12,
-                child: Container(
-                  height: 24,
-                  width: 24,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: CircleAvatar(
-                    child: hunters[1].user.photourl != null && hunters[1].user.photourl.startsWith('http')
-                        ? Image.network(hunters[1].user.photourl)
-                        // : hunters[1].user.photourl != null
-                        : Image.asset(Assets.assetsImage951)
-                  ),
+                child: CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  radius: 12.0.w,
+                  child: hunters[1].user.photourl != null && hunters[1].user.photourl.startsWith('http')
+                      ? Image.network(hunters[1].user.photourl)
+                      // : hunters[1].user.photourl != null
+                      : Image.asset(Assets.assetsImage951)
                 ),
               ) : Container(),
               hunters.length >= 3 ?
               Positioned(
                 left: 24,
-                child: Container(
-                  height: 24,
-                  width: 24,
-                  decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: CircleAvatar(
-                    child:
-                    hunters[1].user.photourl != null && hunters[1].user.photourl.startsWith('http')
-                    ? Image.network(hunters[2].user.photourl)
-                        : Image.asset(Assets.assetsImage951)
-                  ),
+                child: CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                  radius: 12.0.w,
+                  child:
+                  hunters[1].user.photourl != null && hunters[1].user.photourl.startsWith('http')
+                  ? Image.network(hunters[2].user.photourl)
+                      : Image.asset(Assets.assetsImage951)
                 ),
               ) : Container()
             ],
           ),
         ),
         SizedBox(width: 8.0.w,),
-        Container(
+        SizedBox(
           //padding: EdgeInsets.only(right: 24),
           width: 120,
           child: AutoSizeText(

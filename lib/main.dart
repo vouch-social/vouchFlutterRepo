@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -27,6 +28,7 @@ import 'auth/firebase_auth/auth_util.dart';
 import 'backend/push_notifications/push_notifications_util.dart';
 import 'backend/firebase/firebase_config.dart';
 import 'checkAuth.dart';
+import 'firebase_option.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
@@ -52,6 +54,10 @@ SharedPreferences? prefs;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   /// for linkdin login url
   usePathUrlStrategy();
@@ -65,6 +71,11 @@ void main() async {
     create: (context) => appState,
     child: MyApp(),
   ));
+}
+
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message)async {
+  await Firebase.initializeApp();
 }
 
 Future<void> initSharedPreferences() async {
@@ -162,107 +173,17 @@ class _MyAppState extends State<MyApp> {
       );
 }
 
-class NavBarPage extends StatefulWidget {
-  NavBarPage({Key? key, this.initialPage, this.page}) : super(key: key);
-
-  final String? initialPage;
-  final Widget? page;
-
-  @override
-  _NavBarPageState createState() => _NavBarPageState();
-}
-
-/// This is the private State class that goes with NavBarPage.
-class _NavBarPageState extends State<NavBarPage> {
-  String _currentPageName = 'Home';
-  late Widget? _currentPage;
-
-  @override
-  void initState() {
-    super.initState();
-    _currentPageName = widget.initialPage ?? _currentPageName;
-    _currentPage = widget.page;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final tabs = {
-      'allBounty': AllBountyWidget(),
-      'Home': HomeWidget(),
-      'Profile': ProfileWidget(),
-    };
-
-    //NIRCOM - Remove Tabs
-    final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
-    final MediaQueryData queryData = MediaQuery.of(context);
-
-    return Scaffold(
-      body: MediaQuery(
-          data: queryData
-              .removeViewInsets(removeBottom: true)
-              .removeViewPadding(removeBottom: true),
-          child: _currentPage ?? tabs[_currentPageName]!),
-      extendBody: true,
-      bottomNavigationBar: FloatingNavbar(
-        currentIndex: currentIndex,
-        onTap: (i) => setState(() {
-          _currentPage = null;
-          _currentPageName = tabs.keys.toList()[i];
-        }),
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        selectedItemColor: FlutterFlowTheme.of(context).primaryBackground,
-        unselectedItemColor: FlutterFlowTheme.of(context).tertiary,
-        selectedBackgroundColor: FlutterFlowTheme.of(context).primary,
-        borderRadius: 1000.0,
-        itemBorderRadius: 1000.0,
-        margin: EdgeInsets.all(10.0),
-        padding: EdgeInsets.all(10.0),
-        width: MediaQuery.sizeOf(context).width * 1.0,
-        elevation: 0.0,
-        items: [
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.emoji_events,
-                  color: currentIndex == 0
-                      ? FlutterFlowTheme.of(context).primaryBackground
-                      : FlutterFlowTheme.of(context).tertiary,
-                  size: 24.0,
-                ),
-              ],
-            ),
-          ),
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.grain_rounded,
-                  color: currentIndex == 1
-                      ? FlutterFlowTheme.of(context).primaryBackground
-                      : FlutterFlowTheme.of(context).tertiary,
-                ),
-              ],
-            ),
-          ),
-          FloatingNavbarItem(
-            customWidget: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.person,
-                  color: currentIndex == 2
-                      ? FlutterFlowTheme.of(context).primaryBackground
-                      : FlutterFlowTheme.of(context).tertiary,
-                  size: 24.0,
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
+/// Postman code to send notification
+// {
+// "to":
+// "",
+// "notification":{
+// "title":"Demo notification",
+// "body":"Please chal ja bhai 72"
+// },
+// "data":{
+// "type":"msg",
+// "id":121
+// }
+//
+// }

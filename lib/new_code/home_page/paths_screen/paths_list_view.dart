@@ -10,6 +10,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:vouch/flutter_flow/flutter_flow_widgets.dart';
 import 'package:vouch/generated/assets.dart';
+import 'package:vouch/new_code/home_page/paths_screen/final_path_message_screen.dart';
 import 'package:vouch/new_code/home_page/paths_screen/path_success_screen.dart';
 import 'package:vouch/new_code/home_page/paths_screen/paths_controller.dart';
 
@@ -109,50 +110,19 @@ class _PathListViewState extends State<PathListView>
             padding: EdgeInsets.fromLTRB(16.0.h, 0, 16.0.h, 16.0.h),
             child: FFButtonWidget(
                 text: "CTA",
-                onPressed: () async{
+                onPressed: () async {
                   // Call the callback function with the relevant data
-                  if (_tabController != null) {
+
+                  // Get.to(() => FinalPathMessageScreen());
+
+
+                  if (_tabController != null ) {
                     final int currentIndex = _tabController!.index;
-                    final data = widget.allPaths.singlePathList[currentIndex];
+                    print("currentIndex: ${currentIndex},singlePath:  ${widget.allPaths.singlePathList[currentIndex]}");
 
-                    Map<String, dynamic> pathNodeToMap(PathNode node) {
-                      return {
-                        "name": node.name,
-                        "contactHashedPhone": node.contactHashedPhone,
-                        "strengthToNext": node.strengthToNext,
-                        "isRegistered": node.isRegistered,
-                        "heading": node.heading,
-                        "image": node.image,
-                        "attributes": node.attributes.map((attr) => {
-                          "createdAt": attr.createdAt,
-                          "updatedAt": attr.updatedAt,
-                          "id": attr.id,
-                          "userId": attr.userId,
-                          "attributes": attr.attributes,
-                        }).toList(),
-                      };
-                    }
-
-
-                    await MyListView(
-                      paths: widget.allPaths.singlePathList[currentIndex],
-                      totalCount: widget.allPaths.finalPaths,
-                      index: currentIndex,
-                      onPressed: (data) async {
-                        print("PathList : ${data.pathNode.map((node) => pathNodeToMap(node)).toList()}");
-                        print(
-                            'Button pressed in tab $currentIndex with data: ${jsonEncode(data.pathNode)}'
-                        );
-                        print('Button pressed in tab $currentIndex with strength: ${(data.strength)}');
-                        print('Button pressed in tab $currentIndex with length: ${(data.length)}');
-                        await pathController.sendPath(
-                            pathList: data.pathNode.map((node) => pathNodeToMap(node)).toList(),
-                            strength: data.strength,
-                            length: data.length
-                        );
-                      },
-                    ).onPressed(data);
+                  Get.to(() => FinalPathMessageScreen(currentIndex: currentIndex,singlePath:  widget.allPaths.singlePathList[currentIndex]));
                   }
+
                 },
 
                 options: CTAButton(context)),
@@ -161,6 +131,7 @@ class _PathListViewState extends State<PathListView>
       ),
     );
   }
+
 }
 
 class MyListView extends StatelessWidget {
@@ -168,7 +139,7 @@ class MyListView extends StatelessWidget {
   final SinglePath paths;
   final int totalCount;
   final int index;
-  final Function(SinglePath) onPressed;
+  final Function(PathNode) onPressed;
   const MyListView({
     super.key,
     required this.paths,
@@ -389,3 +360,8 @@ class MyListView extends StatelessWidget {
     );
   }
 }
+
+
+
+
+

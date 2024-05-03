@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:choose_input_chips/choose_input_chips.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -391,34 +393,66 @@ class CustomImageSourceDialog extends StatelessWidget {
   final VoidCallback onGalleryTap;
   final VoidCallback onCameraTap;
 
-  const CustomImageSourceDialog({
+  const CustomImageSourceDialog({super.key,
     required this.onGalleryTap,
     required this.onCameraTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text("Choose Image Source"),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ListTile(
-            title: Text("Gallery"),
-            onTap: () {
-              onGalleryTap();
-              Navigator.pop(context);
-            },
+    return
+       AlertDialog(
+         alignment: Alignment.center,
+         actionsPadding: EdgeInsets.all(24.0.w),
+         shape: RoundedRectangleBorder(
+           borderRadius: BorderRadius.circular(16.0.w)
+         ),
+        actions: [
+          Center(
+            child: Text("Choose Image Source",
+                style: FlutterFlowTheme.of(context).titleLarge
+            ),
           ),
-          ListTile(
-            title: Text("Camera"),
-            onTap: () {
-              onCameraTap();
-              Navigator.pop(context);
-            },
+          SizedBox(
+            height: 24.0.h,
           ),
-        ],
-      ),
-    );
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: (){
+                  onGalleryTap();
+                  Navigator.pop(context);
+                },
+                child: Column(
+                  children: [
+                    const Icon(Icons.photo,size: 20,),
+                    SizedBox(height: 4.0.h,),
+                    Text("Gallery",
+                      style: FlutterFlowTheme.of(context).labelSmall,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 32.0.w,),
+              GestureDetector(
+                onTap: (){
+                  onCameraTap();
+                  Navigator.pop(context);
+                },
+                child: Column(
+                  children: [
+                    const Icon(Icons.camera_alt_outlined,size: 20,),
+                    SizedBox(height: 4.0.h,),
+                    Text("Camera",
+                      style: FlutterFlowTheme.of(context).labelSmall,
+
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ],    );
   }
 }

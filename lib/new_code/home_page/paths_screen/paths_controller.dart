@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:vouch/new_code/home_page/paths_screen/path_success_screen.dart';
 
@@ -11,16 +12,17 @@ class PathsController extends GetxController {
 
 
   final PathsRepository repository = PathsRepository();
+  final contextController = TextEditingController();
 
   Future<void> sendPath(
-      {required List<Map<String, dynamic>> pathList, required int length, required double strength}) async {
+      {required List<Map<String, dynamic>> pathList, required int length, required double strength,}) async {
     var data = {
       "pathData": {
         "path": pathList,
         "length": length,
         "strength": strength
       },
-      "context": "Want to Connect With Nirant Ramakuru"
+      "context": contextController.text
     };
 
     try {

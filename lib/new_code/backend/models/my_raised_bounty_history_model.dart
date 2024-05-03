@@ -114,12 +114,12 @@ class Hunter {
 
 class User {
   String name;
-  String photourl;
+  dynamic photourl;
   String localizedheadline;
 
   User({
     required this.name,
-    required this.photourl,
+     this.photourl,
     required this.localizedheadline,
   });
 

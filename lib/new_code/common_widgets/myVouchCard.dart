@@ -14,7 +14,7 @@ Widget myVouchWidget(context, vouch) {
     child: Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.0.w),
-          color: FlutterFlowTheme.of(context).primaryBackground,
+          color: FlutterFlowTheme.of(context).textFieldBackground,
           border: Border.all(
               color: FlutterFlowTheme.of(context).textFieldBackground)),
       padding: EdgeInsets.symmetric(horizontal: 12.0.w, vertical: 16.0.h),
@@ -38,7 +38,7 @@ Widget myVouchWidget(context, vouch) {
           ),
           AutoSizeText(
             minFontSize: 0.0,
-            'Want to Connect with IT company CEO for business consulting and services. Want to Connect with IT company CEO for business consulting and services.',
+            '${vouch.message}',
             style: FlutterFlowTheme.of(context).labelExtraSmall.override(
                   useGoogleFonts: false,
                   fontSize: 12.sp,
@@ -108,7 +108,7 @@ Widget myVouchWidget(context, vouch) {
                         horizontal: 12.0.w, vertical: 8.0.h),
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(4.0.w),
-                        color: FlutterFlowTheme.of(context).ffButton),
+                        color: FlutterFlowTheme.of(context).primary),
                     child: AutoSizeText('Close',
                         style: FlutterFlowTheme.of(context).buttonText.override(
                             useGoogleFonts: false,

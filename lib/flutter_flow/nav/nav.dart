@@ -105,24 +105,24 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               requireAuth: true,
               builder: (context, params) => EditProfileWidget(),
             ),
-            FFRoute(
-              name: 'Home',
-              path: 'home',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Home')
-                  : NavBarPage(
-                      initialPage: 'Home',
-                      page: NewHomePage(),
-                    ),
-            ),
-            FFRoute(
-              name: 'Profile',
-              path: 'profile',
-              requireAuth: true,
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'Profile')
-                  : ProfileWidget(),
-            ),
+            // FFRoute(
+            //   name: 'Home',
+            //   path: 'home',
+            //   builder: (context, params) => params.isEmpty
+            //       ? NavBarPage(initialPage: 'Home')
+            //       : NavBarPage(
+            //           initialPage: 'Home',
+            //           page: NewHomePage(),
+            //         ),
+            // ),
+            // FFRoute(
+            //   name: 'Profile',
+            //   path: 'profile',
+            //   requireAuth: true,
+            //   builder: (context, params) => params.isEmpty
+            //       ? NavBarPage(initialPage: 'Profile')
+            //       : ProfileWidget(),
+            // ),
             FFRoute(
               name: 'Contacts',
               path: 'Contacts',
@@ -172,14 +172,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'linkedinLogin',
               builder: (context, params) => LinkedinWidget(),
             ),
-            FFRoute(
-              name: 'vouchBot',
-              path: 'VouchBot',
-              builder: (context, params) => NavBarPage(
-                initialPage: '',
-                page: VouchBotWidget(),
-              ),
-            ),
+            // FFRoute(
+            //   name: 'vouchBot',
+            //   path: 'VouchBot',
+            //   builder: (context, params) => NavBarPage(
+            //     initialPage: '',
+            //     page: VouchBotWidget(),
+            //   ),
+            // ),
             FFRoute(
               name: 'navigationAnimation',
               path: 'NavigationAnimation',
@@ -192,16 +192,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               path: 'PathCarouselNew',
               builder: (context, params) => PathCarouselNewWidget(),
             ),
-            FFRoute(
-              name: 'allBounty',
-              path: 'allBounty',
-              builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'allBounty')
-                  : NavBarPage(
-                      initialPage: 'allBounty',
-                      page: AllBountyWidget(),
-                    ),
-            ),
+            // FFRoute(
+            //   name: 'allBounty',
+            //   path: 'allBounty',
+            //   builder: (context, params) => params.isEmpty
+            //       ? NavBarPage(initialPage: 'allBounty')
+            //       : NavBarPage(
+            //           initialPage: 'allBounty',
+            //           page: AllBountyWidget(),
+            //         ),
+            // ),
             FFRoute(
               name: 'raiseBounty',
               path: 'raiseBounty',
