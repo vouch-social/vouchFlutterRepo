@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:vouch/new_code/backend/models/my_raised_bounty_history_model.dart';
-import 'package:vouch/new_code/backend/repos/my_raised_bounty_history_repo.dart';
+import 'package:vouch/new_code/backend/models/my_bounty_history_model.dart';
+import 'package:vouch/new_code/backend/repos/my_bounty_history_repo.dart';
 
 import '../../backend/models/base_response.dart';
 import 'my_bounty_history.dart';

@@ -7,9 +7,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vouch/new_code/onboarding/customize_profile/user_details.dart';
-
+import 'linkedin_widget.dart';
 import '../../../backend/firebase_analytics/analytics.dart';
-import '../../../final_design/onboarding/linkedin/linkedin_widget.dart';
 import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../flutter_flow/flutter_flow_widgets.dart';
 import '../../../generated/assets.dart';

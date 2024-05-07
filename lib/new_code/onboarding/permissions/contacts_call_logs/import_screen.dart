@@ -5,7 +5,7 @@ import 'package:flutter_contacts/contact.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../../../../custom_code/actions/hashed_phone.dart';
+import '../../../services/hashed_phone.dart';
 import '../../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../backend/repos/contacts_call_logs_repo.dart';
 import 'my_contacts_class.dart';

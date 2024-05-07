@@ -1,13 +1,9 @@
 import 'dart:async';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -15,40 +11,20 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
-import 'package:vouch/new_code/onboarding/auth_screen/login_screen/login_screen.dart';
-import 'package:vouch/new_code/onboarding/customize_profile/user_details.dart';
-import 'package:vouch/new_code/onboarding/goals/goals_screen.dart';
-import 'package:vouch/new_code/onboarding/permissions/contacts_call_logs/import_screen.dart';
-import 'package:vouch/new_code/onboarding/permissions/contacts_call_logs/upload_success.dart';
-import 'package:vouch/new_code/onboarding/permissions/permissions_screen.dart';
 import 'auth/firebase_auth/firebase_user_provider.dart';
 import 'auth/firebase_auth/auth_util.dart';
 
-import 'backend/push_notifications/push_notifications_util.dart';
-import 'backend/firebase/firebase_config.dart';
-import 'checkAuth.dart';
-import 'firebase_option.dart';
-import 'flutter_flow/flutter_flow_theme.dart';
+import './backend/push_notifications/push_notifications_util.dart';
+import './backend/firebase/firebase_config.dart';
+import 'auth/checkAuth.dart';
+import 'new_code/services/firebase_option.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
-import 'package:flutter/foundation.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'flutter_flow/firebase_app_check_util.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
-import 'flutter_flow/nav/nav.dart';
-import 'index.dart';
 
-import '/backend/firebase_dynamic_links/firebase_dynamic_links.dart';
+import './backend/firebase_dynamic_links/firebase_dynamic_links.dart';
 
-import 'new_code/backend/models/base_response.dart';
-import 'new_code/backend/models/check_user_model.dart';
-import 'new_code/backend/repos/auth_repo.dart';
-import 'new_code/onboarding/auth_screen/login_screen/components/country_code_remover.dart';
-import 'new_code/onboarding/auth_screen/otp_screen/otp_screen.dart';
-import 'new_code/onboarding/linkdin/linkdin_screen.dart';
-import 'new_code/onboarding/welcome_screen/welcome_screen.dart';
+import './new_code/onboarding/welcome_screen/welcome_screen.dart';
 
 SharedPreferences? prefs;
 
@@ -74,7 +50,7 @@ void main() async {
 }
 
 @pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message)async {
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
 }
 
@@ -141,7 +117,7 @@ class _MyAppState extends State<MyApp> {
         builder: (context, _) => GetMaterialApp(
             title: 'Vouch',
             debugShowCheckedModeBanner: false,
-            localizationsDelegates: [
+            localizationsDelegates: const [
               FFLocalizationsDelegate(),
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
@@ -173,17 +149,3 @@ class _MyAppState extends State<MyApp> {
       );
 }
 
-/// Postman code to send notification
-// {
-// "to":
-// "",
-// "notification":{
-// "title":"Demo notification",
-// "body":"Please chal ja bhai 72"
-// },
-// "data":{
-// "type":"msg",
-// "id":121
-// }
-//
-// }

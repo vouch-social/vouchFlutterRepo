@@ -6,7 +6,7 @@ import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/new_code/common_widgets/myAppBar.dart';
 
 import '../../../generated/assets.dart';
-import '../../backend/models/my_raised_bounty_history_model.dart';
+import '../../backend/models/my_bounty_history_model.dart';
 
 class HuntersListScreen extends StatefulWidget {
   final List<Hunter> hunters;

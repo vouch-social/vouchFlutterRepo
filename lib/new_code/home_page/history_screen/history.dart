@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../../../flutter_flow/flutter_flow_theme.dart';
-import '../../backend/models/my_raised_bounty_history_model.dart';
+import '../../backend/models/my_bounty_history_model.dart';
 import '../../common_widgets/myAppBar.dart';
 import 'my_bounty_history_controller.dart';
 import 'my_bounty_history.dart';
@@ -50,7 +50,7 @@ class _HistoryScreenState extends State<HistoryScreen> with TickerProviderStateM
       appBar: CustomAppBar(
         showHistoryButton: false,
         showBackButton: true,
-        title: "History",
+        title: "My History",
       ),
       body: Column(
         children: [
@@ -69,14 +69,14 @@ class _HistoryScreenState extends State<HistoryScreen> with TickerProviderStateM
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "My Bounties",
+                  "Bounty",
                   style: FlutterFlowTheme.of(context).titleSmall,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "My Vouch",
+                  "Vouch",
                   style: FlutterFlowTheme.of(context).titleSmall,
                 ),
               ),

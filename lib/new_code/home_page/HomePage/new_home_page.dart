@@ -9,7 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:vouch/bounty/raise_bounty/raise_bounty_widget.dart';
+// import 'package:vouch/bounty/raise_bounty/raise_bounty_widget.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/new_code/common_widgets/bountyWidget.dart';
 import 'package:vouch/new_code/common_widgets/vouchCard.dart';

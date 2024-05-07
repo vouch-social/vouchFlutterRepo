@@ -16,11 +16,6 @@ import '/auth/base_auth_user_provider.dart';
 
 import '/backend/push_notifications/push_notifications_handler.dart'
     show PushNotificationsHandler;
-import '/index.dart';
-import '/main.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/lat_lng.dart';
-import '/flutter_flow/place.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'serialization_util.dart';
 
@@ -99,12 +94,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, _) =>
               appStateNotifier.loggedIn ? NewHomePage() : WelcomeScreen(),
           routes: [
-            FFRoute(
-              name: 'editProfile',
-              path: 'editProfile',
-              requireAuth: true,
-              builder: (context, params) => EditProfileWidget(),
-            ),
+            // FFRoute(
+            //   name: 'editProfile',
+            //   path: 'editProfile',
+            //   requireAuth: true,
+            //   builder: (context, params) => EditProfileWidget(),
+            // ),
             // FFRoute(
             //   name: 'Home',
             //   path: 'home',
@@ -123,12 +118,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             //       ? NavBarPage(initialPage: 'Profile')
             //       : ProfileWidget(),
             // ),
-            FFRoute(
-              name: 'Contacts',
-              path: 'Contacts',
-              requireAuth: true,
-              builder: (context, params) => ContactsWidget(),
-            ),
+            // FFRoute(
+            //   name: 'Contacts',
+            //   path: 'Contacts',
+            //   requireAuth: true,
+            //   builder: (context, params) => ContactsWidget(),
+            // ),
             FFRoute(
               name: 'Welcome',
               path: 'Welcome',
@@ -146,32 +141,32 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                 mobileWOCC: params.getParam('mobile', ParamType.String),
               ),
             ),
-            FFRoute(
-              name: 'Name',
-              path: 'name',
-              requireAuth: true,
-              builder: (context, params) => NameWidget(),
-            ),
-            FFRoute(
-              name: 'Permissions',
-              path: 'Permissions',
-              builder: (context, params) => PermissionsWidget(),
-            ),
-            FFRoute(
-              name: 'Import',
-              path: 'Import',
-              builder: (context, params) => ImportWidget(),
-            ),
-            FFRoute(
-              name: 'Search',
-              path: 'Search',
-              builder: (context, params) => SearchWidget(),
-            ),
-            FFRoute(
-              name: 'Linkedin',
-              path: 'linkedinLogin',
-              builder: (context, params) => LinkedinWidget(),
-            ),
+            // FFRoute(
+            //   name: 'Name',
+            //   path: 'name',
+            //   requireAuth: true,
+            //   builder: (context, params) => NameWidget(),
+            // ),
+            // FFRoute(
+            //   name: 'Permissions',
+            //   path: 'Permissions',
+            //   builder: (context, params) => PermissionsWidget(),
+            // ),
+            // FFRoute(
+            //   name: 'Import',
+            //   path: 'Import',
+            //   builder: (context, params) => ImportWidget(),
+            // ),
+            // FFRoute(
+            //   name: 'Search',
+            //   path: 'Search',
+            //   builder: (context, params) => SearchWidget(),
+            // ),
+            // FFRoute(
+            //   name: 'Linkedin',
+            //   path: 'linkedinLogin',
+            //   builder: (context, params) => LinkedinWidget(),
+            // ),
             // FFRoute(
             //   name: 'vouchBot',
             //   path: 'VouchBot',
@@ -180,18 +175,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             //     page: VouchBotWidget(),
             //   ),
             // ),
-            FFRoute(
-              name: 'navigationAnimation',
-              path: 'NavigationAnimation',
-              builder: (context, params) => NavigationAnimationWidget(
-                paths: params.getParam('paths', ParamType.JSON),
-              ),
-            ),
-            FFRoute(
-              name: 'pathCarouselNew',
-              path: 'PathCarouselNew',
-              builder: (context, params) => PathCarouselNewWidget(),
-            ),
+            // FFRoute(
+            //   name: 'navigationAnimation',
+            //   path: 'NavigationAnimation',
+            //   builder: (context, params) => NavigationAnimationWidget(
+            //     paths: params.getParam('paths', ParamType.JSON),
+            //   ),
+            // ),
+            // FFRoute(
+            //   name: 'pathCarouselNew',
+            //   path: 'PathCarouselNew',
+            //   builder: (context, params) => PathCarouselNewWidget(),
+            // ),
             // FFRoute(
             //   name: 'allBounty',
             //   path: 'allBounty',
@@ -202,27 +197,27 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             //           page: AllBountyWidget(),
             //         ),
             // ),
-            FFRoute(
-              name: 'raiseBounty',
-              path: 'raiseBounty',
-              builder: (context, params) => RaiseBountyWidget(),
-            ),
-            FFRoute(
-              name: 'bountyDetails',
-              path: 'bountyDetails',
-              builder: (context, params) => BountyDetailsWidget(
-                bountyDetails: params.getParam('bountyDetails', ParamType.JSON),
-                isLinkedIn: params.getParam('isLinkedIn', ParamType.bool),
-              ),
-            ),
-            FFRoute(
-              name: 'myBountyDetails',
-              path: 'myBountyDetails',
-              builder: (context, params) => MyBountyDetailsWidget(
-                bountyDetails: params.getParam('bountyDetails', ParamType.JSON),
-                isLinkedIn: params.getParam('isLinkedIn', ParamType.bool),
-              ),
-            )
+            // FFRoute(
+            //   name: 'raiseBounty',
+            //   path: 'raiseBounty',
+            //   builder: (context, params) => RaiseBountyWidget(),
+            // ),
+            // FFRoute(
+            //   name: 'bountyDetails',
+            //   path: 'bountyDetails',
+            //   builder: (context, params) => BountyDetailsWidget(
+            //     bountyDetails: params.getParam('bountyDetails', ParamType.JSON),
+            //     isLinkedIn: params.getParam('isLinkedIn', ParamType.bool),
+            //   ),
+            // ),
+            // FFRoute(
+            //   name: 'myBountyDetails',
+            //   path: 'myBountyDetails',
+            //   builder: (context, params) => MyBountyDetailsWidget(
+            //     bountyDetails: params.getParam('bountyDetails', ParamType.JSON),
+            //     isLinkedIn: params.getParam('isLinkedIn', ParamType.bool),
+            //   ),
+            // )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
       ].map((r) => r.toRoute(appStateNotifier)).toList(),

@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
-import '../../../../app_state.dart';
+import '../../../services/app_state.dart';
 import '../../../../auth/firebase_auth/auth_util.dart';
-import '../../../../checkAuth.dart';
+import '../../../../auth/checkAuth.dart';
 import '../../../../flutter_flow/flutter_flow_model.dart';
 import '../../../../flutter_flow/flutter_flow_timer.dart';
 import '../../../../main.dart';

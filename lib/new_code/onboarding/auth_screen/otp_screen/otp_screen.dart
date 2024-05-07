@@ -6,7 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
-import 'package:vouch/checkAuth.dart';
+import 'package:vouch/auth/checkAuth.dart';
 import 'package:vouch/flutter_flow/flutter_flow_util.dart';
 import '../../../../auth/firebase_auth/auth_util.dart';
 import '../../../../flutter_flow/flutter_flow_theme.dart';
