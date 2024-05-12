@@ -16,7 +16,7 @@ import 'package:vouch/new_code/home_page/settings/settings_screen.dart';
 import '../../../generated/assets.dart';
 import '../../common_widgets/myAppBar.dart';
 import '../../common_widgets/vector.dart';
-import '../HomePage/home_page_controller.dart';
+import '../HomePage/paths_list_controller.dart';
 
 class PathsScreen extends StatefulWidget {
 

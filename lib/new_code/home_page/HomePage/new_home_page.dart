@@ -16,7 +16,7 @@ import 'package:vouch/new_code/common_widgets/vouchCard.dart';
 import 'package:vouch/new_code/home_page/HomePage/controllers/feeds_controller.dart';
 import 'package:vouch/new_code/home_page/HomePage/recommendations_controller.dart';
 import 'package:vouch/new_code/home_page/bounty_screen/bounty_controller.dart';
-import 'package:vouch/new_code/home_page/HomePage/home_page_controller.dart';
+import 'package:vouch/new_code/home_page/HomePage/paths_list_controller.dart';
 import 'package:vouch/new_code/home_page/paths_screen/paths_screen.dart';
 import 'package:vouch/new_code/home_page/search_screen/search_screen.dart';
 import 'package:vouch/new_code/home_page/settings/settings_screen.dart';
