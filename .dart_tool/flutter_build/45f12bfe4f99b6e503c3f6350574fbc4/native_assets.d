@@ -1,0 +1,1 @@
+ D:\\project\\vouchFlutterRepo\\.dart_tool\\flutter_build\\45f12bfe4f99b6e503c3f6350574fbc4\\native_assets.yaml: 
