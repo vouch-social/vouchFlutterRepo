@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:vouch/new_code/home_page/history_screen/my_hunt_history.dart';
 
 import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../backend/models/my_bounty_history_model.dart';
@@ -27,7 +28,7 @@ class _HistoryScreenState extends State<HistoryScreen> with TickerProviderStateM
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(_handleTabSelection);
   }
 
@@ -80,6 +81,13 @@ class _HistoryScreenState extends State<HistoryScreen> with TickerProviderStateM
                   style: FlutterFlowTheme.of(context).titleSmall,
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "My Hunts",
+                  style: FlutterFlowTheme.of(context).titleSmall,
+                ),
+              ),
             ],
             indicatorSize: TabBarIndicatorSize.tab,
           ),
@@ -90,6 +98,7 @@ class _HistoryScreenState extends State<HistoryScreen> with TickerProviderStateM
               children: [
                 MyRaisedBountyHistory(),
                 MyVouchHistory(),
+                MyHuntsScreen(),
               ],
             ),
           ),

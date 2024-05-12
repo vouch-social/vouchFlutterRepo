@@ -91,7 +91,7 @@ class MySelectedPathListDatum {
 class PathData {
   List<Path> path;
   int length;
-  int strength;
+  dynamic strength;
 
   PathData({
     required this.path,

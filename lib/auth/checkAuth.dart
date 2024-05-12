@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vouch/new_code/onboarding/permissions/contacts_call_logs/import_screen.dart';
 import 'package:vouch/new_code/onboarding/permissions/permissions_screen.dart';
 import 'package:vouch/new_code/onboarding/welcome_screen/welcome_screen.dart';
 import 'firebase_auth/auth_util.dart';
@@ -69,7 +70,9 @@ Widget newCustomNav(){
   return FutureBuilder<String>(
       future: pageName(),
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-        if (snapshot.data == "linkedInPending") {
+        if(snapshot.data == 'callLogsPending'){
+          return ImportScreen();
+        }else if (snapshot.data == "linkedInPending") {
           return LinkedinScreen();
         }
         return NewHomePage();

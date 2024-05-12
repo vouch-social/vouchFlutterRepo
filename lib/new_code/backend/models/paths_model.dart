@@ -10,9 +10,9 @@ AllPaths pathsModelFromJson(String str) =>
 String pathsModelToJson(AllPaths data) => json.encode(data.toJson());
 
 class AllPaths {
-  List<SinglePath> singlePathList;
-  int numPaths;
-  int finalPaths;
+   List<SinglePath> singlePathList;
+  dynamic numPaths;
+  dynamic finalPaths;
 
   AllPaths({
     required this.singlePathList,

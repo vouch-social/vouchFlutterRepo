@@ -14,6 +14,7 @@ import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/new_code/common_widgets/bountyWidget.dart';
 import 'package:vouch/new_code/common_widgets/vouchCard.dart';
 import 'package:vouch/new_code/home_page/HomePage/controllers/feeds_controller.dart';
+import 'package:vouch/new_code/home_page/HomePage/recommendations_controller.dart';
 import 'package:vouch/new_code/home_page/bounty_screen/bounty_controller.dart';
 import 'package:vouch/new_code/home_page/HomePage/home_page_controller.dart';
 import 'package:vouch/new_code/home_page/paths_screen/paths_screen.dart';
@@ -34,12 +35,15 @@ class NewHomePage extends StatefulWidget {
 
 class _NewHomePageState extends State<NewHomePage> {
   final feedsController = Get.put(FeedsController());
+  final recommendationsController = Get.put(RecommendationsController());
   var vouchFeedsData;
   var bountyFeeedsData;
+  var recommendationsData;
   @override
   void initState() {
     super.initState();
     fetchFeeds();
+    fetchRecommendations();
   }
 
   void fetchFeeds() async {
@@ -47,6 +51,13 @@ class _NewHomePageState extends State<NewHomePage> {
     setState(() {
       vouchFeedsData = fetchedFeeds.vouches;
       bountyFeeedsData = fetchedFeeds.bounties;
+    });
+  }
+
+  void fetchRecommendations() async {
+    var fetchedRecommendations = await recommendationsController.getRecommendationsData();
+    setState(() {
+      recommendationsData = fetchedRecommendations.recommendationData;
     });
   }
 
@@ -71,11 +82,13 @@ class _NewHomePageState extends State<NewHomePage> {
       'Nirant Ramakuru',
       "Abhiram Bali",
       'Shivani Narashimhan',
-      'Kumar Sharma'
+      'Kumar Sharma',
+      'kumar Vishwash'
     ];
     final List<String> images = [
       'assets/image951.png',
       "assets/image951.png",
+      'assets/image951.png',
       'assets/image951.png',
       'assets/image951.png'
     ];
@@ -83,12 +96,14 @@ class _NewHomePageState extends State<NewHomePage> {
       'Strategy Builder | Leader',
       "Car Dealer | Used Car Seller",
       'Flutter Developer | Student',
+      'Web Designer | @ Vouch',
       'Web Designer | @ Vouch'
     ];
     final List<String> goals = [
       'Want to find a driver for my car',
       "Find a maths tutor",
       'Find a DotNet Developer',
+      'Want to buy a second hand car',
       'Want to buy a second hand car'
     ];
 
@@ -108,6 +123,7 @@ class _NewHomePageState extends State<NewHomePage> {
               width: 6.w,
             ),
             GestureDetector(
+
               child: Container(
                 height: 50.h,
                 width: 50.w,
@@ -119,7 +135,9 @@ class _NewHomePageState extends State<NewHomePage> {
                   color: FlutterFlowTheme.of(context).secondaryText,
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Get.to( ()=> BountyScreen());
+              },
             )
           ],
         ),
@@ -294,109 +312,123 @@ class _NewHomePageState extends State<NewHomePage> {
                     shrinkWrap: true,
                     physics: const BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
-                    itemCount: colors.length,
+                    itemCount: recommendationsData?.length  >= 0 ?  recommendationsData?.length : recommendationsData?.length-1,
                     itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () {
-                          controller.getPathsList();
-                        },
-                        child: Container(
-                            width: 200.w,
-                            decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 2.0.w,
-                                      blurRadius: 4.0.w,
-                                      offset: Offset(0, 3))
-                                ],
-                                borderRadius: BorderRadius.circular(12.0.w),
-                                color: colors[index]),
-                            margin: EdgeInsets.only(right: 8.0.w, top: 8.w),
-                            child: Padding(
-                              padding: EdgeInsets.all(12.0.w),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Hero(
-                                    tag: "image:$index",
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      child: Container(
-                                        width: 36.w,
-                                        height: 36.h,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(30.0.w),
-                                          color: Colors.grey,
+                      if (recommendationsData == null || index >= recommendationsData.length) {
+                        print('Error: recommendationsData is null or index is out of bounds.');
+                        return const SizedBox();
+                      }
+                      print('Index: $index, Data length: ${recommendationsData.length}');
+                      var recommendations = recommendationsData[index];
+                      print("length ${recommendationsData.length}");
+                      return Obx(
+                        () =>  Skeletonizer(
+                          enabled: recommendationsController.isLoading.value,
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.to(() => PathsScreen(
+                                name: recommendations.name,
+                                hashedPhone: recommendations.hashedphone,
+                                image: recommendations.photourl,
+                                index: index,
+                                headline: recommendations.localizedheadline,
+                                goals: recommendations.goals,
+                              ));
+                            },
+                            child: Container(
+                                width: 200.w,
+                                decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 2.0.w,
+                                          blurRadius: 4.0.w,
+                                          offset: Offset(0, 3))
+                                    ],
+                                    borderRadius: BorderRadius.circular(12.0.w),
+                                    color: colors[index]),
+                                margin: EdgeInsets.only(right: 8.0.w, top: 8.w),
+                                child: Padding(
+                                  padding: EdgeInsets.all(12.0.w),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Hero(
+                                        tag: "image:$index",
+                                        child: Material(
+                                          color: Colors.transparent,
+                                          child: CircleAvatar(
+                                            radius: 18.0.w,
+                                            child: recommendations.photourl != null ? Image.network(recommendations.photourl) :
+                                            Image.asset(images[index]),
+                                          )
                                         ),
-                                        child: Image.asset(images[index]),
                                       ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 8.0.h,
-                                  ),
-                                  Hero(
-                                    tag: "name:$index",
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      child: AutoSizeText(
-                                        names[index],
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 1,
-                                        style: FlutterFlowTheme.of(context)
-                                            .titleLarge
-                                            .override(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .fixedBlack,
-                                              useGoogleFonts: false,
-                                            ),
+                                      SizedBox(
+                                        height: 8.0.h,
                                       ),
-                                    ),
-                                  ),
-                                  SizedBox(height: 4.0.h),
-                                  Hero(
-                                    tag: "headline:$index",
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      child: AutoSizeText(headLine[index],
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
-                                          style: FlutterFlowTheme.of(context)
-                                              .labelExtraSmall
-                                              .override(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .fixedBlack,
+                                      Hero(
+                                        tag: "name:$index",
+                                        child: Material(
+                                          color: Colors.transparent,
+                                          child: AutoSizeText(
+                                            recommendations.name,
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 1,
+                                            style: FlutterFlowTheme.of(context)
+                                                .titleLarge
+                                                .override(
+                                                  color:
+                                                      FlutterFlowTheme.of(context)
+                                                          .fixedBlack,
                                                   useGoogleFonts: false,
-                                                  fontWeight: FontWeight.w300)),
-                                    ),
+                                                ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 4.0.h),
+                                      Hero(
+                                        tag: "headline:$index",
+                                        child: Material(
+                                          color: Colors.transparent,
+                                          child: AutoSizeText(recommendations.localizedheadline,
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                              style: FlutterFlowTheme.of(context)
+                                                  .labelExtraSmall
+                                                  .override(
+                                                      color: FlutterFlowTheme.of(
+                                                              context)
+                                                          .fixedBlack,
+                                                      useGoogleFonts: false,
+                                                      fontWeight: FontWeight.w300)),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 16.0.h,
+                                      ),
+                                      Hero(
+                                        tag: "goal:$index",
+                                        child: Material(
+                                          color: Colors.transparent,
+                                          child: AutoSizeText(recommendations.goals.toString(),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                              style: FlutterFlowTheme.of(context)
+                                                  .labelExtraSmall
+                                                  .override(
+                                                      color: FlutterFlowTheme.of(
+                                                              context)
+                                                          .fixedBlack,
+                                                      useGoogleFonts: false,
+                                                      fontWeight: FontWeight.w400)),
+                                        ),
+                                      )
+                                    ],
                                   ),
-                                  SizedBox(
-                                    height: 16.0.h,
-                                  ),
-                                  Hero(
-                                    tag: "goal:$index",
-                                    child: Material(
-                                      color: Colors.transparent,
-                                      child: AutoSizeText(goals[index],
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
-                                          style: FlutterFlowTheme.of(context)
-                                              .labelExtraSmall
-                                              .override(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .fixedBlack,
-                                                  useGoogleFonts: false,
-                                                  fontWeight: FontWeight.w400)),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            )),
+                                )),
+                          ),
+                        ),
                       );
                     },
                   ),

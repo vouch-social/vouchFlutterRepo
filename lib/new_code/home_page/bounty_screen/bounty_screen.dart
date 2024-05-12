@@ -132,7 +132,7 @@ class _BountyScreenState extends State<BountyScreen> {
             SizedBox(
               height: 24.0.h,
             ),
-            AutoSizeText('Hoping for a resresponse',
+            AutoSizeText('Hoping for a response',
             style: FlutterFlowTheme.of(context).headlineSmall,
             ),
             SizedBox(
@@ -182,7 +182,7 @@ class _BountyScreenState extends State<BountyScreen> {
             const Spacer(),
             FFButtonWidget(
                 onPressed: () async {
-                  await controller.sendRaisedBounty(sliderValue);
+                  await controller.sendRaisedBounty(2);
                 },
                 text: 'Ask Network',
                 options: CTAButton(context)),

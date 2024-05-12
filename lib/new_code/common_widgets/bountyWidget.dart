@@ -6,7 +6,7 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/generated/assets.dart';
 import 'package:vouch/new_code/home_page/HomePage/controllers/start_hunt_controller.dart';
-Widget bountyWidget(context, bounty){
+Widget bountyWidget(context, bounty, ){
   var  controller = StartHuntController();
   return Padding(
     padding:  EdgeInsets.symmetric(vertical: 8.0.h),
@@ -162,7 +162,8 @@ Widget bountyWidget(context, bounty){
               Obx(
                   () => GestureDetector(
                   onTap: () async{
-                    //await controller.startBountyHunt(bounty.id);
+                    await controller.startBountyHunt(bounty.id);
+
                   },
                   child: Container(
 

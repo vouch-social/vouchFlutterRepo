@@ -21,9 +21,7 @@ import 'new_code/services/firebase_option.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
 import 'flutter_flow/firebase_app_check_util.dart';
-
 import './backend/firebase_dynamic_links/firebase_dynamic_links.dart';
-
 import './new_code/onboarding/welcome_screen/welcome_screen.dart';
 
 SharedPreferences? prefs;

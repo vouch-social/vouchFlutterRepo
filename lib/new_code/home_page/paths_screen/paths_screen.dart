@@ -16,33 +16,45 @@ import 'package:vouch/new_code/home_page/settings/settings_screen.dart';
 import '../../../generated/assets.dart';
 import '../../common_widgets/myAppBar.dart';
 import '../../common_widgets/vector.dart';
+import '../HomePage/home_page_controller.dart';
 
 class PathsScreen extends StatefulWidget {
-  final AllPaths allPaths;
+
   final dynamic name;
   final dynamic image;
   final dynamic headline;
   final dynamic goals;
   final dynamic index;
+  final dynamic hashedPhone;
   const PathsScreen(
       {super.key,
       this.name,
       this.image,
       this.headline,
       this.goals,
-      this.index,
-      required this.allPaths});
+      this.index, this.hashedPhone,
+      });
 
   @override
   State<PathsScreen> createState() => _PathsScreenState();
 }
 
 class _PathsScreenState extends State<PathsScreen> {
+  final controller = Get.put(HomeController());
+  var allPaths;
   bool _isLoading = true;
+
+  void fetchPaths() async {
+    var fetchedPaths = await controller.getPathsList(widget.hashedPhone);
+    setState(() {
+      allPaths = fetchedPaths;
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    fetchPaths();
     Future.delayed(Duration(seconds: 2), () {
       setState(() {
         _isLoading = false;
@@ -52,7 +64,7 @@ class _PathsScreenState extends State<PathsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("Path Path : ${widget.allPaths.singlePathList[0].pathNode[0].image}");
+    print("Path Path : ${widget.image}");
     return Scaffold(
       appBar: CustomAppBar(
         backgroundColor: FlutterFlowTheme.of(context).fixedWhite,
@@ -84,7 +96,7 @@ class _PathsScreenState extends State<PathsScreen> {
                         color: Colors.transparent,
                         child: CircleAvatar(
                           backgroundImage: NetworkImage(
-                            widget.allPaths.singlePathList[0].pathNode[0]
+                            widget
                                     .image ??
                                 "https://images.unsplash.com/photo-1545987796-200677ee1011?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                           ),
@@ -100,7 +112,7 @@ class _PathsScreenState extends State<PathsScreen> {
                     child: Material(
                       color: Colors.transparent,
                       child: AutoSizeText(
-                        widget.allPaths.singlePathList[0].pathNode[0].name,
+                        widget.name,
                         style: FlutterFlowTheme.of(context)
                             .headlineSmall
                             .override(
@@ -119,7 +131,7 @@ class _PathsScreenState extends State<PathsScreen> {
                       child: Material(
                         color: Colors.transparent,
                         child: AutoSizeText(
-                          widget.allPaths.singlePathList[0].pathNode[0].heading,
+                          widget.headline,
                           style: FlutterFlowTheme.of(context)
                               .bodyMedium
                               .override(
@@ -142,12 +154,11 @@ class _PathsScreenState extends State<PathsScreen> {
                       tag: "goal:$widget.index",
                       child: Material(
                         child: AutoSizeText(
-                          widget.allPaths.singlePathList[0].pathNode[0]
-                                  .attributes.isEmpty
+                          widget
+                                  .goals.isEmpty
                               ? "Dummy Attribute"
                               :
-                                  widget.allPaths.singlePathList[0].pathNode[0]
-                                      .attributes[0].attributes.toString(),
+                                  widget.goals.toString(),
 
                           style: FlutterFlowTheme.of(context)
                               .labelExtraSmall
@@ -169,7 +180,7 @@ class _PathsScreenState extends State<PathsScreen> {
             ),
             Expanded(
                 child: PathListView(
-              allPaths: widget.allPaths,
+              allPaths: allPaths,
             )),
           ],
         ),
