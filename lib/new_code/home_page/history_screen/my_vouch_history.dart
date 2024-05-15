@@ -45,7 +45,11 @@ class _MyVouchHistoryState extends State<MyVouchHistory> {
             padding: EdgeInsets.symmetric(horizontal: 16.0.w),
                   itemBuilder: (BuildContext context, int index) {
                     var vouch = vouchHistory[index];
-                    return myVouchWidget(context,vouch);
+                    if(vouch.status == "cancel") {
+                      return Container();
+                    } else {
+                      return myVouchWidget(context,vouch);
+                    }
                   },
                 ),
         ),

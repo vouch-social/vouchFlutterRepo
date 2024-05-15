@@ -5,10 +5,15 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/generated/assets.dart';
+import 'package:vouch/new_code/home_page/HomePage/controllers/update_vouch_status_controller.dart';
 
 Widget myVouchWidget(context, vouch) {
+
+  var controller = UpdateVouchStatusController();
+
   return Padding(
     padding: EdgeInsets.symmetric(vertical: 8.0.h),
     child: Container(
@@ -82,38 +87,73 @@ Widget myVouchWidget(context, vouch) {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 12.0.w, vertical: 6.0.h),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4.0.w),
-                        color: Colors.transparent,
-                        border: Border.all(
-                            color: FlutterFlowTheme.of(context).primaryText)),
-                    child: AutoSizeText('Cancel',
-                        style: FlutterFlowTheme.of(context)
-                            .labelExtraSmall
-                            .override(
-                              useGoogleFonts: false,
-                              fontWeight: FontWeight.w400,
-                            )),
+                  vouch.status == 'close' ? Container() :
+                  GestureDetector(
+                    onTap: () async{
+                      await controller.updateVouchStatus(vouch.id, 'cancel');
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 12.0.w, vertical: 6.0.h),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4.0.w),
+                          color: Colors.transparent,
+                          border: Border.all(
+                              color: FlutterFlowTheme.of(context).primaryText)),
+                      child: AutoSizeText('Cancel',
+                          style: FlutterFlowTheme.of(context)
+                              .labelExtraSmall
+                              .override(
+                                useGoogleFonts: false,
+                                fontWeight: FontWeight.w400,
+                              )),
+                    ),
                   ),
                   SizedBox(
                     width: 8.0.w,
                   ),
-                  Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 12.0.w, vertical: 8.0.h),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4.0.w),
-                        color: FlutterFlowTheme.of(context).primary),
-                    child: AutoSizeText('Close',
-                        style: FlutterFlowTheme.of(context).buttonText.override(
-                            useGoogleFonts: false,
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w400)),
+                  vouch.activenode == vouch.endnode && vouch.status != 'close'?
+                  GestureDetector(
+                    onTap: () async{
+                      //await controller.updateVouchStatus(vouch.id, 'close');
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 12.0.w, vertical: 8.0.h),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4.0.w),
+                          color: FlutterFlowTheme.of(context).primary),
+                      child: AutoSizeText('Connect',
+                          style: FlutterFlowTheme.of(context).buttonText.override(
+                              useGoogleFonts: false,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w400)),
+                    ),
+                  )
+                      :
+                  vouch.status == 'close' ?
+                  AutoSizeText('Closed',
+                      style: FlutterFlowTheme.of(context).bodyLarge)
+                      :
+                  GestureDetector(
+                    onTap: () async{
+                      await controller.updateVouchStatus(vouch.id, 'close');
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 12.0.w, vertical: 8.0.h),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4.0.w),
+                          color: FlutterFlowTheme.of(context).primary),
+                      child: AutoSizeText('Close',
+                          style: FlutterFlowTheme.of(context).buttonText.override(
+                              useGoogleFonts: false,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w400)),
+                    ),
                   ),
                 ],
               ),
@@ -132,11 +172,16 @@ Widget vouchPath(context, pathItem, index, length, activenode) {
       Column(
         children: [
           CircleAvatar(
-            radius: 20.0.h,
-            backgroundColor: Colors.transparent,
-            child: Image.asset(
-              'assets/image951.png',
-              fit: BoxFit.cover,
+            radius: 22.0.h,
+            backgroundColor: activenode == pathItem.contactHashedPhone ? FlutterFlowTheme.of(context).primary:Colors.transparent,
+            child: CircleAvatar(
+              radius: 20.0.h,
+              backgroundColor: Colors.transparent,
+              child: Image.asset(
+                'assets/image951.png',
+                fit: BoxFit.cover,
+
+              ),
             ),
           ),
           SizedBox(height: 4.0.h),
@@ -158,36 +203,24 @@ Widget vouchPath(context, pathItem, index, length, activenode) {
         ],
       ),
       Visibility(
-        visible: index != length - 1 ? true : false,
+        visible: index != length-1 ? true : false,
         child: Stack(
           alignment: Alignment.center,
           children: [
-            Container(
-                height: 4.0.h,
-                width: (MediaQuery.of(context).size.width -
-                        56.0.w -
-                        (length * 64.0.h)) /
-                    (length - 1),
-                color: !pathItem.hasVouched
-                    ? FlutterFlowTheme.of(context).primary
-                    : FlutterFlowTheme.of(context)
-                        .primaryText
-                        .withOpacity(0.3)),
-            activenode == pathItem.contactHashedPhone
-                ? Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.0.h),
-                    child: Container(
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                      child: Icon(
-                        Icons.verified_rounded,
-                        color: FlutterFlowTheme.of(context).primary,
-                        size: 24.0.h,
-                      ),
-                    ),
-                  )
-                : Container(
-                    height: 40.0.h,
-                  ),
+            Padding(
+              padding:  EdgeInsets.symmetric(vertical: 20.0.w),
+              child: Container(
+                  height: 4.0.h,
+                  width: (MediaQuery.of(context).size.width -
+                      56.0.w -
+                      (length * 64.0.h)) /
+                      (length - 1),
+                  color: pathItem.hasVouched
+                      ? FlutterFlowTheme.of(context).primary
+                      : FlutterFlowTheme.of(context)
+                      .primaryText
+                      .withOpacity(0.3)),
+            ),
           ],
         ),
       ),

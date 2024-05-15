@@ -32,7 +32,7 @@ class _MyHuntsScreenState extends State<MyHuntsScreen> {
   void fetchHuntsHistory() async {
     var fetchedBountyHistory = await controller.getHuntsHistory();
     setState(() {
-      huntsHistory = fetchedBountyHistory. myHunts;
+      huntsHistory = fetchedBountyHistory.myHunts;
     });
   }
 
@@ -50,9 +50,9 @@ class _MyHuntsScreenState extends State<MyHuntsScreen> {
             padding: EdgeInsets.symmetric(horizontal: 16.0.w),
             itemCount: huntsHistory?.length ?? 0,
             itemBuilder: (BuildContext context, int index) {
-              var bounty = huntsHistory[index];
+              var hunts = huntsHistory[index];
               return
-                myHuntsWidget(context,bounty);
+                myHuntsWidget(context,hunts);
             },
           ),
         ),

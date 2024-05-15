@@ -18,8 +18,9 @@ class GetBountyByIdModel {
   String bountyStatus;
   DateTime createdAt;
   DateTime updatedAt;
-  List<dynamic> hunters;
+  List<Hunter> hunters;
   Urgency urgency;
+  User user;
 
   GetBountyByIdModel({
     required this.id,
@@ -33,6 +34,7 @@ class GetBountyByIdModel {
     required this.updatedAt,
     required this.hunters,
     required this.urgency,
+    required this.user,
   });
 
   factory GetBountyByIdModel.fromJson(Map<String, dynamic> json) => GetBountyByIdModel(
@@ -45,8 +47,9 @@ class GetBountyByIdModel {
     bountyStatus: json["bounty_status"],
     createdAt: DateTime.parse(json["createdAt"]),
     updatedAt: DateTime.parse(json["updatedAt"]),
-    hunters: List<dynamic>.from(json["hunters"].map((x) => x)),
+    hunters: List<Hunter>.from(json["hunters"].map((x) => Hunter.fromJson(x))),
     urgency: Urgency.fromJson(json["urgency"]),
+    user: User.fromJson(json["user"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -61,6 +64,75 @@ class GetBountyByIdModel {
     "updatedAt": updatedAt.toIso8601String(),
     "hunters": List<dynamic>.from(hunters.map((x) => x)),
     "urgency": urgency.toJson(),
+    "user": user.toJson(),
+  };
+}
+
+class Hunter {
+  String createdAt;
+  String updatedAt;
+  int id;
+  String hunterCreatedAt;
+  int bountyId;
+  int userId;
+  User user;
+  String hunterStatus;
+
+  Hunter({
+    required this.createdAt,
+    required this.updatedAt,
+    required this.id,
+    required this.hunterCreatedAt,
+    required this.bountyId,
+    required this.userId,
+    required this.user,
+    required this.hunterStatus,
+  });
+
+  factory Hunter.fromJson(Map<String, dynamic> json) => Hunter(
+    createdAt: json["createdAt"],
+    updatedAt: json["updatedAt"],
+    id: json["id"],
+    hunterCreatedAt: json["created_at"],
+    bountyId: json["bounty_id"],
+    userId: json["user_id"],
+    hunterStatus: json["hunter_status"],
+    user: User.fromJson(json["user"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "createdAt": createdAt,
+    "updatedAt": updatedAt,
+    "id": id,
+    "created_at": hunterCreatedAt,
+    "bounty_id": bountyId,
+    "user_id": userId,
+    "hunter_status":hunterStatus,
+    "user": user.toJson(),
+  };
+}
+
+class User {
+  String name;
+  dynamic photourl;
+  String localizedheadline;
+
+  User({
+    required this.name,
+    this.photourl,
+    required this.localizedheadline,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) => User(
+    name: json["name"],
+    photourl: json["photourl"],
+    localizedheadline: json["localizedheadline"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "name": name,
+    "photourl": photourl,
+    "localizedheadline": localizedheadline,
   };
 }
 

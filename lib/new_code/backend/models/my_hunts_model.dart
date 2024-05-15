@@ -84,6 +84,7 @@ class Bounty {
   DateTime updatedAt;
   Urgency urgency;
   User user;
+  List<Hunter> hunters;
 
   Bounty({
     required this.id,
@@ -97,6 +98,7 @@ class Bounty {
     required this.updatedAt,
     required this.urgency,
     required this.user,
+    required this.hunters,
   });
 
   factory Bounty.fromJson(Map<String, dynamic> json) => Bounty(
@@ -111,6 +113,7 @@ class Bounty {
     updatedAt: DateTime.parse(json["updatedAt"]),
     urgency: Urgency.fromJson(json["urgency"]),
     user: User.fromJson(json["user"]),
+    hunters: List<Hunter>.from(json["hunters"].map((x) => Hunter.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -125,22 +128,51 @@ class Bounty {
     "updatedAt": updatedAt.toIso8601String(),
     "urgency": urgency.toJson(),
     "user": user.toJson(),
+    "hunters": List<dynamic>.from(hunters.map((x) => x.toJson())),
   };
 }
 
-class Urgency {
-  String name;
+class Hunter {
+  String createdAt;
+  String updatedAt;
+  int id;
+  String hunterCreatedAt;
+  int bountyId;
+  int userId;
+  String hunterStatus;
+  User user;
 
-  Urgency({
-    required this.name,
+  Hunter({
+    required this.createdAt,
+    required this.updatedAt,
+    required this.id,
+    required this.hunterCreatedAt,
+    required this.bountyId,
+    required this.userId,
+    required this.hunterStatus,
+    required this.user,
   });
 
-  factory Urgency.fromJson(Map<String, dynamic> json) => Urgency(
-    name: json["name"],
+  factory Hunter.fromJson(Map<String, dynamic> json) => Hunter(
+    createdAt: json["createdAt"],
+    updatedAt: json["updatedAt"],
+    id: json["id"],
+    hunterCreatedAt: json["created_at"],
+    bountyId: json["bounty_id"],
+    userId: json["user_id"],
+    hunterStatus: json["hunter_status"],
+    user: User.fromJson(json["user"]),
   );
 
   Map<String, dynamic> toJson() => {
-    "name": name,
+    "createdAt": createdAt,
+    "updatedAt": updatedAt,
+    "id": id,
+    "created_at": hunterCreatedAt,
+    "bounty_id": bountyId,
+    "user_id": userId,
+    "hunter_status": hunterStatus,
+    "user": user.toJson(),
   };
 }
 
@@ -165,5 +197,21 @@ class User {
     "name": name,
     "photourl": photourl,
     "localizedheadline": localizedheadline,
+  };
+}
+
+class Urgency {
+  String name;
+
+  Urgency({
+    required this.name,
+  });
+
+  factory Urgency.fromJson(Map<String, dynamic> json) => Urgency(
+    name: json["name"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "name": name,
   };
 }

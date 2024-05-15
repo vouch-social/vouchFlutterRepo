@@ -25,6 +25,7 @@ class AuthRepository {
         'hashedphone': hashedphone,
         'country_code':country_code
       };
+      print("Data 1 :$requestData");
       dio.Response response = await _dioClient.postRequest(endPoint: '/api/auth/login', data: requestData,authToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjkxODcwMDM0MjkwMSIsInN1YiI6NDUsImlhdCI6MTcxMjU3MjQyMiwiZXhwIjoxNzQ0MTMwMDIyfQ.ZiRcVsoDakk2I8hR9tfwuN0B3nt9zbT9IomdClTxoVw');
 
       if (response.data != null) {

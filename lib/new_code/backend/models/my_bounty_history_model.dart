@@ -27,6 +27,7 @@ class MyBountyListDatum {
   List<String> tags;
   int urgencyId;
   int expiry;
+  String bountyStatus;
   DateTime createdAt;
   DateTime updatedAt;
   List<Hunter> hunters;
@@ -43,6 +44,7 @@ class MyBountyListDatum {
     required this.updatedAt,
     required this.hunters,
     required this.urgency,
+    required this.bountyStatus,
   });
 
   factory MyBountyListDatum.fromJson(Map<String, dynamic> json) => MyBountyListDatum(
@@ -52,6 +54,7 @@ class MyBountyListDatum {
     tags: List<String>.from(json["tags"].map((x) => x)),
     urgencyId: json["urgency_id"],
     expiry: json["expiry"],
+    bountyStatus: json["bounty_status"],
     createdAt: DateTime.parse(json["createdAt"]),
     updatedAt: DateTime.parse(json["updatedAt"]),
     hunters: List<Hunter>.from(json["hunters"].map((x) => Hunter.fromJson(x))),
@@ -65,6 +68,7 @@ class MyBountyListDatum {
     "tags": List<dynamic>.from(tags.map((x) => x)),
     "urgency_id": urgencyId,
     "expiry": expiry,
+    "bounty_status": bountyStatus,
     "createdAt": createdAt.toIso8601String(),
     "updatedAt": updatedAt.toIso8601String(),
     "hunters": List<dynamic>.from(hunters.map((x) => x.toJson())),

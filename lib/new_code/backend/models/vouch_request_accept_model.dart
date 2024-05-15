@@ -5,33 +5,33 @@ VouchAcceptModel vouchAcceptModelFromJson(String str) => VouchAcceptModel.fromJs
 String vouchAcceptModelToJson(VouchAcceptModel data) => json.encode(data.toJson());
 
 class VouchAcceptModel {
-  String createdAt;
-  String updatedAt;
-  int id;
-  String vouchAcceptModelCreatedAt;
-  String message;
-  String status;
-  int pathlength;
-  String startnode;
-  String endnode;
-  String activenode;
-  String activenodeStatus;
-  int userId;
+  dynamic createdAt;
+  dynamic updatedAt;
+  dynamic id;
+  dynamic vouchAcceptModelCreatedAt;
+  dynamic message;
+  dynamic status;
+  dynamic pathlength;
+  dynamic startnode;
+  dynamic endnode;
+  dynamic activenode;
+  dynamic activenodeStatus;
+  dynamic userId;
   PathData pathData;
 
   VouchAcceptModel({
-    required this.createdAt,
-    required this.updatedAt,
-    required this.id,
-    required this.vouchAcceptModelCreatedAt,
-    required this.message,
-    required this.status,
-    required this.pathlength,
-    required this.startnode,
-    required this.endnode,
-    required this.activenode,
-    required this.activenodeStatus,
-    required this.userId,
+     this.createdAt,
+     this.updatedAt,
+     this.id,
+     this.vouchAcceptModelCreatedAt,
+     this.message,
+     this.status,
+     this.pathlength,
+     this.startnode,
+     this.endnode,
+     this.activenode,
+     this.activenodeStatus,
+     this.userId,
     required this.pathData,
   });
 
@@ -70,13 +70,13 @@ class VouchAcceptModel {
 
 class PathData {
   List<Path> path;
-  int length;
-  int strength;
+  dynamic length;
+  dynamic strength;
 
   PathData({
     required this.path,
-    required this.length,
-    required this.strength,
+     this.length,
+     this.strength,
   });
 
   factory PathData.fromJson(Map<String, dynamic> json) => PathData(
@@ -93,24 +93,24 @@ class PathData {
 }
 
 class Path {
-  String name;
-  String? image;
-  String heading;
+  dynamic name;
+  dynamic image;
+  dynamic heading;
   List<Attribute> attributes;
-  bool isRegistered;
-  double strengthToNext;
-  String contactHashedPhone;
-  bool hasVouched;
+  dynamic isRegistered;
+  dynamic strengthToNext;
+  dynamic contactHashedPhone;
+  dynamic hasVouched;
 
   Path({
-    required this.name,
-    required this.image,
-    required this.heading,
+     this.name,
+     this.image,
+     this.heading,
     required this.attributes,
-    required this.isRegistered,
-    required this.strengthToNext,
-    required this.contactHashedPhone,
-    required this.hasVouched,
+     this.isRegistered,
+     this.strengthToNext,
+     this.contactHashedPhone,
+     this.hasVouched,
   });
 
   factory Path.fromJson(Map<String, dynamic> json) => Path(
@@ -137,11 +137,11 @@ class Path {
 }
 
 class Attribute {
-  int id;
+  dynamic id;
   dynamic userId;
-  String createdAt;
-  String updatedAt;
-  List<String> attributes;
+  dynamic createdAt;
+  dynamic updatedAt;
+  List<dynamic> attributes;
 
   Attribute({
     required this.id,
@@ -156,7 +156,7 @@ class Attribute {
     userId: json["userId"],
     createdAt: json["createdAt"],
     updatedAt: json["updatedAt"],
-    attributes: List<String>.from(json["attributes"].map((x) => x)),
+    attributes: List<dynamic>.from(json["attributes"].map((x) => x)),
   );
 
   Map<String, dynamic> toJson() => {

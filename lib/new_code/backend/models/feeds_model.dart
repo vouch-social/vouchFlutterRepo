@@ -35,9 +35,11 @@ class Bounty {
   List<String> tags;
   int urgencyId;
   int expiry;
+  String bountyStatus;
   DateTime createdAt;
   DateTime updatedAt;
   User user;
+  List<Hunter> hunters;
 
   Bounty({
     required this.id,
@@ -46,9 +48,11 @@ class Bounty {
     required this.tags,
     required this.urgencyId,
     required this.expiry,
+    required this.bountyStatus,
     required this.createdAt,
     required this.updatedAt,
     required this.user,
+    required this.hunters,
   });
 
   factory Bounty.fromJson(Map<String, dynamic> json) => Bounty(
@@ -58,10 +62,11 @@ class Bounty {
     tags: List<String>.from(json["tags"].map((x) => x)),
     urgencyId: json["urgency_id"],
     expiry: json["expiry"],
+    bountyStatus: json["bounty_status"],
     createdAt: DateTime.parse(json["createdAt"]),
     updatedAt: DateTime.parse(json["updatedAt"]),
     user: User.fromJson(json["user"]),
-  );
+    hunters: json["hunters"] != null ? List<Hunter>.from(json["hunters"].map((x) => Hunter.fromJson(x))) : [],  );
 
   Map<String, dynamic> toJson() => {
     "id": id,
@@ -70,21 +75,67 @@ class Bounty {
     "tags": List<dynamic>.from(tags.map((x) => x)),
     "urgency_id": urgencyId,
     "expiry": expiry,
+    "bounty_status": bountyStatus,
     "createdAt": createdAt.toIso8601String(),
     "updatedAt": updatedAt.toIso8601String(),
+    "user": user.toJson(),
+    "hunters": List<dynamic>.from(hunters.map((x) => x.toJson())),
+  };
+}
+
+class Hunter {
+  String createdAt;
+  String updatedAt;
+  int id;
+  String hunterCreatedAt;
+  int bountyId;
+  int userId;
+  String hunterStatus;
+  User user;
+
+  Hunter({
+    required this.createdAt,
+    required this.updatedAt,
+    required this.id,
+    required this.hunterCreatedAt,
+    required this.bountyId,
+    required this.userId,
+    required this.hunterStatus,
+    required this.user,
+  });
+
+  factory Hunter.fromJson(Map<String, dynamic> json) => Hunter(
+    createdAt: json["createdAt"],
+    updatedAt: json["updatedAt"],
+    id: json["id"],
+    hunterCreatedAt: json["created_at"],
+    bountyId: json["bounty_id"],
+    userId: json["user_id"],
+    hunterStatus: json["hunter_status"],
+    user: User.fromJson(json["user"]),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "createdAt": createdAt,
+    "updatedAt": updatedAt,
+    "id": id,
+    "created_at": hunterCreatedAt,
+    "bounty_id": bountyId,
+    "user_id": userId,
+    "hunter_status": hunterStatus,
     "user": user.toJson(),
   };
 }
 
 class User {
   String name;
-  dynamic photourl;
-  dynamic localizedheadline;
+  String? photourl;
+  String localizedheadline;
 
   User({
     required this.name,
-     this.photourl,
-     this.localizedheadline,
+    required this.photourl,
+    required this.localizedheadline,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -104,7 +155,7 @@ class Vouch {
   String createdAt;
   String updatedAt;
   int id;
-  dynamic vouchCreatedAt;
+  String vouchCreatedAt;
   String message;
   String status;
   int pathlength;
@@ -193,20 +244,20 @@ class Path {
   String? image;
   String heading;
   List<Attribute> attributes;
+  bool hasVouched;
   bool isRegistered;
   double strengthToNext;
   String contactHashedPhone;
-  bool hasVouched;
 
   Path({
     required this.name,
     required this.image,
     required this.heading,
     required this.attributes,
+    required this.hasVouched,
     required this.isRegistered,
     required this.strengthToNext,
     required this.contactHashedPhone,
-    required this.hasVouched,
   });
 
   factory Path.fromJson(Map<String, dynamic> json) => Path(
@@ -214,10 +265,10 @@ class Path {
     image: json["image"],
     heading: json["heading"],
     attributes: List<Attribute>.from(json["attributes"].map((x) => Attribute.fromJson(x))),
+    hasVouched: json["hasVouched"],
     isRegistered: json["isRegistered"],
     strengthToNext: json["strengthToNext"]?.toDouble(),
     contactHashedPhone: json["contactHashedPhone"],
-    hasVouched: json["hasVouched"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -225,10 +276,10 @@ class Path {
     "image": image,
     "heading": heading,
     "attributes": List<dynamic>.from(attributes.map((x) => x.toJson())),
+    "hasVouched": hasVouched,
     "isRegistered": isRegistered,
     "strengthToNext": strengthToNext,
     "contactHashedPhone": contactHashedPhone,
-    "hasVouched": hasVouched,
   };
 }
 

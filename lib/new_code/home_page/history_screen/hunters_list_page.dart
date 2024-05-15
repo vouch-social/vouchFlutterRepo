@@ -28,6 +28,7 @@ class _HuntersListScreenState extends State<HuntersListScreen> {
         child: Padding(
           padding: EdgeInsets.all(16.0.w),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AutoSizeText(
                 "Claimed Hunters",
@@ -49,12 +50,15 @@ class _HuntersListScreenState extends State<HuntersListScreen> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0.w)),
                           leading:
-                              widget.hunters[index].user.photourl != null &&
-                                      widget.hunters[index].user.photourl
-                                          .startsWith('http')
-                                  ? Image.network(
-                                      widget.hunters[index].user.photourl)
-                                  : Image.asset(Assets.assetsImage951),
+                              CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                child: widget.hunters[index].user.photourl != null &&
+                                    widget.hunters[index].user.photourl
+                                        .startsWith('http')
+                                    ? Image.network(
+                                    widget.hunters[index].user.photourl)
+                                    : Image.asset(Assets.assetsImage951),
+                              ),
                           title: AutoSizeText(
                             widget.hunters[index].user.name,
                             style: FlutterFlowTheme.of(context).titleSmall,
@@ -86,16 +90,6 @@ class _HuntersListScreenState extends State<HuntersListScreen> {
                       );
                     }),
               ),
-              SizedBox(
-                height: 24.0.h,
-              ),
-              AutoSizeText(
-                "Unclaimed Hunters",
-                style: FlutterFlowTheme.of(context).titleLarge,
-              ),
-              SizedBox(
-                height: 24.0.h,
-              ),
               Expanded(
                 child: ListView.builder(
                     itemCount: widget.hunters.length,
@@ -115,12 +109,15 @@ class _HuntersListScreenState extends State<HuntersListScreen> {
                               borderRadius: BorderRadius.circular(8.0.w),
                             ),
                             leading:
-                                widget.hunters[index].user.photourl != null &&
-                                        widget.hunters[index].user.photourl
-                                            .startsWith('http')
-                                    ? Image.network(
-                                        widget.hunters[index].user.photourl)
-                                    : Image.asset(Assets.assetsImage951),
+                            CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              child: widget.hunters[index].user.photourl != null &&
+                                  widget.hunters[index].user.photourl
+                                      .startsWith('http')
+                                  ? Image.network(
+                                  widget.hunters[index].user.photourl)
+                                  : Image.asset(Assets.assetsImage951),
+                            ),
                             title: AutoSizeText(
                               widget.hunters[index].user.name,
                               style: FlutterFlowTheme.of(context).titleSmall,

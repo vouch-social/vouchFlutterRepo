@@ -4,9 +4,8 @@ import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/new_code/common_widgets/my_bounty_widget.dart';
+import 'package:vouch/new_code/home_page/history_screen/bounty_details_by_id.dart';
 import 'package:vouch/new_code/home_page/history_screen/my_bounty_history_controller.dart';
-
-import '../../backend/models/my_bounty_history_model.dart';
 
 class MyRaisedBountyHistory extends StatefulWidget {
 
@@ -17,7 +16,7 @@ class MyRaisedBountyHistory extends StatefulWidget {
 }
 
 class _MyRaisedBountyHistoryState extends State<MyRaisedBountyHistory> {
-  final controller = Get.put(BountyController());
+  final controller = Get.put(BountyHistoryController());
   var bountyHistory;
 
   @override
@@ -43,13 +42,24 @@ class _MyRaisedBountyHistoryState extends State<MyRaisedBountyHistory> {
           enabled : controller.isLoading.value,
           child : ListView.builder(
           padding: EdgeInsets.symmetric(horizontal: 16.0.w),
-          itemCount: bountyHistory?.length ?? 0,
+          itemCount: bountyHistory?.length ?? 0 ,
           itemBuilder: (BuildContext context, int index) {
             var bounty = bountyHistory[index];
-            return
-              myBountyWidget(context,bounty);
+            if(bounty.bountyStatus != 'close'){
+              return
+                GestureDetector(
+                    onDoubleTap: (){
+                      Get.to(() => BountyDetailsScreen(
+                        bounty: bountyHistory[index],
+                      ));
+                    },
+                    child: myBountyWidget(context,bounty));
+            }else{
+              return Container();
+            }
+
           },
-        ),
+                  ),
         ),
       ),
     );

@@ -42,7 +42,7 @@ class PathsScreen extends StatefulWidget {
 class _PathsScreenState extends State<PathsScreen> {
   final controller = Get.put(HomeController());
   var allPaths;
-  bool _isLoading = true;
+  //bool _isLoading = true;
 
   void fetchPaths() async {
     var fetchedPaths = await controller.getPathsList(widget.hashedPhone);
@@ -55,11 +55,7 @@ class _PathsScreenState extends State<PathsScreen> {
   void initState() {
     super.initState();
     fetchPaths();
-    Future.delayed(Duration(seconds: 2), () {
-      setState(() {
-        _isLoading = false;
-      });
-    });
+
   }
 
   @override
@@ -73,7 +69,7 @@ class _PathsScreenState extends State<PathsScreen> {
       backgroundColor: FlutterFlowTheme.of(context).fixedWhite,
       body: SafeArea(
           child: Skeletonizer(
-        enabled: _isLoading,
+        enabled: controller.isLoading.value,
         child: Column(
           children: [
             Padding(
@@ -178,10 +174,11 @@ class _PathsScreenState extends State<PathsScreen> {
             SizedBox(
               height: 24.0.h,
             ),
+            allPaths != null ?
             Expanded(
                 child: PathListView(
               allPaths: allPaths,
-            )),
+            )) : Container(),
           ],
         ),
       )),

@@ -39,6 +39,7 @@ class _NewHomePageState extends State<NewHomePage> {
   var vouchFeedsData;
   var bountyFeeedsData;
   var recommendationsData;
+
   @override
   void initState() {
     super.initState();
@@ -48,11 +49,11 @@ class _NewHomePageState extends State<NewHomePage> {
 
   void fetchFeeds() async {
     var fetchedFeeds = await feedsController.getHomePageFeeds();
-    setState(() {
-      vouchFeedsData = fetchedFeeds.vouches;
-      bountyFeeedsData = fetchedFeeds.bounties;
-    });
-  }
+   setState(() {
+    vouchFeedsData = fetchedFeeds.vouches;
+    bountyFeeedsData = fetchedFeeds.bounties;
+  });
+   }
 
   void fetchRecommendations() async {
     var fetchedRecommendations = await recommendationsController.getRecommendationsData();
@@ -106,7 +107,7 @@ class _NewHomePageState extends State<NewHomePage> {
       'Want to buy a second hand car',
       'Want to buy a second hand car'
     ];
-
+    // fetchFeeds();
     return Scaffold(
       appBar: CustomAppBar(),
       key: _scaffoldKey,
@@ -306,45 +307,41 @@ class _NewHomePageState extends State<NewHomePage> {
                 SizedBox(
                   height: 8.0.h,
                 ),
-                SizedBox(
+                Container(
                   height: 144.h,
                   child: ListView.builder(
                     shrinkWrap: true,
                     physics: const BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
-                    itemCount: recommendationsData?.length  >= 0 ?  recommendationsData?.length : recommendationsData?.length-1,
+                    itemCount: recommendationsData != null  ?  recommendationsData?.length-1:0,
                     itemBuilder: (BuildContext context, int index) {
-                      if (recommendationsData == null || index >= recommendationsData.length) {
+                      if (recommendationsData[index].userData == null || index >= recommendationsData.length) {
                         print('Error: recommendationsData is null or index is out of bounds.');
                         return const SizedBox();
                       }
                       print('Index: $index, Data length: ${recommendationsData.length}');
-                      var recommendations = recommendationsData[index];
+                      var recommendations = recommendationsData[1];
+                      print("Recommendations ${recommendations.goal}");
                       print("length ${recommendationsData.length}");
+                      print(Image.network(recommendations.userData[index].photourl).errorBuilder);
+                      print("Image ${recommendations.userData[index].photourl}");
                       return Obx(
                         () =>  Skeletonizer(
                           enabled: recommendationsController.isLoading.value,
                           child: GestureDetector(
                             onTap: () {
                               Get.to(() => PathsScreen(
-                                name: recommendations.name,
-                                hashedPhone: recommendations.hashedphone,
-                                image: recommendations.photourl,
+                                name: recommendations.userData[index].name,
+                                hashedPhone: recommendations.userData[index].hashedphone,
+                                image: recommendations.userData[index].photourl,
                                 index: index,
-                                headline: recommendations.localizedheadline,
-                                goals: recommendations.goals,
+                                headline: recommendations.userData[index].localizedheadline,
+                                goals: recommendations.userData[index].goals,
                               ));
                             },
                             child: Container(
                                 width: 200.w,
                                 decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.grey.withOpacity(0.5),
-                                          spreadRadius: 2.0.w,
-                                          blurRadius: 4.0.w,
-                                          offset: Offset(0, 3))
-                                    ],
                                     borderRadius: BorderRadius.circular(12.0.w),
                                     color: colors[index]),
                                 margin: EdgeInsets.only(right: 8.0.w, top: 8.w),
@@ -359,7 +356,7 @@ class _NewHomePageState extends State<NewHomePage> {
                                           color: Colors.transparent,
                                           child: CircleAvatar(
                                             radius: 18.0.w,
-                                            child: recommendations.photourl != null ? Image.network(recommendations.photourl) :
+                                            child: recommendations.userData[index].photourl != null ||  Image.network(recommendations.userData[index].photourl).errorBuilder !=null ? Image.network(recommendations.userData[index].photourl) :
                                             Image.asset(images[index]),
                                           )
                                         ),
@@ -372,7 +369,7 @@ class _NewHomePageState extends State<NewHomePage> {
                                         child: Material(
                                           color: Colors.transparent,
                                           child: AutoSizeText(
-                                            recommendations.name,
+                                            recommendations.userData[index].name,
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 1,
                                             style: FlutterFlowTheme.of(context)
@@ -391,7 +388,7 @@ class _NewHomePageState extends State<NewHomePage> {
                                         tag: "headline:$index",
                                         child: Material(
                                           color: Colors.transparent,
-                                          child: AutoSizeText(recommendations.localizedheadline,
+                                          child: AutoSizeText(recommendations.userData[index].localizedheadline,
                                               overflow: TextOverflow.ellipsis,
                                               maxLines: 1,
                                               style: FlutterFlowTheme.of(context)
@@ -411,7 +408,7 @@ class _NewHomePageState extends State<NewHomePage> {
                                         tag: "goal:$index",
                                         child: Material(
                                           color: Colors.transparent,
-                                          child: AutoSizeText(recommendations.goals.toString(),
+                                          child: AutoSizeText(recommendations.goal,
                                               overflow: TextOverflow.ellipsis,
                                               maxLines: 1,
                                               style: FlutterFlowTheme.of(context)
@@ -473,11 +470,11 @@ class _NewHomePageState extends State<NewHomePage> {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: vouchFeedsData?.length ?? 0,
                     itemBuilder: (BuildContext context, int index) {
-                      var vouch = vouchFeedsData[index];
+                      var FeedModelVouch = vouchFeedsData[index];
                       return Obx(
                           () => Skeletonizer(
                             enabled: feedsController.isLoading.value,
-                            child: feedsVouchWidget(context, vouch)),
+                            child: feedsVouchWidget(context, FeedModelVouch)),
                       );
                     }),
                 SizedBox(

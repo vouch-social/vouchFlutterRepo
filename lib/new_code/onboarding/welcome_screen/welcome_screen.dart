@@ -178,7 +178,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         logFirebaseEvent(
                             'WELCOME_PAGE_GET_STARTED_BTN_ON_TAP');
                         logFirebaseEvent('Button_navigate_to');
-                        Get.to(()=> const LoginScreen());
+                       await  Get.to(()=> const LoginScreen());
                       },
                       text: 'Get Started',
                       options: CTAButton(context),

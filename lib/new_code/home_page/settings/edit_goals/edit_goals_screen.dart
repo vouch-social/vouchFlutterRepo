@@ -7,6 +7,7 @@ import 'package:vouch/new_code/home_page/settings/edit_goals/edit_goals_controll
 
 import '../../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../../flutter_flow/flutter_flow_widgets.dart';
+import '../../../onboarding/goals/goals_controller.dart';
 
 class EditGoalsScreen extends StatefulWidget {
   const EditGoalsScreen({super.key});
@@ -19,7 +20,7 @@ class _EditGoalsScreenState extends State<EditGoalsScreen>
 
 
   with TickerProviderStateMixin {
-  final controller = Get.put(EditGoalsController());
+  final controller = Get.put(GoalsController());
   late TabController _tabController;
   int _currentIndex = 0;
 
@@ -216,6 +217,7 @@ Widget _tab(currentIndex, context) {
                 _tabController.animateTo(_tabController.index + 1);
               }
               if(_tabController.index == 2 && controller.controller[0].text.isNotEmpty && controller.controller[1].text.isNotEmpty && controller.controller[2].text.isNotEmpty){
+                await controller.sendUserGoalsController();
               }else{
                 if(controller.controller[0].text.isEmpty){
                   const GetSnackBar(
@@ -239,27 +241,7 @@ Widget _tab(currentIndex, context) {
             text: currentIndex == 2 ? 'Finish' : 'Next',
             options: CTAButton(context)),
 
-        currentIndex == 0 || currentIndex == 1 ?
-        Column(
-          children: [
-            SizedBox(
-              height: 16.0.h,
-            ),
-            Center(
-              child: GestureDetector(
-                onTap: () {},
-                child: AutoSizeText(
-                  "Skip for now",
-                  style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                      useGoogleFonts: false,
-                      decoration: TextDecoration.underline
-                  ),
-                ),
-              ),
-            ),
-          ],
-        )
-            : SizedBox(
+        SizedBox(
           height: 28.h,
         )
 

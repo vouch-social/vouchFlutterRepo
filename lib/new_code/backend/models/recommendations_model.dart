@@ -25,33 +25,53 @@ class GetRecommendationsModel {
 }
 
 class RecommendationDatum {
+  String goal;
+  List<UserDatum> userData;
+
+  RecommendationDatum({
+    required this.goal,
+    required this.userData,
+  });
+
+  factory RecommendationDatum.fromJson(Map<String, dynamic> json) => RecommendationDatum(
+    goal: json["goal"],
+    userData: List<UserDatum>.from(json["userData"].map((x) => UserDatum.fromJson(x))),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "goal": goal,
+    "userData": List<dynamic>.from(userData.map((x) => x.toJson())),
+  };
+}
+
+class UserDatum {
   String createdAt;
   String updatedAt;
   int id;
-  String recommendationDatumCreatedAt;
+  dynamic userDatumCreatedAt;
   String name;
   String phone;
   String firebaseid;
-  String photourl;
+  dynamic photourl;
   String graphid;
   String hashedphone;
   String linkedinsub;
   String email;
-  String vanityname;
+  dynamic vanityname;
   String localizedheadline;
   bool contactsSync;
   bool callLogsSync;
   bool linkedinSync;
-  dynamic countryCode;
+  int countryCode;
   dynamic deletedAt;
-  List<dynamic> attributes;
+  List<Attribute> attributes;
   List<dynamic> goals;
 
-  RecommendationDatum({
+  UserDatum({
     required this.createdAt,
     required this.updatedAt,
     required this.id,
-    required this.recommendationDatumCreatedAt,
+    required this.userDatumCreatedAt,
     required this.name,
     required this.phone,
     required this.firebaseid,
@@ -71,11 +91,11 @@ class RecommendationDatum {
     required this.goals,
   });
 
-  factory RecommendationDatum.fromJson(Map<String, dynamic> json) => RecommendationDatum(
+  factory UserDatum.fromJson(Map<String, dynamic> json) => UserDatum(
     createdAt: json["createdAt"],
     updatedAt: json["updatedAt"],
     id: json["id"],
-    recommendationDatumCreatedAt: json["created_at"],
+    userDatumCreatedAt: json["created_at"],
     name: json["name"],
     phone: json["phone"],
     firebaseid: json["firebaseid"],
@@ -91,7 +111,7 @@ class RecommendationDatum {
     linkedinSync: json["linkedin_sync"],
     countryCode: json["country_code"],
     deletedAt: json["deletedAt"],
-    attributes: List<dynamic>.from(json["attributes"].map((x) => x)),
+    attributes: List<Attribute>.from(json["attributes"].map((x) => Attribute.fromJson(x))),
     goals: List<dynamic>.from(json["goals"].map((x) => x)),
   );
 
@@ -99,7 +119,7 @@ class RecommendationDatum {
     "createdAt": createdAt,
     "updatedAt": updatedAt,
     "id": id,
-    "created_at": recommendationDatumCreatedAt,
+    "created_at": userDatumCreatedAt,
     "name": name,
     "phone": phone,
     "firebaseid": firebaseid,
@@ -115,7 +135,39 @@ class RecommendationDatum {
     "linkedin_sync": linkedinSync,
     "country_code": countryCode,
     "deletedAt": deletedAt,
-    "attributes": List<dynamic>.from(attributes.map((x) => x)),
+    "attributes": List<dynamic>.from(attributes.map((x) => x.toJson())),
     "goals": List<dynamic>.from(goals.map((x) => x)),
+  };
+}
+
+class Attribute {
+  String createdAt;
+  String updatedAt;
+  int id;
+  int userId;
+  List<String> attributes;
+
+  Attribute({
+    required this.createdAt,
+    required this.updatedAt,
+    required this.id,
+    required this.userId,
+    required this.attributes,
+  });
+
+  factory Attribute.fromJson(Map<String, dynamic> json) => Attribute(
+    createdAt: json["createdAt"],
+    updatedAt: json["updatedAt"],
+    id: json["id"],
+    userId: json["user_id"],
+    attributes: List<String>.from(json["attributes"].map((x) => x)),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "createdAt": createdAt,
+    "updatedAt": updatedAt,
+    "id": id,
+    "user_id": userId,
+    "attributes": List<dynamic>.from(attributes.map((x) => x)),
   };
 }
