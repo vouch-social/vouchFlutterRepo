@@ -13,7 +13,7 @@ import 'package:vouch/new_code/home_page/HomePage/controllers/update_vouch_statu
 Widget myVouchWidget(context, vouch) {
 
   var controller = UpdateVouchStatusController();
-
+  var revList = vouch.pathData.path.reversed.toList();
   return Padding(
     padding: EdgeInsets.symmetric(vertical: 8.0.h),
     child: Container(
@@ -33,7 +33,7 @@ Widget myVouchWidget(context, vouch) {
               scrollDirection: Axis.horizontal,
               itemCount: vouch.pathData.length,
               itemBuilder: (context, index) {
-                return vouchPath(context, vouch.pathData.path[index], index,
+                return vouchPath(context, revList[index], index,
                     vouch.pathData.length, vouch.activenode);
               },
             ),
@@ -113,7 +113,7 @@ Widget myVouchWidget(context, vouch) {
                   SizedBox(
                     width: 8.0.w,
                   ),
-                  vouch.activenode == vouch.endnode && vouch.status != 'close'?
+                  vouch.activenode == vouch.endnode && vouch.status != 'close' && vouch.activenodeStatus != 'pending'?
                   GestureDetector(
                     onTap: () async{
                       //await controller.updateVouchStatus(vouch.id, 'close');
@@ -135,7 +135,7 @@ Widget myVouchWidget(context, vouch) {
                       :
                   vouch.status == 'close' ?
                   AutoSizeText('Closed',
-                      style: FlutterFlowTheme.of(context).bodyLarge)
+                      style: FlutterFlowTheme.of(context).bodyMedium)
                       :
                   GestureDetector(
                     onTap: () async{
@@ -177,13 +177,17 @@ Widget vouchPath(context, pathItem, index, length, activenode) {
             child: CircleAvatar(
               radius: 20.0.h,
               backgroundColor: Colors.transparent,
-              child: Image.asset(
-                'assets/image951.png',
-                fit: BoxFit.cover,
+             backgroundImage:
 
+
+             pathItem.image != null && pathItem.image.toString().contains('http')
+                 ? NetworkImage(pathItem.image.toString())
+                 : pathItem.image is ImageProvider
+                 ? pathItem.image as ImageProvider<Object>
+                 : AssetImage('assets/image951.png'),
               ),
             ),
-          ),
+
           SizedBox(height: 4.0.h),
           SizedBox(
             width: 64.w,
@@ -217,9 +221,7 @@ Widget vouchPath(context, pathItem, index, length, activenode) {
                       (length - 1),
                   color: pathItem.hasVouched
                       ? FlutterFlowTheme.of(context).primary
-                      : FlutterFlowTheme.of(context)
-                      .primaryText
-                      .withOpacity(0.3)),
+                      : FlutterFlowTheme.of(context).primaryText.withOpacity(0.3),),
             ),
           ],
         ),

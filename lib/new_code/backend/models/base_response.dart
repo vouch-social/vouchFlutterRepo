@@ -25,4 +25,7 @@ class BaseResponse<T> {
       data: json.containsKey('data') ? fromJsonT(json['data']) : null,
     );
   }
+
+
+
 }

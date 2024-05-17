@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
+import 'package:vouch/new_code/common_widgets/image_check.dart';
 import 'package:vouch/new_code/common_widgets/myAppBar.dart';
 import 'package:vouch/new_code/home_page/paths_screen/paths_controller.dart';
 import 'package:vouch/new_code/home_page/paths_screen/paths_list_view.dart';
@@ -135,39 +136,14 @@ class _FinalPathMessageScreenState extends State<FinalPathMessageScreen> {
                   onPressed: () async {
 
                     if (controller.contextController.text != '') {
-                      // final data = widget.allPaths.singlePathList[widget.currentIndex];
-                      //
-                      // Map<String, dynamic> pathNodeToMap(PathNode node) {
-                      //   return {
-                      //     "name": node.name,
-                      //     "contactHashedPhone": node.contactHashedPhone,
-                      //     "strengthToNext": node.strengthToNext,
-                      //     "isRegistered": node.isRegistered,
-                      //     "heading": node.heading,
-                      //     "image": node.image,
-                      //     "attributes": node.attributes
-                      //         .map((attr) => {
-                      //               "createdAt": attr.createdAt,
-                      //               "updatedAt": attr.updatedAt,
-                      //               "id": attr.id,
-                      //               "userId": attr.userId,
-                      //               "attributes": attr.attributes,
-                      //             })
-                      //         .toList(),
-                      //   };
-                      // }
+
 
                       await MyListView(
                         paths: widget.singlePath,
                         totalCount: widget.singlePath.length,
                         index: widget.currentIndex,
                         onPressed: (data) async {
-                          // List<Map<String, dynamic>> reversedPathNodes = data
-                          //     .pathNode
-                          //     .map((node) => pathNodeToMap(node))
-                          //     .toList()
-                          //     .reversed
-                          //     .toList();
+                          List<Map<String, dynamic>> pathNodes = reversedPathNodes.reversed.toList();
                           print("PathList : $reversedPathNodes");
                           print(
                               'Button pressed in tab ${widget.currentIndex} with data: ${jsonEncode(reversedPathNodes)}');
@@ -176,7 +152,7 @@ class _FinalPathMessageScreenState extends State<FinalPathMessageScreen> {
                           print(
                               'Button pressed in tab ${widget.currentIndex} with length: ${widget.singlePath.length}');
                           await controller.sendPath(
-                            pathList: reversedPathNodes,
+                            pathList: pathNodes,
                             strength: widget.singlePath.strength,
                             length:widget.singlePath.length,
                           );
@@ -199,14 +175,10 @@ Widget vouchPath(context, pathItem, index, length, ) {
     children: [
       Column(
         children: [
-          CircleAvatar(
-            radius: 20.0.h,
-            backgroundColor: Colors.transparent,
-            child: Image.asset(
-              'assets/image951.png',
-              fit: BoxFit.cover,
-            ),
-          ),
+         CustomCircleAvatar(
+           radius: 20.0.h,
+           imageUrl: pathItem[index]["photourl"],
+         ),
           SizedBox(height: 4.0.h),
           SizedBox(
             width: 64.w,

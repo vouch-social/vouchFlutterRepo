@@ -47,7 +47,7 @@ class AuthRepository {
 
 try{
       dio.Response response = await _dioClient.getRequest(endPoint: '/api/auth/check_login', data: {phone: phone},bearerToken: '${prefs!.getString(authToken)}',);
-      print('DIO RES $response');
+      print('DIO RES Check User $response');
       if (response.data != null) {
         BaseResponse<CheckUserModel> result = BaseResponse<CheckUserModel>.fromJson(response.data, CheckUserModel.fromJson,);
         return result;

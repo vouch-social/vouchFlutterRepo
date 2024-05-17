@@ -130,6 +130,7 @@ class _EditTagsScreenState extends State<EditTagsScreen> {
                       suggestionBuilder: (context,state, Tags profile) {
                         return Wrap(
                             children: [InputChip(
+                              side :BorderSide.none,
                               backgroundColor: MediaQuery.of(context).platformBrightness == Brightness.dark ?
                               FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9):
                               FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
@@ -162,8 +163,9 @@ class _EditTagsScreenState extends State<EditTagsScreen> {
                     );
                   }else {
                     print("Tags 1: ${_controller.tagsController}");
+
+                    await _controller.sendUserAttributesController();
                     Get.back();
-                    //_controller.sendUserAttributesController();
                   }
                 },
                 text: 'Update Your Profile',

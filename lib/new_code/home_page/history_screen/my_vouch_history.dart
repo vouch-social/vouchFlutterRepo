@@ -26,8 +26,9 @@ class _MyVouchHistoryState extends State<MyVouchHistory> {
     fetchVouchHistory();
   }
 
-  void fetchVouchHistory() async {
+  Future<void> fetchVouchHistory() async {
     var fetchedVouchHistory = await controller.getVouchHistory();
+    if (!mounted) return;
     setState(() {
       vouchHistory = fetchedVouchHistory.mySelectedPathListData;
     });
@@ -37,21 +38,33 @@ class _MyVouchHistoryState extends State<MyVouchHistory> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      body:  Obx(
-        () =>  Skeletonizer(
-          enabled: controller.isLoading.value,
-          child: ListView.builder(
-                  itemCount: vouchHistory?.length ?? 0,
-            padding: EdgeInsets.symmetric(horizontal: 16.0.w),
-                  itemBuilder: (BuildContext context, int index) {
-                    var vouch = vouchHistory[index];
-                    if(vouch.status == "cancel") {
-                      return Container();
-                    } else {
-                      return myVouchWidget(context,vouch);
-                    }
-                  },
-                ),
+      body: RefreshIndicator(
+        color: FlutterFlowTheme.of(context).primary,
+        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        onRefresh: () async {
+          await fetchVouchHistory();
+        },
+        child: Obx(
+          () => Skeletonizer(
+              enabled: controller.isLoading.value,
+              child: controller.isLoading.value == false 
+                  ? ListView.builder(
+                      itemCount: vouchHistory?.length ?? 0,
+                      padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+                      itemBuilder: (BuildContext context, int index) {
+                        var vouch = vouchHistory[index];
+                        if (vouch.status == "cancel") {
+                          return Container();
+                        } else {
+                          return myVouchWidget(context, vouch);
+                        }
+                      },
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                    )),
         ),
       ),
     );

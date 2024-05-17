@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:date_time_format/date_time_format.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/generated/assets.dart';
+import 'package:vouch/new_code/common_widgets/image_check.dart';
 import 'package:vouch/new_code/home_page/HomePage/other_hunters_list.dart';
 import 'package:vouch/new_code/home_page/history_screen/hunters_list_page.dart';
 import 'package:vouch/new_code/home_page/history_screen/my_hunts_hunter_list.dart';
@@ -34,19 +37,7 @@ Widget myHuntsWidget(context, hunts) {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircleAvatar(
-                backgroundColor: Colors.transparent,
-                radius: 20.0.w,
-                child: prefs!.getString(imageUrl) != 'null'
-                    ? Image.network(
-                  imageUrl,
-                  fit: BoxFit.fill,
-                )
-                    : Image.asset(
-                  Assets.assetsImage951,
-                  fit: BoxFit.fill,
-                ),
-              ),
+              CustomCircleAvatar(imageUrl: hunts.bounty.user.photourl),
               SizedBox(
                 width: 8.0.w,
               ),
@@ -117,6 +108,7 @@ Widget myHuntsWidget(context, hunts) {
               SizedBox(
                 width: 8.0.w,
               ),
+              hunts.hunterStatus != "claim"?
               GestureDetector(
                 onTap: (){
                   statusController.updateBountyStatus(hunts.id, 'claim');
@@ -138,7 +130,13 @@ Widget myHuntsWidget(context, hunts) {
                           fontSize: 12.sp,
                           fontWeight: FontWeight.w400)),
                 ),
-              ),
+              ):
+              AutoSizeText('Claimed',
+                  style: FlutterFlowTheme.of(context).buttonText.override(
+                      useGoogleFonts: false,
+                      fontSize: 12.sp,
+                      color: FlutterFlowTheme.of(context).primaryText,
+                      fontWeight: FontWeight.w400)),
             ],
           )
         ],

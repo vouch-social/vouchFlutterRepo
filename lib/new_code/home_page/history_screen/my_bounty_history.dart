@@ -8,8 +8,9 @@ import 'package:vouch/new_code/home_page/history_screen/bounty_details_by_id.dar
 import 'package:vouch/new_code/home_page/history_screen/my_bounty_history_controller.dart';
 
 class MyRaisedBountyHistory extends StatefulWidget {
-
-  const MyRaisedBountyHistory({super.key, });
+  const MyRaisedBountyHistory({
+    super.key,
+  });
 
   @override
   State<MyRaisedBountyHistory> createState() => _MyRaisedBountyHistoryState();
@@ -25,8 +26,11 @@ class _MyRaisedBountyHistoryState extends State<MyRaisedBountyHistory> {
     fetchBountyHistory();
   }
 
-  void fetchBountyHistory() async {
+  Future<void> fetchBountyHistory() async {
     var fetchedBountyHistory = await controller.getBountyHistory();
+    if (!mounted) {
+      return;
+    }
     setState(() {
       bountyHistory = fetchedBountyHistory.myBountyListData;
     });
@@ -37,29 +41,28 @@ class _MyRaisedBountyHistoryState extends State<MyRaisedBountyHistory> {
     print("BountyHistory : $bountyHistory");
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      body: Obx(
-        () => Skeletonizer(
-          enabled : controller.isLoading.value,
-          child : ListView.builder(
-          padding: EdgeInsets.symmetric(horizontal: 16.0.w),
-          itemCount: bountyHistory?.length ?? 0 ,
-          itemBuilder: (BuildContext context, int index) {
-            var bounty = bountyHistory[index];
-            if(bounty.bountyStatus != 'close'){
-              return
-                GestureDetector(
-                    onDoubleTap: (){
-                      Get.to(() => BountyDetailsScreen(
-                        bounty: bountyHistory[index],
-                      ));
-                    },
-                    child: myBountyWidget(context,bounty));
-            }else{
-              return Container();
-            }
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await fetchBountyHistory();
+        },
+        child: Obx(
+          () => Skeletonizer(
+              enabled: controller.isLoading.value,
+              child: bountyHistory != null
+                  ? ListView.builder(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+                      itemCount: bountyHistory?.length ?? 0,
+                      itemBuilder: (BuildContext context, int index) {
+                        var bounty = bountyHistory[index];
 
-          },
-                  ),
+                        return myBountyWidget(context, bounty);
+                      },
+                    )
+                  : Center(
+                      child: CircularProgressIndicator(
+                        color: FlutterFlowTheme.of(context).primaryText,
+                      ),
+                    )),
         ),
       ),
     );

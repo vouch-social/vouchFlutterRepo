@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:vouch/main.dart';
 import 'package:vouch/new_code/backend/backend_constants.dart';
+import 'package:vouch/new_code/home_page/history_screen/award_bounty_controller.dart';
 import 'package:vouch/new_code/home_page/history_screen/my_bounty_history_controller.dart';
 import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../generated/assets.dart';
@@ -24,6 +25,7 @@ class BountyDetailsScreen extends StatefulWidget {
 class _BountyDetailsScreenState extends State<BountyDetailsScreen> {
 
   final controller = Get.put(BountyHistoryController());
+  final awardController = Get.put(AwardBountyController());
   var bountyDetails;
   @override
   void initState() {
@@ -33,6 +35,7 @@ class _BountyDetailsScreenState extends State<BountyDetailsScreen> {
 
   void fetchBountyByIdHistory() async {
     var fetchedBountyDetails = await controller.getBountyHistoryById(widget.bounty.id);
+    if (!mounted) return;
     setState(() {
       bountyDetails = fetchedBountyDetails;
     });
@@ -58,9 +61,6 @@ class _BountyDetailsScreenState extends State<BountyDetailsScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // SizedBox(
-                    //   height: 8.0.h,
-                    // ),
                     AutoSizeText(
                       "Your Bounty",
                       style: FlutterFlowTheme.of(context).headlineMedium,
@@ -183,9 +183,8 @@ class _BountyDetailsScreenState extends State<BountyDetailsScreen> {
                                           CircleAvatar(
                                             radius: 18.0.w,
                                             backgroundColor: Colors.transparent,
-                                            child: hunters[index].user.photourl != null &&
-                                                hunters[index].user.photourl
-                                                    .startsWith('http')
+                                            child: hunters[index].user.photourl
+                                                    .contains('http')
                                                 ? Image.network(
                                                 hunters[index].user.photourl)
                                                 : Image.asset(Assets.assetsImage951),
@@ -200,26 +199,31 @@ class _BountyDetailsScreenState extends State<BountyDetailsScreen> {
                                           ),
                                           trailing:
 
-                                          hunters[index].hunterStatus == "claimed"?
-                                          Container(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 6.0.h, horizontal: 10.0.w),
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(4.0.w),
-                                                border: Border.all(
-                                                    color: FlutterFlowTheme.of(context)
-                                                        .primaryText)),
-                                            child: AutoSizeText(
-                                              "Award",
-                                              minFontSize: 8,
-                                              style: FlutterFlowTheme.of(context)
-                                                  .labelExtraSmall
-                                                  .override(
-                                                  useGoogleFonts: false,
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 10.sp),
+                                          hunters[index].hunterStatus == "claim"?
+                                          GestureDetector(
+                                            onTap: () async{
+                                              await awardController.awardTheHunter(widget.bounty.id, hunters[index].id);
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: 6.0.h, horizontal: 10.0.w),
+                                              decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(4.0.w),
+                                                  border: Border.all(
+                                                      color: FlutterFlowTheme.of(context)
+                                                          .primaryText)),
+                                              child: AutoSizeText(
+                                                "Award",
+                                                minFontSize: 8,
+                                                style: FlutterFlowTheme.of(context)
+                                                    .labelExtraSmall
+                                                    .override(
+                                                    useGoogleFonts: false,
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 10.sp),
+                                              ),
                                             ),
-                                          ) : AutoSizeText(
+                                          ) :  AutoSizeText(
                                             hunters[index].hunterStatus,
                                             minFontSize: 8,
                                             style: FlutterFlowTheme.of(context)

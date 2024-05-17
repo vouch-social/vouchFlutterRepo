@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vouch/new_code/common_widgets/myAppBar.dart';
+import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
 import 'package:vouch/new_code/home_page/settings/settings_screen.dart';
 
 import '../../../flutter_flow/flutter_flow_theme.dart';
@@ -183,6 +184,7 @@ class _BountyScreenState extends State<BountyScreen> {
             FFButtonWidget(
                 onPressed: () async {
                   await controller.sendRaisedBounty(2);
+                  Get.to(() => NewHomePage());
                 },
                 text: 'Ask Network',
                 options: CTAButton(context)),

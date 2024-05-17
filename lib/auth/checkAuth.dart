@@ -38,6 +38,12 @@ Future<bool> checkUser() async {
       print("User Name: ${prefs?.getString(userName)}");
       prefs?.setString(imageUrl, apiResult.data!.data.user.photourl ?? 'null');
       print("imageUrl: ${prefs?.getString(imageUrl)}");
+      prefs?.setString(headline, apiResult.data!.data.user.localizedheadline ?? 'null');
+      print("HealdLine : ${prefs?.getString(headline)}");
+      prefs?.setString(loggedInUserHashedPhone, apiResult.data!.data.user.hashedphone);
+      prefs?.setBool(isLinkedinSync, apiResult.data!.data.linkedinSync);
+      print("Linkedin : ${prefs?.get(isLinkedinSync)}");
+
     }
     return apiResult.status;
   } catch (error) {

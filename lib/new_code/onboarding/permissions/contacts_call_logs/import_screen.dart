@@ -36,7 +36,7 @@ class _ImportScreenState extends State<ImportScreen> {
     if (status.isGranted) {
       List<Contact> allContacts = await myGetContacts();
       setState(() {
-        _contacts = allContacts.take(2).toList();
+        _contacts = allContacts.toList();
         sendContactsData(_contacts);
       });
     }

@@ -97,7 +97,7 @@ class Hunter {
     bountyId: json["bounty_id"],
     userId: json["user_id"],
     hunterStatus: json["hunter_status"],
-    user: User.fromJson(json["user"]),
+    user: json["user"] == null ? User(name: "Name",photourl: null,localizedheadline: "HeadLine") :User.fromJson(json["user"]),
   );
 
   Map<String, dynamic> toJson() => {

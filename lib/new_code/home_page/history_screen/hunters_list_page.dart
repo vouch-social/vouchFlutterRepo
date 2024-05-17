@@ -12,6 +12,7 @@ class HuntersListScreen extends StatefulWidget {
   final List<Hunter> hunters;
   const HuntersListScreen({super.key, required this.hunters});
 
+
   @override
   State<HuntersListScreen> createState() => _HuntersListScreenState();
 }
@@ -19,6 +20,10 @@ class HuntersListScreen extends StatefulWidget {
 class _HuntersListScreenState extends State<HuntersListScreen> {
   @override
   Widget build(BuildContext context) {
+    List<Hunter> claimers = widget.hunters.where((item) => item.hunterStatus == "claimed").toList();
+    List<Hunter> nonClaimers = widget.hunters.where((item) => item.hunterStatus != "claimed").toList();
+    List<Hunter> newHunters = claimers;
+    newHunters.addAll(nonClaimers);
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: CustomAppBar(

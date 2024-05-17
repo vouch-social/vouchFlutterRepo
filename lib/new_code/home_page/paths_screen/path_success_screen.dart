@@ -23,7 +23,7 @@ class _PathSuccessScreenState extends State<PathSuccessScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(milliseconds: 2000), () {
-      Get.offAll(() => NewHomePage());
+      Get.to(() => NewHomePage());
     });
   }
 

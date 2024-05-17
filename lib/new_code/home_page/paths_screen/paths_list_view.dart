@@ -10,6 +10,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:vouch/flutter_flow/flutter_flow_widgets.dart';
 import 'package:vouch/generated/assets.dart';
+import 'package:vouch/new_code/common_widgets/image_check.dart';
 import 'package:vouch/new_code/home_page/paths_screen/final_path_message_screen.dart';
 import 'package:vouch/new_code/home_page/paths_screen/path_success_screen.dart';
 import 'package:vouch/new_code/home_page/paths_screen/paths_controller.dart';
@@ -278,15 +279,13 @@ class MyListView extends StatelessWidget {
                         alignment: Alignment.bottomRight,
                         children: [
                           CircleAvatar(
-                            radius: 25.0,
+                            radius: 25.0.w,
                             backgroundColor:
                                 FlutterFlowTheme.of(context).fixedWhite,
-                            child: CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                   paths.pathNode[index].image ?? 'https://images.unsplash.com/photo-1545987796-200677ee1011?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
-                              // backgroundColor: Colors.transparent,
-                              radius: 24.0,
-                            ),
+                            child: CustomCircleAvatar(
+                              imageUrl: paths.pathNode[index].image,
+                              radius: 24.0.w,
+                            )
                           ),
                           paths.pathNode[index].isRegistered
                               ? Container(

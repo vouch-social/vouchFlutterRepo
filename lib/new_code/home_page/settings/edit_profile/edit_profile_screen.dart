@@ -5,15 +5,19 @@ import 'package:choose_input_chips/choose_input_chips.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:vouch/new_code/backend/backend_constants.dart';
 import 'package:vouch/new_code/home_page/settings/edit_profile/edit_tags_screen.dart';
 import '../../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../../flutter_flow/flutter_flow_widgets.dart';
 import '../../../../generated/assets.dart';
+import '../../../../main.dart';
 import '../../../common_widgets/myAppBar.dart';
+import '../settings_screen.dart';
 import 'edit_profile_controller.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -36,8 +40,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       setState(() {
         _imageFile = imageFile;
         _base64Image = base64Encode(imageFile.readAsBytesSync());
-       // _controller.imageController.text = _base64Image!;
-        //print(_controller.imageController.text);
+       _controller.imageController.text = _base64Image!.toString();
+        print(_controller.imageController.text);
       });
     }
   }
@@ -50,8 +54,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       setState(() {
         _imageFile = imageFile;
         _base64Image = base64Encode(imageFile.readAsBytesSync());
-        //_controller.imageController.text = _base64Image!;
-        //print("Base 64 : ${_controller.imageController.text}");
+        _controller.imageController.text = _base64Image!.toString();
+        print("Base 64 : ${_controller.imageController.text}");
       });
     }
   }
@@ -59,52 +63,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
 
-    const mockResults = <Tags>[
-      Tags(
-        'John Doe',
-      ),
-      Tags(
-        'Paul',
-      ),
-      Tags(
-        'Fred',
-      ),
-      Tags(
-        'Brian',
-      ),
-      Tags(
-        'John',
-      ),
-      Tags(
-        'Thomas',
-      ),
-      Tags(
-        'Nelly',
-      ),
-      Tags(
-        'Marie',
-      ),
-      Tags(
-        'Charlie',
-      ),
-      Tags(
-        'Diana',
-      ),
-      Tags(
-        'Ernie',
-      ),
-      Tags(
-        'Gina',
-      ),
-    ];
+    _controller.nameController.text = prefs!.getString(userName)!;
+    _controller.headlineController.text = prefs!.getString(headline)!;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: CustomAppBar(
         showNotificationButton: false,
         showHistoryButton: false,
         showBackButton: true,
-        title: "Edit Profile",
+        title: "Profile",
         showProfileButton: false,
       ),
       body: SafeArea(child: Padding(
@@ -113,16 +82,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 64.0.h,
+              height: 36.0.h,
             ),
 
-            AutoSizeText(
-              'Please update your details',
-              style: FlutterFlowTheme.of(context).headlineMedium,
-            ),
-            SizedBox(
-              height: 32.h,
-            ),
             Center(
               child: Stack(
                 alignment: Alignment.bottomRight,
@@ -147,12 +109,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           height: 128.h,
                           width: 128.w,
                         ),
-                      )
-                          : Text(
-                        'NR',
-                        style: FlutterFlowTheme.of(context)
-                            .buttonText,
-                      ),
+                      ) : ClipOval(
+                          clipBehavior: Clip.hardEdge,
+                          child: prefs?.getString(imageUrl) == null
+                              ? Image.asset(Assets.assetsImage951)
+                              : prefs!.getString(imageUrl)!.contains('http')
+                              ? Image.network("${prefs!.getString(imageUrl)}")
+                              : Image.memory(
+                              base64Decode(prefs!.getString(imageUrl)!))),
                     ),
                   ),
                   GestureDetector(
@@ -186,123 +150,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
             ),
             SizedBox(
-              height: 32.0.h,
+              height: 64.0.h,
             ),
             CustomTextField(
-              label: "Name",
-             // controller: _controller.nameController,
+              label: "Full Name",
+              controller: _controller.nameController,
             ),
             SizedBox(
               height: 16.0.h,
             ),
             CustomTextField(
               label: "Headline",
-              //controller: _controller.headlineController,
+              controller: _controller.headlineController,
+              maxLines: 2,
             ),
-            SizedBox(
-              height: 16.0.h,
-            ),
-            Hero(
-              tag: "Tags",
-              child: Material(
-                color: Colors.transparent,
-                child: Stack(children: [
-                  Container(
-                      height: 72.0,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: ChipsInput(
-                       // initialValue: _controller.tagsController,
-                        textStyle: FlutterFlowTheme.of(context).labelExtraSmall,
-                        decoration: InputDecoration(
-                          // filled: true,
-                          // fillColor: FlutterFlowTheme.of(context)
-                          //     .textFieldBackground,
-                          labelText: "Tags",
-                          floatingLabelStyle:
-                          FlutterFlowTheme.of(context).bodyLarge,
-                          labelStyle: FlutterFlowTheme.of(context).bodyLarge,
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          // focusedBorder: OutlineInputBorder(
-                          //   borderSide: BorderSide(
-                          //     color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
-                          //     width: 1.0,
-                          //   ),
-                          //   borderRadius: BorderRadius.circular(8.0),
-                          // ),
-                        ),
-                        findSuggestions: (String query) {
-                          if (query.isNotEmpty) {
-                            var lowercaseQuery = query.toLowerCase();
-                            final results = mockResults.where((profile) {
-                              return profile.tags
-                                  .toLowerCase()
-                                  .contains(query.toLowerCase());
-                            }).toList(growable: false)
-                              ..sort((a, b) => a.tags
-                                  .toLowerCase()
-                                  .indexOf(lowercaseQuery)
-                                  .compareTo(b.tags
-                                  .toLowerCase()
-                                  .indexOf(lowercaseQuery)));
-                            return results;
-                          }
-                          return mockResults;
-                        },
-                        onChanged: (List<Tags> tags) {
-                          _controller.tagsController.value = tags;
-                          //print("Tags : ${_controller.tagsController}");
-                        },
-                        chipBuilder: (context, state, Tags profile) {
-                          return InputChip(
-                            backgroundColor: MediaQuery.of(context).platformBrightness == Brightness.dark ?
-                            FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9):
-                            FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
-                            labelStyle: FlutterFlowTheme.of(context).labelSmall,
-                            key: ObjectKey(profile),
-                            label: Text(profile.tags),
-                            onDeleted: () => state.deleteChip(profile),
-                            materialTapTargetSize:
-                            MaterialTapTargetSize.shrinkWrap,
-                          );
-                        },
-                        suggestionBuilder: (context, state, Tags profile) {
-                          return Wrap(children: [
-                            InputChip(
-                              backgroundColor: MediaQuery.of(context).platformBrightness == Brightness.dark ?
-                              FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9):
-                              FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
-                              labelStyle: FlutterFlowTheme.of(context).labelSmall,
-                              elevation: 0,
-                              key: ObjectKey(profile),
-                              label: Text(profile.tags),
-                              onPressed: () =>
-                                  state.selectSuggestion(profile),
-                            ),
-                          ]);
-                        },
-                      )),
-                  GestureDetector(
-                    onTap: () {
-                      Get.to(() => EditTagsScreen());
-                    },
-                    child: Container(
-                      height: 72,
-                      color: Colors.transparent,
-                    ),
-                  ),
-                ]),
-              ),
-            ),
+
             const Spacer(),
             FFButtonWidget(
                 onPressed: () async {
@@ -317,16 +179,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       message: "Please fill the Headline",
                     );
                     print("Null Data is There");
-                  } else if (_controller.tagsController.isEmpty) {
-                    const GetSnackBar(
-                      title: "Alert",
-                      message: "Please fill your Tags",
-                    );
-                    Get.to(EditTagsScreen());
-                  } else if (_controller.nameController.text.isNotEmpty &&
-                      _controller.headlineController.text.isNotEmpty &&
-                      _controller.tagsController.isNotEmpty) {
-                   // await _controller.saveUserController();
+                  }  else if (_controller.nameController.text.isNotEmpty &&
+                      _controller.headlineController.text.isNotEmpty
+                      ) {
+                    await _controller.saveUserController();
+                    Get.back();
                   }
                 },
                 text: 'Update Your Profile',
@@ -341,26 +198,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 class CustomTextField extends StatelessWidget {
   final String label;
   final controller;
+  final dynamic initialValue;
+  final maxLines;
 
   const CustomTextField({
     super.key,
     required this.label,
-    this.controller,
+    this.controller, this.initialValue, this.maxLines,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 56.0,
+      height: 72.0.h,
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: TextFormField(
+        minLines: 1,
+        maxLines: maxLines,
+        initialValue: initialValue,
         style: FlutterFlowTheme.of(context).headlineSmall,
         controller: controller,
         cursorColor: FlutterFlowTheme.of(context).secondaryBackground,
         decoration: InputDecoration(
+
           // filled: true,
           // fillColor: FlutterFlowTheme.of(context).textFieldBackground,
           alignLabelWithHint: true,
@@ -402,6 +265,7 @@ class CustomImageSourceDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return
        AlertDialog(
+         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
          alignment: Alignment.center,
          actionsPadding: EdgeInsets.all(24.0.w),
          shape: RoundedRectangleBorder(
@@ -426,7 +290,7 @@ class CustomImageSourceDialog extends StatelessWidget {
                 },
                 child: Column(
                   children: [
-                    const Icon(Icons.photo,size: 20,),
+                     Icon(Icons.photo,size: 20,color: FlutterFlowTheme.of(context).primaryText,),
                     SizedBox(height: 4.0.h,),
                     Text("Gallery",
                       style: FlutterFlowTheme.of(context).labelSmall,
@@ -442,7 +306,7 @@ class CustomImageSourceDialog extends StatelessWidget {
                 },
                 child: Column(
                   children: [
-                    const Icon(Icons.camera_alt_outlined,size: 20,),
+                     Icon(Icons.camera_alt_outlined,size: 20,color: FlutterFlowTheme.of(context).primaryText,),
                     SizedBox(height: 4.0.h,),
                     Text("Camera",
                       style: FlutterFlowTheme.of(context).labelSmall,

@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/new_code/backend/models/paths_model.dart';
+import 'package:vouch/new_code/common_widgets/image_check.dart';
 import 'package:vouch/new_code/home_page/paths_screen/paths_list_view.dart';
 import 'package:vouch/new_code/home_page/settings/settings_screen.dart';
 
@@ -90,13 +91,10 @@ class _PathsScreenState extends State<PathsScreen> {
                       tag: "image:$widget.index",
                       child: Material(
                         color: Colors.transparent,
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            widget
-                                    .image ??
-                                "https://images.unsplash.com/photo-1545987796-200677ee1011?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                          ),
-                        ),
+                        child: CustomCircleAvatar(
+                          imageUrl: widget.image,
+                          radius: 64.0.w,
+                        )
                       ),
                     ),
                   ),

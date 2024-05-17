@@ -10,6 +10,7 @@ import 'package:vouch/new_code/home_page/bounty_screen/bounty_screen.dart';
 import 'package:vouch/new_code/home_page/search_screen/search_controller.dart';
 import 'package:vouch/new_code/home_page/search_screen/search_prompt_widget.dart';
 import '../../../flutter_flow/flutter_flow_theme.dart';
+import '../../common_widgets/image_check.dart';
 import '../paths_screen/paths_screen.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -42,6 +43,7 @@ class _SearchScreenState extends State<SearchScreen> {
       FlutterFlowTheme.of(context).container3,
       FlutterFlowTheme.of(context).container2,
     ];
+
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: CustomAppBar(
@@ -54,6 +56,8 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Padding(
           padding: EdgeInsets.all(16.0.w),
           child: Column(
+
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (_sendIconPressed)
                 Column(
@@ -62,11 +66,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     Align(
                       alignment: Alignment.topRight,
                       child: Container(
-                        //width: double.infinity,
                         padding: EdgeInsets.all(16.0.w),
                         decoration: BoxDecoration(
-                          color:
-                              FlutterFlowTheme.of(context).textFieldBackground,
+                          color: FlutterFlowTheme.of(context).textFieldBackground,
                           borderRadius: BorderRadius.circular(12.0.w),
                         ),
                         child: Text(
@@ -75,18 +77,17 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 8.0.h,
-                    ),
+                    SizedBox(height: 8.0.h),
                     Container(
                       height: 24.0.h,
                       width: 24.0.w,
                       decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).primaryBackground,
-                          borderRadius: BorderRadius.circular(12.0.w),
-                          border: Border.all(
-                              color: FlutterFlowTheme.of(context)
-                                  .textFieldBackground)),
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        borderRadius: BorderRadius.circular(12.0.w),
+                        border: Border.all(
+                            color: FlutterFlowTheme.of(context).textFieldBackground
+                        ),
+                      ),
                       child: Icon(
                         Icons.person,
                         color: FlutterFlowTheme.of(context)
@@ -94,7 +95,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             .withOpacity(0.3),
                         size: 10.0.w,
                       ),
-                    )
+                    ),
                   ],
                 ),
               if (_sendIconPressed) SizedBox(height: 12.0.h),
@@ -103,286 +104,135 @@ class _SearchScreenState extends State<SearchScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                        width: 200.w,
-                        decoration: BoxDecoration(
-                            borderRadius:
-                            BorderRadius.circular(12.0.w),
-                            color: colors[0]),
-                        margin:
-                        EdgeInsets.only(right: 8.0.w, top: 8.w),
-                        child: Padding(
-                          padding: EdgeInsets.all(12.0.w),
-                          child: Column(
-                            crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                            children: [
-                              Hero(
-                                tag: "image:${0}",
-                                child: Material(
-                                    color: Colors.transparent,
-                                    child: CircleAvatar(
-                                      radius: 18.0.w,
-                                      child: responseData.searchData[0]
-                                          .photourl !=
-                                          null ||
-                                          Image.network(
-                                              responseData.searchData[0]
-                                                  .photourl)
-                                              .errorBuilder !=
-                                              null
-                                          ? Image.network(
-                                          responseData.searchData[0]
-                                              .photourl)
-                                          : Image.asset(
-                                          images[0]),
-                                    )),
-                              ),
-                              SizedBox(
-                                height: 8.0.h,
-                              ),
-                              Hero(
-                                tag: "name:${0}",
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: AutoSizeText(
-                                    responseData.searchData[0].name,
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    style:
-                                    FlutterFlowTheme.of(context)
-                                        .titleLarge
-                                        .override(
-                                      color:
-                                      FlutterFlowTheme.of(
-                                          context)
-                                          .fixedBlack,
-                                      useGoogleFonts: false,
+                      height: 120.0.h,
+                      //color: FlutterFlowTheme.of(context).fixedWhite,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: responseData.searchData != null
+                            ? responseData.searchData.length
+                            : 0,
+                        itemBuilder: (BuildContext context, int index) {
+                          if (responseData.searchData == null || index >= responseData.searchData.length) {
+                            return const SizedBox();
+                          }
+                          var recommendations = responseData.searchData[index];
+                          return Obx(
+                                () => Skeletonizer(
+                              enabled: _controller.isLoading.value,
+                              child: GestureDetector(
+                                onTap: () {
+                                  Get.to(() => PathsScreen(
+                                    name: recommendations.name,
+                                    hashedPhone: recommendations.hashedphone,
+                                    image: recommendations.photourl,
+                                    index: index,
+                                    headline: recommendations.localizedheadline,
+                                    goals: recommendations.goals,
+                                  ));
+                                },
+                                child: Container(
+
+                                  width: 200.0.w,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12.0.w),
+                                      color: colors[0]
+                                  ),
+                                  margin: EdgeInsets.only(right: 8.0.w, top: 8.w),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(12.0.w),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Hero(
+                                          tag: "image:$index",
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: CustomCircleAvatar(
+                                              imageUrl: recommendations.photourl,
+                                            )
+                                          ),
+                                        ),
+                                        SizedBox(height: 8.0.h),
+                                        Hero(
+                                          tag: "name:$index",
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: AutoSizeText(
+                                              recommendations.name,
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                              style: FlutterFlowTheme.of(context)
+                                                  .titleLarge
+                                                  .override(
+                                                color: FlutterFlowTheme.of(context).fixedBlack,
+                                                useGoogleFonts: false,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 4.0.h),
+                                        Hero(
+                                          tag: "headline:$index",
+                                          child: Material(
+                                            color: Colors.transparent,
+                                            child: AutoSizeText(
+                                              recommendations.localizedheadline,
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                              style: FlutterFlowTheme.of(context)
+                                                  .labelExtraSmall
+                                                  .override(
+                                                color: FlutterFlowTheme.of(context).fixedBlack,
+                                                useGoogleFonts: false,
+                                                fontWeight: FontWeight.w300,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
                               ),
-                              SizedBox(height: 4.0.h),
-                              Hero(
-                                tag: "headline:${0}",
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: AutoSizeText(
-                                      responseData.searchData[0]
-                                          .localizedheadline,
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                      style: FlutterFlowTheme.of(
-                                          context)
-                                          .labelExtraSmall
-                                          .override(
-                                          color:
-                                          FlutterFlowTheme.of(
-                                              context)
-                                              .fixedBlack,
-                                          useGoogleFonts: false,
-                                          fontWeight:
-                                          FontWeight.w300)),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 16.0.h,
-                              ),
-                              Hero(
-                                tag: "goal:${0}",
-                                child: Material(
-                                  color: Colors.transparent,
-                                  child: AutoSizeText(
-                                      responseData.searchData[0].goals
-                                          .toString(),
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 1,
-                                      style: FlutterFlowTheme.of(
-                                          context)
-                                          .labelExtraSmall
-                                          .override(
-                                          color:
-                                          FlutterFlowTheme.of(
-                                              context)
-                                              .fixedBlack,
-                                          useGoogleFonts: false,
-                                          fontWeight:
-                                          FontWeight.w400)),
-                                ),
-                              )
-                            ],
-                          ),
-                        )),
-                    // Container(
-                    //  // height: 200,
-                    //   //color: FlutterFlowTheme.of(context).fixedWhite,
-                    //   child: ListView.builder(
-                    //     shrinkWrap: true,
-                    //     physics: const BouncingScrollPhysics(),
-                    //     scrollDirection: Axis.horizontal,
-                    //     itemCount: responseData.searchData != null
-                    //         ? responseData.searchData?.length - 1
-                    //         : 0,
-                    //     itemBuilder: (BuildContext context, int index) {
-                    //       if (responseData.searchData == null ||
-                    //           index >= responseData.searchData.length) {
-                    //         return const SizedBox();
-                    //       }
-                    //       print(
-                    //           ' Data length: ${responseData.searchData.length}');
-                    //       var recommendations = responseData.searchData[0];
-                    //       print("length ${responseData.searchData.length}");
-                    //       print(Image.network(recommendations.photourl)
-                    //           .errorBuilder);
-                    //       return Obx(
-                    //             () => Skeletonizer(
-                    //           enabled: _controller.isLoading.value,
-                    //           child: GestureDetector(
-                    //             onTap: () {
-                    //               Get.to(() => PathsScreen(
-                    //                 name: recommendations.name,
-                    //                 hashedPhone: recommendations.hashedphone,
-                    //                 image: recommendations.photourl,
-                    //                 index: index,
-                    //                 headline:
-                    //                 recommendations.localizedheadline,
-                    //                 goals: recommendations.goals,
-                    //               ));
-                    //             },
-                    //             child: Container(
-                    //                 width: 200.w,
-                    //                 decoration: BoxDecoration(
-                    //                     borderRadius:
-                    //                     BorderRadius.circular(12.0.w),
-                    //                     color: colors[index]),
-                    //                 margin:
-                    //                 EdgeInsets.only(right: 8.0.w, top: 8.w),
-                    //                 child: Padding(
-                    //                   padding: EdgeInsets.all(12.0.w),
-                    //                   child: Column(
-                    //                     crossAxisAlignment:
-                    //                     CrossAxisAlignment.start,
-                    //                     children: [
-                    //                       Hero(
-                    //                         tag: "image:$index",
-                    //                         child: Material(
-                    //                             color: Colors.transparent,
-                    //                             child: CircleAvatar(
-                    //                               radius: 18.0.w,
-                    //                               child: recommendations
-                    //                                   .photourl !=
-                    //                                   null ||
-                    //                                   Image.network(
-                    //                                       recommendations
-                    //                                           .photourl)
-                    //                                       .errorBuilder !=
-                    //                                       null
-                    //                                   ? Image.network(
-                    //                                   recommendations
-                    //                                       .photourl)
-                    //                                   : Image.asset(
-                    //                                   images[index]),
-                    //                             )),
-                    //                       ),
-                    //                       SizedBox(
-                    //                         height: 8.0.h,
-                    //                       ),
-                    //                       Hero(
-                    //                         tag: "name:$index",
-                    //                         child: Material(
-                    //                           color: Colors.transparent,
-                    //                           child: AutoSizeText(
-                    //                             recommendations.name,
-                    //                             overflow: TextOverflow.ellipsis,
-                    //                             maxLines: 1,
-                    //                             style:
-                    //                             FlutterFlowTheme.of(context)
-                    //                                 .titleLarge
-                    //                                 .override(
-                    //                               color:
-                    //                               FlutterFlowTheme.of(
-                    //                                   context)
-                    //                                   .fixedBlack,
-                    //                               useGoogleFonts: false,
-                    //                             ),
-                    //                           ),
-                    //                         ),
-                    //                       ),
-                    //                       SizedBox(height: 4.0.h),
-                    //                       Hero(
-                    //                         tag: "headline:$index",
-                    //                         child: Material(
-                    //                           color: Colors.transparent,
-                    //                           child: AutoSizeText(
-                    //                               recommendations
-                    //                                   .localizedheadline,
-                    //                               overflow: TextOverflow.ellipsis,
-                    //                               maxLines: 1,
-                    //                               style: FlutterFlowTheme.of(
-                    //                                   context)
-                    //                                   .labelExtraSmall
-                    //                                   .override(
-                    //                                   color:
-                    //                                   FlutterFlowTheme.of(
-                    //                                       context)
-                    //                                       .fixedBlack,
-                    //                                   useGoogleFonts: false,
-                    //                                   fontWeight:
-                    //                                   FontWeight.w300)),
-                    //                         ),
-                    //                       ),
-                    //                       SizedBox(
-                    //                         height: 16.0.h,
-                    //                       ),
-                    //                       Hero(
-                    //                         tag: "goal:$index",
-                    //                         child: Material(
-                    //                           color: Colors.transparent,
-                    //                           child: AutoSizeText(
-                    //                               recommendations.goals
-                    //                                   .toString(),
-                    //                               overflow: TextOverflow.ellipsis,
-                    //                               maxLines: 1,
-                    //                               style: FlutterFlowTheme.of(
-                    //                                   context)
-                    //                                   .labelExtraSmall
-                    //                                   .override(
-                    //                                   color:
-                    //                                   FlutterFlowTheme.of(
-                    //                                       context)
-                    //                                       .fixedBlack,
-                    //                                   useGoogleFonts: false,
-                    //                                   fontWeight:
-                    //                                   FontWeight.w400)),
-                    //                         ),
-                    //                       )
-                    //                     ],
-                    //                   ),
-                    //                 )),
-                    //           ),
-                    //         ),
-                    //       );
-                    //     },
-                    //   ),
-                    // ),
-                    SizedBox(height: 12.0.h,),
-                    Row(
-                      children: [
-                        AutoSizeText("Didn't find what you want?",
-                        style: FlutterFlowTheme.of(context).bodySmall,
-                        ),
-                        SizedBox(width: 4.0.w,),
-                        AutoSizeText("Raise a bounty",
-                          style: FlutterFlowTheme.of(context).bodySmall.override(
-                            useGoogleFonts: false,
-                            color: FlutterFlowTheme.of(context).primary
-                          ),
-                        ),
-                      ],
+                            ),
+                          );
+                        },
+                      ),
                     ),
-
+                    SizedBox(height: 12.0.h),
+                    Container(
+                      padding: EdgeInsets.all(8.0.w),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0.w),
+                        color: FlutterFlowTheme.of(context).textFieldBackground
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          AutoSizeText(
+                            "Didn't find what you want?",
+                            style: FlutterFlowTheme.of(context).bodySmall,
+                          ),
+                          SizedBox(width: 4.0.w),
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(() => BountyScreen());
+                            },
+                            child: AutoSizeText(
+                              "Raise a bounty",
+                              style: FlutterFlowTheme.of(context).bodySmall.override(
+                                  useGoogleFonts: false,
+                                  color: FlutterFlowTheme.of(context).primary
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-
               if (!_sendIconPressed) searchPromptWidget(context),
               SizedBox(height: 20.0.h),
               if (_sendIconPressed) Spacer(),
@@ -397,11 +247,9 @@ class _SearchScreenState extends State<SearchScreen> {
                         padding: EdgeInsets.symmetric(horizontal: 16.0.w),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30.0.w),
-                          color:
-                              FlutterFlowTheme.of(context).textFieldBackground,
+                          color: FlutterFlowTheme.of(context).textFieldBackground,
                           border: Border.all(
-                            color: FlutterFlowTheme.of(context)
-                                .textFieldBackground,
+                            color: FlutterFlowTheme.of(context).textFieldBackground,
                           ),
                         ),
                         child: TextFormField(
@@ -414,8 +262,6 @@ class _SearchScreenState extends State<SearchScreen> {
                           onChanged: (text) {
                             setState(() {
                               _showSendIcon = text.trim().isNotEmpty;
-                              print("Text changed: $text");
-                              print("Show send icon: $_showSendIcon");
                             });
                           },
                           decoration: InputDecoration(
@@ -453,13 +299,10 @@ class _SearchScreenState extends State<SearchScreen> {
                           _sendIconPressed = true;
                           _userInput = _controller.searchController.text;
                           _controller.searchController.clear();
-                          //_controller.searchController.dispose();
                           _showSendIcon = false;
-                          print("Send icon pressed");
-                          print("User input: $_userInput");
                         });
                         var _responseData =
-                            await _controller.getSearchData(_userInput);
+                        await _controller.getSearchData(_userInput);
                         setState(() {
                           responseData = _responseData;
                         });
@@ -475,3 +318,4 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 }
+

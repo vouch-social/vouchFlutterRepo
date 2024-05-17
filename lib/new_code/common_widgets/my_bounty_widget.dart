@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:date_time_format/date_time_format.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,6 +15,7 @@ import 'package:vouch/new_code/home_page/history_screen/update_bounty_by_id_cont
 import '../../main.dart';
 import '../backend/backend_constants.dart';
 import '../home_page/HomePage/controllers/update_bounty_status_controller.dart';
+import '../home_page/history_screen/bounty_details_by_id.dart';
 
 Widget myBountyWidget(context, bounty) {
   var controller = UpdateBountyByIdController();
@@ -37,15 +40,16 @@ Widget myBountyWidget(context, bounty) {
               CircleAvatar(
                 backgroundColor: Colors.transparent,
                 radius: 20.0.w,
-                child: prefs!.getString(imageUrl) != 'null'
+                child: prefs!.getString(imageUrl) != 'null' && prefs!.getString(imageUrl)!.contains('http')
                     ? Image.network(
-                        imageUrl,
-                        fit: BoxFit.fill,
-                      )
-                    : Image.asset(
-                        Assets.assetsImage951,
-                        fit: BoxFit.fill,
-                      ),
+                  imageUrl,
+                  fit: BoxFit.fill,
+                )
+                    : prefs!.getString(imageUrl) != 'null' ? Image.memory(base64Decode(prefs!.getString(imageUrl)!)):
+                Image.asset(
+                  Assets.assetsImage951,
+                  fit: BoxFit.fill,
+                ),
               ),
               SizedBox(
                 width: 8.0.w,
@@ -108,8 +112,8 @@ Widget myBountyWidget(context, bounty) {
                   GestureDetector(
                       onTap: () {
                         if (bounty.hunters.length != 0) {
-                          Get.to(() => HuntersListScreen(
-                                hunters: bounty.hunters,
+                          Get.to(() => BountyDetailsScreen(
+                                bounty: bounty,
                               ));
                         }
                       },
@@ -173,7 +177,9 @@ Widget myBountyWidget(context, bounty) {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // statusController.updateBountyStatus(bounty.id, 'awarded');
+                      Get.to(() => BountyDetailsScreen(
+                        bounty: bounty,
+                      ));
                     },
                     child: Container(
                       //height: 30,

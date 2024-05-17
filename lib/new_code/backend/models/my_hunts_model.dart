@@ -161,7 +161,7 @@ class Hunter {
     bountyId: json["bounty_id"],
     userId: json["user_id"],
     hunterStatus: json["hunter_status"],
-    user: User.fromJson(json["user"]),
+    user: json["user"] == null ? User(name: "Name",photourl: null,localizedheadline: "HeadLine") : User.fromJson(json["user"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -172,19 +172,19 @@ class Hunter {
     "bounty_id": bountyId,
     "user_id": userId,
     "hunter_status": hunterStatus,
-    "user": user.toJson(),
+    "user":  user.toJson(),
   };
 }
 
 class User {
-  String name;
-  String? photourl;
-  String localizedheadline;
+  dynamic name;
+  dynamic photourl;
+  dynamic localizedheadline;
 
   User({
-    required this.name,
-    required this.photourl,
-    required this.localizedheadline,
+     this.name,
+     this.photourl,
+     this.localizedheadline,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(

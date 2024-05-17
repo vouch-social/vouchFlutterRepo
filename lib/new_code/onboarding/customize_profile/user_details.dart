@@ -39,7 +39,7 @@ class _UserDetailsState extends State<UserDetails> {
       setState(() {
         _imageFile = imageFile;
         _base64Image = base64Encode(imageFile.readAsBytesSync());
-        _controller.imageController.text = _base64Image!;
+        _controller.imageController.text = _base64Image!.toString();
         print(_controller.imageController.text);
       });
     }
@@ -53,7 +53,7 @@ class _UserDetailsState extends State<UserDetails> {
       setState(() {
         _imageFile = imageFile;
         _base64Image = base64Encode(imageFile.readAsBytesSync());
-        _controller.imageController.text = _base64Image!;
+        _controller.imageController.text = _base64Image!.toString();
         print("Base 64 : ${_controller.imageController.text}");
       });
     }

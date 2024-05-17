@@ -8,6 +8,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/generated/assets.dart';
+import 'package:vouch/new_code/common_widgets/image_check.dart';
 import 'package:vouch/new_code/home_page/HomePage/controllers/start_hunt_controller.dart';
 import 'package:vouch/new_code/home_page/HomePage/other_hunters_list.dart';
 
@@ -33,16 +34,8 @@ Widget bountyWidget(context, bounty, ){
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircleAvatar(
-                radius: 24.0.w,
-                  backgroundColor: Colors.transparent,
-                child:
-                    bounty.user.photourl == null ?
-                Image.asset(Assets.assetsImage951,
-                fit: BoxFit.fill,
-                ) : bounty.user.photourl.startsWith('https') ? Image.network(bounty.user.photourl) : Image.asset(Assets.assetsImage951,
-                      fit: BoxFit.fill,
-                    )
+              CustomCircleAvatar(
+                imageUrl: bounty.user.photourl,
               ),
               SizedBox(width: 8.0.w,),
               AutoSizeText(
@@ -99,7 +92,7 @@ Widget bountyWidget(context, bounty, ){
                     '${bounty.tags[0]}',
                     style: FlutterFlowTheme.of(context).labelExtraSmall.override(
                         useGoogleFonts: false,
-                        color: FlutterFlowTheme.of(context).primaryText,
+                        color: FlutterFlowTheme.of(context).fixedBlack,
                         fontSize: 10,
                         fontWeight: FontWeight.w400
                     )
@@ -118,7 +111,7 @@ Widget bountyWidget(context, bounty, ){
                     '${bounty.tags[1]}',
                     style: FlutterFlowTheme.of(context).labelExtraSmall.override(
                         useGoogleFonts: false,
-                        color: FlutterFlowTheme.of(context).primaryText,
+                        color: FlutterFlowTheme.of(context).fixedBlack,
                         fontSize: 10.sp,
                         fontWeight: FontWeight.w400
                     )
@@ -163,8 +156,8 @@ Widget bountyWidget(context, bounty, ){
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   GestureDetector(
-                    onTap: (){
-                      statusController.updateBountyStatus(bounty.id, 'ignore');
+                    onTap: () async{
+                    await controller.ignoreBounty(bounty.id);
                     },
                     child: Container(
                       alignment: Alignment.center,

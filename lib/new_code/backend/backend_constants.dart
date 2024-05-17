@@ -10,3 +10,5 @@ const String sendContactsResponse = "sendContactsResponse";
 const String sendCallLogsResponse = "sendCallLogsResponse";
 const String userName = "userName";
 const String imageUrl = "imageUrl";
+const String headline = "HeadLine";
+const String isLinkedinSync = "isLinkedinSync";

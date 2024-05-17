@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final saveUserModel = saveUserModelFromJson(jsonString);
+
 import 'dart:convert';
 
 SaveUserModel saveUserModelFromJson(String str) => SaveUserModel.fromJson(json.decode(str));
@@ -5,69 +9,53 @@ SaveUserModel saveUserModelFromJson(String str) => SaveUserModel.fromJson(json.d
 String saveUserModelToJson(SaveUserModel data) => json.encode(data.toJson());
 
 class SaveUserModel {
-  Data data;
+  dynamic createdAt;
+  dynamic updatedAt;
+  dynamic id;
+  dynamic saveUserModelCreatedAt;
+  dynamic name;
+  dynamic phone;
+  dynamic firebaseid;
+  dynamic photourl;
+  dynamic graphid;
+  dynamic hashedphone;
+  dynamic linkedinsub;
+  dynamic email;
+  dynamic vanityname;
+  dynamic localizedheadline;
+  bool contactsSync;
+  bool callLogsSync;
+  bool linkedinSync;
+  dynamic countryCode;
+  dynamic deletedAt;
 
   SaveUserModel({
-    required this.data,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.id,
+    required this.saveUserModelCreatedAt,
+    required this.name,
+    required this.phone,
+    required this.firebaseid,
+    required this.photourl,
+    required this.graphid,
+    required this.hashedphone,
+    required this.linkedinsub,
+    required this.email,
+    required this.vanityname,
+    required this.localizedheadline,
+    required this.contactsSync,
+    required this.callLogsSync,
+    required this.linkedinSync,
+    required this.countryCode,
+    required this.deletedAt,
   });
 
   factory SaveUserModel.fromJson(Map<String, dynamic> json) => SaveUserModel(
-    data: Data.fromJson(json),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "data": data.toJson(),
-  };
-}
-
-class Data {
-  String? createdAt;
-  String? updatedAt;
-  int? id;
-  String? dataCreatedAt;
-  String? name;
-  String? phone;
-  String? firebaseid;
-  String? photourl;
-  String? graphid;
-  String? hashedphone;
-  String? linkedinsub;
-  String? email;
-  String? vanityname;
-  String? localizedheadline;
-  bool? contactsSync;
-  bool? callLogsSync;
-  bool? linkedinSync;
-  int? countryCode;
-  dynamic deletedAt;
-
-  Data({
-    this.createdAt,
-    this.updatedAt,
-    this.id,
-    this.dataCreatedAt,
-    this.name,
-    this.phone,
-    this.firebaseid,
-    this.photourl,
-    this.graphid,
-    this.hashedphone,
-    this.linkedinsub,
-    this.email,
-    this.vanityname,
-    this.localizedheadline,
-    this.contactsSync,
-    this.callLogsSync,
-    this.linkedinSync,
-    this.countryCode,
-    this.deletedAt,
-  });
-
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
     createdAt: json["createdAt"],
     updatedAt: json["updatedAt"],
     id: json["id"],
-    dataCreatedAt: json["created_at"],
+    saveUserModelCreatedAt: json["created_at"],
     name: json["name"],
     phone: json["phone"],
     firebaseid: json["firebaseid"],
@@ -89,7 +77,7 @@ class Data {
     "createdAt": createdAt,
     "updatedAt": updatedAt,
     "id": id,
-    "created_at": dataCreatedAt,
+    "created_at": saveUserModelCreatedAt,
     "name": name,
     "phone": phone,
     "firebaseid": firebaseid,

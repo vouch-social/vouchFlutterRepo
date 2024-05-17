@@ -84,7 +84,7 @@ class _HistoryScreenState extends State<HistoryScreen> with TickerProviderStateM
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "My Hunts",
+                  "Hunts",
                   style: FlutterFlowTheme.of(context).titleSmall,
                 ),
               ),

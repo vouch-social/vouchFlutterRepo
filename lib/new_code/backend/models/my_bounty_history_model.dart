@@ -21,13 +21,13 @@ class MyBountyHistoryModel {
 }
 
 class MyBountyListDatum {
-  int id;
-  int userId;
-  String message;
-  List<String> tags;
-  int urgencyId;
-  int expiry;
-  String bountyStatus;
+  dynamic id;
+  dynamic userId;
+  dynamic message;
+  List<dynamic> tags;
+  dynamic urgencyId;
+  dynamic expiry;
+  dynamic bountyStatus;
   DateTime createdAt;
   DateTime updatedAt;
   List<Hunter> hunters;
@@ -77,15 +77,17 @@ class MyBountyListDatum {
 }
 
 class Hunter {
-  String createdAt;
-  String updatedAt;
-  int id;
-  String hunterCreatedAt;
-  int bountyId;
-  int userId;
-  User user;
+  dynamic createdAt;
+  dynamic updatedAt;
+  dynamic id;
+  dynamic hunterCreatedAt;
+  dynamic bountyId;
+  dynamic userId;
+  dynamic user;
+  dynamic hunterStatus;
 
   Hunter({
+     this.hunterStatus,
     required this.createdAt,
     required this.updatedAt,
     required this.id,
@@ -102,7 +104,8 @@ class Hunter {
     hunterCreatedAt: json["created_at"],
     bountyId: json["bounty_id"],
     userId: json["user_id"],
-    user: User.fromJson(json["user"]),
+    user: json["user"] == null ? User(name: "Name",photourl: null,localizedheadline: "HeadLine") : User.fromJson(json["user"] ) ,
+      hunterStatus : json["hunter_status"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -113,18 +116,19 @@ class Hunter {
     "bounty_id": bountyId,
     "user_id": userId,
     "user": user.toJson(),
+    "hunter_status" : hunterStatus,
   };
 }
 
 class User {
-  String name;
+  dynamic name;
   dynamic photourl;
-  String localizedheadline;
+  dynamic localizedheadline;
 
   User({
-    required this.name,
+     this.name,
      this.photourl,
-    required this.localizedheadline,
+     this.localizedheadline,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -141,7 +145,7 @@ class User {
 }
 
 class Urgency {
-  String name;
+  dynamic name;
 
   Urgency({
     required this.name,

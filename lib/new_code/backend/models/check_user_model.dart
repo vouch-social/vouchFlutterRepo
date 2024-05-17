@@ -55,7 +55,7 @@ class User {
   String? deletedAt;
   int? id;
   dynamic userCreatedAt;
-  String? name;
+  dynamic name;
   String? phone;
   String? firebaseid;
   String? photourl;

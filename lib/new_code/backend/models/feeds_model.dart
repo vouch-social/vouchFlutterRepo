@@ -29,13 +29,13 @@ class FeedsModel {
 }
 
 class Bounty {
-  int id;
-  int userId;
-  String message;
-  List<String> tags;
-  int urgencyId;
-  int expiry;
-  String bountyStatus;
+  dynamic id;
+  dynamic userId;
+  dynamic message;
+  List<dynamic> tags;
+  dynamic urgencyId;
+  dynamic expiry;
+  dynamic bountyStatus;
   DateTime createdAt;
   DateTime updatedAt;
   User user;
@@ -66,7 +66,7 @@ class Bounty {
     createdAt: DateTime.parse(json["createdAt"]),
     updatedAt: DateTime.parse(json["updatedAt"]),
     user: User.fromJson(json["user"]),
-    hunters: json["hunters"] != null ? List<Hunter>.from(json["hunters"].map((x) => Hunter.fromJson(x))) : [],  );
+    hunters: json["hunters"] != null ? List<Hunter>.from(json["hunters"].map((x) => Hunter.fromJson(x))) : [], );
 
   Map<String, dynamic> toJson() => {
     "id": id,
@@ -84,13 +84,13 @@ class Bounty {
 }
 
 class Hunter {
-  String createdAt;
-  String updatedAt;
-  int id;
-  String hunterCreatedAt;
-  int bountyId;
-  int userId;
-  String hunterStatus;
+  dynamic createdAt;
+  dynamic updatedAt;
+  dynamic id;
+  dynamic hunterCreatedAt;
+  dynamic bountyId;
+  dynamic userId;
+  dynamic hunterStatus;
   User user;
 
   Hunter({
@@ -112,7 +112,7 @@ class Hunter {
     bountyId: json["bounty_id"],
     userId: json["user_id"],
     hunterStatus: json["hunter_status"],
-    user: User.fromJson(json["user"]),
+    user: json["user"] == null ? User(name: "Name",photourl: null,localizedheadline: "HeadLine") : User.fromJson(json["user"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -128,14 +128,14 @@ class Hunter {
 }
 
 class User {
-  String name;
-  String? photourl;
-  String localizedheadline;
+  dynamic name;
+  dynamic photourl;
+  dynamic localizedheadline;
 
   User({
-    required this.name,
-    required this.photourl,
-    required this.localizedheadline,
+     this.name,
+     this.photourl,
+     this.localizedheadline,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -152,33 +152,33 @@ class User {
 }
 
 class Vouch {
-  String createdAt;
-  String updatedAt;
-  int id;
-  String vouchCreatedAt;
-  String message;
-  String status;
-  int pathlength;
-  String startnode;
-  String endnode;
-  String activenode;
-  String activenodeStatus;
-  int userId;
+  dynamic createdAt;
+  dynamic updatedAt;
+  dynamic id;
+  dynamic vouchCreatedAt;
+  dynamic message;
+  dynamic status;
+  dynamic pathlength;
+  dynamic startnode;
+  dynamic endnode;
+  dynamic activenode;
+  dynamic activenodeStatus;
+  dynamic userId;
   PathData pathData;
 
   Vouch({
-    required this.createdAt,
-    required this.updatedAt,
-    required this.id,
-    required this.vouchCreatedAt,
-    required this.message,
-    required this.status,
-    required this.pathlength,
-    required this.startnode,
-    required this.endnode,
-    required this.activenode,
-    required this.activenodeStatus,
-    required this.userId,
+     this.createdAt,
+     this.updatedAt,
+     this.id,
+     this.vouchCreatedAt,
+     this.message,
+     this.status,
+     this.pathlength,
+     this.startnode,
+     this.endnode,
+     this.activenode,
+     this.activenodeStatus,
+     this.userId,
     required this.pathData,
   });
 
@@ -217,8 +217,8 @@ class Vouch {
 
 class PathData {
   List<Path> path;
-  int length;
-  int strength;
+  dynamic length;
+  dynamic strength;
 
   PathData({
     required this.path,
@@ -240,14 +240,14 @@ class PathData {
 }
 
 class Path {
-  String name;
-  String? image;
-  String heading;
+  dynamic name;
+  dynamic image;
+  dynamic heading;
   List<Attribute> attributes;
-  bool hasVouched;
-  bool isRegistered;
-  double strengthToNext;
-  String contactHashedPhone;
+  dynamic hasVouched;
+  dynamic isRegistered;
+  dynamic strengthToNext;
+  dynamic contactHashedPhone;
 
   Path({
     required this.name,
@@ -284,11 +284,11 @@ class Path {
 }
 
 class Attribute {
-  int id;
+  dynamic id;
   dynamic userId;
-  String createdAt;
-  String updatedAt;
-  List<String> attributes;
+  dynamic createdAt;
+  dynamic updatedAt;
+  List<dynamic> attributes;
 
   Attribute({
     required this.id,

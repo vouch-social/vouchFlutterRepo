@@ -11,6 +11,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/generated/assets.dart';
+import 'package:vouch/new_code/common_widgets/image_check.dart';
 import 'package:vouch/new_code/home_page/HomePage/controllers/accept_vouch_controller.dart';
 
 import '../home_page/HomePage/controllers/update_vouch_status_controller.dart';
@@ -80,7 +81,7 @@ Widget feedsVouchWidget(context, FeedModelVouch) {
                         relativeTo: DateTime.now(),
                         DateTime.fromMillisecondsSinceEpoch(timestamp * 1000),
                         ifNow: "Just Now..",
-                        appendIfAfter: 'ago'),
+                        appendIfAfter: 'ago...'),
                     style: FlutterFlowTheme.of(context)
                         .labelExtraSmall
                         .override(
@@ -201,14 +202,10 @@ Widget vouchPath(context, pathItem, index, length, activenode) {
             backgroundColor: activenode == pathItem.contactHashedPhone
                 ? FlutterFlowTheme.of(context).primary
                 : Colors.transparent,
-            child: CircleAvatar(
-              radius: 20.0.h,
-              backgroundColor: Colors.transparent,
-              child: Image.asset(
-                'assets/image951.png',
-                fit: BoxFit.cover,
-              ),
-            ),
+            child: CustomCircleAvatar(
+              radius: 20.0.w,
+              imageUrl: pathItem.image,
+            )
           ),
           SizedBox(height: 4.0.h),
           SizedBox(

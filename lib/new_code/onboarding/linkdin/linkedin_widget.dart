@@ -35,7 +35,7 @@ class _LinkedinWidgetState extends State<LinkedinWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final AuthRepository repository = AuthRepository();
-  late bool isLinkedinSync;
+   bool isLinkedinSync = false;
   int counter = 0;
   @override
   void initState() {
@@ -46,7 +46,7 @@ class _LinkedinWidgetState extends State<LinkedinWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       var data = {
-        'phone': cleanPhone(currentPhoneNumber),
+        "phone": cleanPhone(currentPhoneNumber),
         // 'phone':'919999999999'
       };
       logFirebaseEvent('LINKEDIN_PAGE_Linkedin_ON_INIT_STATE');
@@ -56,8 +56,11 @@ class _LinkedinWidgetState extends State<LinkedinWidget> {
         callback: (timer) async {
 
           try {
+            print("Linkedin DAta: ${data}");
             BaseResponse<CheckUserModel> apiResult =
             await repository.sendTokenToServer(data['phone']!);
+            print("Linkedin1 ${apiResult.data.data.linkedinSync}");
+
             isLinkedinSync =  apiResult.data.data.linkedinSync;
             if (apiResult.status) {
               print('Api Result : ${apiResult}');
@@ -79,7 +82,7 @@ class _LinkedinWidgetState extends State<LinkedinWidget> {
 
             logFirebaseEvent('Linkedin_stop_periodic_action');
             _model.instantTimer?.cancel();
-          } else if(counter == 5) {
+          } else if(counter == 50) {
             logFirebaseEvent('Linkedin_navigate_to');
             Get.to(() => GoalsScreen());
           }else{

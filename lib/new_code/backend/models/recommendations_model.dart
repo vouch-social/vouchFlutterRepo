@@ -45,48 +45,48 @@ class RecommendationDatum {
 }
 
 class UserDatum {
-  String createdAt;
-  String updatedAt;
-  int id;
+  dynamic createdAt;
+  dynamic updatedAt;
+  dynamic id;
   dynamic userDatumCreatedAt;
-  String name;
-  String phone;
-  String firebaseid;
+  dynamic name;
+  dynamic phone;
+  dynamic firebaseid;
   dynamic photourl;
-  String graphid;
-  String hashedphone;
-  String linkedinsub;
-  String email;
+  dynamic graphid;
+  dynamic hashedphone;
+  dynamic linkedinsub;
+  dynamic email;
   dynamic vanityname;
-  String localizedheadline;
-  bool contactsSync;
-  bool callLogsSync;
-  bool linkedinSync;
-  int countryCode;
+  dynamic localizedheadline;
+  dynamic contactsSync;
+  dynamic callLogsSync;
+  dynamic linkedinSync;
+  dynamic countryCode;
   dynamic deletedAt;
   List<Attribute> attributes;
   List<dynamic> goals;
 
   UserDatum({
-    required this.createdAt,
-    required this.updatedAt,
-    required this.id,
-    required this.userDatumCreatedAt,
-    required this.name,
-    required this.phone,
-    required this.firebaseid,
-    required this.photourl,
-    required this.graphid,
-    required this.hashedphone,
-    required this.linkedinsub,
-    required this.email,
-    required this.vanityname,
-    required this.localizedheadline,
-    required this.contactsSync,
-    required this.callLogsSync,
-    required this.linkedinSync,
-    required this.countryCode,
-    required this.deletedAt,
+     this.createdAt,
+     this.updatedAt,
+     this.id,
+     this.userDatumCreatedAt,
+     this.name,
+     this.phone,
+     this.firebaseid,
+     this.photourl,
+     this.graphid,
+     this.hashedphone,
+     this.linkedinsub,
+     this.email,
+     this.vanityname,
+     this.localizedheadline,
+     this.contactsSync,
+     this.callLogsSync,
+     this.linkedinSync,
+     this.countryCode,
+     this.deletedAt,
     required this.attributes,
     required this.goals,
   });
@@ -141,17 +141,17 @@ class UserDatum {
 }
 
 class Attribute {
-  String createdAt;
-  String updatedAt;
-  int id;
-  int userId;
-  List<String> attributes;
+  dynamic createdAt;
+  dynamic updatedAt;
+  dynamic id;
+  dynamic userId;
+  List<dynamic> attributes;
 
   Attribute({
-    required this.createdAt,
-    required this.updatedAt,
-    required this.id,
-    required this.userId,
+     this.createdAt,
+     this.updatedAt,
+     this.id,
+     this.userId,
     required this.attributes,
   });
 

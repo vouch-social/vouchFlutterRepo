@@ -1,16 +1,20 @@
+import 'dart:convert';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
+import 'package:vouch/flutter_flow/flutter_flow_widgets.dart';
 import 'package:vouch/generated/assets.dart';
 import 'package:vouch/main.dart';
 import 'package:vouch/new_code/backend/backend_constants.dart';
 import 'package:vouch/new_code/home_page/settings/edit_goals/edit_goals_screen.dart';
 import 'package:vouch/new_code/home_page/settings/edit_profile/edit_profile_screen.dart';
 import 'package:vouch/new_code/onboarding/linkdin/linkdin_screen.dart';
-
 import '../../common_widgets/myAppBar.dart';
+import 'edit_profile/edit_tags_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -50,235 +54,247 @@ class _SettingsScreenState extends State<SettingsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 22.0,
-                    backgroundColor: Colors.transparent,
-                    child:
-                    prefs?.getString(imageUrl) == 'null' ?
-                    Image.asset(Assets.assetsImage951) :
-                    Image.network("${prefs!.getString(imageUrl)}"), ),
-                  SizedBox(
-                    width: 16.0.w,
-                  ),
-                  AutoSizeText(
-                    '${prefs?.getString(userName)}',
-                    style: FlutterFlowTheme.of(context).headlineLarge,
-                  ),
-                  const Spacer(),
-                  GestureDetector(
-                      child: Icon(Icons.edit,size: 24.0.w,color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.6),),
-                  onTap: (){
-                        Get.to(() => EditProfileScreen());
-                  },
-                  ),
-                  
-                ],
-              ),
-              SizedBox(
-                height: 28.0.h,
-              ),
-              AutoSizeText(
-                'Account',
-                style: FlutterFlowTheme.of(context).titleLarge,
-              ),
-              SizedBox(
-                height: 20.0.h,
-              ),
-        SizedBox(
-            height: 64.h,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(Icons.email_outlined),
-                SizedBox(
-                  width: 28.0.w,
+              Center(
+                child: Container(
+                  height: 128.0.h,
+                  width: 128.0.w,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(36.0.w)),
+                  child: ClipOval(
+                      clipBehavior: Clip.hardEdge,
+                      child: prefs?.getString(imageUrl) == null
+                          ? Image.asset(Assets.assetsImage951)
+                          : prefs!.getString(imageUrl)!.contains('http')
+                              ? Image.network("${prefs!.getString(imageUrl)}")
+                              : Image.memory(
+                                  base64Decode(prefs!.getString(imageUrl)!))),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 4.0.h,
-                    ),
-                    AutoSizeText(
-                      "Email",
-                      style:
-                      FlutterFlowTheme.of(context).titleLarge,
-                    ),
-                    SizedBox(
-                      height: 8.0.h,
-                    ),
-                    AutoSizeText(
-                      'nirantr@gmail.com',
-                      style:
-                      FlutterFlowTheme.of(context).titleSmall,
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                GestureDetector(
-                  onTap: (){
-                    //Get.to(() => const EditGoalsScreen());
-                  },
-                  child: Icon(Icons.arrow_forward_ios,size: 20,color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.4),),
-                )
-              ],
-            )),
-              SizedBox(
-                height: 8.0.h,
-              ),
-              SizedBox(
-                  height: 64.h,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.adjust_rounded),
-                      SizedBox(
-                        width: 28.0.w,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 4.0.h,
-                          ),
-                          AutoSizeText(
-                            "Edit your goals",
-                            style:
-                            FlutterFlowTheme.of(context).titleLarge,
-                          ),
-                          SizedBox(
-                            height: 8.0.h,
-                          ),
-                          AutoSizeText(
-                            'goals',
-                            style:
-                            FlutterFlowTheme.of(context).titleSmall,
-                          ),
-                        ],
-                      ),
-                      const Spacer(),
-                      GestureDetector(
-                        onTap: (){
-                          Get.to(() => const EditGoalsScreen());
-                        },
-                        child: Icon(Icons.arrow_forward_ios,size: 20,color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.4),),
-                      )
-                    ],
-                  )),
-              SizedBox(
-                height: 8.0.h,
-              ),
-              SizedBox(
-                  height: 64.h,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.adjust_rounded),
-                      SizedBox(
-                        width: 28.0.w,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 4.0.h,
-                          ),
-                          AutoSizeText(
-                            "Linkedin Sync",
-                            style:
-                            FlutterFlowTheme.of(context).titleLarge,
-                          ),
-                          SizedBox(
-                            height: 8.0.h,
-                          ),
-                          AutoSizeText(
-                            'Not Completed',
-                            style:
-                            FlutterFlowTheme.of(context).titleSmall,
-                          ),
-                        ],
-                      ),
-                      const Spacer(),
-                      GestureDetector(
-                        onTap: (){
-                          Get.to(() =>  const LinkedinScreen());
-                        },
-                        child: Icon(Icons.arrow_forward_ios,size: 20,color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.4),),
-                      )
-                    ],
-                  )),
-              SizedBox(
-                height: 8.0.h,
-              ),
-              AutoSizeText(
-                'App',
-                style: FlutterFlowTheme.of(context).titleLarge,
-              ),
-              SizedBox(
-                height: 8.0.h,
-              ),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: 2,
-                itemBuilder: (BuildContext context, int index) {
-                  return SizedBox(
-                      height: 64.h,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          iconsList[index],
-                          SizedBox(
-                            width: 28.0.w,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 4.0.h,
-                              ),
-                              AutoSizeText(
-                                titleList[index],
-                                style:
-                                    FlutterFlowTheme.of(context).titleLarge,
-                              ),
-                              SizedBox(
-                                height: 8.0.h,
-                              ),
-                              AutoSizeText(
-                                'nirantr@gmail.com',
-                                style:
-                                    FlutterFlowTheme.of(context).titleSmall,
-                              ),
-                            ],
-                          )
-                        ],
-                      ));
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return SizedBox(
-                    height: 8.0.h,
-                  );
-                },
               ),
               SizedBox(
                 height: 16.0.h,
               ),
-              GestureDetector(
-                onTap: () {
-                  // Get.to(() => const LoginScreen());
-                },
+              Center(
                 child: AutoSizeText(
-                  'LogOut',
-                  style: FlutterFlowTheme.of(context).labelSmall,
+                  '${prefs?.getString(userName)}',
+                  style: FlutterFlowTheme.of(context).headlineLarge,
                 ),
               ),
               SizedBox(
                 height: 8.0.h,
               ),
+              Center(
+                child: AutoSizeText(
+                  "${prefs?.getString(headline)}",
+                  style: FlutterFlowTheme.of(context).labelExtraSmall,
+                ),
+              ),
+              SizedBox(
+                height: 16.0.h,
+              ),
+              Center(
+                child: GestureDetector(
+                  onTap: () {
+                    Get.to(() => EditProfileScreen());
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 16.0.w, vertical: 8.0.h),
+                    decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).primary,
+                        borderRadius: BorderRadius.circular(4.0.w)),
+                    child: AutoSizeText(
+                      'Edit Profile',
+                      style: FlutterFlowTheme.of(context)
+                          .labelExtraSmall
+                          .override(
+                              useGoogleFonts: false,
+                              color: FlutterFlowTheme.of(context).fixedWhite),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 40.0.h,
+              ),
+
+              GestureDetector(
+                onTap: (){
+                  if(prefs?.getBool(isLinkedinSync) == false)
+                   Get.to( () => LinkedinScreen());
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: 12.0.h,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        AutoSizeText(
+                          'Linkedin sync',
+                          style: FlutterFlowTheme.of(context).labelSmall,
+                        ),
+                        const Spacer(),
+                        prefs?.getBool(isLinkedinSync) == true
+                            ? Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 16.0.w, vertical: 8.0.h),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16.0.w),
+                                    color:
+                                        FlutterFlowTheme.of(context).container1),
+                                child: AutoSizeText(
+                                  'Sync successful',
+                                  style: FlutterFlowTheme.of(context)
+                                      .labelExtraSmall
+                                      .override(
+                                          useGoogleFonts: false,
+                                          color: FlutterFlowTheme.of(context)
+                                              .fixedBlack,
+                                          fontSize: 10.sp),
+                                ),
+                              )
+                            : Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 16.0.w, vertical: 8.0.h),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16.0.w),
+                                    color:
+                                        FlutterFlowTheme.of(context).pastelBlue),
+                                child: AutoSizeText(
+                                  'Sync Now',
+                                  style: FlutterFlowTheme.of(context)
+                                      .labelExtraSmall
+                                      .override(
+                                          useGoogleFonts: false,
+                                          color: FlutterFlowTheme.of(context)
+                                              .fixedBlack,
+                                          fontSize: 10.sp),
+                                ),
+                              ),
+                        SizedBox(
+                          width: 4.0.w,
+                        ),
+                        prefs?.getBool(isLinkedinSync) == false ?
+                        Icon(Icons.arrow_forward_ios,
+                                size: 16.0.h,
+                                color: FlutterFlowTheme.of(context).primaryText): Container()
+                      ],
+                    ),
+                    SizedBox(
+                      height: 12.0.h,
+                    ),
+                    Divider(
+                      color: FlutterFlowTheme.of(context)
+                          .primaryText
+                          .withOpacity(0.9),
+                    )
+                  ],
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Get.to(() => const EditTagsScreen());
+                },
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 16.0.h,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        AutoSizeText(
+                          'Attributes',
+                          style: FlutterFlowTheme.of(context).labelSmall,
+                        ),
+                        const Spacer(),
+                        Icon(Icons.arrow_forward_ios,
+                            size: 16.0.h,
+                            color: FlutterFlowTheme.of(context).primaryText),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 16.0.h,
+                    ),
+                    Divider(
+                      thickness: 1.5,
+                      color: FlutterFlowTheme.of(context)
+                          .primaryText
+                          .withOpacity(0.2),
+                    )
+                  ],
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Get.to(() => const EditGoalsScreen());
+                },
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 16.0.h,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        AutoSizeText(
+                          'Goals',
+                          style: FlutterFlowTheme.of(context).labelSmall,
+                        ),
+                        const Spacer(),
+                        GestureDetector(
+
+                          child: Icon(Icons.arrow_forward_ios,
+                              size: 16.0.h,
+                              color: FlutterFlowTheme.of(context).primaryText),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 16.0.h,
+                    ),
+                    Divider(
+                      thickness: 1.5,
+                      color: FlutterFlowTheme.of(context)
+                          .primaryText
+                          .withOpacity(0.2),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                  height: 36.0.h,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 16.0.h,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            AutoSizeText(
+                              'Contact sync',
+                              style: FlutterFlowTheme.of(context).labelSmall,
+                            ),
+                            const Spacer(),
+                            GestureDetector(
+                              child: Icon(Icons.arrow_forward_ios,
+                                  size: 16.0.h,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  )),
+              const Spacer(),
+              FFButtonWidget(
+                  text: 'Logout', onPressed: () {}, options: CTAButton(context))
             ],
           ),
         ),

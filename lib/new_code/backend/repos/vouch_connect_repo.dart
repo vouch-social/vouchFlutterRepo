@@ -21,10 +21,10 @@ class VouchConnectRepository {
   Future<BaseResponse<VouchConnectModel>> connectVouch(
       dynamic id) async {
     try {
-      dio.Response response = await _dioClient.postRequest(
+      dio.Response response = await _dioClient.getRequest(
         endPoint: '/api/pathnodes/vouchConnect/$id',
         data: null,
-        authToken: '${prefs!.getString(authToken)}',
+        bearerToken: '${prefs!.getString(authToken)}',
       );
       print('DIO RES Connect Vouch $response');
       if (response.data != null) {

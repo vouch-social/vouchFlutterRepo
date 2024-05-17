@@ -16,8 +16,9 @@ class UserDetailsController extends GetxController {
     try {
       var data = {
         "name" : nameController.text,
+        "photourl": "bhjghfvhjg",
         "localizedheadline" : headlineController.text,
-        "photourl": imageController.text,
+        "linkedinsub":"linkedinsub"
       };
       print("DATA : $data");
 

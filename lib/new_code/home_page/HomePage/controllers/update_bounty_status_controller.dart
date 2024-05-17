@@ -10,7 +10,7 @@ class UpdateBountyStatusController extends GetxController {
   final UpdateBountyRepository repository = UpdateBountyRepository();
   var isLoading = false.obs;
 
-  Future<void> updateBountyStatus(dynamic bountyId,dynamic status) async {
+  Future<void> updateBountyStatus(dynamic huntId,dynamic status) async {
     var data = {
       "status": status,
     };
@@ -18,7 +18,7 @@ class UpdateBountyStatusController extends GetxController {
     isLoading(true);
     try {
       BaseResponse<BountyUpdateModel> apiResult =
-      await repository.updateBounty(data,bountyId);
+      await repository.updateBounty(data,huntId);
       if (apiResult.status) {
         print('Api Result Bounty Status Controller: ${apiResult.message}');
         isLoading(false);

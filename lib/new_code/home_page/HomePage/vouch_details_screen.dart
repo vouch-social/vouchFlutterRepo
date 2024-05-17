@@ -90,6 +90,7 @@ class _VouchDetailsScreenState extends State<VouchDetailsScreen> {
               const Spacer(),
               FFButtonWidget(text: "Connect", onPressed: ()
               async{
+                print("VOUCH ID: ${widget.vouch.id}");
                 await connectController.connectVouchUser(widget.vouch.id);
                 Get.to(() => NewHomePage());
               }, options: CTAButton(context)),

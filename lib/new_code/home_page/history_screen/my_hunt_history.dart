@@ -17,9 +17,6 @@ class MyHuntsScreen extends StatefulWidget {
 }
 
 class _MyHuntsScreenState extends State<MyHuntsScreen> {
-
-
-
   final controller = Get.put(HuntsController());
   var huntsHistory;
 
@@ -29,31 +26,41 @@ class _MyHuntsScreenState extends State<MyHuntsScreen> {
     fetchHuntsHistory();
   }
 
-  void fetchHuntsHistory() async {
+  Future<void> fetchHuntsHistory() async {
     var fetchedBountyHistory = await controller.getHuntsHistory();
+    if (!mounted) return;
     setState(() {
       huntsHistory = fetchedBountyHistory.myHunts;
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      body:
-      Obx(
-            () => Skeletonizer(
-          enabled : controller.isLoading.value,
-          child : ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 16.0.w),
-            itemCount: huntsHistory?.length ?? 0,
-            itemBuilder: (BuildContext context, int index) {
-              var hunts = huntsHistory[index];
-              return
-                myHuntsWidget(context,hunts);
-            },
+      body: RefreshIndicator(
+        color: FlutterFlowTheme.of(context).primary,
+        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        onRefresh: () async {
+          await fetchHuntsHistory();
+        },
+        child: Obx(
+          () => Skeletonizer(
+            enabled: controller.isLoading.value,
+            child:
+            huntsHistory != null ?
+            ListView.builder(
+              padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+              itemCount: huntsHistory?.length ?? 0,
+              itemBuilder: (BuildContext context, int index) {
+                var hunts = huntsHistory[index];
+                return myHuntsWidget(context, hunts);
+              },
+            ) : Center(
+              child: CircularProgressIndicator(
+                color: FlutterFlowTheme.of(context).primaryText,
+              ),
+            )
           ),
         ),
       ),
