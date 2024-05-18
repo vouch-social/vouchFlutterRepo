@@ -7,6 +7,7 @@ import 'package:vouch/new_code/common_widgets/myAppBar.dart';
 
 import '../../../generated/assets.dart';
 import '../../backend/models/my_bounty_history_model.dart';
+import '../../common_widgets/image_check.dart';
 
 class HuntersListScreen extends StatefulWidget {
   final List<Hunter> hunters;
@@ -55,15 +56,9 @@ class _HuntersListScreenState extends State<HuntersListScreen> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0.w)),
                           leading:
-                              CircleAvatar(
-                                backgroundColor: Colors.transparent,
-                                child: widget.hunters[index].user.photourl != null &&
-                                    widget.hunters[index].user.photourl
-                                        .startsWith('http')
-                                    ? Image.network(
-                                    widget.hunters[index].user.photourl)
-                                    : Image.asset(Assets.assetsImage951),
-                              ),
+                          CustomCircleAvatar(
+                            imageUrl: widget.hunters[index].user.photourl,
+                          ),
                           title: AutoSizeText(
                             widget.hunters[index].user.name,
                             style: FlutterFlowTheme.of(context).titleSmall,
@@ -114,14 +109,8 @@ class _HuntersListScreenState extends State<HuntersListScreen> {
                               borderRadius: BorderRadius.circular(8.0.w),
                             ),
                             leading:
-                            CircleAvatar(
-                              backgroundColor: Colors.transparent,
-                              child: widget.hunters[index].user.photourl != null &&
-                                  widget.hunters[index].user.photourl
-                                      .startsWith('http')
-                                  ? Image.network(
-                                  widget.hunters[index].user.photourl)
-                                  : Image.asset(Assets.assetsImage951),
+                            CustomCircleAvatar(
+                              imageUrl: widget.hunters[index].user.photourl,
                             ),
                             title: AutoSizeText(
                               widget.hunters[index].user.name,

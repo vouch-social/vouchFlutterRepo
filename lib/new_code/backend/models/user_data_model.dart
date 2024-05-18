@@ -30,20 +30,20 @@ class UserModel {
 }
 
 class Data {
-  String accessToken;
+  dynamic accessToken;
   User user;
-  String userStatus;
-  bool contactsSync;
-  bool callLogsSync;
-  bool linkedinSync;
+  dynamic userStatus;
+  dynamic contactsSync;
+  dynamic callLogsSync;
+  dynamic linkedinSync;
 
   Data({
-    required this.accessToken,
+     this.accessToken,
     required this.user,
-    required this.userStatus,
-    required this.contactsSync,
-    required this.callLogsSync,
-    required this.linkedinSync,
+     this.userStatus,
+     this.contactsSync,
+     this.callLogsSync,
+     this.linkedinSync,
   });
 
   factory Data.fromJson(Map<String, dynamic> json){
@@ -69,25 +69,25 @@ class Data {
 }
 
 class User {
-  String? createdAt;
-  String? updatedAt;
-  String? deletedAt;
-  int? id;
+  dynamic createdAt;
+  dynamic updatedAt;
+  dynamic deletedAt;
+  dynamic id;
   dynamic userCreatedAt;
   dynamic name;
-  String? phone;
-  String? firebaseid;
+  dynamic phone;
+  dynamic firebaseid;
   dynamic photourl;
-  String? graphid;
-  String? hashedphone;
+  dynamic graphid;
+  dynamic hashedphone;
   dynamic linkedinsub;
   dynamic email;
   dynamic vanityname;
   dynamic localizedheadline;
-  bool? contactsSync;
-  bool? callLogsSync;
-  bool? linkedinSync;
-  int? countryCode;
+  dynamic contactsSync;
+  dynamic callLogsSync;
+  dynamic linkedinSync;
+  dynamic countryCode;
 
   User({
     this.createdAt,

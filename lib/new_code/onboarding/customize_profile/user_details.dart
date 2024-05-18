@@ -12,10 +12,14 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vouch/generated/assets.dart';
+import 'package:vouch/new_code/backend/backend_constants.dart';
+import 'package:vouch/new_code/onboarding/customize_profile/attributes_screen.dart';
 import 'package:vouch/new_code/onboarding/customize_profile/tags_screen.dart';
 import 'package:vouch/new_code/onboarding/customize_profile/user_details_controller.dart';
+import 'package:vouch/new_code/onboarding/goals/goals_screen.dart';
 import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../flutter_flow/flutter_flow_widgets.dart';
+import '../../../main.dart';
 import '../linkdin/linkdin_screen.dart';
 
 class UserDetails extends StatefulWidget {
@@ -199,106 +203,128 @@ class _UserDetailsState extends State<UserDetails> {
               SizedBox(
                 height: 16.0.h,
               ),
-              Hero(
-                tag: "Tags",
-                child: Material(
-                  color: Colors.transparent,
-                  child: Stack(children: [
-                    Container(
-                        height: 72.0,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        child: ChipsInput(
-                          initialValue: _controller.tagsController,
-                          textStyle: FlutterFlowTheme.of(context).labelExtraSmall,
-                          decoration: InputDecoration(
-                            // filled: true,
-                            // fillColor: FlutterFlowTheme.of(context)
-                            //     .textFieldBackground,
-                            labelText: "Tags",
-                            floatingLabelStyle:
-                                FlutterFlowTheme.of(context).bodyLarge,
-                            labelStyle: FlutterFlowTheme.of(context).bodyLarge,
-                            floatingLabelBehavior: FloatingLabelBehavior.always,
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            // focusedBorder: OutlineInputBorder(
-                            //   borderSide: BorderSide(
-                            //     color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
-                            //     width: 1.0,
-                            //   ),
-                            //   borderRadius: BorderRadius.circular(8.0),
-                            // ),
-                          ),
-                          findSuggestions: (String query) {
-                            if (query.isNotEmpty) {
-                              var lowercaseQuery = query.toLowerCase();
-                              final results = mockResults.where((profile) {
-                                return profile.tags
-                                    .toLowerCase()
-                                    .contains(query.toLowerCase());
-                              }).toList(growable: false)
-                                ..sort((a, b) => a.tags
-                                    .toLowerCase()
-                                    .indexOf(lowercaseQuery)
-                                    .compareTo(b.tags
-                                        .toLowerCase()
-                                        .indexOf(lowercaseQuery)));
-                              return results;
-                            }
-                            return mockResults;
-                          },
-                          onChanged: (List<Tags> tags) {
-                            _controller.tagsController.value = tags;
-                            print("Tags : ${_controller.tagsController}");
-                          },
-                          chipBuilder: (context, state, Tags profile) {
-                            return InputChip(
-                              backgroundColor: MediaQuery.of(context).platformBrightness == Brightness.dark ?
-                              FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9):
-                              FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
-                              labelStyle: FlutterFlowTheme.of(context).labelSmall,
-                              key: ObjectKey(profile),
-                              label: Text(profile.tags),
-                              onDeleted: () => state.deleteChip(profile),
-                              materialTapTargetSize:
-                                  MaterialTapTargetSize.shrinkWrap,
-                            );
-                          },
-                          suggestionBuilder: (context, state, Tags profile) {
-                            return Wrap(children: [
-                              InputChip(
-                                backgroundColor: MediaQuery.of(context).platformBrightness == Brightness.dark ?
-                                FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9):
-                                FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
-                                labelStyle: FlutterFlowTheme.of(context).labelSmall,
-                                elevation: 0,
-                                key: ObjectKey(profile),
-                                label: Text(profile.tags),
-                                onPressed: () =>
-                                    state.selectSuggestion(profile),
-                              ),
-                            ]);
-                          },
-                        )),
-                    GestureDetector(
-                      onTap: () {
-                        Get.to(() => TagsScreen());
-                      },
-                      child: Container(
-                        height: 72,
-                        color: Colors.transparent,
-                      ),
+              // Hero(
+              //   tag: "Tags",
+              //   child: Material(
+              //     color: Colors.transparent,
+              //     child: Stack(children: [
+              //       Container(
+              //           height: 72.0,
+              //           width: double.infinity,
+              //           decoration: BoxDecoration(
+              //             borderRadius: BorderRadius.circular(8.0),
+              //           ),
+              //           child: ChipsInput(
+              //             initialValue: _controller.tagsController,
+              //             textStyle: FlutterFlowTheme.of(context).labelExtraSmall,
+              //             decoration: InputDecoration(
+              //               // filled: true,
+              //               // fillColor: FlutterFlowTheme.of(context)
+              //               //     .textFieldBackground,
+              //               labelText: "Tags",
+              //               floatingLabelStyle:
+              //                   FlutterFlowTheme.of(context).bodyLarge,
+              //               labelStyle: FlutterFlowTheme.of(context).bodyLarge,
+              //               floatingLabelBehavior: FloatingLabelBehavior.always,
+              //               enabledBorder: OutlineInputBorder(
+              //                 borderSide: BorderSide(
+              //                   color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
+              //                   width: 1.0,
+              //                 ),
+              //                 borderRadius: BorderRadius.circular(8.0),
+              //               ),
+              //               // focusedBorder: OutlineInputBorder(
+              //               //   borderSide: BorderSide(
+              //               //     color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
+              //               //     width: 1.0,
+              //               //   ),
+              //               //   borderRadius: BorderRadius.circular(8.0),
+              //               // ),
+              //             ),
+              //             findSuggestions: (String query) {
+              //               if (query.isNotEmpty) {
+              //                 var lowercaseQuery = query.toLowerCase();
+              //                 final results = mockResults.where((profile) {
+              //                   return profile.tags
+              //                       .toLowerCase()
+              //                       .contains(query.toLowerCase());
+              //                 }).toList(growable: false)
+              //                   ..sort((a, b) => a.tags
+              //                       .toLowerCase()
+              //                       .indexOf(lowercaseQuery)
+              //                       .compareTo(b.tags
+              //                           .toLowerCase()
+              //                           .indexOf(lowercaseQuery)));
+              //                 return results;
+              //               }
+              //               return mockResults;
+              //             },
+              //             onChanged: (List<Tags> tags) {
+              //               _controller.tagsController.value = tags;
+              //               print("Tags : ${_controller.tagsController}");
+              //             },
+              //             chipBuilder: (context, state, Tags profile) {
+              //               return InputChip(
+              //                 backgroundColor: MediaQuery.of(context).platformBrightness == Brightness.dark ?
+              //                 FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9):
+              //                 FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
+              //                 labelStyle: FlutterFlowTheme.of(context).labelSmall,
+              //                 key: ObjectKey(profile),
+              //                 label: Text(profile.tags),
+              //                 onDeleted: () => state.deleteChip(profile),
+              //                 materialTapTargetSize:
+              //                     MaterialTapTargetSize.shrinkWrap,
+              //               );
+              //             },
+              //             suggestionBuilder: (context, state, Tags profile) {
+              //               return Wrap(children: [
+              //                 InputChip(
+              //                   backgroundColor: MediaQuery.of(context).platformBrightness == Brightness.dark ?
+              //                   FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9):
+              //                   FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
+              //                   labelStyle: FlutterFlowTheme.of(context).labelSmall,
+              //                   elevation: 0,
+              //                   key: ObjectKey(profile),
+              //                   label: Text(profile.tags),
+              //                   onPressed: () =>
+              //                       state.selectSuggestion(profile),
+              //                 ),
+              //               ]);
+              //             },
+              //           )),
+              //       GestureDetector(
+              //         onTap: () {
+              //           Get.to(() => TagsScreen());
+              //         },
+              //         child: Container(
+              //           height: 72,
+              //           color: Colors.transparent,
+              //         ),
+              //       ),
+              //     ]),
+              //   ),
+              // ),
+              Row(
+                children: [
+                  AutoSizeText("Attributes (${prefs?.getStringList(attributes)?.length})",
+                  style: FlutterFlowTheme.of(context).titleSmall,
+                  ),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: (){
+                      Get.to(() => AttributesList(
+                        items: [],
+                      ));
+                    },
+                    child: AutoSizeText("Edit",
+                    style: FlutterFlowTheme.of(context).labelExtraSmall.override(
+                      useGoogleFonts: false,
+                      color: FlutterFlowTheme.of(context).primary
                     ),
-                  ]),
-                ),
+                    ),
+                  )
+
+                ],
               ),
               const Spacer(),
               FFButtonWidget(
@@ -320,16 +346,13 @@ class _UserDetailsState extends State<UserDetails> {
                         message: "Please fill the Headline",
                       );
                       print("Null Data is There");
-                    } else if (_controller.tagsController.isEmpty) {
-                      const GetSnackBar(
-                        title: "Alert",
-                        message: "Please fill your Tags",
-                      );
-                      Get.to(TagsScreen());
-                    } else if (_controller.nameController.text.isNotEmpty &&
-                        _controller.headlineController.text.isNotEmpty &&
-                        _controller.tagsController.isNotEmpty) {
+                    }else if(prefs!.getStringList(attributes)!.isEmpty){
+                      Get.to(const AttributesList());
+                    }
+                      else if (_controller.nameController.text.isNotEmpty &&
+                        _controller.headlineController.text.isNotEmpty && _controller.imageController.text.isNotEmpty) {
                       await _controller.saveUserController();
+                      Get.to(() => GoalsScreen());
                     }
                   },
                   text: 'Update Your Profile',

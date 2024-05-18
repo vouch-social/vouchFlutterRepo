@@ -3,9 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
-import 'package:vouch/new_code/backend/models/bounty_update_resonse_model.dart';
+import 'package:vouch/new_code/common_widgets/image_check.dart';
 import 'package:vouch/new_code/common_widgets/myAppBar.dart';
-import '../../../generated/assets.dart';
 import '../../backend/models/feeds_model.dart';
 
 
@@ -58,14 +57,8 @@ class _OtherHuntersListState extends State<OtherHuntersList> {
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.0.w)),
                             leading:
-                            CircleAvatar(
-                              backgroundColor: Colors.transparent,
-                              child: widget.hunters[index].user.photourl != null &&
-                                  widget.hunters[index].user.photourl
-                                      !.startsWith('http')
-                                  ? Image.network(
-                                  widget.hunters[index].user.photourl.toString())
-                                  : Image.asset(Assets.assetsImage951),
+                            CustomCircleAvatar(
+                              imageUrl: widget.hunters[index].user.photourl,
                             ),
                             title: AutoSizeText(
                               widget.hunters[index].user.name,

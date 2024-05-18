@@ -1,28 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/generated/assets.dart';
-
-// Future<ImageProvider> getImageProvider(String url, String assetPath) async {
-//   if (url.contains('http')) {
-//     try {
-//       final response = await http.get(Uri.parse(url));
-//       if (response.statusCode == 403) {
-//         return AssetImage(assetPath);
-//       } else {
-//         return NetworkImage(url);
-//       }
-//     } catch (e) {
-//       return AssetImage(assetPath);
-//     }
-//   } else if (url is ImageProvider) {
-//     return url as ImageProvider<Object>;
-//   } else {
-//     return AssetImage(assetPath);
-//   }
-// }
 
 
 class CustomCircleAvatar extends StatelessWidget {
@@ -35,7 +16,7 @@ class CustomCircleAvatar extends StatelessWidget {
   });
 
   Future<ImageProvider> getImageProvider(String url) async {
-   if(url == null){
+   if(url == null ){
      return AssetImage(Assets.assetsImage951);
    }
     try {

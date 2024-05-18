@@ -5,6 +5,8 @@ import 'package:flutter_contacts/contact.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:vouch/new_code/backend/backend_constants.dart';
+import '../../../../main.dart';
 import '../../../services/hashed_phone.dart';
 import '../../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../backend/repos/contacts_call_logs_repo.dart';
@@ -28,7 +30,7 @@ class _ImportScreenState extends State<ImportScreen> {
   void initState() {
     super.initState();
     _fetchContacts();
-    _fetchCallLogs();
+    //_fetchCallLogs();
   }
 
   Future<void> _fetchContacts() async {
@@ -50,11 +52,10 @@ class _ImportScreenState extends State<ImportScreen> {
     }
 
     Map<String, dynamic> data = {
-      "hashedPhone": hashedPhone(widget.mobileWOCC,
-          widget.countryCode),
+      "hashedPhone": prefs?.getString(loggedInUserHashedPhone),
       "contacts": myContactListToJson(_contacts)
     };
-    print(data);
+    print("Contacts : $data");
     try {
       await repository.sendContacts(data);
     } catch (error) {

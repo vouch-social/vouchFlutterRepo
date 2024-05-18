@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:shared_preferences/shared_preferences.dart';
+
 const String contentType = "application/json";
 const String authorizationHeaderKey = "Authorization";
 const String authorizationHeaderTag = "Authorization";
@@ -12,3 +16,8 @@ const String userName = "userName";
 const String imageUrl = "imageUrl";
 const String headline = "HeadLine";
 const String isLinkedinSync = "isLinkedinSync";
+const String phone = "phone";
+const String goals = "goals";
+const String attributes = "attributes";
+
+

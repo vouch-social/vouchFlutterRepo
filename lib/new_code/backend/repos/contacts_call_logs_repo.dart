@@ -46,9 +46,9 @@ class ContactsCallLogsRepo {
 }
 
 checkImport() {
-  bool? isCallLog = prefs?.getBool(sendCallLogsResponse);
+  // bool? isCallLog = prefs?.getBool(sendCallLogsResponse);
   bool? isContactLog = prefs?.getBool(sendContactsResponse);
-  if (isCallLog != null && isContactLog != null && isCallLog && isContactLog) {
+  if ( isContactLog != null && isContactLog) {
     Get.to(() => LinkedinScreen());
   }
 }

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../main.dart';
+import '../../../backend/backend_constants.dart';
 import '../../../backend/repos/save_attributes_goals_repo.dart';
 
 class EditGoalsController extends GetxController{
 
   final AttributesGoalsRepo repository = AttributesGoalsRepo();
 
-  List<TextEditingController> controller = List.generate(3, (index) => TextEditingController());
+  List<TextEditingController> controller = List.generate(3, (index) => TextEditingController(text: prefs!.getStringList(goals)?[index].toString()));
 
 
-  Future<void> sendUserGoalsController() async {
+  Future<void> sendUserEditedGoalsController() async {
     try {
       var data = {
         "goals": [

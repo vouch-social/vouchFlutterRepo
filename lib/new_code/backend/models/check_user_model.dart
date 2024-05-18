@@ -1,5 +1,8 @@
-import 'dart:convert';
+// To parse this JSON data, do
+//
+//     final checkUserModel = checkUserModelFromJson(jsonString);
 
+import 'dart:convert';
 
 CheckUserModel checkUserModelFromJson(String str) => CheckUserModel.fromJson(json.decode(str));
 
@@ -23,15 +26,15 @@ class CheckUserModel {
 
 class Data {
   User user;
-  bool contactsSync;
-  bool callLogsSync;
-  bool linkedinSync;
+  dynamic contactsSync;
+  dynamic callLogsSync;
+  dynamic linkedinSync;
 
   Data({
     required this.user,
-    required this.contactsSync,
-    required this.callLogsSync,
-    required this.linkedinSync,
+     this.contactsSync,
+     this.callLogsSync,
+     this.linkedinSync,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -50,36 +53,37 @@ class Data {
 }
 
 class User {
-  String? createdAt;
-  String? updatedAt;
-  String? deletedAt;
-  int? id;
+  dynamic photourl;
+  dynamic createdAt;
+  dynamic updatedAt;
+  dynamic id;
   dynamic userCreatedAt;
   dynamic name;
-  String? phone;
-  String? firebaseid;
-  String? photourl;
-  String? graphid;
-  String? hashedphone;
-  String? linkedinsub;
-  String? email;
-  String? vanityname;
-  String? localizedheadline;
-  bool? contactsSync;
-  bool? callLogsSync;
-  bool? linkedinSync;
-  int? countryCode;
+  dynamic phone;
+  dynamic firebaseid;
+  dynamic graphid;
+  dynamic hashedphone;
+  dynamic linkedinsub;
+  dynamic email;
+  dynamic vanityname;
+  dynamic localizedheadline;
+  dynamic contactsSync;
+  dynamic callLogsSync;
+  dynamic linkedinSync;
+  dynamic countryCode;
+  dynamic deletedAt;
+  List<Attribute> attributes;
+  List<Goal> goals;
 
   User({
+     this.photourl,
      this.createdAt,
      this.updatedAt,
-     this.deletedAt,
      this.id,
      this.userCreatedAt,
      this.name,
      this.phone,
      this.firebaseid,
-     this.photourl,
      this.graphid,
      this.hashedphone,
      this.linkedinsub,
@@ -90,18 +94,20 @@ class User {
      this.callLogsSync,
      this.linkedinSync,
      this.countryCode,
+     this.deletedAt,
+    required this.attributes,
+    required this.goals,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
+    photourl: json["photourl"],
     createdAt: json["createdAt"],
     updatedAt: json["updatedAt"],
-    deletedAt: json["deletedAt"],
     id: json["id"],
     userCreatedAt: json["created_at"],
     name: json["name"],
     phone: json["phone"],
     firebaseid: json["firebaseid"],
-    photourl: json["photourl"],
     graphid: json["graphid"],
     hashedphone: json["hashedphone"],
     linkedinsub: json["linkedinsub"],
@@ -112,18 +118,20 @@ class User {
     callLogsSync: json["call_logs_sync"],
     linkedinSync: json["linkedin_sync"],
     countryCode: json["country_code"],
+    deletedAt: json["deletedAt"],
+    attributes: List<Attribute>.from(json["attributes"].map((x) => Attribute.fromJson(x))),
+    goals: List<Goal>.from(json["goals"].map((x) => Goal.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
+    "photourl": photourl,
     "createdAt": createdAt,
     "updatedAt": updatedAt,
-    "deletedAt": deletedAt,
     "id": id,
     "created_at": userCreatedAt,
     "name": name,
     "phone": phone,
     "firebaseid": firebaseid,
-    "photourl": photourl,
     "graphid": graphid,
     "hashedphone": hashedphone,
     "linkedinsub": linkedinsub,
@@ -134,5 +142,71 @@ class User {
     "call_logs_sync": callLogsSync,
     "linkedin_sync": linkedinSync,
     "country_code": countryCode,
+    "deletedAt": deletedAt,
+    "attributes": List<dynamic>.from(attributes.map((x) => x.toJson())),
+    "goals": List<dynamic>.from(goals.map((x) => x.toJson())),
+  };
+}
+
+class Attribute {
+  dynamic createdAt;
+  dynamic updatedAt;
+  dynamic id;
+  dynamic userId;
+  List<dynamic>? attributes;
+
+  Attribute({
+     this.createdAt,
+     this.updatedAt,
+     this.id,
+     this.userId,
+    this.attributes,
+  });
+
+  factory Attribute.fromJson(Map<String, dynamic> json) => Attribute(
+    createdAt: json["createdAt"],
+    updatedAt: json["updatedAt"],
+    id: json["id"],
+    userId: json["user_id"],
+    attributes: json["attributes"] == null ? [] : List<String>.from(json["attributes"]!.map((x) => x)),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "createdAt": createdAt,
+    "updatedAt": updatedAt,
+    "id": id,
+    "user_id": userId,
+    "attributes": attributes == null ? [] : List<dynamic>.from(attributes!.map((x) => x)),
+  };
+}
+class Goal {
+  dynamic createdAt;
+  dynamic updatedAt;
+  dynamic id;
+  dynamic userId;
+  List<dynamic>? goals;
+
+  Goal({
+    this.createdAt,
+    this.updatedAt,
+    this.id,
+    this.userId,
+    this.goals,
+  });
+
+  factory Goal.fromJson(Map<String, dynamic> json) => Goal(
+    createdAt: json["createdAt"],
+    updatedAt: json["updatedAt"],
+    id: json["id"],
+    userId: json["user_id"],
+    goals: json["goals"] == null ? [] : List<String>.from(json["goals"]!.map((x) => x)),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "createdAt": createdAt,
+    "updatedAt": updatedAt,
+    "id": id,
+    "user_id": userId,
+    "goals": goals == null ? [] : List<dynamic>.from(goals!.map((x) => x)),
   };
 }

@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -7,7 +8,9 @@ import 'package:vouch/new_code/home_page/settings/edit_goals/edit_goals_controll
 
 import '../../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../../flutter_flow/flutter_flow_widgets.dart';
-import '../../../onboarding/goals/goals_controller.dart';
+import '../../../../main.dart';
+import '../../../backend/backend_constants.dart';
+
 
 class EditGoalsScreen extends StatefulWidget {
   const EditGoalsScreen({super.key});
@@ -20,7 +23,7 @@ class _EditGoalsScreenState extends State<EditGoalsScreen>
 
 
   with TickerProviderStateMixin {
-  final controller = Get.put(GoalsController());
+  final controller = Get.put(EditGoalsController());
   late TabController _tabController;
   int _currentIndex = 0;
 
@@ -51,6 +54,7 @@ class _EditGoalsScreenState extends State<EditGoalsScreen>
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: CustomAppBar(
@@ -176,6 +180,7 @@ Widget _tab(currentIndex, context) {
           ),
           child: TextFormField(
             controller: controller.controller[currentIndex],
+            // initialValue: controller.controller[currentIndex].text,
             minLines: 3,
             maxLines: 5,
             style: FlutterFlowTheme.of(context).labelSmall,
@@ -194,21 +199,30 @@ Widget _tab(currentIndex, context) {
         SizedBox(
           height: 16.0.h,
         ),
-        AutoSizeText('Example:',
-            style: FlutterFlowTheme.of(context).titleSmall),
-        SizedBox(
-          height: 8.0.h,
+        Visibility(
+          visible: controller.controller[currentIndex].text.isEmpty,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AutoSizeText('Example:',
+                  style: FlutterFlowTheme.of(context).titleSmall),
+              SizedBox(
+                height: 8.0.h,
+              ),
+              Wrap(
+                spacing: 8.0,
+                children: [
+                  _buildChip('I want to buy a 2nd car'),
+                  _buildChip('I want to buy a 2nd car'),
+                  _buildChip('I buy a 2nd car'),
+                  _buildChip('I want to buy car'),
+                  _buildChip('Find Math tutor'),
+                ],
+              ),
+            ],
+          ),
         ),
-        Wrap(
-          spacing: 8.0,
-          children: [
-            _buildChip('I want to buy a 2nd car'),
-            _buildChip('I want to buy a 2nd car'),
-            _buildChip('I buy a 2nd car'),
-            _buildChip('I want to buy car'),
-            _buildChip('Find Math tutor'),
-          ],
-        ),
+
         const Spacer(),
         FFButtonWidget(
             onPressed: () async {
@@ -217,7 +231,7 @@ Widget _tab(currentIndex, context) {
                 _tabController.animateTo(_tabController.index + 1);
               }
               if(_tabController.index == 2 && controller.controller[0].text.isNotEmpty && controller.controller[1].text.isNotEmpty && controller.controller[2].text.isNotEmpty){
-                await controller.sendUserGoalsController();
+                await controller.sendUserEditedGoalsController();
               }else{
                 if(controller.controller[0].text.isEmpty){
                   const GetSnackBar(

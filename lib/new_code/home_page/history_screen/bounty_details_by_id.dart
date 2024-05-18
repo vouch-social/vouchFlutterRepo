@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:vouch/main.dart';
 import 'package:vouch/new_code/backend/backend_constants.dart';
+import 'package:vouch/new_code/common_widgets/image_check.dart';
 import 'package:vouch/new_code/home_page/history_screen/award_bounty_controller.dart';
 import 'package:vouch/new_code/home_page/history_screen/my_bounty_history_controller.dart';
 import '../../../flutter_flow/flutter_flow_theme.dart';
@@ -82,14 +83,9 @@ class _BountyDetailsScreenState extends State<BountyDetailsScreen> {
                           children: [
                             Row(
                               children: [
-                                CircleAvatar(
+                                CustomCircleAvatar(
+                                  imageUrl: prefs!.getString(imageUrl),
                                   radius: 18.0.w,
-                                  child: prefs?.getString(imageUrl) != null &&
-                                      prefs!.getString(imageUrl)
-                                          !.startsWith('http')
-                                      ? Image.network(
-                                      prefs!.getString(imageUrl).toString()
-                                  ) : Image.asset(Assets.assetsImage951),
                                 ),
                                 SizedBox(
                                   width: 8.0.w,
@@ -134,8 +130,12 @@ class _BountyDetailsScreenState extends State<BountyDetailsScreen> {
                               height: 12.0.h,
                             ),
                             Container(
-                              color: FlutterFlowTheme.of(context).textFieldBackground,
                               width: double.infinity,
+                              padding:EdgeInsets.all(4.0.w),
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context).textFieldBackground,
+                                borderRadius: BorderRadius.circular(8.0.w)
+                              ),
                               child: Row(
                                 children: [
                                   Icon(
@@ -148,7 +148,7 @@ class _BountyDetailsScreenState extends State<BountyDetailsScreen> {
                                   SizedBox(
                                     width: 8.0.w,
                                   ),
-                                  AutoSizeText(bountyDetails.urgency.name == 'urgently' ? "Needs to be completed with in 24hours." : '' ,
+                                  AutoSizeText(bountyDetails.urgency.name == 'urgently' ? "Needs to be completed with in 24hours." : 'Needs to be completed with in 36hours.' ,
                                   style: FlutterFlowTheme.of(context).labelExtraSmall,
                                   ),
                                 ],
@@ -180,14 +180,9 @@ class _BountyDetailsScreenState extends State<BountyDetailsScreen> {
                                           shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(8.0.w)),
                                           leading:
-                                          CircleAvatar(
+                                          CustomCircleAvatar(
+                                            imageUrl: hunters[index].user.photourl,
                                             radius: 18.0.w,
-                                            backgroundColor: Colors.transparent,
-                                            child: hunters[index].user.photourl
-                                                    .contains('http')
-                                                ? Image.network(
-                                                hunters[index].user.photourl)
-                                                : Image.asset(Assets.assetsImage951),
                                           ),
                                           title: AutoSizeText(
                                             hunters[index].user.name,

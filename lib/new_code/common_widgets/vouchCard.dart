@@ -204,7 +204,7 @@ Widget vouchPath(context, pathItem, index, length, activenode) {
                 : Colors.transparent,
             child: CustomCircleAvatar(
               radius: 20.0.w,
-              imageUrl: pathItem.image,
+              imageUrl: pathItem.image!,
             )
           ),
           SizedBox(height: 4.0.h),

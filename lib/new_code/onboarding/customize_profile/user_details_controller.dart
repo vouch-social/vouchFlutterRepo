@@ -16,7 +16,7 @@ class UserDetailsController extends GetxController {
     try {
       var data = {
         "name" : nameController.text,
-        "photourl": "bhjghfvhjg",
+        "photourl": imageController.text,
         "localizedheadline" : headlineController.text,
         "linkedinsub":"linkedinsub"
       };
@@ -25,7 +25,6 @@ class UserDetailsController extends GetxController {
       final response = await repository.saveUser(data);
 
       if (response.status) {
-        sendUserAttributesController();
         //Get.to(() => GoalsScreen());
       } else {
         print('Status is false');
@@ -36,19 +35,18 @@ class UserDetailsController extends GetxController {
   }
 
 
-  Future<void> sendUserAttributesController() async {
-    List<String> stringList = tagsController.map((tag) => tag.tags).toList();
+  Future<void> sendUserAttributesController(dynamic attributes) async {
 
     try {
       var data = {
-        "attributes" : stringList
+        "attributes" : attributes
       };
       print("DATA : $data");
 
       final response = await repository.sendUserAttributes(data);
 
       if (response.status) {
-        Get.to(() => GoalsScreen());
+
       } else {
         print('Status is false');
       }

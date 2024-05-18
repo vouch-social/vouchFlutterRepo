@@ -44,7 +44,7 @@ class OtpModel extends FlutterFlowModel<OtpScreen> {
 
   final AuthRepository repository = AuthRepository();
 
-  void sendUserData({String? phoneWOCC, String? countryCode}) async {
+  Future<void> sendUserData({String? phoneWOCC, String? countryCode}) async {
     var data = {
       'phone': phoneWOCC,
       'firebaseid': currentUserReference?.id,

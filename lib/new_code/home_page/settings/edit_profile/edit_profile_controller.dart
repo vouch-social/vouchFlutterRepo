@@ -39,12 +39,12 @@ class EditProfileController extends GetxController{
     }
   }
 
-  Future<void> sendUserAttributesController() async {
-    List<String> stringList = tagsController.map((tag) => tag.tags).toList();
+  Future<void> sendUserAttributesController(dynamic attributes,) async {
+    // List<String> stringList = tagsController.map((tag) => tag.tags).toList();
 
     try {
       var data = {
-        "attributes" : stringList
+        "attributes" : attributes
       };
       print("DATA : $data");
 

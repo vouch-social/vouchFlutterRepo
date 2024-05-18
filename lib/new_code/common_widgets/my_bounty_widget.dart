@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/generated/assets.dart';
+import 'package:vouch/new_code/common_widgets/image_check.dart';
 import 'package:vouch/new_code/home_page/history_screen/hunters_list_page.dart';
 import 'package:vouch/new_code/home_page/history_screen/update_bounty_by_id_controller.dart';
 
@@ -37,19 +38,9 @@ Widget myBountyWidget(context, bounty) {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircleAvatar(
-                backgroundColor: Colors.transparent,
+              CustomCircleAvatar(
                 radius: 20.0.w,
-                child: prefs!.getString(imageUrl) != 'null' && prefs!.getString(imageUrl)!.contains('http')
-                    ? Image.network(
-                  imageUrl,
-                  fit: BoxFit.fill,
-                )
-                    : prefs!.getString(imageUrl) != 'null' ? Image.memory(base64Decode(prefs!.getString(imageUrl)!)):
-                Image.asset(
-                  Assets.assetsImage951,
-                  fit: BoxFit.fill,
-                ),
+                imageUrl: prefs!.getString(imageUrl),
               ),
               SizedBox(
                 width: 8.0.w,
@@ -125,31 +116,7 @@ Widget myBountyWidget(context, bounty) {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  bounty.hunters.length == 0
-                      ? GestureDetector(
-                          onTap: () {
-                            controller.updateBountyById(bounty.id, 'open',2);
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 12.0.w, vertical: 6.0.h),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4.0.w),
-                                color: Colors.transparent,
-                                border: Border.all(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText)),
-                            child: AutoSizeText('Close',
-                                style: FlutterFlowTheme.of(context)
-                                    .labelExtraSmall
-                                    .override(
-                                      useGoogleFonts: false,
-                                      fontWeight: FontWeight.w400,
-                                    )),
-                          ),
-                        )
-                      : GestureDetector(
+                   GestureDetector(
                           onTap: () {
                             controller.updateBountyById(bounty.id, 'close',0);
                           },
@@ -175,6 +142,31 @@ Widget myBountyWidget(context, bounty) {
                   SizedBox(
                     width: 8.0.w,
                   ),
+                  bounty.hunters.length == 0
+                      ? GestureDetector(
+                    onTap: () {
+                      controller.updateBountyById(bounty.id, 'open',2);
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 12.0.w, vertical: 6.0.h),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4.0.w),
+                          color: FlutterFlowTheme.of(context).ffButton,
+                          border: Border.all(
+                              color: FlutterFlowTheme.of(context)
+                                  .primaryBackground)),
+                      child: AutoSizeText('Extend',
+                          style: FlutterFlowTheme.of(context)
+                              .buttonText
+                              .override(
+                              useGoogleFonts: false,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w400)),
+                    ),
+                  )
+                      :
                   GestureDetector(
                     onTap: () {
                       Get.to(() => BountyDetailsScreen(
@@ -237,38 +229,28 @@ Widget hunters(hunters, context) {
               hunters.length >= 1
                   ? Positioned(
                       left: 0,
-                      child: CircleAvatar(
-                          radius: 12.0.w,
-                          backgroundColor: Colors.transparent,
-                          child: hunters[0].user.photourl != null &&
-                                  hunters[0].user.photourl.startsWith('http')
-                              ? Image.network(hunters[0].user.photourl)
-                              : Image.asset(Assets.assetsImage951)),
+                      child: CustomCircleAvatar(
+                        imageUrl: hunters[0].user.photourl,
+                        radius: 12.0.w,
+                      )
                     )
                   : Container(),
               hunters.length >= 2
                   ? Positioned(
                       left: 12,
-                      child: CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          radius: 12.0.w,
-                          child: hunters[1].user.photourl != null &&
-                                  hunters[1].user.photourl.startsWith('http')
-                              ? Image.network(hunters[1].user.photourl)
-                              // : hunters[1].user.photourl != null
-                              : Image.asset(Assets.assetsImage951)),
+                      child: CustomCircleAvatar(
+                        imageUrl: hunters[1].user.photourl,
+                        radius: 12.0.w,
+                      )
                     )
                   : Container(),
               hunters.length >= 3
                   ? Positioned(
                       left: 24,
-                      child: CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          radius: 12.0.w,
-                          child: hunters[1].user.photourl != null &&
-                                  hunters[1].user.photourl.startsWith('http')
-                              ? Image.network(hunters[2].user.photourl)
-                              : Image.asset(Assets.assetsImage951)),
+                      child: CustomCircleAvatar(
+                        imageUrl: hunters[2].user.photourl,
+                        radius: 12.0.w,
+                      )
                     )
                   : Container()
             ],

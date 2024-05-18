@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vouch/new_code/onboarding/permissions/contacts_call_logs/import_screen.dart';
 import 'package:vouch/new_code/onboarding/permissions/permissions_screen.dart';
 import 'package:vouch/new_code/onboarding/welcome_screen/welcome_screen.dart';
@@ -33,21 +34,33 @@ Future<bool> checkUser() async {
   try {
     BaseResponse<CheckUserModel> apiResult =
         await repository.sendTokenToServer(data['phone']!);
+    print("Api REsult Status :${apiResult.status}");
+
     if(apiResult.status){
-      prefs?.setString(userName, apiResult.data!.data.user.name);
+      print("Status is true: ${apiResult.data!.data.user.name}");
+      prefs?.setString(userName, (apiResult.data!.data.user.name).toString());
       print("User Name: ${prefs?.getString(userName)}");
-      prefs?.setString(imageUrl, apiResult.data!.data.user.photourl ?? 'null');
+      prefs?.setString(imageUrl, apiResult.data!.data.user.photourl);
       print("imageUrl: ${prefs?.getString(imageUrl)}");
       prefs?.setString(headline, apiResult.data!.data.user.localizedheadline ?? 'null');
       print("HealdLine : ${prefs?.getString(headline)}");
       prefs?.setString(loggedInUserHashedPhone, apiResult.data!.data.user.hashedphone);
+      print("HasedPhone : ${prefs?.getString(loggedInUserHashedPhone)}" );
       prefs?.setBool(isLinkedinSync, apiResult.data!.data.linkedinSync);
       print("Linkedin : ${prefs?.get(isLinkedinSync)}");
+      print("IsContact: ${apiResult.data!.data.contactsSync}");
+      prefs?.setStringList(goals, apiResult.data!.data.user.goals[0].goals);
+      print("Goals : ${prefs?.getStringList(goals)}");
+      prefs?.setStringList(attributes, apiResult.data!.data.user.attributes[0].attributes);
+      print("Attributes : ${prefs?.getStringList(attributes)}");
+      prefs?.setString(phone, apiResult.data!.data.user.phone.toString());
+       print("Phone : ${apiResult.data!.data.user.phone}");
+    //  await saveAttributes(apiResult.data!.data.user.attributes.attributes);
 
     }
     return apiResult.status;
   } catch (error) {
-    print(error);
+    print("Check User : $error");
   }
   return false;
 }
@@ -64,7 +77,7 @@ Widget newCustomNav(){
       print("apiResponseCustomNav : ${apiResult.data.data}");
       if (!apiResult.data.data.linkedinSync) {
         return"linkedInPending";
-      } else if (!apiResult.data.data.callLogsSync) {
+      } else if (!apiResult.data.data.contactsSync) {
         return "callLogsPending";
       }
     } catch (error) {
@@ -77,7 +90,7 @@ Widget newCustomNav(){
       future: pageName(),
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
         if(snapshot.data == 'callLogsPending'){
-          return ImportScreen();
+          return PermissionsScreen();
         }else if (snapshot.data == "linkedInPending") {
           return LinkedinScreen();
         }

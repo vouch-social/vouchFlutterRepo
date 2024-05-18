@@ -30,6 +30,7 @@ import 'package:vouch/new_code/home_page/HomePage/paths_list_controller.dart';
 import 'package:vouch/new_code/home_page/paths_screen/paths_screen.dart';
 import 'package:vouch/new_code/home_page/search_screen/search_screen.dart';
 import 'package:vouch/new_code/home_page/settings/settings_screen.dart';
+import 'package:vouch/new_code/onboarding/customize_profile/user_details.dart';
 
 import '../../../flutter_flow/flutter_flow_util.dart';
 import '../../../generated/assets.dart';

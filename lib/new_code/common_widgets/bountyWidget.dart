@@ -88,7 +88,9 @@ Widget bountyWidget(context, bounty, ){
                     borderRadius: BorderRadius.circular(16.0.w),
                     color: FlutterFlowTheme.of(context).pastelTint
                 ),
-                child: AutoSizeText(
+                child:
+                bounty.tags.isEmpty ? Container():
+                AutoSizeText(
                     '${bounty.tags[0]}',
                     style: FlutterFlowTheme.of(context).labelExtraSmall.override(
                         useGoogleFonts: false,
@@ -107,7 +109,9 @@ Widget bountyWidget(context, bounty, ){
                     borderRadius: BorderRadius.circular(16.0.w),
                     color: FlutterFlowTheme.of(context).pastelBlue
                 ),
-                child: AutoSizeText(
+                child:
+                bounty.tags[1] == null ? Container():
+                AutoSizeText(
                     '${bounty.tags[1]}',
                     style: FlutterFlowTheme.of(context).labelExtraSmall.override(
                         useGoogleFonts: false,

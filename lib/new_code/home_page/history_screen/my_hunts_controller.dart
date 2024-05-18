@@ -17,7 +17,6 @@ class HuntsController extends GetxController {
       await repository.getMyHuntsHistory();
       if (apiResult.status) {
         print('Api Result Hunts History : ${apiResult.message}');
-        print("My Hunts History : ${apiResult.data.myHunts[0].id}");
         return apiResult.data;
       }
       Future.delayed(Duration(milliseconds: 300), () {

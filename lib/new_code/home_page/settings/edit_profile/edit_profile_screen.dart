@@ -16,6 +16,7 @@ import '../../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../../flutter_flow/flutter_flow_widgets.dart';
 import '../../../../generated/assets.dart';
 import '../../../../main.dart';
+import '../../../common_widgets/image_check.dart';
 import '../../../common_widgets/myAppBar.dart';
 import '../settings_screen.dart';
 import 'edit_profile_controller.dart';
@@ -109,14 +110,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           height: 128.h,
                           width: 128.w,
                         ),
-                      ) : ClipOval(
-                          clipBehavior: Clip.hardEdge,
-                          child: prefs?.getString(imageUrl) == null
-                              ? Image.asset(Assets.assetsImage951)
-                              : prefs!.getString(imageUrl)!.contains('http')
-                              ? Image.network("${prefs!.getString(imageUrl)}")
-                              : Image.memory(
-                              base64Decode(prefs!.getString(imageUrl)!))),
+                      ) : CustomCircleAvatar(
+                          radius: 64.0.w,
+                          imageUrl: prefs?.getString(imageUrl)
+                      )
                     ),
                   ),
                   GestureDetector(

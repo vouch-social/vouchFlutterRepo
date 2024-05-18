@@ -164,7 +164,7 @@ class _EditTagsScreenState extends State<EditTagsScreen> {
                   }else {
                     print("Tags 1: ${_controller.tagsController}");
 
-                    await _controller.sendUserAttributesController();
+                    // await _controller.sendUserAttributesController();
                     Get.back();
                   }
                 },

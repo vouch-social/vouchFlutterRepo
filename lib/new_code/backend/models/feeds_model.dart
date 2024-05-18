@@ -94,13 +94,13 @@ class Hunter {
   User user;
 
   Hunter({
-    required this.createdAt,
-    required this.updatedAt,
-    required this.id,
-    required this.hunterCreatedAt,
-    required this.bountyId,
-    required this.userId,
-    required this.hunterStatus,
+     this.createdAt,
+     this.updatedAt,
+     this.id,
+     this.hunterCreatedAt,
+     this.bountyId,
+     this.userId,
+     this.hunterStatus,
     required this.user,
   });
 

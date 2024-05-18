@@ -85,9 +85,9 @@ class _GoalsScreenState extends State<GoalsScreen>
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(4.0.w),
-                    color: _currentIndex >= 0
+                    color: _currentIndex > 0
                         ? FlutterFlowTheme.of(context).ffButton
-                        : FlutterFlowTheme.of(context).ffButton.withAlpha(51),
+                        : _currentIndex == 0 ? FlutterFlowTheme.of(context).ffButton.withAlpha(71):FlutterFlowTheme.of(context).ffButton.withAlpha(51),
                   ),
                   margin: EdgeInsets.only(right: 6.0.w),
                   height: 4,
@@ -97,9 +97,9 @@ class _GoalsScreenState extends State<GoalsScreen>
                   height: 4,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4.0.w),
-                      color: _currentIndex >= 1
+                      color: _currentIndex > 1
                           ? FlutterFlowTheme.of(context).ffButton
-                          : FlutterFlowTheme.of(context)
+                          : _currentIndex == 1 ? FlutterFlowTheme.of(context).ffButton.withAlpha(71) :FlutterFlowTheme.of(context)
                           .ffButton
                           .withAlpha(51)),
                 ),
@@ -110,7 +110,8 @@ class _GoalsScreenState extends State<GoalsScreen>
                     borderRadius: BorderRadius.circular(4.0.w),
                     color: _currentIndex >= 2
                         ? FlutterFlowTheme.of(context).ffButton
-                        : FlutterFlowTheme.of(context).ffButton.withAlpha(51),
+                        : _currentIndex == 2 ? FlutterFlowTheme.of(context).ffButton.withAlpha(71) :
+                    FlutterFlowTheme.of(context).ffButton.withAlpha(51),
                   ),
                 ),
               ],
