@@ -14,6 +14,8 @@ import 'package:vouch/new_code/common_widgets/image_check.dart';
 import 'package:vouch/new_code/home_page/settings/edit_goals/edit_goals_screen.dart';
 import 'package:vouch/new_code/home_page/settings/edit_profile/edit_profile_screen.dart';
 import 'package:vouch/new_code/onboarding/linkdin/linkdin_screen.dart';
+import 'package:vouch/new_code/onboarding/permissions/permissions_screen.dart';
+import 'package:vouch/new_code/onboarding/welcome_screen/welcome_screen.dart';
 import '../../common_widgets/myAppBar.dart';
 import 'edit_attributes_screen.dart';
 import 'edit_profile/edit_tags_screen.dart';
@@ -265,7 +267,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SizedBox(
                   height: 36.0.h,
                   child: GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Get.to(() => PermissionsScreen());
+                    },
                     child: Column(
                       children: [
                         SizedBox(
@@ -292,7 +296,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   )),
               const Spacer(),
               FFButtonWidget(
-                  text: 'Logout', onPressed: () {}, options: CTAButton(context))
+                  text: 'Logout', onPressed: () {
+                    Get.offAll(() => WelcomeScreen());
+              }, options: CTAButton(context))
             ],
           ),
         ),

@@ -26,15 +26,15 @@ class CheckUserModel {
 
 class Data {
   User user;
-  dynamic contactsSync;
+  bool contactsSync;
   dynamic callLogsSync;
-  dynamic linkedinSync;
+  bool linkedinSync;
 
   Data({
     required this.user,
-     this.contactsSync,
+    required this.contactsSync,
      this.callLogsSync,
-     this.linkedinSync,
+    required this.linkedinSync,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(

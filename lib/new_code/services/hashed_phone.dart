@@ -1,4 +1,6 @@
 // Automatic FlutterFlow imports
+import 'package:vouch/new_code/backend/backend_constants.dart';
+
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -32,14 +34,20 @@ extractCountryCode(String phoneNumber) {
 }
 
 String hashedPhone(String? userPhone,String? userPhoneCC)  {
+  print("UserPhone : $userPhone");
+  print("UserCC: $userPhoneCC");
+
   if (userPhone != null && userPhone.isNotEmpty) {
+    userPhone = cleanPhoneNumber(userPhone);
+    print("Cleaned Phone $userPhone");
     // Clean the phone number before hashing
-    String phone = "$userPhoneCC$userPhone";
+    String phone = userPhone;
     // Convert the cleaned phone number to bytes and hash it
     var bytes = utf8.encode(phone);
     var hashedPhone = sha256.convert(bytes);
 
     // Set the hashed phone number in FFAppState
+    print("HashedPhoneMySide : $hashedPhone");
     FFAppState().hashedPhone = hashedPhone.toString();
     return hashedPhone.toString();
   } else {

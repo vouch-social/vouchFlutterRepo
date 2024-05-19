@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:vouch/new_code/backend/backend_constants.dart';
+import 'package:vouch/new_code/home_page/settings/settings_screen.dart';
 import 'package:vouch/new_code/onboarding/linkdin/linkdin_screen.dart';
 import '../../../main.dart';
 import '../network/dio_client.dart';
@@ -37,7 +38,11 @@ class ContactsCallLogsRepo {
           data: data,
           authToken: prefs?.getString(authToken));
       prefs?.setBool(sendContactsResponse, response.data['status']);
-      checkImport();
+      if(prefs?.getString(userName) != null){
+        Get.to(() => SettingsScreen());
+      }else{
+        checkImport();
+      }
       print("sendContacts : $response");
     } catch (error) {
       print("Error 3 :$error");

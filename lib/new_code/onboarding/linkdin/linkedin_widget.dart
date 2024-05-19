@@ -85,7 +85,12 @@ class _LinkedinWidgetState extends State<LinkedinWidget> {
             _model.instantTimer?.cancel();
           } else if(counter == 30) {
             logFirebaseEvent('Linkedin_navigate_to');
-            Get.to(() => UserDetails());
+            if(prefs?.getString(userName) == null){
+              Get.to(() => UserDetails());
+            } else {
+              Get.to(() => NewHomePage());
+            }
+
           }else{
             logFirebaseEvent('Linkedin_backend_call');
             print("Counter :$counter");

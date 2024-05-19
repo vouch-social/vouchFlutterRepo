@@ -17,13 +17,13 @@ class CustomCircleAvatar extends StatelessWidget {
 
   Future<ImageProvider> getImageProvider(String url) async {
    if(url == null ){
-     return AssetImage(Assets.assetsImage951);
+     return AssetImage(Assets.assetsDefault);
    }
     try {
       if (url.contains('http')) {
         final response = await http.get(Uri.parse(url));
         if (response.statusCode == 403) {
-          return AssetImage(Assets.assetsImage951);
+          return AssetImage(Assets.assetsDefault);
         } else {
           return NetworkImage(url);
         }
@@ -32,10 +32,10 @@ class CustomCircleAvatar extends StatelessWidget {
       } else if (url is ImageProvider) {
         return url as ImageProvider<Object>;
       } else {
-        return AssetImage(Assets.assetsImage951);
+        return AssetImage(Assets.assetsDefault);
       }
     } catch (e) {
-      return AssetImage(Assets.assetsImage951);
+      return AssetImage(Assets.assetsDefault);
     }
   }
   @override
@@ -47,7 +47,7 @@ class CustomCircleAvatar extends StatelessWidget {
           if (snapshot.hasError) {
             return CircleAvatar(
               radius: radius,
-              backgroundImage: AssetImage(Assets.assetsImage951),
+              backgroundImage: AssetImage(Assets.assetsDefault),
               backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             );
           } else {

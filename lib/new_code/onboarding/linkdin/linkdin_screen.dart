@@ -6,7 +6,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
+import 'package:vouch/new_code/backend/backend_constants.dart';
+import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
 import 'package:vouch/new_code/onboarding/customize_profile/user_details.dart';
+import '../../../main.dart';
 import 'linkedin_widget.dart';
 import '../../../backend/firebase_analytics/analytics.dart';
 import '../../../flutter_flow/flutter_flow_theme.dart';
@@ -133,8 +136,10 @@ class _LinkedinScreenState extends State<LinkedinScreen> {
                 SizedBox(
                   height: 16.0.h,
                 ),
+                // prefs?.getString(userName) == null ?
                 GestureDetector(
-                  onTap: () {Get.to(() => UserDetails());
+                  onTap: () {
+                    Get.to(() => UserDetails());
                   },
                   child: Center(
                     child: AutoSizeText(
@@ -145,7 +150,22 @@ class _LinkedinScreenState extends State<LinkedinScreen> {
                         )
                     ),
                   ),
-                ),
+                )
+                // : GestureDetector(
+                //   onTap: () {
+                //     Get.to(() => NewHomePage());
+                //   },
+                //   child: Center(
+                //     child: AutoSizeText(
+                //         'Skip for now !',
+                //         style: FlutterFlowTheme.of(context).labelExtraSmall.override(
+                //           useGoogleFonts: false,
+                //           decoration: TextDecoration.underline,
+                //         )
+                //     ),
+                //   ),
+                // )
+                ,
 
               ],
             ),

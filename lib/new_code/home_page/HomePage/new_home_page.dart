@@ -114,7 +114,7 @@ class _NewHomePageState extends State<NewHomePage> {
       if (starred.length > 4) {
         starred = starred.sublist(0, 4);
       }
-
+      if (!mounted) return;
       setState(() {
         starredContacts = starred;
       });

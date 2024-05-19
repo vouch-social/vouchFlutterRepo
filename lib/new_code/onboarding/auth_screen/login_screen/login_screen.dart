@@ -152,6 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     logFirebaseEvent('Button_update_app_state');
                     FFAppState().loginPhoneWOCC =
                         '${_model.phoneNumberController2?.text}';
+                    print("LoginPhoneWOCC : ${_model.phoneNumberController2?.text}");
                     FFAppState().loginPhoneCC =
                     '${_model.phoneNumberController1?.text}';
                     logFirebaseEvent('Button_custom_action');
@@ -179,6 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               mobileWOCC: removeCountryCode(_model.phoneNumberController2.text,_model.phoneNumberController1.text),
                               countryCode: _model.phoneNumberController1.text,
                             ));
+
                       },
                     );
                   },

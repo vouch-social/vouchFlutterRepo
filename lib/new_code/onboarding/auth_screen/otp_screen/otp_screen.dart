@@ -217,6 +217,7 @@ activeBorderWidth: 0,
                                       'OTP_PAGE_Text_z4z0y37v_ON_TAP');
                                   logFirebaseEvent('Text_auth');
                                   final phoneAuthWCC = '${widget.countryCode}${widget.mobileWOCC}';
+                                  print("Phone With CC ${phoneAuthWCC}");
                                   await authManager.beginPhoneAuth(
                                     context: context,
                                     phoneNumber: phoneAuthWCC,

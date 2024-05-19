@@ -13,6 +13,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vouch/generated/assets.dart';
 import 'package:vouch/new_code/backend/backend_constants.dart';
+import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
 import 'package:vouch/new_code/onboarding/customize_profile/attributes_screen.dart';
 import 'package:vouch/new_code/onboarding/customize_profile/tags_screen.dart';
 import 'package:vouch/new_code/onboarding/customize_profile/user_details_controller.dart';
@@ -352,7 +353,11 @@ class _UserDetailsState extends State<UserDetails> {
                       else if (_controller.nameController.text.isNotEmpty &&
                         _controller.headlineController.text.isNotEmpty && _controller.imageController.text.isNotEmpty) {
                       await _controller.saveUserController();
-                      Get.to(() => GoalsScreen());
+                      if(prefs?.getStringList(goals) != null){
+                        Get.to(() => NewHomePage());
+                      }else{
+                        Get.to(() => GoalsScreen());
+                      }
                     }
                   },
                   text: 'Update Your Profile',

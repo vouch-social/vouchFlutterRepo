@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
+import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
 import '../../../flutter_flow/flutter_flow_widgets.dart';
 import 'goals_controller.dart';
 
@@ -223,7 +224,9 @@ class _GoalsScreenState extends State<GoalsScreen>
               ),
               Center(
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(NewHomePage());
+                  },
                   child: AutoSizeText(
                     "Skip for now",
                     style: FlutterFlowTheme.of(context).labelExtraSmall.override(
