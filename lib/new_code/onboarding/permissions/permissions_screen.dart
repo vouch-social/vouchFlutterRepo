@@ -173,7 +173,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                           'PERMISSIONS_START_BUILDING_NETWORK_BTN_O');
                       logFirebaseEvent('Button_request_permissions');
                       await Permission.contacts.request();
-                      await Permission.phone.request();
+                      // await Permission.phone.request();
                       logFirebaseEvent('Button_navigate_to');
 
                       Get.to(() => ImportScreen(mobileWOCC: widget.mobileWOCC,countryCode: widget.countryCode,));

@@ -16,8 +16,8 @@ class AllPaths {
 
   AllPaths({
     required this.singlePathList,
-    required this.numPaths,
-    required this.finalPaths,
+     this.numPaths,
+     this.finalPaths,
   });
 
   factory AllPaths.fromJson(Map<String, dynamic> json) => AllPaths(
@@ -36,13 +36,13 @@ class AllPaths {
 
 class SinglePath {
   List<PathNode> pathNode;
-  int length;
-  double strength;
+  dynamic length;
+  dynamic strength;
 
   SinglePath({
     required this.pathNode,
-    required this.length,
-    required this.strength,
+     this.length,
+     this.strength,
   });
 
   factory SinglePath.fromJson(Map<String, dynamic> json) => SinglePath(
@@ -62,8 +62,8 @@ class SinglePath {
 class PathNode {
   dynamic name;
   dynamic contactHashedPhone;
-  double strengthToNext;
-  bool isRegistered;
+  dynamic strengthToNext;
+  dynamic isRegistered;
   dynamic status;
   dynamic heading;
   dynamic image = 'https://media.licdn.com/dms/image/C5603AQEFnqHFu0ougw/profile-displayphoto-shrink_100_100/0/1517460846161?e=1715212800&v=beta&t=3d7rHcIDt_64AW55zFyWNnBhdeN_YtMMVuSE-qbRmVA';
@@ -72,11 +72,11 @@ class PathNode {
   PathNode({
     this.name,
     this.contactHashedPhone,
-    required this.strengthToNext,
-    required this.isRegistered,
-    required this.heading,
+     this.strengthToNext,
+     this.isRegistered,
+     this.heading,
     this.status,
-    required this.image,
+     this.image,
     required this.attributes,
   });
 

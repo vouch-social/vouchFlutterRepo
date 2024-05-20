@@ -24,7 +24,7 @@ class ImportScreen extends StatefulWidget {
 class _ImportScreenState extends State<ImportScreen> {
   final ContactsCallLogsRepo repository = ContactsCallLogsRepo();
   List<Contact> _contacts = [];
-  List<CallLogEntry> _callLogs = [];
+  // List<CallLogEntry> _callLogs = [];
 
   @override
   void initState() {
@@ -46,7 +46,6 @@ class _ImportScreenState extends State<ImportScreen> {
 
   void sendContactsData(List<Contact> _contacts) async {
 
-
     List<Map<String, dynamic>> myContactListToJson(List<Contact> contacts) {
       return contacts.map((contact) => contact.toJson()).toList();
     }
@@ -63,54 +62,54 @@ class _ImportScreenState extends State<ImportScreen> {
     }
   }
 
-  Future<void> _fetchCallLogs() async {
-    var status = await Permission.phone.request();
-    if (status.isGranted) {
-      List<CallLogEntry> logs = await getCallLogs();
-      setState(() {
-        _callLogs = logs;
-        sendCallLogsData(_callLogs);
-      });
-    }
-  }
+  // Future<void> _fetchCallLogs() async {
+  //   var status = await Permission.phone.request();
+  //   if (status.isGranted) {
+  //     List<CallLogEntry> logs = await getCallLogs();
+  //     setState(() {
+  //       _callLogs = logs;
+  //       sendCallLogsData(_callLogs);
+  //     });
+  //   }
+  // }
 
-  void sendCallLogsData(List<CallLogEntry> _callLogs) async {
-    Map<String, dynamic> callLogEntryToJson(CallLogEntry callLog) {
-      return {
-        'name': callLog.name ?? "",
-        'number': callLog.number ?? "",
-        'formattedNumber': callLog.formattedNumber ?? "",
-        'callType': callLog.callType?.name ?? "",
-        'duration': callLog.duration ?? "",
-        'timestamp': callLog.timestamp ?? "",
-        'cachedNumberType': callLog.cachedNumberType ?? "",
-        'cachedNumberLabel': callLog.cachedNumberLabel ?? "",
-        'cachedMatchedNumber': callLog.cachedMatchedNumber ?? "",
-        'simDisplayName': callLog.simDisplayName ?? "",
-        'phoneAccountId': callLog.phoneAccountId ?? "",
-      };
-    }
-
-    List<Map<String, dynamic>> myCallListToJson(List<CallLogEntry> callLogs) {
-      return callLogs
-          .map((callLog) => callLogEntryToJson(callLog))
-          .take(10)
-          .toList();
-    }
-
-    var data = {
-      "hashedPhone": hashedPhone(
-        widget.mobileWOCC,
-        widget.countryCode,
-      ),
-      "callLogs": myCallListToJson(_callLogs)
-    };
-    try {
-      await repository.sendCallLogs(data);
-    } catch (error) {
-      print("Error 1: $error");
-    }
-  }
+  // void sendCallLogsData(List<CallLogEntry> _callLogs) async {
+  //   Map<String, dynamic> callLogEntryToJson(CallLogEntry callLog) {
+  //     return {
+  //       'name': callLog.name ?? "",
+  //       'number': callLog.number ?? "",
+  //       'formattedNumber': callLog.formattedNumber ?? "",
+  //       'callType': callLog.callType?.name ?? "",
+  //       'duration': callLog.duration ?? "",
+  //       'timestamp': callLog.timestamp ?? "",
+  //       'cachedNumberType': callLog.cachedNumberType ?? "",
+  //       'cachedNumberLabel': callLog.cachedNumberLabel ?? "",
+  //       'cachedMatchedNumber': callLog.cachedMatchedNumber ?? "",
+  //       'simDisplayName': callLog.simDisplayName ?? "",
+  //       'phoneAccountId': callLog.phoneAccountId ?? "",
+  //     };
+  //   }
+  //
+  //   List<Map<String, dynamic>> myCallListToJson(List<CallLogEntry> callLogs) {
+  //     return callLogs
+  //         .map((callLog) => callLogEntryToJson(callLog))
+  //         .take(10)
+  //         .toList();
+  //   }
+  //
+  //   var data = {
+  //     "hashedPhone": hashedPhone(
+  //       widget.mobileWOCC,
+  //       widget.countryCode,
+  //     ),
+  //     "callLogs": myCallListToJson(_callLogs)
+  //   };
+  //   try {
+  //     await repository.sendCallLogs(data);
+  //   } catch (error) {
+  //     print("Error 1: $error");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

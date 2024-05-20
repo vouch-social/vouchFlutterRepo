@@ -14,9 +14,10 @@ import '../../../flutter_flow/flutter_flow_widgets.dart';
 import '../../backend/models/paths_model.dart';
 
 class FinalPathMessageScreen extends StatefulWidget {
+  final dynamic goal;
   final int currentIndex;
   final SinglePath singlePath;
-  const FinalPathMessageScreen({super.key, required this.currentIndex, required this.singlePath});
+  const FinalPathMessageScreen({super.key, required this.currentIndex, required this.singlePath,  this.goal});
 
   @override
   State<FinalPathMessageScreen> createState() => _FinalPathMessageScreenState();
@@ -88,18 +89,19 @@ class _FinalPathMessageScreenState extends State<FinalPathMessageScreen> {
                   SizedBox(
                     height: 16.0.h,
                   ),
-
                 ],
               ),
-              SizedBox(
-                height: 24.0.h,
-              ),
-              AutoSizeText("${reversedPathNodes[totalLength-1]['name']}",
-                  style: FlutterFlowTheme.of(context).headlineLarge),
               SizedBox(height: 20.0.h),
-              AutoSizeText(
-                  "Want to find driver for car delivery, Want to find driver for car delivery.",
-                  style: FlutterFlowTheme.of(context).bodySmall),
+              Row(
+                children: [
+                  AutoSizeText(
+                      "Context: ",
+                      style: FlutterFlowTheme.of(context).titleLarge),
+                  AutoSizeText(
+                      "${widget.goal}",
+                      style: FlutterFlowTheme.of(context).bodySmall),
+                ],
+              ),
               SizedBox(height: 24.0.h),
               AutoSizeText("Type your message",
                   style: FlutterFlowTheme.of(context).titleLarge),
@@ -126,13 +128,13 @@ class _FinalPathMessageScreenState extends State<FinalPathMessageScreen> {
                 height: 12.0.h,
               ),
               AutoSizeText(
-                'Please do not share any critical information as this message will be visible to all the persons between you path.',
+                'Please do not share any critical information as this message will be visible to all the persons between your path.',
                 style: FlutterFlowTheme.of(context).labelExtraSmall.override(
                     useGoogleFonts: false, fontWeight: FontWeight.w400),
               ),
               const Spacer(),
               FFButtonWidget(
-                  text: "CTA",
+                  text: "Start Vouch",
                   onPressed: () async {
 
                     if (controller.contextController.text != '') {
@@ -170,53 +172,60 @@ class _FinalPathMessageScreenState extends State<FinalPathMessageScreen> {
 }
 
 Widget vouchPath(context, pathItem, index, length, ) {
-  return Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Column(
-        children: [
-         CustomCircleAvatar(
-           radius: 20.0.h,
-           imageUrl: pathItem[index]["photourl"],
-         ),
-          SizedBox(height: 4.0.h),
-          SizedBox(
-            width: 64.w,
-            child: AutoSizeText(
-              '${pathItem[index]["name"]}',
-              overflow: TextOverflow.ellipsis,
-              minFontSize: 10.0,
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                useGoogleFonts: false,
-                fontSize: 10.sp,
+  print("PathItem : $pathItem");
+  return SingleChildScrollView(
+    child: Column(
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              children: [
+               CustomCircleAvatar(
+                 radius: 20.0.h,
+                 imageUrl: pathItem[index]["image"],
+               ),
+                SizedBox(height: 4.0.h),
+                SizedBox(
+                  width: 64.w,
+                  child: AutoSizeText(
+                    '${pathItem[index]["name"]}',
+                    overflow: TextOverflow.ellipsis,
+                    minFontSize: 10.0,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    style: FlutterFlowTheme.of(context).labelExtraSmall.override(
+                      useGoogleFonts: false,
+                      fontSize: 10.sp,
+                    ),
+                  ),
+                ),
+                // Spacer(),
+              ],
+            ),
+            Visibility(
+              visible: index != length - 1 ? true : false,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 20.0.h),
+                      height: 4.0.h,
+                      width: (MediaQuery.of(context).size.width -
+                          56.0.w -
+                          (length * 64.0.h)) /
+                          (length - 1),
+                      color:  FlutterFlowTheme.of(context)
+                          .primaryText
+                          .withOpacity(0.3)),
+        
+                ],
               ),
             ),
-          ),
-          // Spacer(),
-        ],
-      ),
-      Visibility(
-        visible: index != length - 1 ? true : false,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 20.0.h),
-                height: 4.0.h,
-                width: (MediaQuery.of(context).size.width -
-                    56.0.w -
-                    (length * 64.0.h)) /
-                    (length - 1),
-                color:  FlutterFlowTheme.of(context)
-                    .primaryText
-                    .withOpacity(0.3)),
-
           ],
         ),
-      ),
-    ],
+      ],
+    ),
   );
 }
 

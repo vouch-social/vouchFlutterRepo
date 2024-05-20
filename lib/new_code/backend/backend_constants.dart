@@ -19,5 +19,6 @@ const String isLinkedinSync = "isLinkedinSync";
 const String phone = "phone";
 const String goals = "goals";
 const String attributes = "attributes";
+const String isContactSync = "isContactSync";
 
 

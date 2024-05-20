@@ -136,10 +136,13 @@ class _LinkedinScreenState extends State<LinkedinScreen> {
                 SizedBox(
                   height: 16.0.h,
                 ),
-                // prefs?.getString(userName) == null ?
                 GestureDetector(
                   onTap: () {
-                    Get.to(() => UserDetails());
+                    if(prefs?.getString(userName) != null){
+                      Get.to( () => NewHomePage());
+                    }else{
+                      Get.to(() => UserDetails());
+                    }
                   },
                   child: Center(
                     child: AutoSizeText(

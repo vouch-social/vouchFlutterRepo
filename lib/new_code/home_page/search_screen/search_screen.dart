@@ -129,7 +129,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     image: recommendations.photourl,
                                     index: index,
                                     headline: recommendations.localizedheadline,
-                                    goals: recommendations.goals,
+                                    goals: _userInput,
                                   ));
                                 },
                                 child: Container(

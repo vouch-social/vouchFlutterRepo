@@ -353,11 +353,11 @@ class _UserDetailsState extends State<UserDetails> {
                       else if (_controller.nameController.text.isNotEmpty &&
                         _controller.headlineController.text.isNotEmpty && _controller.imageController.text.isNotEmpty) {
                       await _controller.saveUserController();
-                      if(prefs?.getStringList(goals) != null){
-                        Get.to(() => NewHomePage());
-                      }else{
-                        Get.to(() => GoalsScreen());
-                      }
+                      // if(prefs?.getStringList(goals) != null){
+                      //   Get.to(() => NewHomePage());
+                      // }else{
+                        Get.to(() => const GoalsScreen());
+                      // }
                     }
                   },
                   text: 'Update Your Profile',
@@ -460,6 +460,7 @@ class CustomImageSourceDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       alignment: Alignment.center,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       actionsPadding: EdgeInsets.all(24.0.w),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0.w)
@@ -483,7 +484,7 @@ class CustomImageSourceDialog extends StatelessWidget {
               },
               child: Column(
                 children: [
-                  const Icon(Icons.photo,size: 20,),
+                   Icon(Icons.photo,size: 20,color: FlutterFlowTheme.of(context).primaryText,),
                   SizedBox(height: 4.0.h,),
                   Text("Gallery",
                     style: FlutterFlowTheme.of(context).labelSmall,
@@ -499,7 +500,7 @@ class CustomImageSourceDialog extends StatelessWidget {
               },
               child: Column(
                 children: [
-                  const Icon(Icons.camera_alt_outlined,size: 20,),
+                   Icon(Icons.camera_alt_outlined,size: 20,color: FlutterFlowTheme.of(context).primaryText,),
                   SizedBox(height: 4.0.h,),
                   Text("Camera",
                     style: FlutterFlowTheme.of(context).labelSmall,

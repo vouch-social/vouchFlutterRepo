@@ -19,7 +19,6 @@ class BountyHistoryController extends GetxController {
           await repository.getHistory();
       if (apiResult.status) {
         print('Api Result Bounty History : ${apiResult.message}');
-        print("Bounty History : ${apiResult.data.myBountyListData[0].id}");
         return apiResult.data;
       }
       Future.delayed(Duration(milliseconds: 300), () {

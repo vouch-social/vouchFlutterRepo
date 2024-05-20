@@ -16,7 +16,7 @@ class CustomCircleAvatar extends StatelessWidget {
   });
 
   Future<ImageProvider> getImageProvider(String url) async {
-   if(url == null ){
+   if(url == 'null' || url == null){
      return AssetImage(Assets.assetsDefault);
    }
     try {

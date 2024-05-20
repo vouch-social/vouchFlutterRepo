@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vouch/new_code/common_widgets/myAppBar.dart';
 import 'package:vouch/new_code/home_page/settings/edit_goals/edit_goals_controller.dart';
+import 'package:vouch/new_code/home_page/settings/settings_screen.dart';
 
 import '../../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../../flutter_flow/flutter_flow_widgets.dart';
@@ -232,6 +233,7 @@ Widget _tab(currentIndex, context) {
               }
               if(_tabController.index == 2 && controller.controller[0].text.isNotEmpty && controller.controller[1].text.isNotEmpty && controller.controller[2].text.isNotEmpty){
                 await controller.sendUserEditedGoalsController();
+                Get.back();
               }else{
                 if(controller.controller[0].text.isEmpty){
                   const GetSnackBar(

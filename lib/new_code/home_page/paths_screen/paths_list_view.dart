@@ -19,8 +19,9 @@ import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../backend/models/paths_model.dart';
 
 class PathListView extends StatefulWidget {
+  final dynamic goal;
   final AllPaths allPaths;
-  const PathListView({super.key, required this.allPaths});
+  const PathListView({super.key, required this.allPaths, required this.goal});
 
   @override
   State<PathListView> createState() => _PathListViewState();
@@ -110,7 +111,7 @@ class _PathListViewState extends State<PathListView>
           Padding(
             padding: EdgeInsets.fromLTRB(16.0.h, 0, 16.0.h, 16.0.h),
             child: FFButtonWidget(
-                text: "CTA",
+                text: "Select Path",
                 onPressed: () async {
                   // Call the callback function with the relevant data
 
@@ -121,7 +122,9 @@ class _PathListViewState extends State<PathListView>
                     final int currentIndex = _tabController!.index;
                     print("currentIndex: ${currentIndex},singlePath:  ${widget.allPaths.singlePathList[currentIndex]}");
 
-                  Get.to(() => FinalPathMessageScreen(currentIndex: currentIndex,singlePath:  widget.allPaths.singlePathList[currentIndex]));
+                  Get.to(() => FinalPathMessageScreen(
+                      goal: widget.goal,
+                      currentIndex: currentIndex,singlePath:  widget.allPaths.singlePathList[currentIndex]));
                   }
 
                 },

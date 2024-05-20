@@ -51,10 +51,11 @@ Future<bool> checkUser() async {
       prefs?.setBool(isLinkedinSync, apiResult.data!.data.linkedinSync);
       print("Linkedin : ${prefs?.get(isLinkedinSync)}");
       print("IsContact: ${apiResult.data!.data.contactsSync}");
-      prefs?.setStringList(goals, apiResult.data!.data.user.goals[0].goals);
-      print("Goals : ${prefs?.getStringList(goals)}");
+      prefs?.setBool(isContactSync, apiResult.data!.data.contactsSync);
+       prefs?.setStringList(goals, apiResult.data!.data.user.goals[0].goals ?? []);
+      // print("Goals : ${prefs?.getStringList(goals)}");
       prefs?.setStringList(
-          attributes, apiResult.data!.data.user.attributes[0].attributes);
+          attributes, apiResult.data!.data.user.attributes[0].attributes ?? []);
       print("Attributes : ${prefs?.getStringList(attributes)}");
       prefs?.setString(phone, apiResult.data!.data.user.phone.toString());
       print("Phone : ${apiResult.data!.data.user.phone}");

@@ -80,22 +80,14 @@ class _PathsScreenState extends State<PathsScreen> {
                   SizedBox(
                     height: 8.0.h,
                   ),
-                  Container(
-                    height: 124.0.h,
-                    width: 124.0.w,
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(62.0.w),
-                    ),
-                    child: Hero(
-                      tag: "image:$widget.index",
-                      child: Material(
-                        color: Colors.transparent,
-                        child: CustomCircleAvatar(
-                          imageUrl: widget.image,
-                          radius: 64.0.w,
-                        )
-                      ),
+                  Hero(
+                    tag: "image:$widget.index",
+                    child: Material(
+                      color: Colors.transparent,
+                      child: CustomCircleAvatar(
+                        imageUrl: widget.image,
+                        radius: 64.0.w,
+                      )
                     ),
                   ),
                   SizedBox(
@@ -175,6 +167,7 @@ class _PathsScreenState extends State<PathsScreen> {
             allPaths != null ?
             Expanded(
                 child: PathListView(
+                  goal: widget.goals,
               allPaths: allPaths,
             )) : Container(),
           ],

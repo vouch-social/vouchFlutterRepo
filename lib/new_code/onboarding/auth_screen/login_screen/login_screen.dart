@@ -184,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     );
                   },
-                  text: 'Proceed OTP',
+                  text: 'Generate OTP',
                   options: CTAButton(context),
                 ),
               ),

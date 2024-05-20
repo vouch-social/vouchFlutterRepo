@@ -16,19 +16,19 @@ class ContactsCallLogsRepo {
   }
   factory ContactsCallLogsRepo() => _instance;
 
-  Future<void> sendCallLogs(dynamic data) async {
-    try {
-      dio.Response response = await _dioClient.postRequest(
-          endPoint: '/api/call-logs/saveCallLogs',
-          data: data,
-          authToken: prefs?.getString(authToken));
-      prefs?.setBool(sendCallLogsResponse, response.data['status']);
-      checkImport();
-      print("sendCallLogs: $response");
-    } catch (error) {
-      print("Error 2 :$error");
-    }
-  }
+  // Future<void> sendCallLogs(dynamic data) async {
+  //   try {
+  //     dio.Response response = await _dioClient.postRequest(
+  //         endPoint: '/api/call-logs/saveCallLogs',
+  //         data: data,
+  //         authToken: prefs?.getString(authToken));
+  //     prefs?.setBool(sendCallLogsResponse, response.data['status']);
+  //     checkImport();
+  //     print("sendCallLogs: $response");
+  //   } catch (error) {
+  //     print("Error 2 :$error");
+  //   }
+  // }
 
   Future<void> sendContacts(dynamic data
       ) async {
@@ -39,7 +39,7 @@ class ContactsCallLogsRepo {
           authToken: prefs?.getString(authToken));
       prefs?.setBool(sendContactsResponse, response.data['status']);
       if(prefs?.getString(userName) != null){
-        Get.to(() => SettingsScreen());
+        Get.off(() => SettingsScreen());
       }else{
         checkImport();
       }
