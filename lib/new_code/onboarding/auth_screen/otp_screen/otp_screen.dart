@@ -49,7 +49,6 @@ class _OtpScreenState extends State<OtpScreen> {
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
 
@@ -60,6 +59,7 @@ class _OtpScreenState extends State<OtpScreen> {
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: Padding(

@@ -78,24 +78,24 @@ class EditAttributesList extends StatefulWidget {
 class _EditAttributesListState extends State<EditAttributesList> {
   final _controller = Get.put(EditProfileController());
   final TextEditingController _textEditingController = TextEditingController();
-  List<String> _items = [];
+  List<String>? _items = [];
 
   @override
   void initState() {
     super.initState();
-    _items = widget.items!;
+    _items = widget.items;
   }
 
   void _addItem(String item) {
     setState(() {
-      _items.add(item);
+      _items?.add(item);
     });
     _textEditingController.clear();
   }
 
   void _removeItem(int index) {
     setState(() {
-      _items.removeAt(index);
+      _items?.removeAt(index);
     });
   }
 
@@ -118,11 +118,11 @@ class _EditAttributesListState extends State<EditAttributesList> {
               children: [
                 ListView.builder(
                   shrinkWrap: true,
-                  itemCount: _items.length,
+                  itemCount: _items?.length,
                   itemBuilder: (context, index) {
                     return EditAttributesListItem(
                       serialNumber: index + 1,
-                      text: _items[index],
+                      text: _items![index],
                       icon: widget.icon,
                       onIconTap: () => _removeItem(index),
                     );

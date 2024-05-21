@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:vouch/new_code/home_page/history_screen/history.dart';
 import 'package:vouch/new_code/common_widgets/vector.dart';
 
@@ -17,11 +16,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color backgroundColor;
   final bool showHistoryButton;
   final bool showNotificationButton;
+  final Function()? onSettingsButtonPressed;
+  final Function()? onBackButtonPressed; // New optional parameter
 
-  Function()? onSettingsButtonPressed;
-
-  CustomAppBar({
-    Key? key,
+  const CustomAppBar({
+    super.key,
     this.showBackButton = false,
     this.title = "",
     this.backgroundColor = Colors.transparent,
@@ -29,26 +28,32 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onSettingsButtonPressed,
     this.showHistoryButton = true,
     this.showNotificationButton = true,
-  }) : super(key: key);
+    this.onBackButtonPressed, // Initialize the new parameter
+  });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: backgroundColor == Colors.transparent ? FlutterFlowTheme.of(context).primaryBackground : backgroundColor,
+      backgroundColor: backgroundColor == Colors.transparent
+          ? FlutterFlowTheme.of(context).primaryBackground
+          : backgroundColor,
       elevation: 0,
       leading: showBackButton
           ? GestureDetector(
-              onTap: (){Get.back();},
+              onTap: onBackButtonPressed ??
+                  () {
+                    Get.back();
+                  },
               child: Container(
                 height: 40.h,
                 width: 40.w,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
-
                 ),
                 child: Center(
                   child: Icon(Icons.arrow_back,
-                      color: FlutterFlowTheme.of(context).alternate), // Replace with your icon
+                      color: FlutterFlowTheme.of(context)
+                          .alternate), // Replace with your icon
                 ),
               ),
             )
@@ -56,8 +61,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title,
-          style: FlutterFlowTheme.of(context).headlineLarge),
+          Text(title, style: FlutterFlowTheme.of(context).headlineLarge),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -65,96 +69,70 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ? GestureDetector(
                       onTap: () {
                         Get.to(
-                          () => SettingsScreen(),
+                          () => const SettingsScreen(),
                           transition: Transition.upToDown,
-                          duration: Duration(milliseconds: 500),
-                          //curve: Curves.easeInOut,
+                          duration: const Duration(milliseconds: 500),
                         );
                       },
                       child: Container(
                           width: 40.w,
                           height: 40.h,
                           padding: EdgeInsets.all(8.0.w),
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            // color: FlutterFlowTheme.of(context).accent4
                           ),
-                          child: Icon(Icons.notifications,
-                          color: FlutterFlowTheme.of(context).alternate,)),
+                          child: Icon(
+                            Icons.notifications,
+                            color: FlutterFlowTheme.of(context).alternate,
+                          )),
                     )
-                  : Container(
-                      // width: 40.w,
-                      // height: 40.h,
-                      // padding: EdgeInsets.all(8.0.w),
-                      // decoration: BoxDecoration(
-                      //   shape: BoxShape.circle,
-                      //   // color: FlutterFlowTheme.of(context).accent4
-                      // ),
-                    ),
+                  : Container(),
               showHistoryButton
                   ? GestureDetector(
-                onTap: () {
-                  Get.to(
-                        () => HistoryScreen(),
-                    transition: Transition.rightToLeft,
-                    duration: Duration(milliseconds: 500),
-                    //curve: Curves.easeInOut,
-                  );
-                },
-                child: Container(
-                    width: 40.w,
-                    height: 40.h,
-                    padding: EdgeInsets.all(8.0.w),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      // color: FlutterFlowTheme.of(context).accent4
-                    ),
-                    child: Icon(Icons.history_rounded,
-                      color: FlutterFlowTheme.of(context).alternate,)),
-              )
-                  : Container(
-                // width: 40.w,
-                // height: 40.h,
-                // padding: EdgeInsets.all(8.0.w),
-                // decoration: BoxDecoration(
-                //   shape: BoxShape.circle,
-                //   // color: FlutterFlowTheme.of(context).accent4
-                // ),
-              ),
+                      onTap: () {
+                        Get.to(
+                          () => const HistoryScreen(),
+                          transition: Transition.rightToLeft,
+                          duration: const Duration(milliseconds: 500),
+                        );
+                      },
+                      child: Container(
+                          width: 40.w,
+                          height: 40.h,
+                          padding: EdgeInsets.all(8.0.w),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.history_rounded,
+                            color: FlutterFlowTheme.of(context).alternate,
+                          )),
+                    )
+                  : Container(),
               showProfileButton
                   ? GestureDetector(
-                onTap: () {
-                  Get.to(
-                        () => SettingsScreen(),
-                    transition: Transition.rightToLeftWithFade,
-                    duration: Duration(milliseconds: 500),
-                    //curve: Curves.easeInOut,
-                  );
-                },
-                child: Container(
-                    width: 40.w,
-                    height: 40.h,
-                    padding: EdgeInsets.all(8.0.w),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      // color: FlutterFlowTheme.of(context).accent4
-                    ),
-                    child: SvgPicture.asset(
-                      Assets.assetsUserIcon,
-                      height: 20.h,
-                      width: 20.w,
-                      color: FlutterFlowTheme.of(context).alternate,
-                    )),
-              )
-                  : Container(
-                // width: 40.w,
-                // height: 40.h,
-                // padding: EdgeInsets.all(8.0.w),
-                // decoration: BoxDecoration(
-                //   shape: BoxShape.circle,
-                //   // color: FlutterFlowTheme.of(context).accent4
-                // ),
-              )
+                      onTap: () {
+                        Get.to(
+                          () => const SettingsScreen(),
+                          transition: Transition.rightToLeftWithFade,
+                          duration: const Duration(milliseconds: 500),
+                        );
+                      },
+                      child: Container(
+                          width: 40.w,
+                          height: 40.h,
+                          padding: EdgeInsets.all(8.0.w),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: SvgPicture.asset(
+                            Assets.assetsUserIcon,
+                            height: 20.h,
+                            width: 20.w,
+                            color: FlutterFlowTheme.of(context).alternate,
+                          )),
+                    )
+                  : Container(),
             ],
           ),
         ],
@@ -163,5 +141,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

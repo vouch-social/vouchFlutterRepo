@@ -135,7 +135,6 @@ dependencies:
   webviewx_plus: 0.5.0
   xml: 6.3.0
   flutter_contacts: ^1.1.7+1
-  call_log: ^4.0.0
   flutter_svg: ^2.0.9
   modal_bottom_sheet: ^3.0.0
   get:

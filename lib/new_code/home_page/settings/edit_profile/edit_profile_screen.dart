@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:vouch/auth/checkAuth.dart';
 import 'package:vouch/new_code/backend/backend_constants.dart';
 import 'package:vouch/new_code/home_page/settings/edit_profile/edit_tags_screen.dart';
 import '../../../../flutter_flow/flutter_flow_theme.dart';
@@ -180,6 +181,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       _controller.headlineController.text.isNotEmpty
                       ) {
                     await _controller.saveUserController();
+                    await checkUser();
                     Get.back();
                   }
                 },
@@ -195,13 +197,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 class CustomTextField extends StatelessWidget {
   final String label;
   final controller;
-  final dynamic initialValue;
   final maxLines;
 
   const CustomTextField({
     super.key,
     required this.label,
-    this.controller, this.initialValue, this.maxLines,
+    this.controller, this.maxLines,
   });
 
   @override
@@ -215,7 +216,6 @@ class CustomTextField extends StatelessWidget {
       child: TextFormField(
         minLines: 1,
         maxLines: maxLines,
-        initialValue: initialValue,
         style: FlutterFlowTheme.of(context).headlineSmall,
         controller: controller,
         cursorColor: FlutterFlowTheme.of(context).secondaryBackground,
@@ -224,7 +224,6 @@ class CustomTextField extends StatelessWidget {
           // filled: true,
           // fillColor: FlutterFlowTheme.of(context).textFieldBackground,
           alignLabelWithHint: true,
-          labelText: label,
           floatingLabelStyle: FlutterFlowTheme.of(context).titleSmall,
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelStyle: FlutterFlowTheme.of(context).titleSmall,
@@ -307,7 +306,6 @@ class CustomImageSourceDialog extends StatelessWidget {
                     SizedBox(height: 4.0.h,),
                     Text("Camera",
                       style: FlutterFlowTheme.of(context).labelSmall,
-
                     ),
                   ],
                 ),

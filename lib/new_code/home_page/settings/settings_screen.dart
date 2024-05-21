@@ -11,6 +11,7 @@ import 'package:vouch/generated/assets.dart';
 import 'package:vouch/main.dart';
 import 'package:vouch/new_code/backend/backend_constants.dart';
 import 'package:vouch/new_code/common_widgets/image_check.dart';
+import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
 import 'package:vouch/new_code/home_page/settings/edit_goals/edit_goals_screen.dart';
 import 'package:vouch/new_code/home_page/settings/edit_profile/edit_profile_screen.dart';
 import 'package:vouch/new_code/onboarding/linkdin/linkdin_screen.dart';
@@ -50,6 +51,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         showBackButton: true,
         showProfileButton: false,
         title: "Settings",
+        onBackButtonPressed: (){
+          Get.offAll(() => NewHomePage());
+        },
       ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(

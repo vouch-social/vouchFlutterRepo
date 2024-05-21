@@ -16,6 +16,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:vouch/auth/checkAuth.dart';
 import 'package:vouch/backend/firebase/firebase_config.dart';
 // import 'package:vouch/bounty/raise_bounty/raise_bounty_widget.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
@@ -63,6 +64,7 @@ class _NewHomePageState extends State<NewHomePage> {
     fetchFeeds();
     getStarredContacts();
     _updateGreeting();
+    checkUser();
   }
 
   Future<void> _updateGreeting() async {

@@ -52,10 +52,39 @@ Future<bool> checkUser() async {
       print("Linkedin : ${prefs?.get(isLinkedinSync)}");
       print("IsContact: ${apiResult.data!.data.contactsSync}");
       prefs?.setBool(isContactSync, apiResult.data!.data.contactsSync);
-       prefs?.setStringList(goals, apiResult.data!.data.user.goals[0].goals ?? []);
-      // print("Goals : ${prefs?.getStringList(goals)}");
-      prefs?.setStringList(
-          attributes, apiResult.data!.data.user.attributes[0].attributes ?? []);
+// Ensure prefs and apiResult.data are not null
+      if (prefs != null && apiResult.data != null) {
+        // Initialize an empty list of strings for goals
+        List<String> userGoals = [];
+
+        // Safely navigate through the API result to get the goals
+        if (apiResult.data.data.user.goals.isNotEmpty) {
+          var firstGoalEntry = apiResult.data.data.user.goals[0].goals;
+
+          // Check if the goals are a list of strings
+          if (firstGoalEntry is List<String>) {
+            userGoals = firstGoalEntry;
+          }
+        }
+
+        // Save the list of user goals in shared preferences
+        prefs?.setStringList(goals, userGoals);
+      }      // print("Goals : ${prefs?.getStringList(goals)}");
+      // Check if prefs and apiResult are not null before proceeding
+      if (prefs != null && apiResult.data != null) {
+        // Check if the user attributes are available and is a list of strings
+        List<String> userAttributes = [];
+        if (apiResult.data.data.user.attributes.isNotEmpty) {
+          var firstAttributes = apiResult.data.data.user.attributes[0].attributes;
+          if (firstAttributes is List<String>) {
+            userAttributes = firstAttributes;
+          }
+        }
+
+        // Save the list of user attributes in shared preferences
+        prefs?.setStringList(attributes, userAttributes);
+      }
+
       print("Attributes : ${prefs?.getStringList(attributes)}");
       prefs?.setString(phone, apiResult.data!.data.user.phone.toString());
       print("Phone : ${apiResult.data!.data.user.phone}");
