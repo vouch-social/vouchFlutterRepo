@@ -2,6 +2,7 @@ import 'package:dio/dio.dart' as dio;
 import 'package:vouch/new_code/backend/backend_constants.dart';
 import '../../../main.dart';
 import '../models/base_response.dart';
+import '../models/bounty_tags_model.dart';
 import '../models/raise_bounty_model.dart';
 import '../network/dio_client.dart';
 
@@ -40,4 +41,31 @@ class RaiseBountyRepository {
       rethrow;
     }
   }
+
+
+  Future<BaseResponse<BountyTagsModel>> bountyTags() async {
+    try {
+      dio.Response response = await _dioClient.getRequest(
+        endPoint: '/api/bounty/getBountyTagsAll',
+        data: null,
+        bearerToken: '${prefs!.getString(authToken)}',
+      );
+      print('DIO RES Tags Bounty $response');
+      if (response.data != null) {
+        BaseResponse<BountyTagsModel> result =
+        BaseResponse<BountyTagsModel>.fromJson(
+          response.data,
+          BountyTagsModel.fromJson,
+        );
+        return result;
+      } else {
+        throw Exception('Response data is null');
+      }
+    } catch (error) {
+      print(error);
+      rethrow;
+    }
+  }
+
+
 }

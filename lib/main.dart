@@ -32,7 +32,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
+String? token = await FirebaseMessaging.instance.getToken();
+print("Firebase Token : $token");
   /// for linkdin login url
   usePathUrlStrategy();
   await initFirebase();
@@ -51,6 +52,7 @@ void main() async {
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
 }
+
 
 Future<void> initSharedPreferences() async {
   prefs = await SharedPreferences.getInstance();

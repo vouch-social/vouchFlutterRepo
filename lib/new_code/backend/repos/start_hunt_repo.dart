@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart' as dio;
+import 'package:vouch/new_code/backend/models/ignore_bounty_response_model.dart';
 import 'package:vouch/new_code/backend/models/start_hunt_response_model.dart';
 import '../../../main.dart';
 import '../backend_constants.dart';
@@ -37,4 +38,24 @@ class StartHuntRepo {
       rethrow;
     }
   }
+
+  Future<BaseResponse<IgnoreBountyModel>> ignoreBounty(dynamic data) async {
+    try {
+      print("dataHunt $data");
+      dio.Response response = await _dioClient.postRequest(
+          endPoint: '/api/bounty/ignore-hunt/$data',
+          data: null,
+          authToken: prefs?.getString(authToken));
+      print("Ignore Bounty Response: $response");
+      BaseResponse<IgnoreBountyModel> result = BaseResponse.fromJson(
+          response.data, IgnoreBountyModel.fromJson);
+      print("Result : $result");
+      print("Ignore BountyResponseData: ${response.data}");
+      return result;
+    } catch (error) {
+      print("Error 18 :$error");
+      rethrow;
+    }
+  }
+
 }

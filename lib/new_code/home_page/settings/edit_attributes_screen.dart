@@ -3,6 +3,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:vouch/flutter_flow/flutter_flow_widgets.dart';
 import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../common_widgets/myAppBar.dart';
@@ -13,6 +14,7 @@ class EditAttributesListItem extends StatelessWidget {
   final String text;
   final IconData icon;
   final VoidCallback onIconTap;
+  final bool showIcon;
 
   const EditAttributesListItem({
     super.key,
@@ -20,6 +22,7 @@ class EditAttributesListItem extends StatelessWidget {
     required this.text,
     required this.icon,
     required this.onIconTap,
+    this.showIcon = true,
   });
 
   @override
@@ -48,13 +51,14 @@ class EditAttributesListItem extends StatelessWidget {
               ),
             ),
           ),
-          GestureDetector(
-            onTap: onIconTap,
-            child: Icon(
-              icon,
-              size: 16.0,
+          if (showIcon)
+            GestureDetector(
+              onTap: onIconTap,
+              child: Icon(
+                icon,
+                size: 16.0,
+              ),
             ),
-          ),
         ],
       ),
     );
@@ -79,11 +83,12 @@ class _EditAttributesListState extends State<EditAttributesList> {
   final _controller = Get.put(EditProfileController());
   final TextEditingController _textEditingController = TextEditingController();
   List<String>? _items = [];
-
+  List<String> recommendationsData = [];
   @override
   void initState() {
     super.initState();
     _items = widget.items;
+    fetchRecommendations();
   }
 
   void _addItem(String item) {
@@ -99,6 +104,16 @@ class _EditAttributesListState extends State<EditAttributesList> {
     });
   }
 
+  Future<void> fetchRecommendations() async {
+    var fetchedRecommendations =
+    await _controller.getAttributesExamples();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      setState(() {
+        recommendationsData = fetchedRecommendations.attributes;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,29 +129,64 @@ class _EditAttributesListState extends State<EditAttributesList> {
         child: SafeArea(
           child: Padding(
             padding: EdgeInsets.all(16.0.w),
-            child: Column(
-              children: [
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: _items?.length,
-                  itemBuilder: (context, index) {
-                    return EditAttributesListItem(
-                      serialNumber: index + 1,
-                      text: _items![index],
-                      icon: widget.icon,
-                      onIconTap: () => _removeItem(index),
-                    );
-                  },
-                ),
-                SizedBox(height: 16.0.h,),
-                CustomTextField(
-                  controller: _textEditingController,
-                  addItem: _addItem,
-                ),
-        
-                SizedBox(height: 16.0.h),
-        
-              ],
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: _items?.length,
+                    itemBuilder: (context, index) {
+                      return EditAttributesListItem(
+                        serialNumber: index + 1,
+                        text: _items![index],
+                        icon: widget.icon,
+                        onIconTap: () => _removeItem(index),
+                      );
+                    },
+                  ),
+                  SizedBox(height: 16.0.h,),
+                  CustomTextField(
+                    controller: _textEditingController,
+                    addItem: _addItem,
+                  ),
+
+                  SizedBox(height: 16.0.h),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: recommendationsData.length,
+                    itemBuilder: (context, index) {
+                      return
+                        GestureDetector(
+                          onTap: (){
+                            setState(() {
+                              _textEditingController.text = recommendationsData[index];
+                            });
+                          },
+                          child:
+                          recommendationsData.isEmpty ?
+                              Center(
+                                child: CircularProgressIndicator(
+                                  color: FlutterFlowTheme.of(context).secondaryBackground,
+                                ),
+                              ):
+                          Obx(
+                            () => Skeletonizer(
+                              enabled: _controller.isLoading.value,
+                              child: EditAttributesListItem(
+                                serialNumber: index + 1,
+                                text: recommendationsData[index],
+                                icon: widget.icon,
+                                onIconTap: () {},
+                                showIcon: false,
+                              ),
+                            ),
+                          ),
+                        );
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),

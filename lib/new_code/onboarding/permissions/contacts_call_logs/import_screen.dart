@@ -12,9 +12,8 @@ import '../../../backend/repos/contacts_call_logs_repo.dart';
 import 'my_contacts_class.dart';
 
 class ImportScreen extends StatefulWidget {
-  const ImportScreen({super.key, this.mobileWOCC, this.countryCode});
-  final String? mobileWOCC;
-  final String? countryCode;
+  const ImportScreen({super.key, });
+
 
   @override
   State<ImportScreen> createState() => _ImportScreenState();
@@ -151,7 +150,7 @@ class _ImportScreenState extends State<ImportScreen> {
                     ),
                     SizedBox(height: 48.0.h),
                     AutoSizeText(
-                      'Importing Contacts',
+                      'Importing ${prefs?.getInt(deviceContacts)} Contacts',
                       style: FlutterFlowTheme.of(context).displayMedium
                     ),
                     SizedBox(

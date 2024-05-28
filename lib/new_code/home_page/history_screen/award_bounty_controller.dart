@@ -17,9 +17,9 @@ class AwardBountyController extends GetxController {
 
 
   Future<AwardBountyModel> awardTheHunter(dynamic bountyId,dynamic huntsId) async {
-    List hunts = [huntsId];
+
     var data = {
-      "hunters" : hunts
+      "hunters" : huntsId
     };
     print("Award Data $data");
     isDetailsLoading(true);

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:vouch/new_code/common_widgets/myAppBar.dart';
 import 'package:vouch/new_code/home_page/bounty_screen/bounty_screen.dart';
@@ -27,14 +28,6 @@ class _SearchScreenState extends State<SearchScreen> {
   String _userInput = '';
   var responseData;
 
-  final List<String> images = [
-    'assets/image951.png',
-    "assets/image951.png",
-    'assets/image951.png',
-    'assets/image951.png',
-    'assets/image951.png'
-  ];
-
   @override
   Widget build(BuildContext context) {
     final colors = [
@@ -46,7 +39,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         showBackButton: true,
         showHistoryButton: false,
         showNotificationButton: false,
@@ -56,7 +49,6 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Padding(
           padding: EdgeInsets.all(16.0.w),
           child: Column(
-
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               if (_sendIconPressed)
@@ -85,8 +77,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         color: FlutterFlowTheme.of(context).primaryBackground,
                         borderRadius: BorderRadius.circular(12.0.w),
                         border: Border.all(
-                            color: FlutterFlowTheme.of(context).textFieldBackground
-                        ),
+                            color: FlutterFlowTheme.of(context).textFieldBackground),
                       ),
                       child: Icon(
                         Icons.person,
@@ -99,114 +90,167 @@ class _SearchScreenState extends State<SearchScreen> {
                   ],
                 ),
               if (_sendIconPressed) SizedBox(height: 12.0.h),
-              if (_sendIconPressed && responseData != null)
+              if (_sendIconPressed)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      height: 120.0.h,
-                      //color: FlutterFlowTheme.of(context).fixedWhite,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: responseData.searchData != null
-                            ? responseData.searchData.length
-                            : 0,
-                        itemBuilder: (BuildContext context, int index) {
-                          if (responseData.searchData == null || index >= responseData.searchData.length) {
-                            return const SizedBox();
-                          }
-                          var recommendations = responseData.searchData[index];
-                          return Obx(
-                                () => Skeletonizer(
-                              enabled: _controller.isLoading.value,
-                              child: GestureDetector(
-                                onTap: () {
-                                  Get.to(() => PathsScreen(
-                                    name: recommendations.name,
-                                    hashedPhone: recommendations.hashedphone,
-                                    image: recommendations.photourl,
-                                    index: index,
-                                    headline: recommendations.localizedheadline,
-                                    goals: _userInput,
-                                  ));
-                                },
-                                child: Container(
-
-                                  width: 200.0.w,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12.0.w),
-                                      color: colors[0]
-                                  ),
-                                  margin: EdgeInsets.only(right: 8.0.w, top: 8.w),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(12.0.w),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Hero(
-                                          tag: "image:$index",
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: CustomCircleAvatar(
-                                              imageUrl: recommendations.photourl,
-                                            )
-                                          ),
-                                        ),
-                                        SizedBox(height: 8.0.h),
-                                        Hero(
-                                          tag: "name:$index",
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: AutoSizeText(
-                                              recommendations.name,
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 1,
-                                              style: FlutterFlowTheme.of(context)
-                                                  .titleLarge
-                                                  .override(
-                                                color: FlutterFlowTheme.of(context).fixedBlack,
-                                                useGoogleFonts: false,
+                      height: 136.0.h,
+                      child: Obx(() {
+                        if (_controller.isSearchLoading.value ) {
+                          return Center(
+                            child: Lottie.network(
+                              "https://lottie.host/ed886f82-2d00-4bf4-96df-323151092289/hjRRpMdcX5.json",
+                              frameRate: FrameRate(30.0),
+                              height: 124.0.h,
+                              fit: BoxFit.cover,
+                              animate: true,
+                            ),
+                          );
+                        } else if (responseData.searchData == null ||
+                            responseData.searchData.isEmpty) {
+                          return Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                child: Lottie.network(
+                                  "https://lottie.host/b5a24d04-69db-4e87-8f86-21a5243a42a3/xjn2UrFym3.json",
+                                  frameRate: FrameRate(30.0),
+                                  height: 104.0.h,
+                                  fit: BoxFit.cover,
+                                  animate: true,
+                                ),
+                              ),
+                              SizedBox(height: 4.0.h,),
+                              SizedBox(
+                                  width: double.infinity,
+                                  child: AutoSizeText("We cannot provide recommendations for the query provided. Kindly try something else.",
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                  style: FlutterFlowTheme.of(context).labelExtraSmall,
+                                  ))
+                            ],
+                          );
+                        } else {
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: responseData.searchData.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              var recommendations = responseData.searchData[index];
+                              return Obx(
+                                    () => Skeletonizer(
+                                  enabled: _controller.isSearchLoading.value,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.to(() => PathsScreen(
+                                        name: recommendations.name,
+                                        hashedPhone: recommendations.hashedphone,
+                                        image: recommendations.photourl,
+                                        index: index,
+                                        headline: recommendations.localizedheadline,
+                                        goals: _userInput,
+                                        reason: recommendations.reason,
+                                      ));
+                                    },
+                                    child: Container(
+                                      width: 200.0.w,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(12.0.w),
+                                          color: colors[0]),
+                                      margin: EdgeInsets.only(right: 8.0.w, top: 8.w),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(12.0.w),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Hero(
+                                              tag: "image:$index",
+                                              child: Material(
+                                                color: Colors.transparent,
+                                                child: CustomCircleAvatar(
+                                                  imageUrl: recommendations.photourl,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 4.0.h),
-                                        Hero(
-                                          tag: "headline:$index",
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: AutoSizeText(
-                                              recommendations.localizedheadline,
-                                              overflow: TextOverflow.ellipsis,
-                                              maxLines: 1,
-                                              style: FlutterFlowTheme.of(context)
-                                                  .labelExtraSmall
-                                                  .override(
-                                                color: FlutterFlowTheme.of(context).fixedBlack,
-                                                useGoogleFonts: false,
-                                                fontWeight: FontWeight.w300,
+                                            SizedBox(height: 8.0.h),
+                                            Hero(
+                                              tag: "name:$index",
+                                              child: Material(
+                                                color: Colors.transparent,
+                                                child: AutoSizeText(
+                                                  recommendations.name,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                  style: FlutterFlowTheme.of(context)
+                                                      .titleLarge
+                                                      .override(
+                                                    color: FlutterFlowTheme.of(context)
+                                                        .fixedBlack,
+                                                    useGoogleFonts: false,
+                                                  ),
+                                                ),
                                               ),
                                             ),
-                                          ),
+                                            SizedBox(height: 4.0.h),
+                                            Hero(
+                                              tag: "headline:$index",
+                                              child: Material(
+                                                color: Colors.transparent,
+                                                child: AutoSizeText(
+                                                  recommendations.localizedheadline,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                  style: FlutterFlowTheme.of(context)
+                                                      .labelExtraSmall
+                                                      .override(
+                                                    color: FlutterFlowTheme.of(context)
+                                                        .fixedBlack,
+                                                    useGoogleFonts: false,
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(height: 4.0.h,),
+                                            Hero(
+                                              tag: "reason:$index",
+                                              child: Material(
+                                                color: Colors.transparent,
+                                                child: AutoSizeText(
+                                                  "${recommendations.reason ?? "No Reason Found"}  ",
+                                                  overflow: TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                  style: FlutterFlowTheme.of(context)
+                                                      .labelExtraSmall
+                                                      .override(
+                                                    color: FlutterFlowTheme.of(context)
+                                                        .fixedBlack,
+                                                    useGoogleFonts: false,
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ),
+                              );
+                            },
                           );
-                        },
-                      ),
+                        }
+                      }),
                     ),
                     SizedBox(height: 12.0.h),
                     Container(
                       padding: EdgeInsets.all(8.0.w),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8.0.w),
-                        color: FlutterFlowTheme.of(context).textFieldBackground
+                        color: FlutterFlowTheme.of(context).textFieldBackground,
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -222,9 +266,11 @@ class _SearchScreenState extends State<SearchScreen> {
                             },
                             child: AutoSizeText(
                               "Raise a bounty",
-                              style: FlutterFlowTheme.of(context).bodySmall.override(
-                                  useGoogleFonts: false,
-                                  color: FlutterFlowTheme.of(context).primary
+                              style: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .override(
+                                useGoogleFonts: false,
+                                color: FlutterFlowTheme.of(context).primary,
                               ),
                             ),
                           ),
@@ -233,7 +279,12 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                   ],
                 ),
-              if (!_sendIconPressed) searchPromptWidget(context),
+              if (!_sendIconPressed) SearchPromptWidget(onSuggestionTap: (suggestion ) {
+                setState(() {
+                  _userInput = _controller.searchController.text;
+                  _showSendIcon = true;
+                });
+              },),
               SizedBox(height: 20.0.h),
               if (_sendIconPressed) Spacer(),
               Row(
@@ -265,7 +316,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             });
                           },
                           decoration: InputDecoration(
-                            hintText: "Type, talk, ask?",
+                            hintText: "Search by query/context or Raise a bounty->",
                             hintStyle: FlutterFlowTheme.of(context).titleSmall,
                             focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide.none,
@@ -301,8 +352,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           _controller.searchController.clear();
                           _showSendIcon = false;
                         });
-                        var _responseData =
-                        await _controller.getSearchData(_userInput);
+                        var _responseData = await _controller.getSearchData(_userInput);
                         setState(() {
                           responseData = _responseData;
                         });

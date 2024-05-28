@@ -11,11 +11,13 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/generated/assets.dart';
+import 'package:vouch/new_code/common_widgets/common_button_widget.dart';
 import 'package:vouch/new_code/common_widgets/image_check.dart';
 import 'package:vouch/new_code/home_page/HomePage/controllers/accept_vouch_controller.dart';
 
 import '../home_page/HomePage/controllers/update_vouch_status_controller.dart';
 import '../home_page/HomePage/vouch_details_screen.dart';
+import 'outline_button_widget.dart';
 
 Widget feedsVouchWidget(context, FeedModelVouch) {
   var controller = AcceptVouchController();
@@ -96,91 +98,30 @@ Widget feedsVouchWidget(context, FeedModelVouch) {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  GestureDetector(
+                  OutlineButtonWidget(
+                    text: 'Ignore',
                     onTap: () {
                       controller.sendVouchStatus(FeedModelVouch.id, "reject");
                     },
-                    child: Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 12.0.w, vertical: 6.0.h),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4.0.w),
-                          color: Colors.transparent,
-                          border: Border.all(
-                              color: FlutterFlowTheme.of(context).primaryText)),
-                      child: AutoSizeText('Ignore',
-                          style: FlutterFlowTheme.of(context)
-                              .labelExtraSmall
-                              .override(
-                                useGoogleFonts: false,
-                                fontWeight: FontWeight.w400,
-                              )),
-                    ),
                   ),
                   SizedBox(
                     width: 8.0.w,
                   ),
-                  FeedModelVouch.activenodeStatus == 'accept' && FeedModelVouch.activenode == FeedModelVouch.endnode
-                      ? Obx(
-                          () => GestureDetector(
-                            onTap: () async {
-                              await Get.to(() => VouchDetailsScreen(
-                                    vouch: FeedModelVouch,
-                                  ));
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 12.0.w, vertical: 8.0.h),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(4.0.w),
-                                  color: FlutterFlowTheme.of(context).ffButton),
-                              child: controller.isLoading.value
-                                  ? LinearProgressIndicator(
-                                      minHeight: 4,
-                                      valueColor: AlwaysStoppedAnimation(
-                                          FlutterFlowTheme.of(context).primary),
-                                    )
-                                  : AutoSizeText('Connect',
-                                      style: FlutterFlowTheme.of(context)
-                                          .buttonText
-                                          .override(
-                                              useGoogleFonts: false,
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.w400)),
-                            ),
-                          ),
-                        )
-                      : Obx(
-                          () => GestureDetector(
-                            onTap: () async {
-                              await controller.sendVouchStatus(
-                                  FeedModelVouch.id, "accept");
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 12.0.w, vertical: 8.0.h),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(4.0.w),
-                                  color: FlutterFlowTheme.of(context).ffButton),
-                              child: controller.isLoading.value
-                                  ? LinearProgressIndicator(
-                                      minHeight: 4,
-                                      valueColor: AlwaysStoppedAnimation(
-                                          FlutterFlowTheme.of(context).primary),
-                                    )
-                                  : AutoSizeText('Vouch',
-                                      style: FlutterFlowTheme.of(context)
-                                          .buttonText
-                                          .override(
-                                              useGoogleFonts: false,
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.w400)),
-                            ),
-                          ),
-                        ),
+                  FeedModelVouch.activenodeStatus == 'accept' &&
+                          FeedModelVouch.activenode == FeedModelVouch.endnode
+                      ?  CustomButton(
+                        text: "Connect",
+                        onTap: () async {
+                          await Get.to(() => VouchDetailsScreen(
+                            vouch: FeedModelVouch,
+                          ));
+                        },
+                      )
+                      : CustomButton(text: 'Vouch',  onTap: () async {
+                            await controller.sendVouchStatus(
+                                FeedModelVouch.id, "accept");
+                          },),
+
                 ],
               ),
             ],
@@ -198,15 +139,14 @@ Widget vouchPath(context, pathItem, index, length, activenode) {
       Column(
         children: [
           CircleAvatar(
-            radius: 22.0.h,
-            backgroundColor: activenode == pathItem.contactHashedPhone
-                ? FlutterFlowTheme.of(context).primary
-                : Colors.transparent,
-            child: CustomCircleAvatar(
-              radius: 20.0.w,
-              imageUrl: pathItem.image!,
-            )
-          ),
+              radius: 22.0.h,
+              backgroundColor: activenode == pathItem.contactHashedPhone
+                  ? FlutterFlowTheme.of(context).primary
+                  : Colors.transparent,
+              child: CustomCircleAvatar(
+                radius: 20.0.w,
+                imageUrl: pathItem.image!,
+              )),
           SizedBox(height: 4.0.h),
           SizedBox(
             width: 64.w,

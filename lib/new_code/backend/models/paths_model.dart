@@ -66,7 +66,7 @@ class PathNode {
   dynamic isRegistered;
   dynamic status;
   dynamic heading;
-  dynamic image = 'https://media.licdn.com/dms/image/C5603AQEFnqHFu0ougw/profile-displayphoto-shrink_100_100/0/1517460846161?e=1715212800&v=beta&t=3d7rHcIDt_64AW55zFyWNnBhdeN_YtMMVuSE-qbRmVA';
+  dynamic image;
   List<Attribute> attributes;
 
   PathNode({
@@ -84,7 +84,7 @@ class PathNode {
         name: json["name"],
         contactHashedPhone: json["contactHashedPhone"],
         strengthToNext: json["strengthToNext"]?.toDouble(),
-        isRegistered: json["isRegistered"],
+        isRegistered: json["isRegistered"] ?? false,
         heading: json["heading"],
         image: json["image"],
         status: json["status"],

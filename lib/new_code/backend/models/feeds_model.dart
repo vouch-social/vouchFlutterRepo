@@ -252,7 +252,7 @@ class Path {
   Path({
     required this.name,
     required this.image,
-    required this.heading,
+     this.heading,
     required this.attributes,
     required this.hasVouched,
     required this.isRegistered,

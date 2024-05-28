@@ -1,13 +1,9 @@
-// import 'package:call_log/call_log.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
+import 'package:vouch/new_code/backend/backend_constants.dart';
 
-// Future<List<CallLogEntry>> getCallLogs() async {
-//   Iterable<CallLogEntry> entries = await CallLog.get();
-//   return entries.toList();
-// }
+import '../../../../main.dart';
 
 Future<List<Contact>> myGetContacts() async {
-  // Fetch contacts with the specified properties
   Iterable<Contact> entries = await FlutterContacts.getContacts(
     withProperties: true,
     withThumbnail: false,
@@ -16,10 +12,11 @@ Future<List<Contact>> myGetContacts() async {
     withAccounts: false,
   );
 
+  print('Total number of contacts on the phone: ${entries.length}');
+
   List<Contact> contactsWithPhones = entries.where((contact) => contact.phones.isNotEmpty).map((contact) {
     contact.displayName = contact.displayName ?? " ";
-    contact.thumbnail = null; // Set thumbnail to null
-    // Optionally, clear other properties if they are not needed
+    contact.thumbnail = null;
     contact.emails = [];
     contact.addresses = [];
     contact.events = [];
@@ -28,6 +25,11 @@ Future<List<Contact>> myGetContacts() async {
     return contact;
   }).toList();
 
+  int eliminatedCount = entries.length - contactsWithPhones.length;
+
+  print('Number of contacts eliminated: $eliminatedCount');
+
+  prefs?.setInt(deviceContacts, contactsWithPhones.length);
+
   return contactsWithPhones;
 }
-

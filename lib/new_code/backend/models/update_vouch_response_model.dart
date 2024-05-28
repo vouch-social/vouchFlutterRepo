@@ -102,7 +102,7 @@ class Path {
   String heading;
   List<Attribute> attributes;
   bool isRegistered;
-  double strengthToNext;
+  dynamic strengthToNext;
   String contactHashedPhone;
 
   Path({
@@ -111,7 +111,7 @@ class Path {
     required this.heading,
     required this.attributes,
     required this.isRegistered,
-    required this.strengthToNext,
+     this.strengthToNext,
     required this.contactHashedPhone,
   });
 

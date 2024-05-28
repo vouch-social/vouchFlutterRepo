@@ -1,10 +1,15 @@
 import 'package:get/get.dart';
 import 'package:vouch/new_code/backend/backend_constants.dart';
+import 'package:vouch/new_code/backend/models/send_contacts_response_model.dart';
+import 'package:vouch/new_code/home_page/settings/re_sync_contacts/contacts_call_logs/re_sync_upload_success.dart';
 import 'package:vouch/new_code/home_page/settings/settings_screen.dart';
 import 'package:vouch/new_code/onboarding/linkdin/linkdin_screen.dart';
+import 'package:vouch/new_code/onboarding/permissions/contacts_call_logs/upload_success.dart';
 import '../../../main.dart';
 import '../network/dio_client.dart';
 import 'package:dio/dio.dart' as dio;
+import '../models/base_response.dart';
+
 
 class ContactsCallLogsRepo {
   static final ContactsCallLogsRepo _instance =
@@ -30,25 +35,48 @@ class ContactsCallLogsRepo {
   //   }
   // }
 
-  Future<void> sendContacts(dynamic data
-      ) async {
+  Future<BaseResponse<ContactsResponseModel>> sendContacts(dynamic data) async {
     try {
       dio.Response response = await _dioClient.postRequest(
           endPoint: '/api/contacts/saveContacts',
           data: data,
           authToken: prefs?.getString(authToken));
-      prefs?.setBool(sendContactsResponse, response.data['status']);
-      if(prefs?.getString(userName) != null){
-        Get.off(() => SettingsScreen());
-      }else{
-        checkImport();
+
+      if (response.data != null) {
+        BaseResponse<ContactsResponseModel> result =
+        BaseResponse<ContactsResponseModel>.fromJson(
+          response.data,
+          ContactsResponseModel.fromJson,
+        );
+       prefs?.setInt(contactsAdded, result.data.totalRecordsRecieved);
+       prefs?.setInt(contactsUpdated, result.data.totalRecordsUpdated);
+        prefs?.setInt(contactsCreated, result.data.totalRecordsCreated);
+
+        if(prefs?.getString(userName )!= 'null'){
+          Get.off(() => const ReSyncContactUploadSuccess());
+        }else{
+          Get.off(() => const ContactUploadSuccess());
+
+        }
+
+        print("sendContacts : $response");
+        return result;
+      } else {
+        throw Exception('Response data is null');
       }
-      print("sendContacts : $response");
     } catch (error) {
       print("Error 3 :$error");
+      return BaseResponse<ContactsResponseModel>(
+        status: false,
+        message: 'Failed to send contacts',
+        data: ContactsResponseModel(),
+      );
     }
   }
+
 }
+
+
 
 checkImport() {
   // bool? isCallLog = prefs?.getBool(sendCallLogsResponse);

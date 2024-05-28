@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:vouch/new_code/backend/models/bounty_tags_model.dart';
 import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
 import '../../backend/models/base_response.dart';
 import '../../backend/models/raise_bounty_model.dart';
@@ -15,6 +16,7 @@ class BountyController extends GetxController{
   final bountyContextController = TextEditingController();
   final linkedinUrlController = TextEditingController();
   final responseTimeController = TextEditingController();
+  var isLoading = false.obs;
 
   List<String> selectedContexts = [];
   void toggleChipSelection(String label) {
@@ -66,14 +68,39 @@ class BountyController extends GetxController{
       await repository.raiseBounty(data);
       print("Send Data : $data");
       if (apiResult.status) {
-        print('Api Result Send Selected Path : ${apiResult.message}');
-        Get.to(() => const NewHomePage());
+        print('Api Result Raised Bounty : ${apiResult.message}');
+        //Get.to(() => const NewHomePage());
       }
     } catch (error) {
       print("Error raise bounty: $error");
       rethrow;
     }
   }
+
+  Future<BountyTagsModel> getBountyTags() async {
+    try {
+      isLoading(true);
+      BaseResponse<BountyTagsModel> apiResult =
+      await repository.bountyTags();
+      if (apiResult.status) {
+        print('Api Result Bounty Tags : ${apiResult.message}');
+       // Get.to(() => const NewHomePage());
+        isLoading(false);
+        if(apiResult.data != null && apiResult.data.bountyTagsAll != null){
+          return apiResult.data;
+        }else{
+          return BountyTagsModel(bountyTagsAll: []);
+        }
+      }
+      return apiResult.data;
+    } catch (error) {
+      print("Error get bounty tags: $error");
+      return BountyTagsModel(bountyTagsAll: []);
+      rethrow;
+    }
+  }
+
+
 
 }
 

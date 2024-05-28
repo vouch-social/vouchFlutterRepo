@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/flutter_flow/flutter_flow_widgets.dart';
 import 'package:vouch/new_code/backend/models/feeds_model.dart';
+import 'package:vouch/new_code/common_widgets/image_check.dart';
 import 'package:vouch/new_code/common_widgets/myAppBar.dart';
 import 'package:vouch/new_code/home_page/HomePage/controllers/vouch_connect_controller.dart';
 import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
@@ -34,7 +35,7 @@ class _VouchDetailsScreenState extends State<VouchDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("VOuch Id ${widget.vouch.id}");
+    print("Vouch Id ${widget.vouch.id}");
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: CustomAppBar(
@@ -92,7 +93,8 @@ class _VouchDetailsScreenState extends State<VouchDetailsScreen> {
               async{
                 print("VOUCH ID: ${widget.vouch.id}");
                 await connectController.connectVouchUser(widget.vouch.id);
-                Get.to(() => NewHomePage());
+
+               // Get.to(() => NewHomePage());
               }, options: CTAButton(context)),
             ],
           ),
@@ -113,6 +115,7 @@ class MyListView extends StatelessWidget {
   Widget build(BuildContext context) {
     var paths = pathData.path.reversed.toList();
     print("Json Encode: ${jsonEncode(paths)}");
+    print("Heading: ${paths[0].heading}");
     return Column(
       children: [
         SizedBox(
@@ -218,12 +221,9 @@ class MyListView extends StatelessWidget {
                         radius: 20.0,
                         backgroundColor:
                         FlutterFlowTheme.of(context).primaryText,
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              paths[index].image ?? 'https://images.unsplash.com/photo-1545987796-200677ee1011?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
-                          // backgroundColor: Colors.transparent,
-                          radius: 19.0.w,
-                        ),
+                        child: CustomCircleAvatar(
+                          imageUrl: paths[index].image,
+                        )
                       ),
                       paths[index].isRegistered
                           ? Container(
@@ -269,7 +269,7 @@ class MyListView extends StatelessWidget {
                           child: AutoSizeText(
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
-                            paths[index].heading,
+                            paths[index].heading.toString(),
                             style: FlutterFlowTheme.of(context)
                                 .labelExtraSmall
                           ),

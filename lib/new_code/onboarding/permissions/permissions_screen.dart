@@ -19,11 +19,7 @@ export 'permissions_model.dart';
 class PermissionsScreen extends StatefulWidget {
   const PermissionsScreen({
     super.key,
-    this.mobileWOCC,
-    this.countryCode,
   });
-  final String? mobileWOCC;
-  final String? countryCode;
   @override
   State<PermissionsScreen> createState() => _PermissionsScreenState();
 }
@@ -176,7 +172,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                       // await Permission.phone.request();
                       logFirebaseEvent('Button_navigate_to');
 
-                      Get.to(() => ImportScreen(mobileWOCC: widget.mobileWOCC,countryCode: widget.countryCode,));
+                      Get.to(() => ImportScreen());
                     },
                     text: 'Start building network',
                     options: CTAButton(context)

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
+import 'package:vouch/new_code/common_widgets/common_button_widget.dart';
 import 'package:vouch/new_code/common_widgets/myAppBar.dart';
 
 import '../../../generated/assets.dart';
@@ -27,7 +28,7 @@ class _HuntersListScreenState extends State<HuntersListScreen> {
     newHunters.addAll(nonClaimers);
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         showBackButton: true,
       ),
       body: SafeArea(
@@ -67,24 +68,9 @@ class _HuntersListScreenState extends State<HuntersListScreen> {
                             widget.hunters[index].user.localizedheadline,
                             style: FlutterFlowTheme.of(context).labelExtraSmall,
                           ),
-                          trailing: Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 6.0.h, horizontal: 10.0.w),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4.0.w),
-                                border: Border.all(
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText)),
-                            child: AutoSizeText(
-                              "Award",
-                              minFontSize: 8,
-                              style: FlutterFlowTheme.of(context)
-                                  .labelExtraSmall
-                                  .override(
-                                      useGoogleFonts: false,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 10.sp),
-                            ),
+                          trailing:
+                          CustomButton(
+                            onTap: (){}, text: 'Award',
                           ),
                         ),
                       );

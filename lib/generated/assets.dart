@@ -6,6 +6,8 @@ class Assets {
   static const String assetsCleanedPhoneBook = 'assets/cleaned_phoneBook.svg';
   static const String assetsContactsPng = 'assets/contacts_png.png';
   static const String assetsDefault = 'assets/default.png';
+  static const String assetsEmptyStateHistory = 'assets/emptyStateHistory.svg';
+  static const String assetsEmptyStateHunts = 'assets/emptyStateHunts.svg';
   static const String assetsImage951 = 'assets/image951.png';
   static const String assetsLinkdinSvg = 'assets/linkdin_svg.svg';
   static const String assetsLock = 'assets/lock.svg';

@@ -3,6 +3,7 @@ import 'package:vouch/new_code/backend/models/start_hunt_response_model.dart';
 import 'package:vouch/new_code/backend/repos/start_hunt_repo.dart';
 import 'package:vouch/new_code/home_page/HomePage/controllers/update_bounty_status_controller.dart';
 import '../../../backend/models/base_response.dart';
+import '../../../backend/models/ignore_bounty_response_model.dart';
 
 
 class StartHuntController extends GetxController {
@@ -33,23 +34,19 @@ class StartHuntController extends GetxController {
     }
   }
   Future<void> ignoreBounty(dynamic bountyId) async {
-    var data = {
-      "bountyId": bountyId
-    };
-
+    var data = bountyId;
     isLoading(true);
     try {
-      BaseResponse<StartHuntModel> apiResult =
-      await repository.startHunt(data);
+      BaseResponse<IgnoreBountyModel> apiResult =
+      await repository.ignoreBounty(data);
       if (apiResult.status) {
-        controller.updateBountyStatus(apiResult.data.id,'ignore');
-        print('Api Result Start Controller: ${apiResult.message}');
+        print('Api Result Ignore Bounty Controller: ${apiResult.message}');
         isLoading(false);
         return apiResult.data;
       }
       return apiResult.data;
     } catch (error) {
-      print("Error Start Hunt : $error");
+      print("Error Ignore Bounty : $error");
       rethrow;
     } finally {
       isLoading(false);

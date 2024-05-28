@@ -1,7 +1,10 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
 import '../../../flutter_flow/flutter_flow_widgets.dart';
@@ -25,6 +28,7 @@ class _GoalsScreenState extends State<GoalsScreen>
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(_handleTabSelection);
+    fetchRecommendations();
   }
 
   @override
@@ -44,6 +48,19 @@ class _GoalsScreenState extends State<GoalsScreen>
       controller.controller[_currentIndex].text = text;
     });
   }
+   List<String> recommendationsData = [];
+   Future<void> fetchRecommendations() async {
+     var fetchedRecommendations =
+     await controller.getGoalsExamples();
+     WidgetsBinding.instance.addPostFrameCallback((_) {
+       if (!mounted) return;
+       setState(() {
+         recommendationsData = fetchedRecommendations.goals;
+       });
+     });
+   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -169,21 +186,30 @@ class _GoalsScreenState extends State<GoalsScreen>
           SizedBox(
             height: 16.0.h,
           ),
-          AutoSizeText('Example:',
-              style: FlutterFlowTheme.of(context).titleSmall),
-          SizedBox(
-            height: 8.0.h,
+
+          Visibility(
+            visible: controller.controller[_currentIndex].text.isEmpty,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AutoSizeText('Example:',
+                    style: FlutterFlowTheme.of(context).titleSmall),
+                SizedBox(
+                  height: 8.0.h,
+                ),
+                Obx(
+                  () => Skeletonizer(
+                    enabled: controller.isLoading.value,
+                    child: Wrap(
+                      spacing: 8.0,
+                      children: recommendationsData.map((goals) => _buildChip(goals)).toList()
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-          Wrap(
-            spacing: 8.0,
-            children: [
-              _buildChip('I want to buy a 2nd car'),
-              _buildChip('I want to buy a 2nd car'),
-              _buildChip('I buy a 2nd car'),
-              _buildChip('I want to buy car'),
-              _buildChip('Find Math tutor'),
-            ],
-          ),
+
           const Spacer(),
           FFButtonWidget(
               onPressed: () async {
@@ -194,20 +220,20 @@ class _GoalsScreenState extends State<GoalsScreen>
                 if(_tabController.index == 2 && controller.controller[0].text.isNotEmpty && controller.controller[1].text.isNotEmpty && controller.controller[2].text.isNotEmpty){
                   controller.sendUserGoalsController();
                 }else{
-                  if(controller.controller[0].text.isEmpty){
-                    const GetSnackBar(
-                      title: "Alert",
-                      message: "Please fill your goal 01",
+                  if(controller.controller[0].text.isEmpty && _tabController.index == 1){
+                     Get.snackbar(
+                       "Alert",
+                      "Please fill your goal 01",
                     );
-                  } if(controller.controller[1].text.isEmpty){
-                    const GetSnackBar(
-                      title: "Alert",
-                      message: "Please fill your goal 02",
+                  }else if(controller.controller[1].text.isEmpty && _tabController.index == 2){
+                     Get.snackbar(
+                       "Alert",
+                       "Please fill your goal 02",
                     );
-                  } if(controller.controller[2].text.isEmpty){
-                    const GetSnackBar(
-                      title: "Alert",
-                      message: "Please fill your goal 02",
+                  }else if(controller.controller[2].text.isEmpty && _tabController.index == 2){
+                    Get.snackbar(
+                       "Alert",
+                       "Please fill your goal 03",
                     );
                   }
                 }
@@ -216,29 +242,30 @@ class _GoalsScreenState extends State<GoalsScreen>
               text: _currentIndex == 2 ? 'Finish' : 'Next',
               options: CTAButton(context)),
 
-          _currentIndex == 0 || _currentIndex == 1 ?
-          Column(
-            children: [
-              SizedBox(
-                height: 16.0.h,
-              ),
-              Center(
-                child: GestureDetector(
-                  onTap: () {
-                    Get.to(NewHomePage());
-                  },
-                  child: AutoSizeText(
-                    "Skip for now",
-                    style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                        useGoogleFonts: false,
-                        decoration: TextDecoration.underline
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          )
-              : SizedBox(
+          // _currentIndex == 0 || _currentIndex == 1 ?
+          // Column(
+          //   children: [
+          //     SizedBox(
+          //       height: 16.0.h,
+          //     ),
+          //     Center(
+          //       child: GestureDetector(
+          //         onTap: () {
+          //           Get.to(NewHomePage());
+          //         },
+          //         child: AutoSizeText(
+          //           "Skip for now",
+          //           style: FlutterFlowTheme.of(context).labelExtraSmall.override(
+          //               useGoogleFonts: false,
+          //               decoration: TextDecoration.underline
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // )
+          //     :
+          SizedBox(
             height: 28.h,
           )
 

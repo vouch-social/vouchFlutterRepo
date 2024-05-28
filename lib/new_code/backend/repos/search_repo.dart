@@ -37,7 +37,7 @@ class SearchRepository {
         throw Exception('Response data is null');
       }
     } catch (error) {
-      print("My First Error $error");
+      print("Search Error $error");
       rethrow;
     }
   }

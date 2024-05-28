@@ -28,7 +28,7 @@ class MySelectedPathListDatum {
   String createdAt;
   String updatedAt;
   int id;
-  String mySelectedPathListDatumCreatedAt;
+  String vouchCreatedAt;
   String message;
   String status;
   int pathlength;
@@ -43,7 +43,7 @@ class MySelectedPathListDatum {
     required this.createdAt,
     required this.updatedAt,
     required this.id,
-    required this.mySelectedPathListDatumCreatedAt,
+    required this.vouchCreatedAt,
     required this.message,
     required this.status,
     required this.pathlength,
@@ -59,7 +59,7 @@ class MySelectedPathListDatum {
     createdAt: json["createdAt"],
     updatedAt: json["updatedAt"],
     id: json["id"],
-    mySelectedPathListDatumCreatedAt: json["created_at"],
+    vouchCreatedAt: json["created_at"],
     message: json["message"],
     status: json["status"],
     pathlength: json["pathlength"],
@@ -75,7 +75,7 @@ class MySelectedPathListDatum {
     "createdAt": createdAt,
     "updatedAt": updatedAt,
     "id": id,
-    "created_at": mySelectedPathListDatumCreatedAt,
+    "created_at": vouchCreatedAt,
     "message": message,
     "status": status,
     "pathlength": pathlength,
@@ -118,7 +118,7 @@ class Path {
   String heading;
   List<Attribute> attributes;
   bool isRegistered;
-  double strengthToNext;
+  dynamic strengthToNext;
   String contactHashedPhone;
   bool hasVouched;
 
@@ -128,7 +128,7 @@ class Path {
     required this.heading,
     required this.attributes,
     required this.isRegistered,
-    required this.strengthToNext,
+     this.strengthToNext,
     required this.contactHashedPhone,
     required this.hasVouched,
   });

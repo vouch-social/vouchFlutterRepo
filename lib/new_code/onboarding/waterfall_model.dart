@@ -9,7 +9,6 @@ import 'package:vouch/new_code/onboarding/welcome_screen/welcome_screen.dart';
 
 import '../../main.dart';
 
-void navigateToPage() {
   /// if user !loggedin navigate to welcome
   /// if iscontactsync != true = contacts
   /// if user name == null && linkedin == false navigate to linkedin
@@ -17,15 +16,16 @@ void navigateToPage() {
   /// if goals == null navigate to goals
   /// else navigate to homepage
 
-  if(prefs?.getString(authToken) == null){
-    Get.to( ()=> Get.to(const WelcomeScreen()));
-  }else if(prefs!.getBool(isContactSync)! != true){
-    Get.to( () => Get.to(() => const PermissionsScreen()));
-  }else if(prefs?.getString(userName) == null && prefs!.getBool(isLinkedinSync)! != true ){
-    Get.to(() => const LinkedinScreen());
-  }else if(prefs?.getStringList(goals) == null){
-    Get.to(() => const GoalsScreen());
-  }else {
-    Get.to(() => const NewHomePage());
+  void navigateToPage(BuildContext context) {
+    if (prefs?.getString(authToken) == null) {
+      Get.to(() => const WelcomeScreen());
+    } else if (prefs!.getBool(isContactSync)! != true) {
+      Get.to(() => const PermissionsScreen());
+    } else if (prefs?.getString(userName) == null && prefs!.getBool(isLinkedinSync)! != true) {
+      Get.to(() => const LinkedinScreen());
+    } else if (prefs?.getStringList(goals) == null) {
+      Get.to(() => const GoalsScreen());
+    } else {
+      Get.to(() => const NewHomePage());
+    }
   }
-}

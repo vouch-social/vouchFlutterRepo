@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:vouch/new_code/backend/models/bounty_update_resonse_model.dart';
 import 'package:vouch/new_code/backend/models/start_hunt_response_model.dart';
 import 'package:vouch/new_code/backend/models/update_vouch_response_model.dart';
@@ -21,6 +22,9 @@ class VouchConnectController extends GetxController {
       await repository.connectVouch(vouchId);
       if (apiResult.status) {
         print('Api Result Vouch Connect Controller: ${apiResult.message}');
+        if (apiResult.data != null && apiResult.data.urlForWhatsapp != null) {
+          _launchURL(apiResult.data.urlForWhatsapp);
+        }
         isLoading(false);
         return apiResult.data;
       }
@@ -32,4 +36,16 @@ class VouchConnectController extends GetxController {
       isLoading(false);
     }
   }
+  void _launchURL(String url) async {
+    try {
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    } catch (e) {
+      print('Error launching URL: $e');
+    }
+  }
+
 }

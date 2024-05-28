@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import 'package:vouch/new_code/common_widgets/myAppBar.dart';
 import 'package:vouch/new_code/home_page/settings/edit_goals/edit_goals_controller.dart';
 import 'package:vouch/new_code/home_page/settings/settings_screen.dart';
@@ -12,7 +13,6 @@ import '../../../../flutter_flow/flutter_flow_widgets.dart';
 import '../../../../main.dart';
 import '../../../backend/backend_constants.dart';
 
-
 class EditGoalsScreen extends StatefulWidget {
   const EditGoalsScreen({super.key});
 
@@ -21,41 +21,50 @@ class EditGoalsScreen extends StatefulWidget {
 }
 
 class _EditGoalsScreenState extends State<EditGoalsScreen>
-
-
-  with TickerProviderStateMixin {
+    with TickerProviderStateMixin {
   final controller = Get.put(EditGoalsController());
   late TabController _tabController;
   int _currentIndex = 0;
 
   @override
   void initState() {
-  super.initState();
-  _tabController = TabController(length: 3, vsync: this);
-  _tabController.addListener(_handleTabSelection);
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController.addListener(_handleTabSelection);
+    fetchRecommendations();
   }
 
   @override
   void dispose() {
-  _tabController.dispose();
-  super.dispose();
+    _tabController.dispose();
+    super.dispose();
   }
 
   void _handleTabSelection() {
-  setState(() {
-  _currentIndex = _tabController.index;
-  });
+    setState(() {
+      _currentIndex = _tabController.index;
+    });
   }
 
   void _handleChipSelection(String text) {
-  setState(() {
-  controller.controller[_currentIndex].text = text;
-  });
+    setState(() {
+      controller.controller[_currentIndex].text = text;
+    });
+  }
+
+  List<String> recommendationsData = [];
+  Future<void> fetchRecommendations() async {
+    var fetchedRecommendations = await controller.getGoalsExamples();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      setState(() {
+        recommendationsData = fetchedRecommendations.goals;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: CustomAppBar(
@@ -78,17 +87,13 @@ class _EditGoalsScreenState extends State<EditGoalsScreen>
                     height: 64.0.h,
                   ),
                   AutoSizeText('Set your goal',
-                      style: FlutterFlowTheme
-                          .of(context)
-                          .displayMedium),
+                      style: FlutterFlowTheme.of(context).displayMedium),
                   SizedBox(
                     height: 8.0.h,
                   ),
                   AutoSizeText(
                       'Please set at least 3 goals. You will have the\nability to edit your choices at any point.',
-                      style: FlutterFlowTheme
-                          .of(context)
-                          .titleSmall),
+                      style: FlutterFlowTheme.of(context).titleSmall),
                   SizedBox(
                     height: 16.0.h,
                   )
@@ -106,13 +111,8 @@ class _EditGoalsScreenState extends State<EditGoalsScreen>
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(4.0.w),
                     color: _currentIndex >= 0
-                        ? FlutterFlowTheme
-                        .of(context)
-                        .ffButton
-                        : FlutterFlowTheme
-                        .of(context)
-                        .ffButton
-                        .withAlpha(51),
+                        ? FlutterFlowTheme.of(context).ffButton
+                        : FlutterFlowTheme.of(context).ffButton.withAlpha(51),
                   ),
                   margin: EdgeInsets.only(right: 6.0.w),
                   height: 4,
@@ -123,13 +123,10 @@ class _EditGoalsScreenState extends State<EditGoalsScreen>
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4.0.w),
                       color: _currentIndex >= 1
-                          ? FlutterFlowTheme
-                          .of(context)
-                          .ffButton
-                          : FlutterFlowTheme
-                          .of(context)
-                          .ffButton
-                          .withAlpha(51)),
+                          ? FlutterFlowTheme.of(context).ffButton
+                          : FlutterFlowTheme.of(context)
+                              .ffButton
+                              .withAlpha(51)),
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 6.0.w),
@@ -137,13 +134,8 @@ class _EditGoalsScreenState extends State<EditGoalsScreen>
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(4.0.w),
                     color: _currentIndex >= 2
-                        ? FlutterFlowTheme
-                        .of(context)
-                        .ffButton
-                        : FlutterFlowTheme
-                        .of(context)
-                        .ffButton
-                        .withAlpha(51),
+                        ? FlutterFlowTheme.of(context).ffButton
+                        : FlutterFlowTheme.of(context).ffButton.withAlpha(51),
                   ),
                 ),
               ],
@@ -165,123 +157,125 @@ class _EditGoalsScreenState extends State<EditGoalsScreen>
       ),
     );
   }
-Widget _tab(currentIndex, context) {
-  return Container(
-    padding: EdgeInsets.all(16.0.w),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        AutoSizeText("Type your Goal 0${currentIndex + 1}",
-            style: FlutterFlowTheme.of(context).titleLarge),
-        SizedBox(height: 12.0.h),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.0.w),
-            // Border radius
-          ),
-          child: TextFormField(
-            controller: controller.controller[currentIndex],
-            // initialValue: controller.controller[currentIndex].text,
-            minLines: 3,
-            maxLines: 5,
-            style: FlutterFlowTheme.of(context).labelSmall,
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: FlutterFlowTheme.of(context).textFieldBackground,
-              contentPadding: EdgeInsets.all(12.0.w),
-              hintText: "Type here...",
-              hintStyle: FlutterFlowTheme.of(context).labelSmall,
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0.w),
-                  borderSide: BorderSide.none),
+
+  Widget _tab(currentIndex, context) {
+    return Container(
+      padding: EdgeInsets.all(16.0.w),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AutoSizeText("Type your Goal 0${currentIndex + 1}",
+              style: FlutterFlowTheme.of(context).titleLarge),
+          SizedBox(height: 12.0.h),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8.0.w),
+              // Border radius
+            ),
+            child: TextFormField(
+              controller: controller.controller[currentIndex],
+              // initialValue: controller.controller[currentIndex].text,
+              minLines: 3,
+              maxLines: 5,
+              style: FlutterFlowTheme.of(context).labelSmall,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: FlutterFlowTheme.of(context).textFieldBackground,
+                contentPadding: EdgeInsets.all(12.0.w),
+                hintText: "Type here...",
+                hintStyle: FlutterFlowTheme.of(context).labelSmall,
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0.w),
+                    borderSide: BorderSide.none),
+              ),
             ),
           ),
-        ),
-        SizedBox(
-          height: 16.0.h,
-        ),
-        Visibility(
-          visible: controller.controller[currentIndex].text.isEmpty,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AutoSizeText('Example:',
-                  style: FlutterFlowTheme.of(context).titleSmall),
-              SizedBox(
-                height: 8.0.h,
-              ),
-              Wrap(
-                spacing: 8.0,
-                children: [
-                  _buildChip('I want to buy a 2nd car'),
-                  _buildChip('I want to buy a 2nd car'),
-                  _buildChip('I buy a 2nd car'),
-                  _buildChip('I want to buy car'),
-                  _buildChip('Find Math tutor'),
-                ],
-              ),
-            ],
+          SizedBox(
+            height: 16.0.h,
           ),
-        ),
-
-        const Spacer(),
-        FFButtonWidget(
-            onPressed: () async {
-
-              if (_tabController.index < 2 ) {
-                _tabController.animateTo(_tabController.index + 1);
-              }
-              if(_tabController.index == 2 && controller.controller[0].text.isNotEmpty && controller.controller[1].text.isNotEmpty && controller.controller[2].text.isNotEmpty){
-                await controller.sendUserEditedGoalsController();
-                Get.back();
-              }else{
-                if(controller.controller[0].text.isEmpty){
-                  const GetSnackBar(
-                    title: "Alert",
-                    message: "Please fill your goal 01",
-                  );
-                } if(controller.controller[1].text.isEmpty){
-                  const GetSnackBar(
-                    title: "Alert",
-                    message: "Please fill your goal 02",
-                  );
-                } if(controller.controller[2].text.isEmpty){
-                  const GetSnackBar(
-                    title: "Alert",
-                    message: "Please fill your goal 02",
-                  );
+          Visibility(
+            visible: controller.controller[currentIndex].text.isEmpty,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AutoSizeText('Example:',
+                    style: FlutterFlowTheme.of(context).titleSmall),
+                SizedBox(
+                  height: 8.0.h,
+                ),
+                Obx(
+                  () => Skeletonizer(
+                    enabled: controller.isLoading.value,
+                    child: Wrap(
+                        spacing: 8.0,
+                        children: recommendationsData
+                            .map((goals) => _buildChip(goals))
+                            .toList()),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const Spacer(),
+          FFButtonWidget(
+              onPressed: () async {
+                if (_tabController.index < 2) {
+                  _tabController.animateTo(_tabController.index + 1);
                 }
-              }
-
-            },
-            text: currentIndex == 2 ? 'Finish' : 'Next',
-            options: CTAButton(context)),
-
-        SizedBox(
-          height: 28.h,
-        )
-
-      ],
-    ),
-  );
-}
-
-Widget _buildChip(String label) {
-  return GestureDetector(
-    onTap: () {
-      _handleChipSelection(label);
-    },
-    child: Chip(
-      // color: MaterialStateProperty.all(FlutterFlowTheme.of(context).textFieldBackground),
-      backgroundColor:
-      MediaQuery.of(context).platformBrightness == Brightness.dark ?
-
-      FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9):
-      FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
-      label: AutoSizeText(label,
-
-        style: FlutterFlowTheme.of(context).labelExtraSmall,
+                if (_tabController.index == 2 &&
+                    controller.controller[0].text.isNotEmpty &&
+                    controller.controller[1].text.isNotEmpty &&
+                    controller.controller[2].text.isNotEmpty) {
+                  await controller.sendUserEditedGoalsController();
+                  Get.back();
+                } else {
+                  if (controller.controller[0].text.isEmpty &&
+                      _tabController.index == 1) {
+                    Get.snackbar(
+                      "Alert",
+                      "Please fill your goal 01",
+                    );
+                  } else if (controller.controller[1].text.isEmpty &&
+                      _tabController.index == 2) {
+                    Get.snackbar(
+                      "Alert",
+                      "Please fill your goal 02",
+                    );
+                  } else if (controller.controller[2].text.isEmpty &&
+                      _tabController.index == 2) {
+                    Get.snackbar(
+                      "Alert",
+                      "Please fill your goal 03",
+                    );
+                  }
+                }
+              },
+              text: currentIndex == 2 ? 'Finish' : 'Next',
+              options: CTAButton(context)),
+          SizedBox(
+            height: 28.h,
+          )
+        ],
       ),
-    ),);
-}
+    );
+  }
+
+  Widget _buildChip(String label) {
+    return GestureDetector(
+      onTap: () {
+        _handleChipSelection(label);
+      },
+      child: Chip(
+        // color: MaterialStateProperty.all(FlutterFlowTheme.of(context).textFieldBackground),
+        backgroundColor: MediaQuery.of(context).platformBrightness ==
+                Brightness.dark
+            ? FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9)
+            : FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
+        label: AutoSizeText(
+          label,
+          style: FlutterFlowTheme.of(context).labelExtraSmall,
+        ),
+      ),
+    );
+  }
 }

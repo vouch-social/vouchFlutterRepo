@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:vouch/new_code/home_page/history_screen/history.dart';
 import 'package:vouch/new_code/common_widgets/vector.dart';
+import 'package:vouch/new_code/home_page/notifications/notifications_screen.dart';
 
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../generated/assets.dart';
@@ -69,7 +70,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ? GestureDetector(
                       onTap: () {
                         Get.to(
-                          () => const SettingsScreen(),
+                          () => const NotificationsScreen(),
                           transition: Transition.upToDown,
                           duration: const Duration(milliseconds: 500),
                         );

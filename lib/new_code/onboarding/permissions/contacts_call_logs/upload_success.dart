@@ -1,9 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
+import 'package:vouch/new_code/backend/backend_constants.dart';
 
 import '../../../../flutter_flow/flutter_flow_theme.dart';
+import '../../../../main.dart';
+import '../../../backend/repos/contacts_call_logs_repo.dart';
+import '../../../home_page/settings/settings_screen.dart';
 
 class ContactUploadSuccess extends StatefulWidget {
   const ContactUploadSuccess({super.key});
@@ -13,6 +19,19 @@ class ContactUploadSuccess extends StatefulWidget {
 }
 
 class _ContactUploadSuccessState extends State<ContactUploadSuccess> {
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(seconds: 5), () {
+      if (prefs?.getString(userName) != "null") {
+        Get.off(() => const SettingsScreen());
+      } else {
+        checkImport();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +76,7 @@ class _ContactUploadSuccessState extends State<ContactUploadSuccess> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AutoSizeText(
-                    "1024 ",
+                    "${prefs?.getInt(contactsAdded)} ",
                     style: FlutterFlowTheme.of(context).headlineLarge
                   ),
                       AutoSizeText(

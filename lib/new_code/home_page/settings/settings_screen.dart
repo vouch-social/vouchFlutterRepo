@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:vouch/auth/checkAuth.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/flutter_flow/flutter_flow_widgets.dart';
 import 'package:vouch/generated/assets.dart';
@@ -14,6 +15,7 @@ import 'package:vouch/new_code/common_widgets/image_check.dart';
 import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
 import 'package:vouch/new_code/home_page/settings/edit_goals/edit_goals_screen.dart';
 import 'package:vouch/new_code/home_page/settings/edit_profile/edit_profile_screen.dart';
+import 'package:vouch/new_code/home_page/settings/re_sync_contacts/re_sync_permissions_screen.dart';
 import 'package:vouch/new_code/onboarding/linkdin/linkdin_screen.dart';
 import 'package:vouch/new_code/onboarding/permissions/permissions_screen.dart';
 import 'package:vouch/new_code/onboarding/welcome_screen/welcome_screen.dart';
@@ -29,20 +31,11 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  List<Icon> iconsList = [
-    Icon(Icons.email_outlined),
-    Icon(Icons.adjust_rounded),
-    Icon(Icons.data_thresholding_outlined),
-    Icon(Icons.archive_outlined),
-    Icon(Icons.integration_instructions_outlined)
-  ];
-  List<String> titleList = [
-    'Email',
-    'Edit Your Goals',
-    'Linkedin Sync',
-    'Archived',
-    'Instructions'
-  ];
+  @override
+  void initState() {
+    super.initState();
+    checkUser();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,9 +44,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
         showBackButton: true,
         showProfileButton: false,
         title: "Settings",
-        onBackButtonPressed: (){
-          Get.offAll(() => NewHomePage());
+        onBackButtonPressed: () async{
+          Future.delayed(const Duration(seconds: 5),
+              await Get.offUntil( MaterialPageRoute(builder: (_) => NewHomePage()),ModalRoute.withName('/SettingsScreen'),),
+          );
         },
+
       ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: SafeArea(
@@ -272,7 +268,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   height: 36.0.h,
                   child: GestureDetector(
                     onTap: () {
-                      Get.to(() => PermissionsScreen());
+                      Get.to(() => const ReSyncPermissionsScreen());
                     },
                     child: Column(
                       children: [

@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vouch/new_code/onboarding/permissions/contacts_call_logs/import_screen.dart';
 import 'package:vouch/new_code/onboarding/permissions/permissions_screen.dart';
 import 'package:vouch/new_code/onboarding/welcome_screen/welcome_screen.dart';
+import '../new_code/onboarding/waterfall_model.dart';
 import 'firebase_auth/auth_util.dart';
 import '../main.dart';
 import '../new_code/backend/backend_constants.dart';
@@ -37,6 +38,8 @@ Future<bool> checkUser() async {
     print("Api REsult Status :${apiResult.status}");
 
     if (apiResult.status) {
+      print("User Id :${apiResult.data!.data.user.id}");
+      prefs?.setInt(userId, apiResult.data!.data.user.id);
       print("Status is true: ${apiResult.data!.data.user.name}");
       prefs?.setString(userName, (apiResult.data!.data.user.name).toString());
       print("User Name: ${prefs?.getString(userName)}");
@@ -88,6 +91,9 @@ Future<bool> checkUser() async {
       print("Attributes : ${prefs?.getStringList(attributes)}");
       prefs?.setString(phone, apiResult.data!.data.user.phone.toString());
       print("Phone : ${apiResult.data!.data.user.phone}");
+      prefs?.setString(countryCode, apiResult.data!.data.user.countryCode.toString());
+
+
       //  await saveAttributes(apiResult.data!.data.user.attributes.attributes);
     }
     return apiResult.status;

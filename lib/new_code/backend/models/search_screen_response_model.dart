@@ -25,14 +25,14 @@ class SearchScreenResponseModel {
 }
 
 class SearchDatum {
+  dynamic photourl;
   dynamic createdAt;
   dynamic updatedAt;
-  int id;
+  dynamic id;
   dynamic searchDatumCreatedAt;
   dynamic name;
   dynamic phone;
   dynamic firebaseid;
-  dynamic photourl;
   dynamic graphid;
   dynamic hashedphone;
   dynamic linkedinsub;
@@ -42,36 +42,39 @@ class SearchDatum {
   bool contactsSync;
   bool callLogsSync;
   bool linkedinSync;
-  int countryCode;
+  dynamic countryCode;
   dynamic deletedAt;
   List<Attribute> attributes;
   List<dynamic> goals;
+  dynamic reason;
 
   SearchDatum({
-    required this.createdAt,
-    required this.updatedAt,
-    required this.id,
-    required this.searchDatumCreatedAt,
-    required this.name,
-    required this.phone,
-    required this.firebaseid,
-    required this.photourl,
-    required this.graphid,
-    required this.hashedphone,
-    required this.linkedinsub,
-    required this.email,
-    required this.vanityname,
-    required this.localizedheadline,
+     this.photourl,
+     this.createdAt,
+     this.updatedAt,
+     this.id,
+     this.searchDatumCreatedAt,
+     this.name,
+     this.phone,
+     this.firebaseid,
+     this.graphid,
+     this.hashedphone,
+     this.linkedinsub,
+     this.email,
+     this.vanityname,
+     this.localizedheadline,
     required this.contactsSync,
     required this.callLogsSync,
     required this.linkedinSync,
-    required this.countryCode,
-    required this.deletedAt,
+     this.countryCode,
+     this.deletedAt,
     required this.attributes,
     required this.goals,
+     this.reason,
   });
 
   factory SearchDatum.fromJson(Map<String, dynamic> json) => SearchDatum(
+    photourl: json["photourl"],
     createdAt: json["createdAt"],
     updatedAt: json["updatedAt"],
     id: json["id"],
@@ -79,7 +82,6 @@ class SearchDatum {
     name: json["name"],
     phone: json["phone"],
     firebaseid: json["firebaseid"],
-    photourl: json["photourl"],
     graphid: json["graphid"],
     hashedphone: json["hashedphone"],
     linkedinsub: json["linkedinsub"],
@@ -93,9 +95,11 @@ class SearchDatum {
     deletedAt: json["deletedAt"],
     attributes: List<Attribute>.from(json["attributes"].map((x) => Attribute.fromJson(x))),
     goals: List<dynamic>.from(json["goals"].map((x) => x)),
+    reason: json["reason"],
   );
 
   Map<String, dynamic> toJson() => {
+    "photourl": photourl,
     "createdAt": createdAt,
     "updatedAt": updatedAt,
     "id": id,
@@ -103,7 +107,6 @@ class SearchDatum {
     "name": name,
     "phone": phone,
     "firebaseid": firebaseid,
-    "photourl": photourl,
     "graphid": graphid,
     "hashedphone": hashedphone,
     "linkedinsub": linkedinsub,
@@ -117,21 +120,22 @@ class SearchDatum {
     "deletedAt": deletedAt,
     "attributes": List<dynamic>.from(attributes.map((x) => x.toJson())),
     "goals": List<dynamic>.from(goals.map((x) => x)),
+    "reason": reason,
   };
 }
 
 class Attribute {
-  String createdAt;
-  String updatedAt;
-  int id;
-  int userId;
+  dynamic createdAt;
+  dynamic updatedAt;
+  dynamic id;
+  dynamic userId;
   List<String> attributes;
 
   Attribute({
-    required this.createdAt,
-    required this.updatedAt,
-    required this.id,
-    required this.userId,
+     this.createdAt,
+     this.updatedAt,
+     this.id,
+     this.userId,
     required this.attributes,
   });
 

@@ -1,5 +1,7 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
@@ -7,6 +9,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:vouch/new_code/home_page/history_screen/my_hunts_controller.dart';
 
 import '../../../flutter_flow/flutter_flow_theme.dart';
+import '../../../generated/assets.dart';
 import '../../common_widgets/my_hunts_card.dart';
 
 class MyHuntsScreen extends StatefulWidget {
@@ -29,8 +32,10 @@ class _MyHuntsScreenState extends State<MyHuntsScreen> {
   Future<void> fetchHuntsHistory() async {
     var fetchedBountyHistory = await controller.getHuntsHistory();
     if (!mounted) return;
-    setState(() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
       huntsHistory = fetchedBountyHistory.myHunts;
+    });
     });
   }
 
@@ -48,15 +53,39 @@ class _MyHuntsScreenState extends State<MyHuntsScreen> {
           () => Skeletonizer(
             enabled: controller.isLoading.value,
             child:
-            huntsHistory != null ?
+            controller.isLoading.value == false ?
+            (huntsHistory.isNotEmpty)?
             ListView.builder(
               padding: EdgeInsets.symmetric(horizontal: 16.0.w),
               itemCount: huntsHistory?.length ?? 0,
               itemBuilder: (BuildContext context, int index) {
                 var hunts = huntsHistory[index];
-                return myHuntsWidget(context, hunts);
+                return MyHuntsCard(hunts:  hunts,refreshCallBack: fetchHuntsHistory);
               },
-            ) : Center(
+            ) :ListView(
+                children:[ Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 24.0.h),
+                      SvgPicture.asset(Assets.assetsEmptyStateHunts,
+                        height: 264.0.h,
+                        width: 264.0.w,
+                      ),
+                      SizedBox(height: 24.0.h,),
+                      AutoSizeText("You have No Hunts",
+                        style: FlutterFlowTheme.of(context).headlineSmall.override(
+                            useGoogleFonts: false,
+                            fontWeight: FontWeight.w400,
+                            color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.7)
+                        ),
+                      )
+
+                    ],
+                  ),
+                ),]
+            )
+                : Center(
               child: CircularProgressIndicator(
                 color: FlutterFlowTheme.of(context).primaryText,
               ),

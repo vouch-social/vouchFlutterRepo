@@ -20,5 +20,12 @@ const String phone = "phone";
 const String goals = "goals";
 const String attributes = "attributes";
 const String isContactSync = "isContactSync";
+const dynamic userId = 'userId';
+const dynamic countryCode = 'countryCode';
+const dynamic contactsAdded = 'contactsAdded';
+const dynamic contactsUpdated = 'contactsUpdated';
+const dynamic contactsCreated = 'contactsCreated';
+const dynamic deviceContacts = 'deviceContacts';
+
 
 

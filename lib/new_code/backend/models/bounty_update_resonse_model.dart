@@ -9,22 +9,24 @@ BountyUpdateModel bountyUpdateModelFromJson(String str) => BountyUpdateModel.fro
 String bountyUpdateModelToJson(BountyUpdateModel data) => json.encode(data.toJson());
 
 class BountyUpdateModel {
-  String createdAt;
-  String updatedAt;
-  int id;
-  String bountyUpdateModelCreatedAt;
-  int bountyId;
-  int userId;
-  String hunterStatus;
+  dynamic createdAt;
+  dynamic updatedAt;
+  dynamic id;
+  dynamic bountyUpdateModelCreatedAt;
+  dynamic bountyId;
+  dynamic userId;
+  dynamic hunterStatus;
+  dynamic claimMessage;
 
   BountyUpdateModel({
-    required this.createdAt,
-    required this.updatedAt,
-    required this.id,
-    required this.bountyUpdateModelCreatedAt,
-    required this.bountyId,
-    required this.userId,
-    required this.hunterStatus,
+     this.createdAt,
+     this.updatedAt,
+     this.id,
+     this.bountyUpdateModelCreatedAt,
+     this.bountyId,
+     this.userId,
+     this.hunterStatus,
+     this.claimMessage,
   });
 
   factory BountyUpdateModel.fromJson(Map<String, dynamic> json) => BountyUpdateModel(
@@ -35,6 +37,7 @@ class BountyUpdateModel {
     bountyId: json["bounty_id"],
     userId: json["user_id"],
     hunterStatus: json["hunter_status"],
+    claimMessage: json["claim_message"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -45,5 +48,6 @@ class BountyUpdateModel {
     "bounty_id": bountyId,
     "user_id": userId,
     "hunter_status": hunterStatus,
+    "claim_message": claimMessage,
   };
 }

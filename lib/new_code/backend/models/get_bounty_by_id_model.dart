@@ -77,6 +77,7 @@ class Hunter {
   int userId;
   User user;
   String hunterStatus;
+  dynamic claimMessage;
 
   Hunter({
     required this.createdAt,
@@ -87,6 +88,7 @@ class Hunter {
     required this.userId,
     required this.user,
     required this.hunterStatus,
+    this.claimMessage,
   });
 
   factory Hunter.fromJson(Map<String, dynamic> json) => Hunter(
@@ -97,6 +99,7 @@ class Hunter {
     bountyId: json["bounty_id"],
     userId: json["user_id"],
     hunterStatus: json["hunter_status"],
+    claimMessage: json["claim_message"],
     user: json["user"] == null ? User(name: "Name",photourl: null,localizedheadline: "HeadLine") :User.fromJson(json["user"]),
   );
 
@@ -108,6 +111,7 @@ class Hunter {
     "bounty_id": bountyId,
     "user_id": userId,
     "hunter_status":hunterStatus,
+    "claim_message":claimMessage,
     "user": user.toJson(),
   };
 }

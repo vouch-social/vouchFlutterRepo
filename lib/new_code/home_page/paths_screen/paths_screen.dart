@@ -1,6 +1,5 @@
 import 'dart:async';
 
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,21 +19,23 @@ import '../../common_widgets/vector.dart';
 import '../HomePage/paths_list_controller.dart';
 
 class PathsScreen extends StatefulWidget {
-
   final dynamic name;
   final dynamic image;
   final dynamic headline;
   final dynamic goals;
   final dynamic index;
   final dynamic hashedPhone;
-  const PathsScreen(
-      {super.key,
-      this.name,
-      this.image,
-      this.headline,
-      this.goals,
-      this.index, this.hashedPhone,
-      });
+  final dynamic reason;
+  const PathsScreen({
+    super.key,
+    this.name,
+    this.image,
+    this.headline,
+    this.goals,
+    this.index,
+    this.hashedPhone,
+    this.reason,
+  });
 
   @override
   State<PathsScreen> createState() => _PathsScreenState();
@@ -56,7 +57,6 @@ class _PathsScreenState extends State<PathsScreen> {
   void initState() {
     super.initState();
     fetchPaths();
-
   }
 
   @override
@@ -81,20 +81,19 @@ class _PathsScreenState extends State<PathsScreen> {
                     height: 8.0.h,
                   ),
                   Hero(
-                    tag: "image:$widget.index",
+                    tag: "image:${widget.index}",
                     child: Material(
-                      color: Colors.transparent,
-                      child: CustomCircleAvatar(
-                        imageUrl: widget.image,
-                        radius: 64.0.w,
-                      )
-                    ),
+                        color: Colors.transparent,
+                        child: CustomCircleAvatar(
+                          imageUrl: widget.image,
+                          radius: 64.0.w,
+                        )),
                   ),
                   SizedBox(
                     height: 16.0.h,
                   ),
                   Hero(
-                    tag: "name:$widget.index",
+                    tag: "name:${widget.index}",
                     child: Material(
                       color: Colors.transparent,
                       child: AutoSizeText(
@@ -113,7 +112,7 @@ class _PathsScreenState extends State<PathsScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 48.0.w),
                     child: Hero(
-                      tag: "headline:$widget.index",
+                      tag: "headline:${widget.index}",
                       child: Material(
                         color: Colors.transparent,
                         child: AutoSizeText(
@@ -137,15 +136,35 @@ class _PathsScreenState extends State<PathsScreen> {
                         borderRadius: BorderRadius.circular(0.0.w)),
                     padding: EdgeInsets.all(0.0.w),
                     child: Hero(
-                      tag: "goal:$widget.index",
+                      tag: "goal:${widget.index}",
                       child: Material(
                         child: AutoSizeText(
-                          widget
-                                  .goals.isEmpty
-                              ? "Dummy Attribute"
-                              :
-                                  widget.goals.toString(),
-
+                          widget.goals,
+                          style: FlutterFlowTheme.of(context)
+                              .labelExtraSmall
+                              .override(
+                                  useGoogleFonts: false,
+                                  fontWeight: FontWeight.w400,
+                                  color: FlutterFlowTheme.of(context)
+                                      .fixedBlack
+                                      .withOpacity(.50)),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 8.0.h,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).container1,
+                        borderRadius: BorderRadius.circular(0.0.w)),
+                    padding: EdgeInsets.all(0.0.w),
+                    child: Hero(
+                      tag: "reason:${widget.index}",
+                      child: Material(
+                        child: AutoSizeText(
+                          widget.reason,
                           style: FlutterFlowTheme.of(context)
                               .labelExtraSmall
                               .override(
@@ -164,12 +183,13 @@ class _PathsScreenState extends State<PathsScreen> {
             SizedBox(
               height: 24.0.h,
             ),
-            allPaths != null ?
-            Expanded(
-                child: PathListView(
-                  goal: widget.goals,
-              allPaths: allPaths,
-            )) : Container(),
+            allPaths != null
+                ? Expanded(
+                    child: PathListView(
+                    goal: widget.goals,
+                    allPaths: allPaths,
+                  ))
+                : Container(),
           ],
         ),
       )),

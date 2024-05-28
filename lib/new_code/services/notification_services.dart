@@ -132,6 +132,7 @@ class NotificationServices {
   //function to get device token on which we will send the notifications
   Future<String> getDeviceToken() async {
     String? token = await messaging.getToken();
+    print("Fcm Token Id: $token");
     return token!;
   }
 

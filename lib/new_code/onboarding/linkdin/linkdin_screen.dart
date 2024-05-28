@@ -139,7 +139,7 @@ class _LinkedinScreenState extends State<LinkedinScreen> {
                 GestureDetector(
                   onTap: () {
                     if(prefs?.getString(userName) != null){
-                      Get.to( () => NewHomePage());
+                       Get.to( () => NewHomePage());
                     }else{
                       Get.to(() => UserDetails());
                     }
