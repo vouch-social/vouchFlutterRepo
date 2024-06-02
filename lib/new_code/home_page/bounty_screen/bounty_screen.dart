@@ -209,6 +209,8 @@ class _BountyScreenState extends State<BountyScreen> {
               FFButtonWidget(
                 onPressed: () async {
                   await controller.sendRaisedBounty(sliderValue);
+                  controller.linkedinUrlController.clear();
+                  controller.bountyContextController.clear();
                   Get.to(() => NewHomePage());
                 },
                 text: 'Ask Network',

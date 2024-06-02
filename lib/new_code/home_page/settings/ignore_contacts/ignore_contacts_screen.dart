@@ -60,8 +60,9 @@ class _IgnoreContactsScreenState extends State<IgnoreContactsScreen> {
     List<Contact> contacts = await myGetContacts();
     setState(() {
       _contacts = contacts;
+      compareHashedPhones();
     });
-    compareHashedPhones();
+
   }
 
   void _initializeData(){
@@ -93,17 +94,19 @@ class _IgnoreContactsScreenState extends State<IgnoreContactsScreen> {
     }).toList();
   }
 
-  void compareHashedPhones() {
-    if (contactsList == null || _contacts.isEmpty) return;
+  List<Map<String, String>> deviceHashedPhones = [];
 
-    List<Map<String, String>> deviceHashedPhones = extractHashedPhones(_contacts);
+  void compareHashedPhones() {
+    deviceHashedPhones = extractHashedPhones(_contacts);
+    if (contactsList == null || _contacts.isEmpty) return;
+    print("device hashedPhones $deviceHashedPhones");
     List<dynamic> serverHashedPhones = contactsList.map((contact) => contact.contacthashedphone.toString()).toList();
 
     List<Map<String, String>> matchedPhones = [];
 
     for (var deviceContact in deviceHashedPhones) {
       if (serverHashedPhones.contains(deviceContact["hashedPhone"])) {
-        matchedPhones.add({"originalPhone": deviceContact["originalPhone"]!, "displayName": deviceContact["displayName"]!});
+        matchedPhones.add(deviceContact);
       }
     }
 
@@ -134,7 +137,9 @@ class _IgnoreContactsScreenState extends State<IgnoreContactsScreen> {
         child: FFButtonWidget(
           text: 'Edit Ignore List',
           onPressed: () {
-            Get.to(() => IgnoreListScreen(alreadyIgnored: matchedContacts));
+            print("Length :${deviceHashedPhones.length}");
+            print("LengthMatched :${matchedContacts.length}");
+            Get.to(() => IgnoreListScreen(alreadyIgnored: matchedContacts,devicePhones: deviceHashedPhones));
           },
           options: CTAButton(context),
         ),

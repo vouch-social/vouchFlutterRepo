@@ -127,6 +127,8 @@ class _PathsScreenState extends State<PathsScreen> {
                           color: Colors.transparent,
                           child: AutoSizeText(
                             widget.headline,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -141,23 +143,28 @@ class _PathsScreenState extends State<PathsScreen> {
                       height: 4.0.h,
                     ),
                     Container(
+                      width: double.infinity,
                       decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).container1,
+                          color: FlutterFlowTheme.of(context).pastelTint,
                           borderRadius: BorderRadius.circular(0.0.w)),
-                      padding: EdgeInsets.all(0.0.w),
+                      padding: EdgeInsets.all(4.0.w),
                       child: Hero(
                         tag: "goal:${widget.index}",
                         child: Material(
-                          child: AutoSizeText(
-                            widget.goals,
-                            style: FlutterFlowTheme.of(context)
-                                .labelExtraSmall
-                                .override(
-                                    useGoogleFonts: false,
-                                    fontWeight: FontWeight.w400,
-                                    color: FlutterFlowTheme.of(context)
-                                        .fixedBlack
-                                        .withOpacity(.50)),
+                          color: Colors.transparent,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width - 32.0.w,
+                            child: AutoSizeText(
+                              widget.goals,
+                              style: FlutterFlowTheme.of(context)
+                                  .labelExtraSmall
+                                  .override(
+                                      useGoogleFonts: false,
+                                      fontWeight: FontWeight.w400,
+                                      color: FlutterFlowTheme.of(context)
+                                          .fixedBlack
+                                          .withOpacity(.50)),
+                            ),
                           ),
                         ),
                       ),
@@ -166,23 +173,30 @@ class _PathsScreenState extends State<PathsScreen> {
                       height: 8.0.h,
                     ),
                     Container(
+                      width: double.infinity - 32.0.w,
                       decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).container1,
-                          borderRadius: BorderRadius.circular(0.0.w)),
-                      padding: EdgeInsets.all(0.0.w),
+                          color: FlutterFlowTheme.of(context).pastelBlue,
+                          borderRadius: BorderRadius.circular(4.0.w)),
+                      padding: EdgeInsets.all(4.0.w),
                       child: Hero(
                         tag: "reason:${widget.index}",
                         child: Material(
-                          child: AutoSizeText(
-                            widget.reason ?? "",
-                            style: FlutterFlowTheme.of(context)
-                                .labelExtraSmall
-                                .override(
-                                    useGoogleFonts: false,
-                                    fontWeight: FontWeight.w400,
-                                    color: FlutterFlowTheme.of(context)
-                                        .fixedBlack
-                                        .withOpacity(.50)),
+                          color: Colors.transparent,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width - 32.0.w,
+                            child: AutoSizeText(
+                              widget.reason ?? "",
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: FlutterFlowTheme.of(context)
+                                  .labelExtraSmall
+                                  .override(
+                                      useGoogleFonts: false,
+                                      fontWeight: FontWeight.w400,
+                                      color: FlutterFlowTheme.of(context)
+                                          .fixedBlack
+                                          .withOpacity(.50)),
+                            ),
                           ),
                         ),
                       ),
