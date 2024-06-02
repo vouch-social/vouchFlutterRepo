@@ -17,13 +17,14 @@ class AuthRepository {
   factory AuthRepository() => _instance;
 
 
-  Future<BaseResponse<UserModel>> sendUser(String firebaseid, String phone, String hashedphone,String country_code) async {
+  Future<BaseResponse<UserModel>> sendUser(String firebaseid, String phone, String hashedphone,String country_code,dynamic fcm_token) async {
     try {
       Map<String, dynamic> requestData = {
         'firebaseid': firebaseid,
         'phone': phone,
         'hashedphone': hashedphone,
-        'country_code':country_code
+        'country_code':country_code,
+        'fcm_token': fcm_token
       };
       print("Data 1 :$requestData");
       dio.Response response = await _dioClient.postRequest(endPoint: '/api/auth/login', data: requestData,authToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjkxODcwMDM0MjkwMSIsInN1YiI6NDUsImlhdCI6MTcxMjU3MjQyMiwiZXhwIjoxNzQ0MTMwMDIyfQ.ZiRcVsoDakk2I8hR9tfwuN0B3nt9zbT9IomdClTxoVw');

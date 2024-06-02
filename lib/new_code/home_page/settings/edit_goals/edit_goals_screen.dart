@@ -66,6 +66,7 @@ class _EditGoalsScreenState extends State<EditGoalsScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: CustomAppBar(
         title: "Edit goals",
@@ -227,7 +228,6 @@ class _EditGoalsScreenState extends State<EditGoalsScreen>
                     controller.controller[1].text.isNotEmpty &&
                     controller.controller[2].text.isNotEmpty) {
                   await controller.sendUserEditedGoalsController();
-                  Get.back();
                 } else {
                   if (controller.controller[0].text.isEmpty &&
                       _tabController.index == 1) {

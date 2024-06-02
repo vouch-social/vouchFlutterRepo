@@ -1,5 +1,6 @@
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:vouch/new_code/backend/backend_constants.dart';
+import 'package:vouch/new_code/services/hashed_phone.dart';
 
 import '../../../../main.dart';
 
@@ -16,20 +17,17 @@ Future<List<Contact>> myGetContacts() async {
 
   List<Contact> contactsWithPhones = entries.where((contact) => contact.phones.isNotEmpty).map((contact) {
     contact.displayName = contact.displayName ?? " ";
-    contact.thumbnail = null;
-    contact.emails = [];
-    contact.addresses = [];
-    contact.events = [];
-    contact.notes = [];
-    contact.organizations = [];
     return contact;
   }).toList();
 
   int eliminatedCount = entries.length - contactsWithPhones.length;
-
   print('Number of contacts eliminated: $eliminatedCount');
 
-  prefs?.setInt(deviceContacts, contactsWithPhones.length);
+  // Calculate the total number of phone numbers
+  int totalPhoneNumbers = contactsWithPhones.fold(0, (sum, contact) => sum + contact.phones.length);
+  print('Total number of phone numbers: $totalPhoneNumbers');
+
+  prefs?.setInt(deviceContacts, totalPhoneNumbers);
 
   return contactsWithPhones;
 }

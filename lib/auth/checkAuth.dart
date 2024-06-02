@@ -36,7 +36,6 @@ Future<bool> checkUser() async {
     BaseResponse<CheckUserModel> apiResult =
         await repository.sendTokenToServer(data['phone']!);
     print("Api REsult Status :${apiResult.status}");
-
     if (apiResult.status) {
       print("User Id :${apiResult.data!.data.user.id}");
       prefs?.setInt(userId, apiResult.data!.data.user.id);
@@ -53,29 +52,20 @@ Future<bool> checkUser() async {
       print("HasedPhone : ${prefs?.getString(loggedInUserHashedPhone)}");
       prefs?.setBool(isLinkedinSync, apiResult.data!.data.linkedinSync);
       print("Linkedin : ${prefs?.get(isLinkedinSync)}");
-      print("IsContact: ${apiResult.data!.data.contactsSync}");
+      print("IsContact: ${apiResult.data!.data.contactsSync!}");
       prefs?.setBool(isContactSync, apiResult.data!.data.contactsSync);
 // Ensure prefs and apiResult.data are not null
       if (prefs != null && apiResult.data != null) {
-        // Initialize an empty list of strings for goals
         List<String> userGoals = [];
-
-        // Safely navigate through the API result to get the goals
         if (apiResult.data.data.user.goals.isNotEmpty) {
           var firstGoalEntry = apiResult.data.data.user.goals[0].goals;
-
-          // Check if the goals are a list of strings
           if (firstGoalEntry is List<String>) {
             userGoals = firstGoalEntry;
           }
         }
-
-        // Save the list of user goals in shared preferences
         prefs?.setStringList(goals, userGoals);
-      }      // print("Goals : ${prefs?.getStringList(goals)}");
-      // Check if prefs and apiResult are not null before proceeding
+      }
       if (prefs != null && apiResult.data != null) {
-        // Check if the user attributes are available and is a list of strings
         List<String> userAttributes = [];
         if (apiResult.data.data.user.attributes.isNotEmpty) {
           var firstAttributes = apiResult.data.data.user.attributes[0].attributes;
@@ -83,18 +73,12 @@ Future<bool> checkUser() async {
             userAttributes = firstAttributes;
           }
         }
-
-        // Save the list of user attributes in shared preferences
         prefs?.setStringList(attributes, userAttributes);
       }
-
       print("Attributes : ${prefs?.getStringList(attributes)}");
       prefs?.setString(phone, apiResult.data!.data.user.phone.toString());
       print("Phone : ${apiResult.data!.data.user.phone}");
       prefs?.setString(countryCode, apiResult.data!.data.user.countryCode.toString());
-
-
-      //  await saveAttributes(apiResult.data!.data.user.attributes.attributes);
     }
     return apiResult.status;
   } catch (error) {
@@ -103,35 +87,35 @@ Future<bool> checkUser() async {
   return false;
 }
 
-Widget newCustomNav() {
-  final AuthRepository repository = AuthRepository();
-  Future<String> pageName() async {
-    var data = {
-      'phone': cleanPhone(currentPhoneNumber),
-    };
-    try {
-      BaseResponse<CheckUserModel> apiResult =
-          await repository.sendTokenToServer(data['phone']!);
-      print("apiResponseCustomNav : ${apiResult.data.data}");
-      if (apiResult.data.data.contactsSync == false) {
-        return "callLogsPending";
-      } else if (!apiResult.data.data.linkedinSync) {
-        return "linkedInPending";
-      }
-    } catch (error) {
-      print(error);
-    }
-    return "";
-  }
-
-  return FutureBuilder<String>(
-      future: pageName(),
-      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-        if (snapshot.data == 'callLogsPending') {
-          return PermissionsScreen();
-        } else if (snapshot.data == "linkedInPending") {
-          return LinkedinScreen();
-        }
-        return NewHomePage();
-      });
-}
+// Widget newCustomNav() {
+//   final AuthRepository repository = AuthRepository();
+//   Future<String> pageName() async {
+//     var data = {
+//       'phone': cleanPhone(currentPhoneNumber),
+//     };
+//     try {
+//       BaseResponse<CheckUserModel> apiResult =
+//           await repository.sendTokenToServer(data['phone']!);
+//       print("apiResponseCustomNav : ${apiResult.data.data}");
+//       if (apiResult.data.data.contactsSync == false) {
+//         return "callLogsPending";
+//       } else if (!apiResult.data.data.linkedinSync) {
+//         return "linkedInPending";
+//       }
+//     } catch (error) {
+//       print(error);
+//     }
+//     return "";
+//   }
+//
+//   return FutureBuilder<String>(
+//       future: pageName(),
+//       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+//         if (snapshot.data == 'callLogsPending') {
+//           return PermissionsScreen();
+//         } else if (snapshot.data == "linkedInPending") {
+//           return LinkedinScreen();
+//         }
+//         return navigateToPage(context);
+//       });
+// }

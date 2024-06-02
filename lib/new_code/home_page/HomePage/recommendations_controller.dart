@@ -57,6 +57,7 @@ class RecommendationsController extends GetxController {
           hashedphone: oldUserDatum.hashedphone,
           linkedinsub: oldUserDatum.linkedinsub,
           email: oldUserDatum.email,
+          reason: oldUserDatum.reason,
           vanityname: oldUserDatum.vanityname,
           localizedheadline: oldUserDatum.localizedheadline,
           contactsSync: oldUserDatum.contactsSync,

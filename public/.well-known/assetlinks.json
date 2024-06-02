@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "social.vouch.relayt",
+    "sha256_cert_fingerprints":
+    ["F2:62:C8:6B:FA:01:2E:93:68:7F:42:F7:1C:5D:DB:52:B0:B1:89:75:18:7B:CB:06:BF:CB:3E:C2:DF:C3:88:1E"]
+  }
+}]

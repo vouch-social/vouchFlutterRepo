@@ -8,8 +8,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/generated/assets.dart';
+import 'package:vouch/new_code/common_widgets/image_check.dart';
 import 'package:vouch/new_code/home_page/HomePage/controllers/update_vouch_status_controller.dart';
+import 'package:vouch/new_code/home_page/HomePage/vouch_details_screen.dart';
 
+import '../home_page/history_screen/my_vouch_details_screen.dart';
 import 'common_button_widget.dart';
 import 'outline_button_widget.dart';
 
@@ -115,15 +118,10 @@ class _MyVouchCardState extends State<MyVouchCard> {
                       width: 8.0.w,
                     ),
                     widget. vouch.activenode == widget.vouch.endnode && widget.vouch.status != 'close' && widget.vouch.activenodeStatus != 'pending'?
-                    GestureDetector(
-                        onTap: () async{
-                          //await controller.updateVouchStatus(vouch.id, 'close');
-                        },
-                        child: CustomButton(text: 'Connect', onTap: () async{
+                    CustomButton(text: 'Connect', onTap: () async{
+                      await Get.to(() => MyVouchDetailsScreen(vouch: widget.vouch));
+                    },
 
-                        },
-
-                        )
                     )
                         :
                     widget. vouch.status == 'close' ?
@@ -162,19 +160,10 @@ Widget vouchPath(context, pathItem, index, length, activenode) {
           CircleAvatar(
             radius: 22.0.h,
             backgroundColor: activenode == pathItem.contactHashedPhone ? FlutterFlowTheme.of(context).primary:Colors.transparent,
-            child: CircleAvatar(
-              radius: 20.0.h,
-              backgroundColor: Colors.transparent,
-             backgroundImage:
-
-
-             pathItem.image != null && pathItem.image.toString().contains('http')
-                 ? NetworkImage(pathItem.image.toString())
-                 : pathItem.image is ImageProvider
-                 ? pathItem.image as ImageProvider<Object>
-                 : AssetImage('assets/image951.png'),
-              ),
-            ),
+            child: CustomCircleAvatar(
+              radius: 20.0.w,
+              imageUrl: pathItem.image,
+            ),            ),
 
           SizedBox(height: 4.0.h),
           SizedBox(

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:vouch/auth/checkAuth.dart';
 import 'package:vouch/flutter_flow/flutter_flow_widgets.dart';
 import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../common_widgets/myAppBar.dart';
@@ -71,7 +70,7 @@ class EditAttributesList extends StatefulWidget {
 
   const EditAttributesList({
     super.key,
-     this.items,
+    this.items,
     this.icon = Icons.clear, // Default icon
   });
 
@@ -84,10 +83,12 @@ class _EditAttributesListState extends State<EditAttributesList> {
   final TextEditingController _textEditingController = TextEditingController();
   List<String>? _items = [];
   List<String> recommendationsData = [];
+
   @override
   void initState() {
     super.initState();
-    _items = widget.items;
+    checkUser();
+    _items = widget.items ?? [];
     fetchRecommendations();
   }
 
@@ -105,8 +106,7 @@ class _EditAttributesListState extends State<EditAttributesList> {
   }
 
   Future<void> fetchRecommendations() async {
-    var fetchedRecommendations =
-    await _controller.getAttributesExamples();
+    var fetchedRecommendations = await _controller.getAttributesExamples();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       setState(() {
@@ -114,10 +114,12 @@ class _EditAttributesListState extends State<EditAttributesList> {
       });
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      resizeToAvoidBottomInset: false,
+      appBar: const CustomAppBar(
         title: "Edit Attributes",
         showBackButton: true,
         showProfileButton: false,
@@ -125,12 +127,15 @@ class _EditAttributesListState extends State<EditAttributesList> {
         showHistoryButton: false,
       ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.all(16.0.w),
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await fetchRecommendations();
+        },
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.all(16.0.w),
               child: Column(
                 children: [
                   ListView.builder(
@@ -145,46 +150,52 @@ class _EditAttributesListState extends State<EditAttributesList> {
                       );
                     },
                   ),
-                  SizedBox(height: 16.0.h,),
+                  SizedBox(height: 16.0.h),
                   CustomTextField(
                     controller: _textEditingController,
                     addItem: _addItem,
                   ),
-
                   SizedBox(height: 16.0.h),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: recommendationsData.length,
-                    itemBuilder: (context, index) {
-                      return
-                        GestureDetector(
-                          onTap: (){
+                  Obx(() {
+                    return _controller.isLoading.value
+                        ? Center(
+                      child: CircularProgressIndicator(
+                        color: FlutterFlowTheme.of(context)
+                            .secondaryBackground,
+                      ),
+                    )
+                        : ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: recommendationsData.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
                             setState(() {
-                              _textEditingController.text = recommendationsData[index];
+                              _textEditingController.text =
+                              recommendationsData[index];
                             });
                           },
-                          child:
-                          recommendationsData.isEmpty ?
-                              Center(
-                                child: CircularProgressIndicator(
-                                  color: FlutterFlowTheme.of(context).secondaryBackground,
-                                ),
-                              ):
-                          Obx(
-                            () => Skeletonizer(
-                              enabled: _controller.isLoading.value,
-                              child: EditAttributesListItem(
-                                serialNumber: index + 1,
-                                text: recommendationsData[index],
-                                icon: widget.icon,
-                                onIconTap: () {},
-                                showIcon: false,
-                              ),
+                          child: recommendationsData.isEmpty
+                              ? Center(
+                            child: CircularProgressIndicator(
+                              color: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                            ),
+                          )
+                              : Skeletonizer(
+                            enabled: _controller.isLoading.value,
+                            child: EditAttributesListItem(
+                              serialNumber: index + 1,
+                              text: recommendationsData[index],
+                              icon: widget.icon,
+                              onIconTap: () {},
+                              showIcon: false,
                             ),
                           ),
                         );
-                    },
-                  ),
+                      },
+                    );
+                  }),
                 ],
               ),
             ),
@@ -192,10 +203,11 @@ class _EditAttributesListState extends State<EditAttributesList> {
         ),
       ),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.only(left: 16.0.w,right: 16.0.w,bottom: 16.0.w),
+        padding: EdgeInsets.only(
+            left: 16.0.w, right: 16.0.w, bottom: 16.0.w),
         child: FFButtonWidget(
           text: "Update Attributes",
-          onPressed: () async{
+          onPressed: () async {
             print("Attributes ${_items}");
             await _controller.sendUserAttributesController(_items);
           },
@@ -230,7 +242,7 @@ class CustomTextField extends StatelessWidget {
         color: FlutterFlowTheme.of(context).textFieldBackground,
         border: Border.all(
           color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
-        )
+        ),
       ),
       child: Row(
         children: [
@@ -246,10 +258,10 @@ class CustomTextField extends StatelessWidget {
                 alignLabelWithHint: true,
                 labelStyle: FlutterFlowTheme.of(context).titleSmall,
                 enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide.none
+                  borderSide: BorderSide.none,
                 ),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide.none
+                  borderSide: BorderSide.none,
                 ),
               ),
             ),
@@ -257,8 +269,6 @@ class CustomTextField extends StatelessWidget {
           SizedBox(width: 8.0.w),
           GestureDetector(
             child: Container(
-              // height: 20.h,
-              // width: 20.w,
               padding: EdgeInsets.all(8.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0.w),
@@ -276,7 +286,7 @@ class CustomTextField extends StatelessWidget {
               }
             },
           ),
-          SizedBox(width: 8.0.w,)
+          SizedBox(width: 8.0.w),
         ],
       ),
     );

@@ -267,23 +267,46 @@ class _BountyDetailsScreenState extends State<BountyDetailsScreen> {
                                                       FlutterFlowTheme.of(context)
                                                           .titleSmall,
                                                 ),
-                                                subtitle: AutoSizeText(
-                                                  hunters[index]
-                                                      .user
-                                                      .localizedheadline,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                  minFontSize: 10.0,
-                                                  style: FlutterFlowTheme.of(
+                                                subtitle: Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    AutoSizeText(
+                                                      hunters[index]
+                                                          .user
+                                                          .localizedheadline,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      maxLines: 1,
+                                                      minFontSize: 10.0,
+                                                      style: FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelExtraSmall
+                                                          .override(
+                                                              fontSize: 10.0,
+                                                              useGoogleFonts: false,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .primaryText
+                                                                  .withOpacity(0.5)),
+                                                    ),
+                                                    SizedBox(height: 4.0.h,),
+                                                    AutoSizeText(
+                                                      hunters[index]
+                                                          .claimMessage ?? "",
+                                                      overflow: TextOverflow.ellipsis,
+                                                      maxLines: 1,
+                                                      minFontSize: 10.0,
+                                                      style: FlutterFlowTheme.of(
                                                           context)
-                                                      .labelExtraSmall
-                                                      .override(
+                                                          .labelExtraSmall
+                                                          .override(
                                                           fontSize: 10.0,
                                                           useGoogleFonts: false,
                                                           color: FlutterFlowTheme
-                                                                  .of(context)
+                                                              .of(context)
                                                               .primaryText
                                                               .withOpacity(0.5)),
+                                                    ),
+                                                  ],
                                                 ),
                                                 trailing: hunters[index]
                                                             .hunterStatus ==

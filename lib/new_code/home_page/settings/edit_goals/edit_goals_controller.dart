@@ -31,6 +31,7 @@ class EditGoalsController extends GetxController{
 
       if (response.status) {
         print('Edit Goals response : ${response.data}');
+        Get.back();
       } else {
         print('Status is false');
       }

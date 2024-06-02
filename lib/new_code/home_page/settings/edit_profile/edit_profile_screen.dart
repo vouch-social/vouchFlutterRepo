@@ -7,15 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vouch/auth/checkAuth.dart';
 import 'package:vouch/new_code/backend/backend_constants.dart';
-import 'package:vouch/new_code/home_page/settings/edit_profile/edit_tags_screen.dart';
 import '../../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../../flutter_flow/flutter_flow_widgets.dart';
-import '../../../../generated/assets.dart';
 import '../../../../main.dart';
 import '../../../common_widgets/image_check.dart';
 import '../../../common_widgets/myAppBar.dart';
@@ -37,9 +34,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   void initState() {
     super.initState();
-    _controller.nameController.text = prefs!.getString(userName)!;
-    _controller.headlineController.text = prefs!.getString(headline)!;
-    _controller.imageController.text = prefs!.getString(imageUrl) ?? '';
+    _initializeData();
+  }
+
+  void _initializeData(){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _controller.nameController.text = prefs!.getString(userName)!;
+      _controller.headlineController.text = prefs!.getString(headline)!;
+      _controller.imageController.text = prefs!.getString(imageUrl) ?? '';
+    });
   }
 
   // @override
@@ -168,6 +171,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 CustomTextField(
                   label: "Full Name",
                   controller: _controller.nameController,
+                  maxLines: 1,
                 ),
                 SizedBox(height: 16.0.h),
                 CustomTextField(
@@ -221,19 +225,20 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 72.0.h,
+      //height: 72.0.h,
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: TextFormField(
-        minLines: 1,
-        maxLines: maxLines,
+        minLines: maxLines,
+        maxLines: 5,
         style: FlutterFlowTheme.of(context).headlineSmall,
         controller: controller,
         cursorColor: FlutterFlowTheme.of(context).secondaryBackground,
         decoration: InputDecoration(
           alignLabelWithHint: true,
+          labelText: label,
           floatingLabelStyle: FlutterFlowTheme.of(context).titleSmall,
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelStyle: FlutterFlowTheme.of(context).titleSmall,

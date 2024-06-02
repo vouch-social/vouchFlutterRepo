@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/contact.dart';
@@ -14,7 +15,6 @@ import 'my_contacts_class.dart';
 class ImportScreen extends StatefulWidget {
   const ImportScreen({super.key, });
 
-
   @override
   State<ImportScreen> createState() => _ImportScreenState();
 }
@@ -22,13 +22,19 @@ class ImportScreen extends StatefulWidget {
 class _ImportScreenState extends State<ImportScreen> {
   final ContactsCallLogsRepo repository = ContactsCallLogsRepo();
   List<Contact> _contacts = [];
-  // List<CallLogEntry> _callLogs = [];
+  Timer? _timer;
+  int _remainingTime = 0;
 
   @override
   void initState() {
     super.initState();
     _fetchContacts();
-    //_fetchCallLogs();
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();  // Dispose the timer when the widget is disposed
+    super.dispose();
   }
 
   Future<void> _fetchContacts() async {
@@ -37,15 +43,43 @@ class _ImportScreenState extends State<ImportScreen> {
       List<Contact> allContacts = await myGetContacts();
       setState(() {
         _contacts = allContacts.toList();
+        _startUploadTimer(_contacts.length);
         sendContactsData(_contacts);
       });
     }
   }
 
-  void sendContactsData(List<Contact> _contacts) async {
+  void _startUploadTimer(int contactCount) {
+    int uploadTimePer400Contacts = 2; // 2 seconds for every 400 contacts
+    _remainingTime = ((contactCount / 400).ceil() * uploadTimePer400Contacts).toInt();
 
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_remainingTime > 0) {
+          _remainingTime--;
+        } else {
+          _timer?.cancel();
+        }
+      });
+    });
+  }
+
+  void sendContactsData(List<Contact> _contacts) async {
     List<Map<String, dynamic>> myContactListToJson(List<Contact> contacts) {
-      return contacts.map((contact) => contact.toJson()).toList();
+      return contacts.map((contact) {
+        var hashedPhones = contact.phones.map((singlePhone) {
+          var hashedPhoneinList = contactHashedPhone(singlePhone.number, "");
+          Map<String, dynamic> returnSinglePhone = {
+            "hashedPhone": hashedPhoneinList
+          };
+          return returnSinglePhone;
+        }).toList();
+        var tempContact = {
+          "displayName": contact.displayName,
+          "phones": hashedPhones
+        };
+        return tempContact;
+      }).toList();
     }
 
     Map<String, dynamic> data = {
@@ -59,55 +93,6 @@ class _ImportScreenState extends State<ImportScreen> {
       print("Error 1: $error");
     }
   }
-
-  // Future<void> _fetchCallLogs() async {
-  //   var status = await Permission.phone.request();
-  //   if (status.isGranted) {
-  //     List<CallLogEntry> logs = await getCallLogs();
-  //     setState(() {
-  //       _callLogs = logs;
-  //       sendCallLogsData(_callLogs);
-  //     });
-  //   }
-  // }
-
-  // void sendCallLogsData(List<CallLogEntry> _callLogs) async {
-  //   Map<String, dynamic> callLogEntryToJson(CallLogEntry callLog) {
-  //     return {
-  //       'name': callLog.name ?? "",
-  //       'number': callLog.number ?? "",
-  //       'formattedNumber': callLog.formattedNumber ?? "",
-  //       'callType': callLog.callType?.name ?? "",
-  //       'duration': callLog.duration ?? "",
-  //       'timestamp': callLog.timestamp ?? "",
-  //       'cachedNumberType': callLog.cachedNumberType ?? "",
-  //       'cachedNumberLabel': callLog.cachedNumberLabel ?? "",
-  //       'cachedMatchedNumber': callLog.cachedMatchedNumber ?? "",
-  //       'simDisplayName': callLog.simDisplayName ?? "",
-  //       'phoneAccountId': callLog.phoneAccountId ?? "",
-  //     };
-  //   }
-  //
-  //   List<Map<String, dynamic>> myCallListToJson(List<CallLogEntry> callLogs) {
-  //     return callLogs
-  //         .map((callLog) => callLogEntryToJson(callLog))
-  //         .take(10)
-  //         .toList();
-  //   }
-  //
-  //   var data = {
-  //     "hashedPhone": hashedPhone(
-  //       widget.mobileWOCC,
-  //       widget.countryCode,
-  //     ),
-  //     "callLogs": myCallListToJson(_callLogs)
-  //   };
-  //   try {
-  //     await repository.sendCallLogs(data);
-  //   } catch (error) {
-  //     print("Error 1: $error");
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +120,7 @@ class _ImportScreenState extends State<ImportScreen> {
                           width: 176.0.w,
                           decoration: BoxDecoration(
                             color:
-                                FlutterFlowTheme.of(context).primaryBackground,
+                            FlutterFlowTheme.of(context).primaryBackground,
                             borderRadius: BorderRadius.circular(16.0),
                           ),
                           child: Center(
@@ -150,8 +135,8 @@ class _ImportScreenState extends State<ImportScreen> {
                     ),
                     SizedBox(height: 48.0.h),
                     AutoSizeText(
-                      'Importing ${prefs?.getInt(deviceContacts)} Contacts',
-                      style: FlutterFlowTheme.of(context).displayMedium
+                        'Importing ${prefs?.getInt(deviceContacts)} Contacts',
+                        style: FlutterFlowTheme.of(context).displayMedium
                     ),
                     SizedBox(
                       height: 8.0.h,
@@ -159,6 +144,11 @@ class _ImportScreenState extends State<ImportScreen> {
                     AutoSizeText(
                       textAlign: TextAlign.center,
                       'Your contacts are safe & we will never store\nphone number information of any\n of your contacts',
+                      style: FlutterFlowTheme.of(context).titleSmall,
+                    ),
+                    SizedBox(height: 24.0.h),
+                    AutoSizeText(
+                      'Time remaining: $_remainingTime seconds',
                       style: FlutterFlowTheme.of(context).titleSmall,
                     ),
                   ],

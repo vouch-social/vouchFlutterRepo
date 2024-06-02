@@ -45,129 +45,141 @@ class RecommendationDatum {
 }
 
 class UserDatum {
-  dynamic createdAt;
-  dynamic updatedAt;
   dynamic id;
-  dynamic userDatumCreatedAt;
+  dynamic fcm;
   dynamic name;
+  dynamic email;
+  List<Attribute> goals;
   dynamic phone;
-  dynamic firebaseid;
-  dynamic photourl;
+  dynamic reason;
   dynamic graphid;
+  dynamic photourl;
+  dynamic createdAt;
+  dynamic deletedAt;
+  dynamic updatedAt;
+  List<Attribute> attributes;
+  dynamic userDatumCreatedAt;
+  dynamic firebaseid;
+  dynamic vanityname;
   dynamic hashedphone;
   dynamic linkedinsub;
-  dynamic email;
-  dynamic vanityname;
-  dynamic localizedheadline;
-  dynamic contactsSync;
-  dynamic callLogsSync;
-  dynamic linkedinSync;
   dynamic countryCode;
-  dynamic deletedAt;
-  List<Attribute> attributes;
-  List<dynamic> goals;
+  dynamic contactsSync;
+  dynamic linkedinSync;
+  dynamic callLogsSync;
+  dynamic localizedheadline;
 
   UserDatum({
-     this.createdAt,
-     this.updatedAt,
      this.id,
-     this.userDatumCreatedAt,
+     this.fcm,
      this.name,
+     this.email,
+    required this.goals,
      this.phone,
-     this.firebaseid,
-     this.photourl,
+     this.reason,
      this.graphid,
+     this.photourl,
+     this.createdAt,
+     this.deletedAt,
+     this.updatedAt,
+    required this.attributes,
+     this.userDatumCreatedAt,
+     this.firebaseid,
+     this.vanityname,
      this.hashedphone,
      this.linkedinsub,
-     this.email,
-     this.vanityname,
-     this.localizedheadline,
-     this.contactsSync,
-     this.callLogsSync,
-     this.linkedinSync,
      this.countryCode,
-     this.deletedAt,
-    required this.attributes,
-    required this.goals,
+     this.contactsSync,
+     this.linkedinSync,
+     this.callLogsSync,
+     this.localizedheadline,
   });
 
   factory UserDatum.fromJson(Map<String, dynamic> json) => UserDatum(
-    createdAt: json["createdAt"],
-    updatedAt: json["updatedAt"],
     id: json["id"],
-    userDatumCreatedAt: json["created_at"],
+    fcm: json["fcm"],
     name: json["name"],
+    email: json["email"],
+    goals: List<Attribute>.from(json["goals"].map((x) => Attribute.fromJson(x))),
     phone: json["phone"],
-    firebaseid: json["firebaseid"],
-    photourl: json["photourl"],
+    reason: json["reason"],
     graphid: json["graphid"],
+    photourl: json["photourl"],
+    createdAt: json["createdAt"],
+    deletedAt: json["deletedAt"],
+    updatedAt: json["updatedAt"],
+    attributes: List<Attribute>.from(json["attributes"].map((x) => Attribute.fromJson(x))),
+    userDatumCreatedAt: json["created_at"],
+    firebaseid: json["firebaseid"],
+    vanityname: json["vanityname"],
     hashedphone: json["hashedphone"],
     linkedinsub: json["linkedinsub"],
-    email: json["email"],
-    vanityname: json["vanityname"],
-    localizedheadline: json["localizedheadline"],
-    contactsSync: json["contacts_sync"],
-    callLogsSync: json["call_logs_sync"],
-    linkedinSync: json["linkedin_sync"],
     countryCode: json["country_code"],
-    deletedAt: json["deletedAt"],
-    attributes: List<Attribute>.from(json["attributes"].map((x) => Attribute.fromJson(x))),
-    goals: List<dynamic>.from(json["goals"].map((x) => x)),
+    contactsSync: json["contacts_sync"],
+    linkedinSync: json["linkedin_sync"],
+    callLogsSync: json["call_logs_sync"],
+    localizedheadline: json["localizedheadline"],
   );
 
   Map<String, dynamic> toJson() => {
-    "createdAt": createdAt,
-    "updatedAt": updatedAt,
     "id": id,
-    "created_at": userDatumCreatedAt,
+    "fcm": fcm,
     "name": name,
+    "email": email,
+    "goals": List<dynamic>.from(goals.map((x) => x.toJson())),
     "phone": phone,
-    "firebaseid": firebaseid,
-    "photourl": photourl,
+    "reason": reason,
     "graphid": graphid,
+    "photourl": photourl,
+    "createdAt": createdAt,
+    "deletedAt": deletedAt,
+    "updatedAt": updatedAt,
+    "attributes": List<dynamic>.from(attributes.map((x) => x.toJson())),
+    "created_at": userDatumCreatedAt,
+    "firebaseid": firebaseid,
+    "vanityname": vanityname,
     "hashedphone": hashedphone,
     "linkedinsub": linkedinsub,
-    "email": email,
-    "vanityname": vanityname,
-    "localizedheadline": localizedheadline,
-    "contacts_sync": contactsSync,
-    "call_logs_sync": callLogsSync,
-    "linkedin_sync": linkedinSync,
     "country_code": countryCode,
-    "deletedAt": deletedAt,
-    "attributes": List<dynamic>.from(attributes.map((x) => x.toJson())),
-    "goals": List<dynamic>.from(goals.map((x) => x)),
+    "contacts_sync": contactsSync,
+    "linkedin_sync": linkedinSync,
+    "call_logs_sync": callLogsSync,
+    "localizedheadline": localizedheadline,
   };
 }
 
 class Attribute {
-  dynamic createdAt;
-  dynamic updatedAt;
-  dynamic id;
-  dynamic userId;
-  List<dynamic> attributes;
+  int id;
+  int userId;
+  String createdAt;
+  String updatedAt;
+  List<String>? attributes;
+  List<String>? goals;
 
   Attribute({
-     this.createdAt,
-     this.updatedAt,
-     this.id,
-     this.userId,
-    required this.attributes,
+    required this.id,
+    required this.userId,
+    required this.createdAt,
+    required this.updatedAt,
+    this.attributes,
+    this.goals,
   });
 
   factory Attribute.fromJson(Map<String, dynamic> json) => Attribute(
-    createdAt: json["createdAt"],
-    updatedAt: json["updatedAt"],
     id: json["id"],
     userId: json["user_id"],
-    attributes: List<String>.from(json["attributes"].map((x) => x)),
+    createdAt: json["createdAt"],
+    updatedAt: json["updatedAt"],
+    attributes: json["attributes"] == null ? [] : List<String>.from(json["attributes"]!.map((x) => x)),
+    goals: json["goals"] == null ? [] : List<String>.from(json["goals"]!.map((x) => x)),
   );
 
   Map<String, dynamic> toJson() => {
-    "createdAt": createdAt,
-    "updatedAt": updatedAt,
     "id": id,
     "user_id": userId,
-    "attributes": List<dynamic>.from(attributes.map((x) => x)),
+    "createdAt": createdAt,
+    "updatedAt": updatedAt,
+    "attributes": attributes == null ? [] : List<dynamic>.from(attributes!.map((x) => x)),
+    "goals": goals == null ? [] : List<dynamic>.from(goals!.map((x) => x)),
   };
 }

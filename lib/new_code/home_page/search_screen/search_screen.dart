@@ -155,85 +155,88 @@ class _SearchScreenState extends State<SearchScreen> {
                                       ));
                                     },
                                     child: Container(
-                                      width: 200.0.w,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(12.0.w),
-                                          color: colors[0]),
-                                      margin: EdgeInsets.only(right: 8.0.w, top: 8.w),
-                                      child: Padding(
-                                        padding: EdgeInsets.all(12.0.w),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Hero(
-                                              tag: "image:$index",
-                                              child: Material(
-                                                color: Colors.transparent,
-                                                child: CustomCircleAvatar(
-                                                  imageUrl: recommendations.photourl,
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(height: 8.0.h),
-                                            Hero(
-                                              tag: "name:$index",
-                                              child: Material(
-                                                color: Colors.transparent,
-                                                child: AutoSizeText(
-                                                  recommendations.name,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                  style: FlutterFlowTheme.of(context)
-                                                      .titleLarge
-                                                      .override(
-                                                    color: FlutterFlowTheme.of(context)
-                                                        .fixedBlack,
-                                                    useGoogleFonts: false,
+                                      color: Colors.transparent,
+                                      child: Container(
+                                        width: 200.0.w,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(12.0.w),
+                                            color: colors[index]),
+                                        margin: EdgeInsets.only(right: 8.0.w, top: 8.w),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(12.0.w),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Hero(
+                                                tag: "image:$index",
+                                                child: Material(
+                                                  color: Colors.transparent,
+                                                  child: CustomCircleAvatar(
+                                                    imageUrl: recommendations.photourl,
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                            SizedBox(height: 4.0.h),
-                                            Hero(
-                                              tag: "headline:$index",
-                                              child: Material(
-                                                color: Colors.transparent,
-                                                child: AutoSizeText(
-                                                  recommendations.localizedheadline,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                  style: FlutterFlowTheme.of(context)
-                                                      .labelExtraSmall
-                                                      .override(
-                                                    color: FlutterFlowTheme.of(context)
-                                                        .fixedBlack,
-                                                    useGoogleFonts: false,
-                                                    fontWeight: FontWeight.w300,
+                                              SizedBox(height: 8.0.h),
+                                              Hero(
+                                                tag: "name:$index",
+                                                child: Material(
+                                                  color: Colors.transparent,
+                                                  child: AutoSizeText(
+                                                    recommendations.name,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                    style: FlutterFlowTheme.of(context)
+                                                        .titleLarge
+                                                        .override(
+                                                      color: FlutterFlowTheme.of(context)
+                                                          .fixedBlack,
+                                                      useGoogleFonts: false,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                            SizedBox(height: 4.0.h,),
-                                            Hero(
-                                              tag: "reason:$index",
-                                              child: Material(
-                                                color: Colors.transparent,
-                                                child: AutoSizeText(
-                                                  "${recommendations.reason ?? "No Reason Found"}  ",
-                                                  overflow: TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                  style: FlutterFlowTheme.of(context)
-                                                      .labelExtraSmall
-                                                      .override(
-                                                    color: FlutterFlowTheme.of(context)
-                                                        .fixedBlack,
-                                                    useGoogleFonts: false,
-                                                    fontWeight: FontWeight.w300,
+                                              SizedBox(height: 4.0.h),
+                                              Hero(
+                                                tag: "headline:$index",
+                                                child: Material(
+                                                  color: Colors.transparent,
+                                                  child: AutoSizeText(
+                                                    recommendations.localizedheadline,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                    style: FlutterFlowTheme.of(context)
+                                                        .labelExtraSmall
+                                                        .override(
+                                                      color: FlutterFlowTheme.of(context)
+                                                          .fixedBlack,
+                                                      useGoogleFonts: false,
+                                                      fontWeight: FontWeight.w300,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ],
+                                              SizedBox(height: 4.0.h,),
+                                              Hero(
+                                                tag: "reason:$index",
+                                                child: Material(
+                                                  color: Colors.transparent,
+                                                  child: AutoSizeText(
+                                                    "${recommendations.reason ?? "No Reason Found"}  ",
+                                                    overflow: TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                    style: FlutterFlowTheme.of(context)
+                                                        .labelExtraSmall
+                                                        .override(
+                                                      color: FlutterFlowTheme.of(context)
+                                                          .fixedBlack,
+                                                      useGoogleFonts: false,
+                                                      fontWeight: FontWeight.w300,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),

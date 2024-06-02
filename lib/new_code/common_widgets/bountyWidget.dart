@@ -255,38 +255,28 @@ Widget hunters(hunters, context) {
               hunters.length >= 1
                   ? Positioned(
                       left: 0,
-                      child: CircleAvatar(
-                          radius: 12.0.w,
-                          backgroundColor: Colors.transparent,
-                          child: hunters[0].user.photourl != null &&
-                                  hunters[0].user.photourl.startsWith('http')
-                              ? Image.network(hunters[0].user.photourl)
-                              : Image.asset(Assets.assetsImage951)),
+                      child: CustomCircleAvatar(
+                        radius: 12.0.w,
+                        imageUrl: hunters[0].user.photourl,
+                      )
                     )
                   : Container(),
               hunters.length >= 2
                   ? Positioned(
                       left: 12,
-                      child: CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          radius: 12.0.w,
-                          child: hunters[1].user.photourl != null &&
-                                  hunters[1].user.photourl.startsWith('http')
-                              ? Image.network(hunters[1].user.photourl)
-                              // : hunters[1].user.photourl != null
-                              : Image.asset(Assets.assetsImage951)),
+                      child: CustomCircleAvatar(
+                        radius: 12.0.w,
+                        imageUrl: hunters[1].user.photourl,
+                      )
                     )
                   : Container(),
               hunters.length >= 3
                   ? Positioned(
                       left: 24,
-                      child: CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          radius: 12.0.w,
-                          child: hunters[1].user.photourl != null &&
-                                  hunters[1].user.photourl.startsWith('http')
-                              ? Image.network(hunters[2].user.photourl)
-                              : Image.asset(Assets.assetsImage951)),
+                      child: CustomCircleAvatar(
+                        radius: 12.0.w,
+                        imageUrl: hunters[2].user.photourl,
+                      )
                     )
                   : Container()
             ],

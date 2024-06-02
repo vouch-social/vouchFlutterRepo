@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:date_time_format/date_time_format.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +19,7 @@ import 'package:vouch/new_code/home_page/paths_screen/paths_list_view.dart';
 import '../../backend/models/paths_model.dart';
 
 class VouchDetailsScreen extends StatefulWidget {
-  final Vouch vouch;
+  final  vouch;
   const VouchDetailsScreen({super.key, required this.vouch});
 
   @override
@@ -38,7 +36,7 @@ class _VouchDetailsScreenState extends State<VouchDetailsScreen> {
     print("Vouch Id ${widget.vouch.id}");
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         showBackButton: true,
       ),
       body: SafeArea(
@@ -82,7 +80,6 @@ class _VouchDetailsScreenState extends State<VouchDetailsScreen> {
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
                           color: FlutterFlowTheme.of(context).fixedBlack
-
                       )
                     ),
                   ],
@@ -93,8 +90,6 @@ class _VouchDetailsScreenState extends State<VouchDetailsScreen> {
               async{
                 print("VOUCH ID: ${widget.vouch.id}");
                 await connectController.connectVouchUser(widget.vouch.id);
-
-               // Get.to(() => NewHomePage());
               }, options: CTAButton(context)),
             ],
           ),
@@ -103,6 +98,7 @@ class _VouchDetailsScreenState extends State<VouchDetailsScreen> {
     );
   }
 }
+
 class MyListView extends StatelessWidget {
   final PathData pathData;
   const MyListView({

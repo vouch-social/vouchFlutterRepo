@@ -21,7 +21,7 @@ class MyRaisedBountyHistory extends StatefulWidget {
 
 class _MyRaisedBountyHistoryState extends State<MyRaisedBountyHistory> {
   final controller = Get.put(BountyHistoryController());
-  var bountyHistory;
+  var bountyHistory = [];
 
   @override
   void initState() {

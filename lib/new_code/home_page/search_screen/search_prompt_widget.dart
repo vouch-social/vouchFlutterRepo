@@ -67,7 +67,7 @@ class _SearchPromptWidgetState extends State<SearchPromptWidget> {
           else
             ListView.builder(
               shrinkWrap: true,
-              itemCount: searchSuggestion.length,
+              itemCount: 2,
               itemBuilder: (context, index) {
                 return Obx(
                       () => Skeletonizer(

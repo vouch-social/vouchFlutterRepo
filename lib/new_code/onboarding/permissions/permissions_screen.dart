@@ -56,7 +56,6 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
   @override
   void dispose() {
     _model.dispose();
-
     super.dispose();
   }
 

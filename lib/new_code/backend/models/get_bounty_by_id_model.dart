@@ -11,7 +11,7 @@ String getBountyByIdModelToJson(GetBountyByIdModel data) => json.encode(data.toJ
 class GetBountyByIdModel {
   int id;
   int userId;
-  String message;
+  dynamic message;
   List<String> tags;
   int urgencyId;
   int expiry;
@@ -21,11 +21,12 @@ class GetBountyByIdModel {
   List<Hunter> hunters;
   Urgency urgency;
   User user;
+  dynamic claimMessage;
 
   GetBountyByIdModel({
     required this.id,
     required this.userId,
-    required this.message,
+     this.message,
     required this.tags,
     required this.urgencyId,
     required this.expiry,

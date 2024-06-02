@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+import 'package:vouch/new_code/onboarding/waterfall_model.dart';
 
 import '../../../services/app_state.dart';
 import '../../../../auth/firebase_auth/auth_util.dart';
@@ -49,7 +50,8 @@ class OtpModel extends FlutterFlowModel<OtpScreen> {
       'phone': phoneWOCC,
       'firebaseid': currentUserReference?.id,
       'hashedphone': FFAppState().hashedPhone,
-      'country_code': countryCode
+      'country_code': countryCode,
+      'fcm_token':prefs?.getString(fcmToken)
     };
     try {
       if (currentUserReference != null && data['firebaseid'] != null) {
@@ -58,6 +60,7 @@ class OtpModel extends FlutterFlowModel<OtpScreen> {
           data['phone']!,
           data['hashedphone']!,
           data['country_code']!,
+          data['fcm_token']!
         );
 
         if (apiResult.status) {
@@ -83,8 +86,8 @@ class OtpModel extends FlutterFlowModel<OtpScreen> {
       await repository.sendTokenToServer(data['phone']!);
       if (apiResult.status) {
         print('Api Result : ${apiResult.message}');
-        // Get.to(() => const PermissionsScreen());
-        Get.offAll(() => newCustomNav());
+       await checkUser();
+        Get.off(() => navigateToPage());
       } else {
         print("No Access TokenFound");
       }

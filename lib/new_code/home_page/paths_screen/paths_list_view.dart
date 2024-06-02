@@ -17,6 +17,7 @@ import 'package:vouch/new_code/home_page/paths_screen/paths_controller.dart';
 
 import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../backend/models/paths_model.dart';
+import '../../backend/models/paths_model.dart';
 
 class PathListView extends StatefulWidget {
   final dynamic goal;
@@ -61,81 +62,111 @@ class _PathListViewState extends State<PathListView>
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(topLeft: Radius.circular(60.0.h)),
         color: FlutterFlowTheme.of(context).fixedBlack,
       ),
-      child: Column(
-        children: [
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: List.generate(
-                widget.allPaths.finalPaths,
-                (index) => MyListView(
-                  paths: widget.allPaths.singlePathList[index],
-                  totalCount: widget.allPaths.finalPaths,
-                  index: index,
-                  onPressed: (data) {
-                    print('Button pressed in tab $index with data: $data');
-                  },
+      child: widget.allPaths.finalPaths != 0
+          ? Column(
+              children: [
+                Expanded(
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: List.generate(
+                      widget.allPaths.finalPaths,
+                      (index) => MyListView(
+                        paths: widget.allPaths.singlePathList[index],
+                        totalCount: widget.allPaths.finalPaths,
+                        index: index,
+                        onPressed: (data) {
+                          print(
+                              'Button pressed in tab $index with data: $data');
+                        },
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
-          Container(
-            width: 80.0.w,
-            child: TabBar(
-              controller: _tabController,
-              indicatorColor: Colors.transparent,
-              automaticIndicatorColorAdjustment: false,
-              padding: EdgeInsets.all(16.0.w),
-              labelPadding: EdgeInsets.zero,
-              tabs: List.generate(
-                widget.allPaths.finalPaths,
-                (index) => Container(
-                  margin: EdgeInsets.only(right: 4.0.w),
-                  height: 4,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4.0.w),
-                      color: _currentIndex == index
-                          ? FlutterFlowTheme.of(context).fixedWhite
-                          : FlutterFlowTheme.of(context)
-                              .fixedWhite
-                              .withAlpha(51)),
+                Container(
+                  width: 80.0.w,
+                  child: TabBar(
+                    controller: _tabController,
+                    indicatorColor: Colors.transparent,
+                    automaticIndicatorColorAdjustment: false,
+                    padding: EdgeInsets.all(16.0.w),
+                    labelPadding: EdgeInsets.zero,
+                    tabs: List.generate(
+                      widget.allPaths.finalPaths,
+                      (index) => Container(
+                        margin: EdgeInsets.only(right: 4.0.w),
+                        height: 4,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4.0.w),
+                            color: _currentIndex == index
+                                ? FlutterFlowTheme.of(context).fixedWhite
+                                : FlutterFlowTheme.of(context)
+                                    .fixedWhite
+                                    .withAlpha(51)),
+                      ),
+                    ),
+                    indicatorSize: TabBarIndicatorSize.tab,
+                  ),
                 ),
-              ),
-              indicatorSize: TabBarIndicatorSize.tab,
+                Padding(
+                  padding: EdgeInsets.fromLTRB(16.0.h, 0, 16.0.h, 16.0.h),
+                  child: FFButtonWidget(
+                      text: "Select Path",
+                      onPressed: () async {
+                        // Call the callback function with the relevant data
+
+                        // Get.to(() => FinalPathMessageScreen());
+
+                        if (_tabController != null) {
+                          final int currentIndex = _tabController!.index;
+                          print(
+                              "currentIndex: ${currentIndex},singlePath:  ${widget.allPaths.singlePathList[currentIndex]}");
+
+                          Get.to(() => FinalPathMessageScreen(
+                              goal: widget.goal,
+                              currentIndex: currentIndex,
+                              singlePath: widget
+                                  .allPaths.singlePathList[currentIndex]));
+                        }
+                      },
+                      options: CTAButton(context)),
+                )
+              ],
+            )
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 36.0.h,
+                ),
+                AutoSizeText(
+                  "Opps!",
+                  style: FlutterFlowTheme.of(context).displayMedium.override(
+                      useGoogleFonts: false,
+                      color: FlutterFlowTheme.of(context).fixedWhite
+                  ),
+                ),
+                AutoSizeText(
+                  "No Path Found",
+                  style: FlutterFlowTheme.of(context).headlineLarge.override(
+                    useGoogleFonts: false,
+                    color: FlutterFlowTheme.of(context).fixedWhite
+                  ),
+                ),
+                SizedBox(
+                  height: 8.0.h,
+                ),
+                SvgPicture.asset(
+                  Assets.assetsPathsEmptyState,
+                ),
+              ],
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(16.0.h, 0, 16.0.h, 16.0.h),
-            child: FFButtonWidget(
-                text: "Select Path",
-                onPressed: () async {
-                  // Call the callback function with the relevant data
-
-                  // Get.to(() => FinalPathMessageScreen());
-
-
-                  if (_tabController != null ) {
-                    final int currentIndex = _tabController!.index;
-                    print("currentIndex: ${currentIndex},singlePath:  ${widget.allPaths.singlePathList[currentIndex]}");
-
-                  Get.to(() => FinalPathMessageScreen(
-                      goal: widget.goal,
-                      currentIndex: currentIndex,singlePath:  widget.allPaths.singlePathList[currentIndex]));
-                  }
-
-                },
-
-                options: CTAButton(context)),
-          )
-        ],
-      ),
     );
   }
-
 }
 
 class MyListView extends StatelessWidget {
@@ -282,14 +313,13 @@ class MyListView extends StatelessWidget {
                         alignment: Alignment.bottomRight,
                         children: [
                           CircleAvatar(
-                            radius: 25.0.w,
-                            backgroundColor:
-                                FlutterFlowTheme.of(context).fixedWhite,
-                            child: CustomCircleAvatar(
-                              imageUrl: paths.pathNode[index].image,
-                              radius: 24.0.w,
-                            )
-                          ),
+                              radius: 25.0.w,
+                              backgroundColor:
+                                  FlutterFlowTheme.of(context).fixedWhite,
+                              child: CustomCircleAvatar(
+                                imageUrl: paths.pathNode[index].image,
+                                radius: 24.0.w,
+                              )),
                           paths.pathNode[index].isRegistered
                               ? Container(
                                   alignment: Alignment.center,
@@ -331,7 +361,7 @@ class MyListView extends StatelessWidget {
                           SizedBox(
                             width: 240.w,
                             child: Padding(
-                              padding:  EdgeInsets.only(right: 48.0.w),
+                              padding: EdgeInsets.only(right: 48.0.w),
                               child: Text(
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 1,
@@ -341,8 +371,8 @@ class MyListView extends StatelessWidget {
                                     .override(
                                       fontWeight: FontWeight.w400,
                                       useGoogleFonts: false,
-                                      color:
-                                          FlutterFlowTheme.of(context).fixedWhite,
+                                      color: FlutterFlowTheme.of(context)
+                                          .fixedWhite,
                                     ),
                               ),
                             ),
@@ -362,8 +392,3 @@ class MyListView extends StatelessWidget {
     );
   }
 }
-
-
-
-
-

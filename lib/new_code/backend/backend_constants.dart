@@ -26,6 +26,7 @@ const dynamic contactsAdded = 'contactsAdded';
 const dynamic contactsUpdated = 'contactsUpdated';
 const dynamic contactsCreated = 'contactsCreated';
 const dynamic deviceContacts = 'deviceContacts';
+const String fcmToken = "fcmToken";
 
 
 

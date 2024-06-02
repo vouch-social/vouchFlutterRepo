@@ -138,6 +138,16 @@ class _MyHuntsCardState extends State<MyHuntsCard> {
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
                                     fontWeight: FontWeight.w400))
+                : widget.hunts.hunterStatus == "awarded" ?
+                AutoSizeText('Awarded',
+                    style: FlutterFlowTheme.of(context)
+                        .buttonText
+                        .override(
+                        useGoogleFonts: false,
+                        fontSize: 12.sp,
+                        color: FlutterFlowTheme.of(context)
+                            .primaryText,
+                        fontWeight: FontWeight.w400))
                         : Row(
                             children: [
                               OutlineButtonWidget(

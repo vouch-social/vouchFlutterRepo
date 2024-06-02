@@ -56,9 +56,7 @@ class ContactsCallLogsRepo {
           Get.off(() => const ReSyncContactUploadSuccess());
         }else{
           Get.off(() => const ContactUploadSuccess());
-
         }
-
         print("sendContacts : $response");
         return result;
       } else {
@@ -73,7 +71,6 @@ class ContactsCallLogsRepo {
       );
     }
   }
-
 }
 
 

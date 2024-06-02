@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
 import 'package:vouch/new_code/onboarding/customize_profile/user_details.dart';
 import 'package:vouch/new_code/onboarding/goals/goals_screen.dart';
+import 'package:vouch/new_code/onboarding/waterfall_model.dart';
 import '../../../main.dart';
 import '../../backend/backend_constants.dart';
 import '../../backend/models/base_response.dart';
@@ -79,17 +80,15 @@ class _LinkedinWidgetState extends State<LinkedinWidget> {
           ) {
             logFirebaseEvent('Linkedin_navigate_to');
 
-            Get.to(() => GoalsScreen());
+            Get.off(() => GoalsScreen());
 
             logFirebaseEvent('Linkedin_stop_periodic_action');
             _model.instantTimer?.cancel();
           } else if(counter == 30) {
             logFirebaseEvent('Linkedin_navigate_to');
-            if(prefs?.getString(userName) == null){
-              Get.to(() => UserDetails());
-            } else {
-              Get.to(() => NewHomePage());
-            }
+
+              Get.off(() => navigateToPage());
+
 
           }else{
             logFirebaseEvent('Linkedin_backend_call');

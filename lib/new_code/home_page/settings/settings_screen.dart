@@ -21,7 +21,7 @@ import 'package:vouch/new_code/onboarding/permissions/permissions_screen.dart';
 import 'package:vouch/new_code/onboarding/welcome_screen/welcome_screen.dart';
 import '../../common_widgets/myAppBar.dart';
 import 'edit_attributes_screen.dart';
-import 'edit_profile/edit_tags_screen.dart';
+import 'ignore_contacts/ignore_contacts_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -44,10 +44,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         showBackButton: true,
         showProfileButton: false,
         title: "Settings",
-        onBackButtonPressed: () async{
-          Future.delayed(const Duration(seconds: 5),
-              await Get.offUntil( MaterialPageRoute(builder: (_) => NewHomePage()),ModalRoute.withName('/SettingsScreen'),),
-          );
+        onBackButtonPressed: () {
+               Get.offAll( () => NewHomePage());
+
         },
 
       ),
@@ -113,10 +112,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
               GestureDetector(
                 onTap: (){
-                  if(prefs?.getBool(isLinkedinSync) == false)
-                   Get.to( () => LinkedinScreen());
+                  if(prefs?.getBool(isLinkedinSync) == false) {
+                    Get.to( () => const LinkedinScreen());
+                  }
                 },
                 child: Container(
+                  color: Colors.transparent,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -181,9 +182,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         height: 12.0.h,
                       ),
                       Divider(
+                        thickness: 1.5,
                         color: FlutterFlowTheme.of(context)
                             .primaryText
-                            .withOpacity(0.9),
+                            .withOpacity(0.2),
                       )
                     ],
                   ),
@@ -194,6 +196,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Get.to(() =>  EditAttributesList(items: prefs!.getStringList(attributes),));
                 },
                 child: Container(
+                  color: Colors.transparent,
                   child: Column(
                     children: [
                       SizedBox(
@@ -230,6 +233,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Get.to(() => const EditGoalsScreen());
                 },
                 child: Container(
+                  color: Colors.transparent,
                   child: Column(
                     children: [
                       SizedBox(
@@ -265,39 +269,84 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               SizedBox(
-                  height: 36.0.h,
                   child: GestureDetector(
                     onTap: () {
                       Get.to(() => const ReSyncPermissionsScreen());
                     },
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 16.0.h,
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            AutoSizeText(
-                              'Contact sync',
-                              style: FlutterFlowTheme.of(context).labelSmall,
-                            ),
-                            const Spacer(),
-                            GestureDetector(
-                              child: Icon(Icons.arrow_forward_ios,
-                                  size: 16.0.h,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText),
-                            )
-                          ],
-                        ),
-                      ],
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 16.0.h,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              AutoSizeText(
+                                'Contact sync',
+                                style: FlutterFlowTheme.of(context).labelSmall,
+                              ),
+                              const Spacer(),
+                              GestureDetector(
+                                child: Icon(Icons.arrow_forward_ios,
+                                    size: 16.0.h,
+                                    color:
+                                        FlutterFlowTheme.of(context).primaryText),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 16.0.h,
+                          ),
+                          Divider(
+                            thickness: 1.5,
+                            color: FlutterFlowTheme.of(context)
+                                .primaryText
+                                .withOpacity(0.2),
+                          )
+                        ],
+                      ),
+                    ),
+                  )),
+              SizedBox(
+                  height: 36.0.h,
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.to(() => const IgnoreContactsScreen());
+                    },
+                    child: Container(
+                      color: Colors.transparent,
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 16.0.h,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              AutoSizeText(
+                                'Ignore Contacts',
+                                style: FlutterFlowTheme.of(context).labelSmall,
+                              ),
+                              const Spacer(),
+                              GestureDetector(
+                                child: Icon(Icons.arrow_forward_ios,
+                                    size: 16.0.h,
+                                    color:
+                                    FlutterFlowTheme.of(context).primaryText),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   )),
               const Spacer(),
               FFButtonWidget(
                   text: 'Logout', onPressed: () {
-                    Get.offAll(() => WelcomeScreen());
+                    prefs?.setString(authToken, '');
+                    Get.offAll(() => const WelcomeScreen());
               }, options: CTAButton(context))
             ],
           ),

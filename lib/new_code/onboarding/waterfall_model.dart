@@ -16,16 +16,16 @@ import '../../main.dart';
   /// if goals == null navigate to goals
   /// else navigate to homepage
 
-  void navigateToPage(BuildContext context) {
+  Widget navigateToPage() {
     if (prefs?.getString(authToken) == null) {
-      Get.to(() => const WelcomeScreen());
-    } else if (prefs!.getBool(isContactSync)! != true) {
-      Get.to(() => const PermissionsScreen());
-    } else if (prefs?.getString(userName) == null && prefs!.getBool(isLinkedinSync)! != true) {
-      Get.to(() => const LinkedinScreen());
-    } else if (prefs?.getStringList(goals) == null) {
-      Get.to(() => const GoalsScreen());
+   return const WelcomeScreen();
+    } else if (prefs!.getBool(isContactSync)! == false) {
+      return const PermissionsScreen();
+    } else if (prefs?.getString(userName) == "null" && prefs!.getBool(isLinkedinSync)! != true) {
+    return const LinkedinScreen();
+    } else if (prefs!.getStringList(goals)!.isEmpty) {
+    return const GoalsScreen();
     } else {
-      Get.to(() => const NewHomePage());
+    return const NewHomePage();
     }
   }

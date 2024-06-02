@@ -44,6 +44,7 @@ class NewUserDatum {
   dynamic linkedinSync;
   dynamic countryCode;
   dynamic deletedAt;
+  dynamic reason;
   dynamic goal;
   List<NewAttribute> attributes;
 
@@ -56,6 +57,7 @@ class NewUserDatum {
      this.phone,
      this.firebaseid,
      this.photourl,
+    this.reason,
      this.graphid,
      this.hashedphone,
      this.linkedinsub,
@@ -78,6 +80,7 @@ class NewUserDatum {
     userDatumCreatedAt: json["created_at"],
     name: json["name"],
     phone: json["phone"],
+    reason: json["reason"],
     firebaseid: json["firebaseid"],
     photourl: json["photourl"],
     graphid: json["graphid"],
@@ -103,6 +106,7 @@ class NewUserDatum {
     "name": name,
     "phone": phone,
     "firebaseid": firebaseid,
+    "reason": reason,
     "photourl": photourl,
     "graphid": graphid,
     "hashedphone": hashedphone,

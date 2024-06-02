@@ -12,7 +12,8 @@ import 'my_bounty_history.dart';
 import 'my_vouch_history.dart';
 
 class HistoryScreen extends StatefulWidget {
-  const HistoryScreen({super.key});
+  final dynamic index;
+  const HistoryScreen({super.key, this.index});
 
   @override
   State<HistoryScreen> createState() => _HistoryScreenState();
@@ -23,13 +24,13 @@ class _HistoryScreenState extends State<HistoryScreen> with TickerProviderStateM
   late final MyBountyHistoryModel myBountyHistoryModel;
 
   late TabController _tabController;
-  int _currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(_handleTabSelection);
+    _tabController.index = widget.index ?? 0;
   }
 
   @override
@@ -41,14 +42,13 @@ class _HistoryScreenState extends State<HistoryScreen> with TickerProviderStateM
 
   void _handleTabSelection() {
     setState(() {
-      _currentIndex = _tabController.index;
     });
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         showHistoryButton: false,
         showBackButton: true,
         title: "My History",

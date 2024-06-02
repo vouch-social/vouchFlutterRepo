@@ -6,10 +6,12 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vouch/new_code/backend/backend_constants.dart';
 
+import '../../../../auth/checkAuth.dart';
 import '../../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../../main.dart';
 import '../../../backend/repos/contacts_call_logs_repo.dart';
 import '../../../home_page/settings/settings_screen.dart';
+import '../../waterfall_model.dart';
 
 class ContactUploadSuccess extends StatefulWidget {
   const ContactUploadSuccess({super.key});
@@ -23,12 +25,9 @@ class _ContactUploadSuccessState extends State<ContactUploadSuccess> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 5), () {
-      if (prefs?.getString(userName) != "null") {
-        Get.off(() => const SettingsScreen());
-      } else {
-        checkImport();
-      }
+    Future.delayed(const Duration(seconds: 3), () async{
+      await checkUser();
+      Get.off(() => navigateToPage());
     });
   }
 

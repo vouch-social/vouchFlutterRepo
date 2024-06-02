@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -10,6 +12,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uni_links/uni_links.dart';
+import 'package:vouch/new_code/backend/backend_constants.dart';
 
 import 'auth/firebase_auth/firebase_user_provider.dart';
 import 'auth/firebase_auth/auth_util.dart';
@@ -17,31 +21,38 @@ import 'auth/firebase_auth/auth_util.dart';
 import './backend/push_notifications/push_notifications_util.dart';
 import './backend/firebase/firebase_config.dart';
 import 'auth/checkAuth.dart';
+import 'new_code/onboarding/waterfall_model.dart';
 import 'new_code/services/firebase_option.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
 import 'flutter_flow/firebase_app_check_util.dart';
 import './backend/firebase_dynamic_links/firebase_dynamic_links.dart';
 import './new_code/onboarding/welcome_screen/welcome_screen.dart';
+import 'new_code/services/notification_services.dart';
 
 SharedPreferences? prefs;
-
+bool _initialUriIsHandled = false;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  Future<void> initSharedPreferences() async {
+    prefs = await SharedPreferences.getInstance();
+  }
 String? token = await FirebaseMessaging.instance.getToken();
-print("Firebase Token : $token");
-  /// for linkdin login url
-  usePathUrlStrategy();
+  print("Firebase token from instance : $token");
   await initFirebase();
   await initSharedPreferences();
+  /// for linkdin login url
+  usePathUrlStrategy();
   final appState = FFAppState(); // Initialize FFAppState
   await appState.initializePersistedState();
   await initializeFirebaseAppCheck();
-
+  await prefs?.setString(fcmToken, token.toString());
+  print("Firebase Token from sharedPrefs : ${prefs?.getString(fcmToken)}");
+  usePathUrlStrategy();
   runApp(ChangeNotifierProvider(
     create: (context) => appState,
     child: MyApp(),
@@ -52,11 +63,9 @@ print("Firebase Token : $token");
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
 }
+NotificationServices notificationServices = NotificationServices();
 
 
-Future<void> initSharedPreferences() async {
-  prefs = await SharedPreferences.getInstance();
-}
 
 class MyApp extends StatefulWidget {
   // This widget is the root of your application.
@@ -76,6 +85,12 @@ class _MyAppState extends State<MyApp> {
   late AppStateNotifier _appStateNotifier;
   late GoRouter _router;
 
+  Uri? _initialUri;
+  Uri? _latestUri;
+  Object? _err;
+
+  StreamSubscription? _sub;
+
   final authUserSub = authenticatedUserStream.listen((_) {});
   final fcmTokenSub = fcmTokenUserStream.listen((_) {});
 
@@ -91,12 +106,20 @@ class _MyAppState extends State<MyApp> {
       const Duration(milliseconds: 1000),
       () => _appStateNotifier.stopShowingSplashImage(),
     );
+    notificationServices.requestNotificationPermission();
+    notificationServices.initLocalNotifications();
+    notificationServices.firebaseInit(context);
+    notificationServices.setupInteractMessage(context);
+    _handleIncomingLinks();
+    _handleInitialUri();
   }
 
   @override
   void dispose() {
     authUserSub.cancel();
     fcmTokenSub.cancel();
+    _sub?.cancel();
+    super.dispose();
     super.dispose();
   }
 
@@ -107,6 +130,50 @@ class _MyAppState extends State<MyApp> {
   void setThemeMode(ThemeMode mode) => setState(() {
         _themeMode = mode;
       });
+
+  void _handleIncomingLinks() {
+    if (!kIsWeb) {
+      _sub = uriLinkStream.listen((Uri? uri) {
+        if (!mounted) return;
+        setState(() {
+          _latestUri = uri;
+          _err = null;
+        });
+      }, onError: (Object err) {
+        if (!mounted) return;
+        setState(() {
+          _latestUri = null;
+          if (err is FormatException) {
+            _err = err;
+          } else {
+            _err = null;
+          }
+        });
+      });
+    }
+  }
+
+  Future<void> _handleInitialUri() async {
+    if (!_initialUriIsHandled) {
+      _initialUriIsHandled = true;
+      try {
+        final uri = await getInitialUri();
+        if (uri == null) {
+          print('no initial uri');
+        } else {
+          print('got initial uri: $uri');
+        }
+        if (!mounted) return;
+        setState(() => _initialUri = uri);
+      } on PlatformException {
+        print('failed to get initial uri');
+      } on FormatException catch (err) {
+        if (!mounted) return;
+        setState(() => _err = err);
+      }
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) => ScreenUtilInit(
@@ -140,7 +207,7 @@ class _MyAppState extends State<MyApp> {
               future: isUserLoggedIn(),
               builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
                 if (snapshot.data == true) {
-                  return newCustomNav();
+                  return navigateToPage();
                 } else {
                   return const WelcomeScreen();
                 }

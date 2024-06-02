@@ -28,7 +28,7 @@ class GoalsController extends GetxController{
       final response = await repository.sendUserGoals(data);
 
       if (response.status) {
-        Get.to(() => NewHomePage());
+        Get.off(() => const NewHomePage());
       } else {
         print('Status is false');
       }

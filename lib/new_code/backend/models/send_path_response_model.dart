@@ -1,41 +1,33 @@
 // To parse this JSON data, do
 //
-//     final sendPathrRsponseModel = sendPathrRsponseModelFromJson(jsonString);
+//     final sendPathResponseModel = sendPathResponseModelFromJson(jsonString);
 
 import 'dart:convert';
 
-SendPathResponseModel sendPatResponseModelFromJson(String str) => SendPathResponseModel.fromJson(json.decode(str));
+SendPathResponseModel sendPathResponseModelFromJson(String str) => SendPathResponseModel.fromJson(json.decode(str));
 
 String sendPathResponseModelToJson(SendPathResponseModel data) => json.encode(data.toJson());
 
 class SendPathResponseModel {
-  Data data;
+  dynamic sharableMessage;
+  bool existingPath;
+  dynamic vouchId;
 
   SendPathResponseModel({
-    required this.data,
+     this.sharableMessage,
+    required this.existingPath,
+     this.vouchId,
   });
 
   factory SendPathResponseModel.fromJson(Map<String, dynamic> json) => SendPathResponseModel(
-    data: Data.fromJson(json),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "data": data.toJson(),
-  };
-}
-
-class Data {
-  dynamic sharableMessage;
-
-  Data({
-    required this.sharableMessage,
-  });
-
-  factory Data.fromJson(Map<dynamic, dynamic> json) => Data(
     sharableMessage: json["sharableMessage"],
+    existingPath: json["existingPath"],
+    vouchId: json["vouchId"],
   );
 
   Map<String, dynamic> toJson() => {
     "sharableMessage": sharableMessage,
+    "existingPath": existingPath,
+    "vouchId": vouchId,
   };
 }

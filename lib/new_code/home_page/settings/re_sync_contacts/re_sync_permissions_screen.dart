@@ -6,6 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:vouch/generated/assets.dart';
+import 'package:vouch/new_code/common_widgets/myAppBar.dart';
 import 'package:vouch/new_code/common_widgets/vector.dart';
 import 'package:vouch/new_code/home_page/settings/re_sync_contacts/contacts_call_logs/contacts_re_import_screen.dart';
 import 'package:vouch/new_code/onboarding/permissions/contacts_call_logs/import_screen.dart';
@@ -89,6 +90,10 @@ class _ReSyncPermissionsScreenState extends State<ReSyncPermissionsScreen> {
           ? FocusScope.of(context).requestFocus(_model.unfocusNode)
           : FocusScope.of(context).unfocus(),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: const CustomAppBar(
+          showBackButton: true,
+        ),
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: Padding(
@@ -102,7 +107,7 @@ class _ReSyncPermissionsScreenState extends State<ReSyncPermissionsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: 142.0.h,
+                    height: 80.0.h,
                   ),
                   Center(
                     child: Container(
@@ -123,7 +128,7 @@ class _ReSyncPermissionsScreenState extends State<ReSyncPermissionsScreen> {
                       )
                     ),
                   ),
-                  SizedBox(height: 172.0.h),
+                  SizedBox(height: 148.0.h),
                   AutoSizeText(
                     'Contacts Permission',
                     style: FlutterFlowTheme.of(context).displayMedium,
@@ -213,9 +218,7 @@ class _ReSyncPermissionsScreenState extends State<ReSyncPermissionsScreen> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 28.0.h,
-              ),
+              const Spacer(),
               Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [

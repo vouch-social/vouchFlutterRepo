@@ -10,6 +10,7 @@ import 'package:vouch/new_code/backend/backend_constants.dart';
 import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
 import 'package:vouch/new_code/onboarding/customize_profile/user_details.dart';
 import '../../../main.dart';
+import '../waterfall_model.dart';
 import 'linkedin_widget.dart';
 import '../../../backend/firebase_analytics/analytics.dart';
 import '../../../flutter_flow/flutter_flow_theme.dart';
@@ -138,11 +139,7 @@ class _LinkedinScreenState extends State<LinkedinScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    if(prefs?.getString(userName) != null){
-                       Get.to( () => NewHomePage());
-                    }else{
-                      Get.to(() => UserDetails());
-                    }
+                      Get.to(() => navigateToPage());
                   },
                   child: Center(
                     child: AutoSizeText(

@@ -158,6 +158,9 @@ class _FinalPathMessageScreenState extends State<FinalPathMessageScreen> {
                             strength: widget.singlePath.strength ?? 0,
                             length:widget.singlePath.length,
                           );
+                          setState(() {
+                            controller.contextController.clear();
+                          });
                         },
                       ).onPressed(data[widget.currentIndex]);
                     }
