@@ -27,10 +27,9 @@ class _FinalPathMessageScreenState extends State<FinalPathMessageScreen> {
   final controller = Get.put(PathsController());
 
 
-
   @override
   Widget build(BuildContext context) {
-
+    print("Index : ${widget.currentIndex}");
     final data = widget.singlePath.pathNode;
 
     Map<String, dynamic> pathNodeToMap(PathNode node) {
@@ -61,7 +60,7 @@ class _FinalPathMessageScreenState extends State<FinalPathMessageScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         showBackButton: true,
       ),
       body: SafeArea(
@@ -136,10 +135,7 @@ class _FinalPathMessageScreenState extends State<FinalPathMessageScreen> {
               FFButtonWidget(
                   text: "Start Vouch",
                   onPressed: () async {
-
                     if (controller.contextController.text != '') {
-
-
                       await MyListView(
                         paths: widget.singlePath,
                         totalCount: widget.singlePath.length,
@@ -153,16 +149,16 @@ class _FinalPathMessageScreenState extends State<FinalPathMessageScreen> {
                               'Button pressed in tab ${widget.currentIndex} with strength: ${widget.singlePath.strength}');
                           print(
                               'Button pressed in tab ${widget.currentIndex} with length: ${widget.singlePath.length}');
-                          await controller.sendPath(
-                            pathList: pathNodes,
-                            strength: widget.singlePath.strength ?? 0,
-                            length:widget.singlePath.length,
-                          );
+                          // await controller.sendPath(
+                          //   pathList: pathNodes,
+                          //   strength: widget.singlePath.strength ?? 0,
+                          //   length:widget.singlePath.length,
+                          // );
                           setState(() {
                             controller.contextController.clear();
                           });
                         },
-                      ).onPressed(data[widget.currentIndex]);
+                      ).onPressed(data[0]);
                     }
                   },
                   options: CTAButton(context)),
@@ -175,6 +171,9 @@ class _FinalPathMessageScreenState extends State<FinalPathMessageScreen> {
 }
 
 Widget vouchPath(context, pathItem, index, length, ) {
+  if (index < 0 || index >= pathItem.length) {
+    return SizedBox();
+  }
   print("PathItem : $pathItem");
   return SingleChildScrollView(
     child: Column(

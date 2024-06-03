@@ -31,7 +31,7 @@ class RoundedTextField extends StatelessWidget {
             ),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: AutoSizeText('Search by query/context or Raise a bounty->',
+              child: AutoSizeText('Search for professionals, topics, or interests',
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   style: FlutterFlowTheme.of(context).titleSmall),

@@ -50,49 +50,57 @@ class _MyRaisedBountyHistoryState extends State<MyRaisedBountyHistory> {
           await fetchBountyHistory();
         },
         child: Obx(
-              () => Skeletonizer(
+          () => Skeletonizer(
               enabled: controller.isLoading.value,
               child: controller.isLoading.value == false
                   ? (bountyHistory.isNotEmpty
-                  ? ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 16.0.w),
-                itemCount: bountyHistory.length,
-                itemBuilder: (BuildContext context, int index) {
-                  var bounty = bountyHistory[index];
-                  return MyBountyWidget(
-                    bounty: bounty,
-                    refreshCallback: fetchBountyHistory,
-                  );
-                },
-              )
-                  : ListView(
-                  children:[ Center(
-                                    child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 48.0.h),
-                      SvgPicture.asset(Assets.assetsEmptyStateHistory,
-                        height: 248.0.h,
-                        width: 180.0.w,
-                      ),
-                      SizedBox(height: 24.0.h,),
-                      AutoSizeText("You have no Bounties",
-                      style: FlutterFlowTheme.of(context).headlineSmall.override(
-                        useGoogleFonts: false,
-                        fontWeight: FontWeight.w400,
-                        color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.7)
-                      ),
-                      )
-
-                    ],
-                                    ),
-                                  ),]
-                  ))
+                      ? ListView.builder(
+                          padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+                          itemCount: bountyHistory.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            var bounty = bountyHistory[index];
+                            return MyBountyWidget(
+                              bounty: bounty,
+                              refreshCallback: fetchBountyHistory,
+                            );
+                          },
+                        )
+                      : Center(
+                          child: ListView(children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 80.0.h),
+                                Image.asset(
+                                  Assets.assetsBounty,
+                                  height: 300.0.h,
+                                  width: 300.0.w,
+                                ),
+                                Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 0.0.w),
+                                  child: AutoSizeText(
+                                    "Start your first bounty to see them here!",
+                                    style: FlutterFlowTheme.of(context)
+                                        .titleMedium
+                                        .override(
+                                            fontSize: 18,
+                                            useGoogleFonts: false,
+                                            fontWeight: FontWeight.w400,
+                                            color: FlutterFlowTheme.of(context)
+                                                .ffButton
+                                                .withOpacity(0.7)),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ]),
+                        ))
                   : Center(
-                child: CircularProgressIndicator(
-                  color: FlutterFlowTheme.of(context).secondaryBackground,
-                ),
-              )),
+                      child: CircularProgressIndicator(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                      ),
+                    )),
         ),
       ),
     );

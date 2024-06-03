@@ -2,15 +2,17 @@
 class Assets {
   Assets._();
 
+  static const String assetsBounty = 'assets/Bounty.png';
   static const String assetsCheckVouchSvg = 'assets/check_vouch_svg.svg';
   static const String assetsCleanedPhoneBook = 'assets/cleaned_phoneBook.svg';
   static const String assetsContactsPng = 'assets/contacts_png.png';
   static const String assetsDefault = 'assets/default.png';
-  static const String assetsEmptyStateHistory = 'assets/emptyStateHistory.svg';
-  static const String assetsEmptyStateHunts = 'assets/emptyStateHunts.svg';
+  static const String assetsHunt = 'assets/Hunt.png';
   static const String assetsImage951 = 'assets/image951.png';
   static const String assetsLinkdinSvg = 'assets/linkdin_svg.svg';
   static const String assetsLock = 'assets/lock.svg';
+  static const String assetsOutreach = 'assets/Outreach.png';
+  static const String assetsPaths = 'assets/Paths.png';
   static const String assetsPathsEmptyState = 'assets/paths_empty_state.svg';
   static const String assetsRecommendationsEmptyState = 'assets/recommendations_empty_state.svg';
   static const String assetsUserIcon = 'assets/user_icon.svg';

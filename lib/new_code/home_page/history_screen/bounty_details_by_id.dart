@@ -192,8 +192,9 @@ class _BountyDetailsScreenState extends State<BountyDetailsScreen> {
                                       ),
                                       AutoSizeText(
                                         bountyDetails.urgency.name == 'urgently'
-                                            ? "Needs to be completed within 24 hours."
-                                            : 'Needs to be completed within 36 hours.',
+                                            ? "Needs to be completed within 6 hours."
+                                      :  bountyDetails.urgency.name == "Within 72 hours" ?
+                                           'Needs to be completed within 72 hours.' : 'Needs to be completed within 24 hours.',
                                         style: FlutterFlowTheme.of(context)
                                             .labelExtraSmall,
                                       ),
@@ -336,9 +337,9 @@ class _BountyDetailsScreenState extends State<BountyDetailsScreen> {
                                                         },
                                                         child:
                                                         isSelected
-                                                            ? Icon(Icons.radio_button_checked)
+                                                            ? const Icon(Icons.radio_button_checked)
                                                             : isSelectedState ?
-                                                        Icon(Icons.radio_button_off_outlined) :
+                                                        const Icon(Icons.radio_button_off_outlined) :
 
                                                         Container(
                                                           padding:
@@ -404,7 +405,7 @@ class _BountyDetailsScreenState extends State<BountyDetailsScreen> {
                                                                     ? "Ignored"
                                                                     : hunters[index]
                                                                                 .hunterStatus ==
-                                                                            "award"
+                                                                            "awarded"
                                                                         ? "Awarded"
                                                                         : "",
                                                         minFontSize: 8,

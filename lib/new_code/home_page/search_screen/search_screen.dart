@@ -95,41 +95,42 @@ class _SearchScreenState extends State<SearchScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      height: 136.0.h,
+                      height: 160.0.h,
                       child: Obx(() {
                         if (_controller.isSearchLoading.value ) {
                           return Center(
                             child: Lottie.network(
-                              "https://lottie.host/ed886f82-2d00-4bf4-96df-323151092289/hjRRpMdcX5.json",
+                              'https://lottie.host/3d8f7b70-2fdf-4192-b93c-afde40d44a6b/PS3ttkgWzx.json',
                               frameRate: FrameRate(30.0),
-                              height: 124.0.h,
                               fit: BoxFit.cover,
                               animate: true,
                             ),
                           );
                         } else if (responseData.searchData == null ||
                             responseData.searchData.isEmpty) {
-                          return Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Container(
-                                child: Lottie.network(
-                                  "https://lottie.host/b5a24d04-69db-4e87-8f86-21a5243a42a3/xjn2UrFym3.json",
-                                  frameRate: FrameRate(30.0),
-                                  height: 104.0.h,
-                                  fit: BoxFit.cover,
-                                  animate: true,
+                          return Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+
+                                  child: Lottie.network(
+                                    "https://lottie.host/b5a24d04-69db-4e87-8f86-21a5243a42a3/xjn2UrFym3.json",
+                                    fit: BoxFit.cover,
+                                    height: 128.0.h,
+                                    animate: true,
+                                  ),
                                 ),
-                              ),
-                              SizedBox(height: 4.0.h,),
-                              SizedBox(
-                                  width: double.infinity,
-                                  child: AutoSizeText("We cannot provide recommendations for the query provided. Kindly try something else.",
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 2,
-                                  style: FlutterFlowTheme.of(context).labelExtraSmall,
-                                  ))
-                            ],
+                                SizedBox(height: 4.0.h,),
+                                SizedBox(
+                                    width: double.infinity,
+                                    child: AutoSizeText("We cannot provide recommendations for the query provided. Kindly try something else.",
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    style: FlutterFlowTheme.of(context).labelExtraSmall,
+                                    ))
+                              ],
+                            ),
                           );
                         } else {
                           return ListView.builder(
@@ -298,7 +299,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       color: Colors.transparent,
                       child: Container(
                         width: MediaQuery.of(context).size.width - 88.w,
-                        padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+                        padding: EdgeInsets.symmetric(horizontal: 12.0.w),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30.0.w),
                           color: FlutterFlowTheme.of(context).textFieldBackground,
@@ -319,8 +320,8 @@ class _SearchScreenState extends State<SearchScreen> {
                             });
                           },
                           decoration: InputDecoration(
-                            hintText: "Search by query/context or Raise a bounty->",
-                            hintStyle: FlutterFlowTheme.of(context).titleSmall,
+                            hintText: "Search for professionals, topics, or interests",
+                            hintStyle: FlutterFlowTheme.of(context).labelExtraSmall,
                             focusedBorder: const OutlineInputBorder(
                               borderSide: BorderSide.none,
                             ),

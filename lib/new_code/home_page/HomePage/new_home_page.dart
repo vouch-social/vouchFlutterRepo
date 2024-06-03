@@ -294,6 +294,7 @@ class _NewHomePageState extends State<NewHomePage> {
                                                 initials,
                                                 textAlign: TextAlign.center,
                                                 style: FlutterFlowTheme.of(context).headlineLarge.override(
+                                                  color: FlutterFlowTheme.of(context).fixedWhite,
                                                   useGoogleFonts: false,
                                                   fontSize: 28.0.sp
                                                 )

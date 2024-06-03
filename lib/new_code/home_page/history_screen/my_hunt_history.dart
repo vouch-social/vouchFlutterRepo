@@ -21,7 +21,7 @@ class MyHuntsScreen extends StatefulWidget {
 
 class _MyHuntsScreenState extends State<MyHuntsScreen> {
   final controller = Get.put(HuntsController());
-  var huntsHistory;
+  var huntsHistory = [];
 
   @override
   void initState() {
@@ -57,33 +57,33 @@ class _MyHuntsScreenState extends State<MyHuntsScreen> {
             (huntsHistory.isNotEmpty)?
             ListView.builder(
               padding: EdgeInsets.symmetric(horizontal: 16.0.w),
-              itemCount: huntsHistory?.length ?? 0,
+              itemCount: huntsHistory.length ?? 0,
               itemBuilder: (BuildContext context, int index) {
                 var hunts = huntsHistory[index];
                 return MyHuntsCard(hunts:  hunts,refreshCallBack: fetchHuntsHistory);
               },
-            ) :ListView(
-                children:[ Center(
-                  child: Column(
+            ) :Center(
+              child: ListView(
+                  children:[ Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      SizedBox(height: 24.0.h),
-                      SvgPicture.asset(Assets.assetsEmptyStateHunts,
-                        height: 264.0.h,
-                        width: 264.0.w,
+                      SizedBox(height: 80.0.h),
+                      Image.asset(Assets.assetsHunt,
+                        height: 300.0.h,
+                        width: 300.0.w,
                       ),
-                      SizedBox(height: 24.0.h,),
-                      AutoSizeText("You have No Hunts",
-                        style: FlutterFlowTheme.of(context).headlineSmall.override(
+                      AutoSizeText("Start hunting for bounties to see them here!",
+                        style: FlutterFlowTheme.of(context).titleMedium.override(
                             useGoogleFonts: false,
+                            fontSize: 18,
                             fontWeight: FontWeight.w400,
                             color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.7)
                         ),
                       )
 
                     ],
-                  ),
-                ),]
+                  ),]
+              ),
             )
                 : Center(
               child: CircularProgressIndicator(

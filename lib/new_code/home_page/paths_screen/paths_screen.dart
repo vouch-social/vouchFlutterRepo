@@ -45,7 +45,7 @@ class PathsScreen extends StatefulWidget {
 class _PathsScreenState extends State<PathsScreen> {
   final controller = Get.put(HomeController());
   var allPaths;
-
+  var isLoading = false;
   void fetchPaths() async {
     var fetchedPaths = await controller.getPathsList(widget.hashedPhone);
     WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -208,11 +208,12 @@ class _PathsScreenState extends State<PathsScreen> {
                 height: 24.0.h,
               ),
               allPaths != null
+
                   ? Expanded(
                       child: PathListView(
                       goal: widget.goals,
                       allPaths: allPaths,
-                    )): Container()
+                                          )): Container()
             ],
                     ),
                   ),

@@ -2,25 +2,26 @@ import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uni_links/uni_links.dart';
+import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/new_code/backend/backend_constants.dart';
-
 import 'auth/firebase_auth/firebase_user_provider.dart';
 import 'auth/firebase_auth/auth_util.dart';
-
 import './backend/push_notifications/push_notifications_util.dart';
 import './backend/firebase/firebase_config.dart';
 import 'auth/checkAuth.dart';
+import 'generated/assets.dart';
 import 'new_code/onboarding/waterfall_model.dart';
 import 'new_code/services/firebase_option.dart';
 import 'flutter_flow/flutter_flow_util.dart';
@@ -177,42 +178,66 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) => ScreenUtilInit(
-        designSize: const Size(390, 844),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        ensureScreenSize: true,
-        builder: (context, _) => GetMaterialApp(
-            title: 'Vouch',
-            debugShowCheckedModeBanner: false,
-            localizationsDelegates: const [
-              FFLocalizationsDelegate(),
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            locale: _locale,
-            supportedLocales: const [
-              Locale('en'),
-            ],
-            theme: ThemeData(
-              brightness: Brightness.light,
-              useMaterial3: false,
-            ),
-            themeMode: _themeMode,
-            builder: (_, child) => DynamicLinksHandler(
-                  router: _router,
-                  child: child!,
-                ),
-            home: FutureBuilder<bool>(
-              future: isUserLoggedIn(),
-              builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                if (snapshot.data == true) {
-                  return navigateToPage();
-                } else {
-                  return const WelcomeScreen();
-                }
-              },
-            )),
-      );
+    designSize: const Size(390, 844),
+    minTextAdapt: true,
+    splitScreenMode: true,
+    ensureScreenSize: true,
+    builder: (context, _) => GetMaterialApp(
+      title: 'Vouch',
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: const [
+        FFLocalizationsDelegate(),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      locale: _locale,
+      supportedLocales: const [
+        Locale('en'),
+      ],
+      theme: ThemeData(
+        brightness: Brightness.light,
+        useMaterial3: false,
+      ),
+      themeMode: _themeMode,
+      builder: (_, child) => DynamicLinksHandler(
+        router: _router,
+        child: child!,
+      ),
+      home: FutureBuilder<bool>(
+        future: isUserLoggedIn(),
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return SplashScreen();
+          } else
+            if (snapshot.hasData && snapshot.data == true) {
+            return navigateToPage();
+          } else {
+            return const WelcomeScreen();
+          }
+        },
+      ),
+    ),
+  );
+
 }
 
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(Assets.assetsWelcomeLogo,
+              color: FlutterFlowTheme.of(context).primary,
+                    ),
+          ],
+        ),
+      ),
+    );
+  }
+}

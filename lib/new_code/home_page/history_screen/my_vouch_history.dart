@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -21,7 +23,7 @@ class MyVouchHistory extends StatefulWidget {
 
 class _MyVouchHistoryState extends State<MyVouchHistory> {
   final controller = Get.put(VouchController());
-  var vouchHistory;
+  var vouchHistory = [];
 
   @override
   void initState() {
@@ -53,7 +55,7 @@ class _MyVouchHistoryState extends State<MyVouchHistory> {
         child: Obx(
           () => Skeletonizer(
               enabled: controller.isLoading.value,
-              child: controller.isLoading.value == false 
+              child: controller.isLoading.value == false && vouchHistory != null
                   ?(
                   vouchHistory.isNotEmpty )?
                   ListView.builder(
@@ -68,28 +70,29 @@ class _MyVouchHistoryState extends State<MyVouchHistory> {
                         }
                       },
                     ) :
-                  ListView(
-                      children:[ Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 48.0.h),
-                            SvgPicture.asset(Assets.assetsEmptyStateHistory,
-                            height: 248.0.h,
-                              width: 180.0.w,
-                            ),
-                            SizedBox(height: 24.0.h,),
-                            AutoSizeText("You have no Vouch",
-                              style: FlutterFlowTheme.of(context).headlineSmall.override(
-                                  useGoogleFonts: false,
-                                  fontWeight: FontWeight.w400,
-                                  color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.7)
+                  Center(
+                    child: ListView(
+                        children:[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(height: 80.0.h),
+                              Image.asset(Assets.assetsOutreach,
+                              height: 300.0.h,
+                                width: 300.0.w,
                               ),
-                            )
+                              AutoSizeText("Search and explore paths to see them here!",
+                                style: FlutterFlowTheme.of(context).titleMedium.override(
+                                  fontSize: 18,
+                                    useGoogleFonts: false,
+                                    fontWeight: FontWeight.w400,
+                                    color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.7)
+                                ),
+                              )
 
-                          ],
-                        ),
-                      ),]
+                            ],
+                          ),]
+                    ),
                   )
 
                   : Center(

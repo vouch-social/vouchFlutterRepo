@@ -117,14 +117,10 @@ class _PathListViewState extends State<PathListView>
                   child: FFButtonWidget(
                       text: "Select Path",
                       onPressed: () async {
-                        // Call the callback function with the relevant data
-
-                        // Get.to(() => FinalPathMessageScreen());
-
                         if (_tabController != null) {
                           final int currentIndex = _tabController!.index;
                           print(
-                              "currentIndex: ${currentIndex},singlePath:  ${widget.allPaths.singlePathList[currentIndex]}");
+                              "currentIndex: $currentIndex,singlePath:  ${widget.allPaths.singlePathList[currentIndex]}");
 
                           Get.to(() => FinalPathMessageScreen(
                               goal: widget.goal,
@@ -144,14 +140,14 @@ class _PathListViewState extends State<PathListView>
                   height: 36.0.h,
                 ),
                 AutoSizeText(
-                  "Opps!",
+                  "No Paths Found!",
                   style: FlutterFlowTheme.of(context).displayMedium.override(
                       useGoogleFonts: false,
                       color: FlutterFlowTheme.of(context).fixedWhite
                   ),
                 ),
                 AutoSizeText(
-                  "No Path Found",
+                  "Explore new connections to bridge the gap.",
                   style: FlutterFlowTheme.of(context).headlineLarge.override(
                     useGoogleFonts: false,
                     color: FlutterFlowTheme.of(context).fixedWhite
@@ -160,8 +156,9 @@ class _PathListViewState extends State<PathListView>
                 SizedBox(
                   height: 8.0.h,
                 ),
-                SvgPicture.asset(
-                  Assets.assetsPathsEmptyState,
+                Image.asset(
+                  Assets.assetsPaths,
+                  height: 300.0.h,
                 ),
               ],
             ),
@@ -170,7 +167,6 @@ class _PathListViewState extends State<PathListView>
 }
 
 class MyListView extends StatelessWidget {
-  //final List<String> items = List<String>.generate(10, (i) => "Item $i");
   final SinglePath paths;
   final int totalCount;
   final int index;
@@ -196,7 +192,7 @@ class MyListView extends StatelessWidget {
           child: Align(
             alignment: Alignment.topRight,
             child: Container(
-                width: 36,
+                width: 36.0.w,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(18.0.w),
@@ -245,7 +241,7 @@ class MyListView extends StatelessWidget {
                                   lineLength: 30.h,
                                 )
                               : Container(
-                                  height: 30.h,
+                                  height: 30.0.h,
                                 ),
                           Stack(
                             alignment: Alignment.center,
@@ -275,7 +271,7 @@ class MyListView extends StatelessWidget {
                           ),
                           index >= paths.length - 1
                               ? Container(
-                                  height: 30.h,
+                                  height: 30.0.h,
                                 )
                               : DottedLine(
                                   dashLength: 2,
@@ -287,7 +283,7 @@ class MyListView extends StatelessWidget {
                                       .withOpacity(0.6),
                                   // dashGapColor: Colors.red,
                                   direction: Axis.vertical,
-                                  lineLength: 30.h,
+                                  lineLength: 30.0.h,
                                 ),
                         ],
                       ),

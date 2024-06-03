@@ -157,15 +157,15 @@ class Path {
 }
 
 class Attribute {
-  int id;
-  int userId;
-  String createdAt;
-  String updatedAt;
-  List<String> attributes;
+  dynamic id;
+  dynamic userId;
+  dynamic createdAt;
+  dynamic updatedAt;
+  List<dynamic> attributes;
 
   Attribute({
     required this.id,
-    required this.userId,
+     this.userId,
     required this.createdAt,
     required this.updatedAt,
     required this.attributes,
