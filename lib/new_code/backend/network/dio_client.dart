@@ -7,7 +7,7 @@ import 'interceptor.dart';
 
 class DioClient {
   static final DioClient _instance = DioClient._internal();
-  static String baseUrl = "http://ec2-52-71-139-244.compute-1.amazonaws.com";
+  static String baseUrl = "https://api.vouch.social";
   late Dio dio;
 
   factory DioClient() => _instance;
