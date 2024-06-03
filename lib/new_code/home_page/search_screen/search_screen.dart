@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:vouch/new_code/common_widgets/myAppBar.dart';
+import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
 import 'package:vouch/new_code/home_page/bounty_screen/bounty_screen.dart';
 import 'package:vouch/new_code/home_page/search_screen/search_controller.dart';
 import 'package:vouch/new_code/home_page/search_screen/search_prompt_widget.dart';
@@ -39,7 +40,10 @@ class _SearchScreenState extends State<SearchScreen> {
 
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: const CustomAppBar(
+      appBar:  CustomAppBar(
+        onBackButtonPressed: (){
+          Get.off(() => const NewHomePage());
+        },
         showBackButton: true,
         showHistoryButton: false,
         showNotificationButton: false,

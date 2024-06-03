@@ -45,7 +45,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         showProfileButton: false,
         title: "Settings",
         onBackButtonPressed: () {
-               Get.offAll( () => NewHomePage());
+               Get.offAll( () => const NewHomePage());
 
         },
 

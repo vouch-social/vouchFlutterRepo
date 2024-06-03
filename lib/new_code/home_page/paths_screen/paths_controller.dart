@@ -36,7 +36,7 @@ class PathsController extends GetxController {
       }
       else{
         Get.snackbar("Alert", "You can not start more that one vouch!");
-        Get.to(() => NewHomePage());
+        Get.off(() => NewHomePage());
       }
     } catch (error) {
       print("Error getPathList: $error");
