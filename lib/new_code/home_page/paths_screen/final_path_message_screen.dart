@@ -149,11 +149,11 @@ class _FinalPathMessageScreenState extends State<FinalPathMessageScreen> {
                               'Button pressed in tab ${widget.currentIndex} with strength: ${widget.singlePath.strength}');
                           print(
                               'Button pressed in tab ${widget.currentIndex} with length: ${widget.singlePath.length}');
-                          // await controller.sendPath(
-                          //   pathList: pathNodes,
-                          //   strength: widget.singlePath.strength ?? 0,
-                          //   length:widget.singlePath.length,
-                          // );
+                          await controller.sendPath(
+                            pathList: pathNodes,
+                            strength: widget.singlePath.strength ?? 0,
+                            length:widget.singlePath.length,
+                          );
                           setState(() {
                             controller.contextController.clear();
                           });
