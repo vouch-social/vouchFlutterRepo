@@ -25,11 +25,15 @@ import 'package:vouch/new_code/home_page/HomePage/paths_list_controller.dart';
 import 'package:vouch/new_code/home_page/bounty_screen/bounty_screen.dart';
 import 'package:vouch/new_code/home_page/paths_screen/paths_screen.dart';
 import 'package:vouch/new_code/home_page/settings/edit_goals/edit_goals_screen.dart';
+import 'package:vouch/new_code/onboarding/goals/goals_screen.dart';
+import 'package:vouch/new_code/onboarding/linkdin/linkdin_screen.dart';
 import 'package:vouch/new_code/onboarding/permissions/permissions_screen.dart';
 import '../../../flutter_flow/flutter_flow_util.dart';
 import '../../../generated/assets.dart';
 import '../../../main.dart';
 import '../../common_widgets/myAppBar.dart';
+import '../../common_widgets/recommendations_card_widget.dart';
+import 'components/bottom_bar_widget.dart';
 import 'components/rounded_text_field.dart';
 
 class NewHomePage extends StatefulWidget {
@@ -55,7 +59,7 @@ class _NewHomePageState extends State<NewHomePage> {
     _updateGreeting();
   }
 
-  void _initializeData(){
+  void _initializeData() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       fetchRecommendations();
       fetchFeeds();
@@ -102,7 +106,7 @@ class _NewHomePageState extends State<NewHomePage> {
     isLoading(false);
   }
 
-  void _makePhoneCall(String phoneNumber) async {
+  void makePhoneCall(String phoneNumber) async {
     final Uri launchUri = Uri(
       scheme: 'tel',
       path: phoneNumber,
@@ -131,6 +135,7 @@ class _NewHomePageState extends State<NewHomePage> {
       });
     });
   }
+
   Color getRandomColor() {
     Random random = Random();
     return Color.fromARGB(
@@ -161,33 +166,7 @@ class _NewHomePageState extends State<NewHomePage> {
       key: _scaffoldKey,
       resizeToAvoidBottomInset: false,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(
-            left: 16.0.w, right: 16.0.w, bottom: 16.0.h, top: 8.0.h),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const RoundedTextField(),
-            SizedBox(width: 6.w),
-            GestureDetector(
-              child: Container(
-                height: 50.h,
-                width: 50.w,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30.w),
-                    color: FlutterFlowTheme.of(context).primary),
-                child: Icon(
-                  Icons.add,
-                  color: FlutterFlowTheme.of(context).fixedWhite,
-                ),
-              ),
-              onTap: () {
-                Get.to(() => const BountyScreen());
-              },
-            )
-          ],
-        ),
-      ),
+      bottomNavigationBar: const BottomBarWidget(),
       body: SafeArea(
         child: RefreshIndicator(
           triggerMode: RefreshIndicatorTriggerMode.onEdge,
@@ -241,29 +220,38 @@ class _NewHomePageState extends State<NewHomePage> {
                               mainAxisAlignment: starredContacts.length < 4
                                   ? MainAxisAlignment.start
                                   : MainAxisAlignment.spaceBetween,
-                              children: List.generate(starredContacts.length, (index) {
-                                String phoneNumber = starredContacts[index].phones.isNotEmpty
+                              children: List.generate(starredContacts.length,
+                                  (index) {
+                                String phoneNumber = starredContacts[index]
+                                        .phones
+                                        .isNotEmpty
                                     ? starredContacts[index].phones.first.number
                                     : '';
-                                String displayName = starredContacts[index].displayName ?? '';
+                                String displayName =
+                                    starredContacts[index].displayName ?? '';
                                 List<String> nameParts = displayName.split(' ');
-                                String firstNameInitial = nameParts.isNotEmpty && nameParts.first.isNotEmpty
-                                    ? nameParts.first[0].toUpperCase()
-                                    : '';
-                                String lastNameInitial = nameParts.length > 1 && nameParts.last.isNotEmpty
+                                String firstNameInitial =
+                                    nameParts.isNotEmpty &&
+                                            nameParts.first.isNotEmpty
+                                        ? nameParts.first[0].toUpperCase()
+                                        : '';
+                                String lastNameInitial = nameParts.length > 1 &&
+                                        nameParts.last.isNotEmpty
                                     ? nameParts.last[0].toUpperCase()
                                     : '';
-                                String initials = '$firstNameInitial$lastNameInitial';
+                                String initials =
+                                    '$firstNameInitial$lastNameInitial';
 
                                 return GestureDetector(
                                   onTap: () {
                                     if (phoneNumber.isNotEmpty) {
-                                      _makePhoneCall(phoneNumber);
+                                      makePhoneCall(phoneNumber);
                                     } else {
-                                      ScaffoldMessenger.of(context).showSnackBar(
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
                                         const SnackBar(
-                                            content: Text(
-                                                "No phone number available for this contact"),
+                                          content: Text(
+                                              "No phone number available for this contact"),
                                         ),
                                       );
                                     }
@@ -273,44 +261,58 @@ class _NewHomePageState extends State<NewHomePage> {
                                         ? EdgeInsets.only(right: 40.0.w)
                                         : EdgeInsets.only(right: 0.0.w),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Container(
                                           width: 60.w,
                                           height: 60.h,
                                           decoration: BoxDecoration(
-                                            color: starredContacts[index].photo == null
-                                                ? getRandomColor()
-                                                : Colors.transparent,
-                                            borderRadius: BorderRadius.circular(30.0.w),
+                                            color:
+                                                starredContacts[index].photo ==
+                                                        null
+                                                    ? getRandomColor()
+                                                    : Colors.transparent,
+                                            borderRadius:
+                                                BorderRadius.circular(30.0.w),
                                           ),
-                                          child: starredContacts[index].photo != null
+                                          child: starredContacts[index].photo !=
+                                                  null
                                               ? ClipOval(
-                                            child: Image.memory(starredContacts[index].photo!),
-                                          )
-                                              : ClipOval(
-                                            child: Center(
-                                              child: AutoSizeText(
-                                                initials,
-                                                textAlign: TextAlign.center,
-                                                style: FlutterFlowTheme.of(context).headlineLarge.override(
-                                                  color: FlutterFlowTheme.of(context).fixedWhite,
-                                                  useGoogleFonts: false,
-                                                  fontSize: 28.0.sp
+                                                  child: Image.memory(
+                                                      starredContacts[index]
+                                                          .photo!),
                                                 )
-                                              ),
-                                            ),
-                                          ),
+                                              : ClipOval(
+                                                  child: Center(
+                                                    child: AutoSizeText(
+                                                        initials,
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: FlutterFlowTheme
+                                                                .of(context)
+                                                            .headlineLarge
+                                                            .override(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .fixedWhite,
+                                                                useGoogleFonts:
+                                                                    false,
+                                                                fontSize:
+                                                                    28.0.sp)),
+                                                  ),
+                                                ),
                                         ),
                                         SizedBox(height: 4.h),
                                         SizedBox(
-                                          width: 60.w,
+                                          width: 60.0.w,
                                           child: AutoSizeText(
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 2,
                                             displayName,
                                             textAlign: TextAlign.center,
-                                            style: FlutterFlowTheme.of(context).labelExtraSmall,
+                                            style: FlutterFlowTheme.of(context)
+                                                .labelExtraSmall,
                                           ),
                                         )
                                       ],
@@ -326,7 +328,8 @@ class _NewHomePageState extends State<NewHomePage> {
                             children: [
                               AutoSizeText(
                                 "Recommendations",
-                                style: FlutterFlowTheme.of(context).headlineLarge,
+                                style:
+                                    FlutterFlowTheme.of(context).headlineLarge,
                               ),
                               GestureDetector(
                                 onTap: () {
@@ -337,10 +340,10 @@ class _NewHomePageState extends State<NewHomePage> {
                                   style: FlutterFlowTheme.of(context)
                                       .labelExtraSmall
                                       .override(
-                                      useGoogleFonts: false,
-                                      decoration: TextDecoration.underline,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primary),
+                                          useGoogleFonts: false,
+                                          decoration: TextDecoration.underline,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary),
                                 ),
                               )
                             ],
@@ -361,227 +364,208 @@ class _NewHomePageState extends State<NewHomePage> {
                           ),
                           SizedBox(height: 8.0.h),
                           Container(
-                              height: 152.0.h,
-                              child:
-                              recommendationsData.isNotEmpty ?
-                              Skeletonizer(
-                                      enabled: recommendationsController
-                                          .isLoading.value,
-                                      child: ListView.builder(
-                                        shrinkWrap: true,
-                                        physics: const BouncingScrollPhysics(),
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: recommendationsData.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return Container(
-                                            width: 200.w,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0.w),
-                                              color:
-                                                  colors[index % colors.length],
-                                            ),
-                                            margin: EdgeInsets.only(
-                                                right: 8.0.w, top: 8.w),
-                                            child: Padding(
-                                              padding: EdgeInsets.all(12.0.w),
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  Get.to(() => PathsScreen(
-                                                        name: recommendationsData[
-                                                                index]
-                                                            .name,
-                                                        hashedPhone:
-                                                            recommendationsData[
-                                                                    index]
-                                                                .hashedphone,
-                                                        image:
-                                                            recommendationsData[
-                                                                    index]
-                                                                .photourl,
-                                                        index: index,
-                                                        headline:
-                                                            recommendationsData[
-                                                                    index]
-                                                                .localizedheadline,
-                                                        goals:
-                                                            recommendationsData[
-                                                                    index]
-                                                                .goal,
-                                                        reason:recommendationsData[
-                                                        index].reason ?? "",
-                                                      ));
-                                                },
-                                                child: Container(
-                                                  color: Colors.transparent,
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
-                                                    children: [
-                                                      Hero(
-                                                        tag: "image:$index",
-                                                        child: Material(
-                                                          color: Colors.transparent,
-                                                          child: CustomCircleAvatar(
-                                                            imageUrl:
-                                                                recommendationsData[
-                                                                        index]
-                                                                    .photourl,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 8.0.h),
-                                                      Hero(
-                                                        tag: "name:$index",
-                                                        child: Material(
-                                                          color: Colors.transparent,
-                                                          child: AutoSizeText(
-                                                            recommendationsData[
-                                                                    index]
-                                                                .name,
-                                                            overflow: TextOverflow
-                                                                .ellipsis,
-                                                            maxLines: 1,
-                                                            style:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .titleLarge
-                                                                    .override(
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .fixedBlack,
-                                                                      useGoogleFonts:
-                                                                          false,
-                                                                    ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 4.0.h),
-                                                      Hero(
-                                                        tag: "headline:$index",
-                                                        child: Material(
-                                                          color: Colors.transparent,
-                                                          child: AutoSizeText(
-                                                            recommendationsData[
-                                                                    index]
-                                                                .localizedheadline,
-                                                            overflow: TextOverflow
-                                                                .ellipsis,
-                                                            maxLines: 1,
-                                                            style:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelExtraSmall
-                                                                    .override(
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .fixedBlack,
-                                                                      useGoogleFonts:
-                                                                          false,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w300,
-                                                                    ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 4.0.h),
-                                                      Hero(
-                                                        tag: "goal:$index",
-                                                        child: Material(
-                                                          color: Colors.transparent,
-                                                          child: AutoSizeText(
-                                                            recommendationsData[
-                                                                    index]
-                                                                .goal,
-                                                            overflow: TextOverflow
-                                                                .ellipsis,
-                                                            maxLines: 1,
-                                                            style:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelExtraSmall
-                                                                    .override(
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .fixedBlack,
-                                                                      useGoogleFonts:
-                                                                          false,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w300,
-                                                                    ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 4.0.h,),
-                                                      Hero(
-                                                        tag: "reason:$index",
-                                                        child: Material(
-                                                          color: Colors.transparent,
-                                                          child: AutoSizeText(
-                                                            "${recommendationsData[
-                                                            index]
-                                                                .reason ?? "No Reason Found"}  ",
-                                                            overflow: TextOverflow.ellipsis,
-                                                            maxLines: 1,
-                                                            style: FlutterFlowTheme.of(context)
-                                                                .labelExtraSmall
-                                                                .override(
-                                                              color: FlutterFlowTheme.of(context)
-                                                                  .fixedBlack,
-                                                              useGoogleFonts: false,
-                                                              fontWeight: FontWeight.w300,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
+                            height: 152.0.h,
+                            child: recommendationsData != null ||   recommendationsData.isNotEmpty
+                                ? Skeletonizer(
+                                    enabled: recommendationsController
+                                        .isLoading.value,
+                                    child: ListView.builder(
+                                      shrinkWrap: true,
+                                      physics: const BouncingScrollPhysics(),
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: recommendationsData.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return Container(
+                                          width: 200.w,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(12.0.w),
+                                            color:
+                                                colors[index % colors.length],
+                                          ),
+                                          margin: EdgeInsets.only(
+                                              right: 8.0.w, top: 8.w),
+                                          child: Padding(
+                                            padding: EdgeInsets.all(12.0.w),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                Get.to(() => PathsScreen(
+                                                      name: recommendationsData[
+                                                              index]
+                                                          .name,
+                                                      hashedPhone:
+                                                          recommendationsData[
+                                                                  index]
+                                                              .hashedphone,
+                                                      image:
+                                                          recommendationsData[
+                                                                  index]
+                                                              .photourl,
+                                                      index: index,
+                                                      headline:
+                                                          recommendationsData[
+                                                                  index]
+                                                              .localizedheadline,
+                                                      goals:
+                                                          recommendationsData[
+                                                                  index]
+                                                              .goal,
+                                                      reason:
+                                                          recommendationsData[
+                                                                      index]
+                                                                  .reason ??
+                                                              "",
+                                                    ));
+                                              },
+                                              child: RecommendationCardWidget(
+                                                index: index,
+                                                imageUrl:
+                                                    recommendationsData[index]
+                                                        .photourl,
+                                                name: recommendationsData[index]
+                                                    .name,
+                                                headline:
+                                                    recommendationsData[index]
+                                                        .localizedheadline,
+                                                goal: recommendationsData[index]
+                                                    .goal,
+                                                reason:
+                                                    recommendationsData[index]
+                                                            .reason ??
+                                                        "",
+                                                maxLine: 1,
                                               ),
                                             ),
-                                          );
-                                        },
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  )
+                                : Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SvgPicture.asset(
+                                        Assets.assetsNoGoalsFound,
+                                        height: 120.0.h,
                                       ),
-                                    ) : SvgPicture.asset(Assets.assetsRecommendationsEmptyState),
+                                      SizedBox(
+                                        width: 24.0.w,
+                                      ),
+                                      Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            width: 180.0.w,
+                                            child: AutoSizeText(
+                                              "No Recommendations available as your goals are empty!",
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .labelExtraSmall,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 8.0.h,
+                                          ),
+                                          GestureDetector(
+                                            onTap: (){
+                                              Get.off(() => const GoalsScreen());
+                                            },
+                                            child: AutoSizeText(
+                                              "Update Goals Now",
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .titleSmall
+                                                  .override(
+                                                      useGoogleFonts: false,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                      decoration: TextDecoration
+                                                          .underline),
+                                            ),
+                                          )
+                                        ],
+                                      )
+                                    ],
+                                  ),
                           ),
-                          SizedBox(height: 16.0.h),
-                          vouchFeedsData.isNotEmpty ?
-                          AutoSizeText(
-                            "Vouch Feed",
-                            style: FlutterFlowTheme.of(context).headlineLarge,
-                          ) : Container(),
+                          SizedBox(height: 12.0.h),
+                          Visibility(
+                            visible: !prefs!.getBool(isLinkedinSync)!,
+                            child: Container(
+                              padding: EdgeInsets.all(12.0.w),
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context).textFieldBackground,
+                                borderRadius: BorderRadius.circular(8.0.w),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  AutoSizeText("Help us to know you better!",
+                                  style: FlutterFlowTheme.of(context).titleSmall
+                                  ),
+                                  GestureDetector(
+                                    onTap: (){
+                                      Get.to(() => const LinkedinScreen());
+                                    },
+                                    child: AutoSizeText("Sync Linkedin",
+                                      style: FlutterFlowTheme.of(context).titleSmall.override(
+                                        useGoogleFonts: false,
+                                        color: FlutterFlowTheme.of(context).primary
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          // SizedBox(height: 8.0.h),
+                          vouchFeedsData.isNotEmpty
+                              ? Column(
+                                  children: [
+                                    SizedBox(height: 12.0.h),
+                                    AutoSizeText(
+                                      "Vouch Feed",
+                                      style: FlutterFlowTheme.of(context)
+                                          .headlineLarge,
+                                    )
+                                  ],
+                                )
+                              : Container(),
                           SizedBox(height: 12.0.h),
                           Skeletonizer(
                               enabled: feedsController.isLoading.value,
-                              child:
-                                  (vouchFeedsData.isNotEmpty)
-                                      ? ListView.builder(
-                                          itemCount: vouchFeedsData.length,
-                                          shrinkWrap: true,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemBuilder: (context, index) {
-                                            final vouchFeed =
-                                                vouchFeedsData[index];
-                                            return Padding(
-                                                padding: EdgeInsets.only(
-                                                    bottom: 8.0.h),
-                                                child: FeedsVouchCard(
-                                                    refreshFeeds: fetchFeeds,feedModelVouch: vouchFeed,));
-                                          },
-                                        )
-
-                                  : Container()
-                            ),
+                              child: (vouchFeedsData.isNotEmpty)
+                                  ? ListView.builder(
+                                      itemCount: vouchFeedsData.length,
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemBuilder: (context, index) {
+                                        final vouchFeed = vouchFeedsData[index];
+                                        return Padding(
+                                            padding:
+                                                EdgeInsets.only(bottom: 8.0.h),
+                                            child: FeedsVouchCard(
+                                              refreshFeeds: fetchFeeds,
+                                              feedModelVouch: vouchFeed,
+                                            ));
+                                      },
+                                    )
+                                  : Container()),
                           SizedBox(height: 16.0.h),
-                          (bountyFeedsData.isNotEmpty) ?
-                          AutoSizeText(
-                            "Bounty Feed",
-                            style: FlutterFlowTheme.of(context).headlineLarge,
-                          ) : Container(),
+                          (bountyFeedsData.isNotEmpty)
+                              ? AutoSizeText(
+                                  "Bounty Feed",
+                                  style: FlutterFlowTheme.of(context)
+                                      .headlineLarge,
+                                )
+                              : Container(),
                           SizedBox(height: 12.0.h),
                           bountyFeedsData.isNotEmpty
                               ? ListView.builder(

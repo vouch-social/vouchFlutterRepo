@@ -38,7 +38,6 @@ class _MyHuntsScreenState extends State<MyHuntsScreen> {
     });
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

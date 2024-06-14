@@ -1,13 +1,9 @@
 import 'package:dio/dio.dart' as dio;
 import 'package:vouch/new_code/backend/backend_constants.dart';
-import 'package:vouch/new_code/backend/models/check_user_model.dart';
-import 'package:vouch/new_code/backend/models/recommendations_model.dart';
 import '../../../main.dart';
-import '../models/attributes_model.dart';
 import '../models/base_response.dart';
 import '../models/paths_model.dart';
 import '../models/send_path_response_model.dart';
-import '../models/user_data_model.dart';
 import '../network/dio_client.dart';
 
 class PathsRepository {

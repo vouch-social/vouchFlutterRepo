@@ -9,12 +9,11 @@ class UpdateBountyByIdController extends GetxController {
   var isLoading = false.obs;
 
   Future<void> updateBountyById(dynamic bountyId,dynamic status,dynamic expiry) async {
+    isLoading(true);
     var data = {
       "status": status,
       'expiry': expiry
     };
-
-    isLoading(true);
     try {
       BaseResponse<UpdateBountyByIdModel> apiResult =
       await repository.updateBounty(data,bountyId);

@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
+import 'package:vouch/new_code/home_page/history_screen/history.dart';
 
 import '../../../flutter_flow/flutter_flow_theme.dart';
 
@@ -22,7 +23,7 @@ class _PathSuccessScreenState extends State<PathSuccessScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(milliseconds: 2000), () {
+    Timer(const Duration(milliseconds: 1500), () {
       Get.off(() => const NewHomePage());
     });
   }

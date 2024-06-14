@@ -68,7 +68,7 @@ class _EditGoalsScreenState extends State<EditGoalsScreen>
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: "Edit goals",
         showProfileButton: false,
         showBackButton: true,
@@ -220,15 +220,13 @@ class _EditGoalsScreenState extends State<EditGoalsScreen>
           const Spacer(),
           FFButtonWidget(
               onPressed: () async {
-                if (_tabController.index < 2) {
-                  _tabController.animateTo(_tabController.index + 1);
-                }
                 if (_tabController.index == 2 &&
                     controller.controller[0].text.isNotEmpty &&
                     controller.controller[1].text.isNotEmpty &&
                     controller.controller[2].text.isNotEmpty) {
                   await controller.sendUserEditedGoalsController();
-                } else {
+                }
+                else {
                   if (controller.controller[0].text.isEmpty &&
                       _tabController.index == 1) {
                     Get.snackbar(
@@ -249,6 +247,9 @@ class _EditGoalsScreenState extends State<EditGoalsScreen>
                     );
                   }
                 }
+                if (_tabController.index < 2) {
+                  _tabController.animateTo(_tabController.index + 1);
+                }
               },
               text: currentIndex == 2 ? 'Finish' : 'Next',
               options: CTAButton(context)),
@@ -266,13 +267,13 @@ class _EditGoalsScreenState extends State<EditGoalsScreen>
         _handleChipSelection(label);
       },
       child: Chip(
-        // color: MaterialStateProperty.all(FlutterFlowTheme.of(context).textFieldBackground),
         backgroundColor: MediaQuery.of(context).platformBrightness ==
                 Brightness.dark
             ? FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9)
             : FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
         label: AutoSizeText(
           label,
+          maxLines: 2,
           style: FlutterFlowTheme.of(context).labelExtraSmall,
         ),
       ),

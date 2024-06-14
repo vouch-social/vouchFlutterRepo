@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ import 'package:vouch/new_code/home_page/paths_screen/paths_list_view.dart';
 
 import '../../../flutter_flow/flutter_flow_widgets.dart';
 import '../../backend/models/paths_model.dart';
+import '../../common_widgets/horizontal_path_list_view.dart';
 
 class FinalPathMessageScreen extends StatefulWidget {
   final dynamic goal;
@@ -80,7 +82,7 @@ class _FinalPathMessageScreenState extends State<FinalPathMessageScreen> {
                       scrollDirection: Axis.horizontal,
                       itemCount: reversedPathNodes.length,
                       itemBuilder: (context, index) {
-                        return vouchPath(context, reversedPathNodes, index,
+                        return vouchPathList(context, reversedPathNodes, index,
                             reversedPathNodes.length, );
                       },
                     ),
@@ -91,15 +93,25 @@ class _FinalPathMessageScreenState extends State<FinalPathMessageScreen> {
                 ],
               ),
               SizedBox(height: 20.0.h),
-              Row(
-                children: [
-                  AutoSizeText(
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 32.0,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AutoSizeText(
                       "Context: ",
-                      style: FlutterFlowTheme.of(context).titleLarge),
-                  AutoSizeText(
-                      "${widget.goal}",
-                      style: FlutterFlowTheme.of(context).bodySmall),
-                ],
+                      style: FlutterFlowTheme.of(context).titleLarge,
+                    ),
+                    Expanded(
+                      child: AutoSizeText(
+                        "${widget.goal}",
+                        maxLines: 4,
+                        style: FlutterFlowTheme.of(context).bodySmall,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: 24.0.h),
               AutoSizeText("Type your message",
@@ -170,64 +182,4 @@ class _FinalPathMessageScreenState extends State<FinalPathMessageScreen> {
   }
 }
 
-Widget vouchPath(context, pathItem, index, length, ) {
-  if (index < 0 || index >= pathItem.length) {
-    return SizedBox();
-  }
-  print("PathItem : $pathItem");
-  return SingleChildScrollView(
-    child: Column(
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Column(
-              children: [
-               CustomCircleAvatar(
-                 radius: 20.0.h,
-                 imageUrl: pathItem[index]["image"],
-               ),
-                SizedBox(height: 4.0.h),
-                SizedBox(
-                  width: 64.w,
-                  child: AutoSizeText(
-                    '${pathItem[index]["name"]}',
-                    overflow: TextOverflow.ellipsis,
-                    minFontSize: 10.0,
-                    maxLines: 2,
-                    textAlign: TextAlign.center,
-                    style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                      useGoogleFonts: false,
-                      fontSize: 10.sp,
-                    ),
-                  ),
-                ),
-                // Spacer(),
-              ],
-            ),
-            Visibility(
-              visible: index != length - 1 ? true : false,
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 20.0.h),
-                      height: 4.0.h,
-                      width: (MediaQuery.of(context).size.width -
-                          56.0.w -
-                          (length * 64.0.h)) /
-                          (length - 1),
-                      color:  FlutterFlowTheme.of(context)
-                          .primaryText
-                          .withOpacity(0.3)),
-        
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
-}
 

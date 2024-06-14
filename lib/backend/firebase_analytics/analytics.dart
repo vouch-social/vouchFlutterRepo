@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 const kMaxEventNameLength = 40;
 const kMaxParameterLength = 100;
 
-void logFirebaseEvent(String eventName, {Map<String?, dynamic>? parameters}) {
+void logFirebaseEvent(String eventName, {Map<String?, Object>? parameters}) {
   // https://firebase.google.com/docs/reference/cpp/group/event-names
   assert(eventName.length <= kMaxEventNameLength);
 

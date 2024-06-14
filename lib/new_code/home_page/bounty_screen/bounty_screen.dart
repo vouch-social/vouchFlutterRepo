@@ -208,10 +208,18 @@ class _BountyScreenState extends State<BountyScreen> {
               const Spacer(),
               FFButtonWidget(
                 onPressed: () async {
-                  await controller.sendRaisedBounty(sliderValue);
-                  controller.linkedinUrlController.clear();
-                  controller.bountyContextController.clear();
-                  Get.to(() => NewHomePage());
+                  if(controller.linkedinUrlController.text != null && controller.linkedinUrlController.text.isNotEmpty){
+                    await controller.sendRaisedBounty(sliderValue);
+                    controller.linkedinUrlController.clear();
+                    controller.bountyContextController.clear();
+                    Get.to(() => NewHomePage());
+                  }else{
+                    Get.snackbar(
+                      "Alert",
+                      "Please write with whom you are looking to connect ??"
+                    );
+                  }
+
                 },
                 text: 'Ask Network',
                 options: CTAButton(context),

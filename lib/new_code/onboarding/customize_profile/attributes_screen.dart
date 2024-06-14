@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -139,6 +140,7 @@ class _AttributesListState extends State<AttributesList> {
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ListView.builder(
                     shrinkWrap: true,
@@ -157,7 +159,8 @@ class _AttributesListState extends State<AttributesList> {
                     controller: _textEditingController,
                     addItem: _addItem,
                   ),
-
+                  SizedBox(height: 16.0.h),
+                  AutoSizeText("Suggestions :",style: FlutterFlowTheme.of(context).bodyLarge,),
                   SizedBox(height: 16.0.h),
                   ListView.builder(
                     shrinkWrap: true,

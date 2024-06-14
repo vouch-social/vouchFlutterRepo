@@ -13,12 +13,13 @@ import '../models/base_response.dart';
 
 class ContactsCallLogsRepo {
   static final ContactsCallLogsRepo _instance =
-      ContactsCallLogsRepo._internal();
+  ContactsCallLogsRepo._internal();
   late final DioClient _dioClient;
 
   ContactsCallLogsRepo._internal() {
     _dioClient = DioClient();
   }
+
   factory ContactsCallLogsRepo() => _instance;
 
   // Future<void> sendCallLogs(dynamic data) async {
@@ -48,15 +49,13 @@ class ContactsCallLogsRepo {
           response.data,
           ContactsResponseModel.fromJson,
         );
-       prefs?.setInt(contactsAdded, result.data.totalRecordsRecieved);
-       prefs?.setInt(contactsUpdated, result.data.totalRecordsUpdated);
+        prefs?.setInt(contactsAdded, result.data.totalRecordsRecieved);
+        prefs?.setInt(contactsUpdated, result.data.totalRecordsUpdated);
         prefs?.setInt(contactsCreated, result.data.totalRecordsCreated);
 
-        if(prefs?.getString(userName )!= 'null'){
-          Get.off(() => const ReSyncContactUploadSuccess());
-        }else{
-          Get.off(() => const ContactUploadSuccess());
-        }
+        Get.to(() => const ReSyncContactUploadSuccess());
+
+
         print("sendContacts : $response");
         return result;
       } else {
@@ -72,7 +71,6 @@ class ContactsCallLogsRepo {
     }
   }
 }
-
 
 
 checkImport() {

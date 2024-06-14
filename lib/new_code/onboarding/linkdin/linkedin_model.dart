@@ -23,7 +23,7 @@ class LinkedinModel extends FlutterFlowModel<LinkedinWidget> {
   final unfocusNode = FocusNode();
   InstantTimer? instantTimer;
   // Stores action output result for [Backend Call - API (getUserFromHashedPhone)] action in Linkedin widget.
-  ApiCallResponse? apiResult237;
+  // ApiCallResponse? apiResult237;
 
   /// Initialization and disposal methods.
 

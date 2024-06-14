@@ -46,12 +46,12 @@ class FirebasePhoneAuthManager extends ChangeNotifier {
 
 class FirebaseAuthManager extends AuthManager
     with
-        EmailSignInManager,
-        GoogleSignInManager,
+        // EmailSignInManager,
+        // GoogleSignInManager,
         // AppleSignInManager,
-        AnonymousSignInManager,
-        JwtSignInManager,
-        GithubSignInManager,
+        // AnonymousSignInManager,
+        // JwtSignInManager,
+        // GithubSignInManager,
         PhoneSignInManager {
   // Set when using phone verification (after phone number is provided).
   String? _phoneAuthVerificationCode;
@@ -163,9 +163,7 @@ class FirebaseAuthManager extends AuthManager
   // Future<BaseAuthUser?> signInWithApple(BuildContext context) =>
   //     _signInOrCreateAccount(context, appleSignIn, 'APPLE');
 
-  @override
-  Future<BaseAuthUser?> signInWithGoogle(BuildContext context) =>
-      _signInOrCreateAccount(context, googleSignInFunc, 'GOOGLE');
+
 
   @override
   Future<BaseAuthUser?> signInWithGithub(BuildContext context) =>

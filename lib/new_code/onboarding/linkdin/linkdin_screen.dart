@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vouch/new_code/backend/backend_constants.dart';
+import 'package:vouch/new_code/common_widgets/myAppBar.dart';
 import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
 import 'package:vouch/new_code/onboarding/customize_profile/user_details.dart';
 import '../../../main.dart';
@@ -28,6 +29,12 @@ class _LinkedinScreenState extends State<LinkedinScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const CustomAppBar(
+        showHistoryButton: false,
+        showProfileButton: false,
+        showNotificationButton: false,
+        showBackButton: true,
+      ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       body: Padding(
         padding: EdgeInsets.all(16.0.w),
@@ -40,7 +47,7 @@ class _LinkedinScreenState extends State<LinkedinScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 140.0.h,
+                  height: 80.0.h,
                 ),
                 Center(
                   child: Container(
@@ -62,7 +69,7 @@ class _LinkedinScreenState extends State<LinkedinScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 220.0.h),
+                SizedBox(height: 184.0.h),
                 AutoSizeText(
                     'LinkedIn Sync',
                     style: FlutterFlowTheme.of(context).displayMedium
@@ -117,7 +124,7 @@ class _LinkedinScreenState extends State<LinkedinScreen> {
               ],
             ),
             SizedBox(
-              height: 40.0.h,
+              height: 32.0.h,
             ),
             Column(
               mainAxisSize: MainAxisSize.max,
@@ -139,7 +146,7 @@ class _LinkedinScreenState extends State<LinkedinScreen> {
                 ),
                 GestureDetector(
                   onTap: () {
-                      Get.to(() => navigateToPage());
+                      Get.to(() => const UserDetails());
                   },
                   child: Center(
                     child: AutoSizeText(
@@ -150,7 +157,9 @@ class _LinkedinScreenState extends State<LinkedinScreen> {
                         )
                     ),
                   ),
-                )
+                ),
+                SizedBox(height: 16.0.h,)
+
                 // : GestureDetector(
                 //   onTap: () {
                 //     Get.to(() => NewHomePage());

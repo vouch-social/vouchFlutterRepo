@@ -14,6 +14,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:vouch/generated/assets.dart';
 import 'package:vouch/new_code/backend/backend_constants.dart';
 import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
+import 'package:vouch/new_code/home_page/search_screen/search_screen.dart';
 import 'package:vouch/new_code/onboarding/customize_profile/attributes_screen.dart';
 import 'package:vouch/new_code/onboarding/customize_profile/tags_screen.dart';
 import 'package:vouch/new_code/onboarding/customize_profile/user_details_controller.dart';
@@ -313,7 +314,7 @@ class _UserDetailsState extends State<UserDetails> {
                   const Spacer(),
                   GestureDetector(
                     onTap: (){
-                      Get.to(() => AttributesList(
+                      Get.to(() => const AttributesList(
                         items: [],
                       ));
                     },
@@ -353,10 +354,7 @@ class _UserDetailsState extends State<UserDetails> {
                       else if (_controller.nameController.text.isNotEmpty &&
                         _controller.headlineController.text.isNotEmpty && _controller.imageController.text.isNotEmpty) {
                       await _controller.saveUserController();
-                      // if(prefs?.getStringList(goals) != null){
-                      //   Get.to(() => NewHomePage());
-                      // }else{
-                        Get.to(() => const GoalsScreen());
+                        Get.to(() => const SearchScreen());
                       // }
                     }
                   },
@@ -366,7 +364,7 @@ class _UserDetailsState extends State<UserDetails> {
                 height: 12.0.h,
               ),
               GestureDetector(
-                onTap: () => Get.to(() => const LinkedinScreen()),
+                onTap: () => Get.off(() => const LinkedinScreen()),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -379,7 +377,7 @@ class _UserDetailsState extends State<UserDetails> {
                       width: 8.0.w,
                     ),
                     AutoSizeText(
-                      'Go back and update LinkedIn',
+                      'Update LinkedIn Instead',
                       style: FlutterFlowTheme.of(context).labelExtraSmall.override(
                         useGoogleFonts: false,
                         decoration: TextDecoration.underline
@@ -387,7 +385,8 @@ class _UserDetailsState extends State<UserDetails> {
                     )
                   ],
                 ),
-              )
+              ),
+              SizedBox(height: 16.0.h,)
             ],
           ),
         ),
@@ -419,8 +418,6 @@ class CustomTextField extends StatelessWidget {
         controller: controller,
         cursorColor: FlutterFlowTheme.of(context).secondaryBackground,
         decoration: InputDecoration(
-          // filled: true,
-          // fillColor: FlutterFlowTheme.of(context).textFieldBackground,
           alignLabelWithHint: true,
           labelText: label,
           floatingLabelStyle: FlutterFlowTheme.of(context).titleSmall,

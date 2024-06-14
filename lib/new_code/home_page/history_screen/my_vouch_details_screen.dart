@@ -68,14 +68,18 @@ class _MyVouchDetailsScreenState extends State<MyVouchDetailsScreen> {
                     SizedBox(
                       height: 12.0.h,
                     ),
-                    AutoSizeText(
-                        widget.vouch.message,
-                        style: FlutterFlowTheme.of(context).buttonText.override(
-                            useGoogleFonts: false,
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w400,
-                            color: FlutterFlowTheme.of(context).fixedBlack
-                        )
+                    SizedBox(
+                      width: double.infinity,
+                      child: AutoSizeText(
+                          widget.vouch.message,
+                          maxLines: 10,
+                          style: FlutterFlowTheme.of(context).buttonText.override(
+                              useGoogleFonts: false,
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w400,
+                              color: FlutterFlowTheme.of(context).fixedBlack
+                          )
+                      ),
                     ),
                   ],
                 ),

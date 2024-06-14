@@ -45,6 +45,7 @@ class OtpModel extends FlutterFlowModel<OtpScreen> {
 
   final AuthRepository repository = AuthRepository();
 
+  var isLoading = false;
   Future<void> sendUserData({String? phoneWOCC, String? countryCode}) async {
     var data = {
       'phone': phoneWOCC,
@@ -54,6 +55,7 @@ class OtpModel extends FlutterFlowModel<OtpScreen> {
       'fcm_token':prefs?.getString(fcmToken)
     };
     try {
+      isLoading = true;
       if (currentUserReference != null && data['firebaseid'] != null) {
         BaseResponse<UserModel> apiResult = await repository.sendUser(
           data['firebaseid']!,
@@ -68,6 +70,7 @@ class OtpModel extends FlutterFlowModel<OtpScreen> {
           prefs?.setString(authToken, apiResult.data!.data.accessToken);
           print("Auth Tokennn: ${prefs?.getString(authToken)}");
           sendToken();
+          isLoading = false;
         }
       } else {
         print('CurrentUserReference or firebaseId is null');

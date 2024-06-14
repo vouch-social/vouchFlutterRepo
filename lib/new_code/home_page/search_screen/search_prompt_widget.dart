@@ -25,7 +25,13 @@ class _SearchPromptWidgetState extends State<SearchPromptWidget> {
   @override
   void initState() {
     super.initState();
-    fetchSuggestions();
+    getSuggestions();
+  }
+
+  void getSuggestions()  {
+    WidgetsBinding.instance.addPostFrameCallback((_)  {
+       fetchSuggestions();
+    });
   }
 
   Future<void> fetchSuggestions() async {
@@ -58,7 +64,7 @@ class _SearchPromptWidgetState extends State<SearchPromptWidget> {
             ),
           ),
           SizedBox(height: 24.0.h,),
-          AutoSizeText("How can I help today?",
+          AutoSizeText("Who do you want to search for?",
             style: FlutterFlowTheme.of(context).headlineSmall,
           ),
           const Spacer(),
