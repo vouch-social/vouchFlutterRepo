@@ -1,0 +1,107 @@
+import 'package:flutter/material.dart';
+import '/new_code/home_page/history_screen/my_hunt_history.dart';
+import '../../../flutter_flow/flutter_flow_theme.dart';
+import '../../backend/models/my_bounty_history_model.dart';
+import '../../common_widgets/myAppBar.dart';
+import 'my_bounty_history.dart';
+import 'my_vouch_history.dart';
+
+class HistoryScreen extends StatefulWidget {
+  final dynamic index;
+  const HistoryScreen({super.key, this.index});
+
+  @override
+  State<HistoryScreen> createState() => _HistoryScreenState();
+}
+
+
+class _HistoryScreenState extends State<HistoryScreen> with TickerProviderStateMixin {
+  late final MyBountyHistoryModel myBountyHistoryModel;
+
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+    _tabController.index = widget.index ?? 0;
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      appBar: const CustomAppBar(
+        showHistoryButton: false,
+        showBackButton: true,
+        title: "My History",
+      ),
+      body: Column(
+        children: [
+          TabBar(
+            controller: _tabController,
+            indicatorColor: FlutterFlowTheme.of(context).primary,
+            automaticIndicatorColorAdjustment: true,
+            // indicator: BoxDecoration(
+            //   color: FlutterFlowTheme.of(context).primaryBackground,
+            //
+            // ),
+            // labelStyle: FlutterFlowTheme.of(context).titleSmall,
+            // padding: EdgeInsets.fromLTRB(16.0.w,0.0.w,16.0.w,0),
+            // labelPadding: EdgeInsets.zero,
+            tabs: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Bounty",
+                  style: FlutterFlowTheme.of(context).titleSmall,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Vouch",
+                  style: FlutterFlowTheme.of(context).titleSmall,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Hunts",
+                  style: FlutterFlowTheme.of(context).titleSmall,
+                ),
+              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: Text(
+              //     "Vouches",
+              //     style: FlutterFlowTheme.of(context).titleSmall,
+              //   ),
+              // ),
+            ],
+            indicatorSize: TabBarIndicatorSize.tab,
+          ),
+          Expanded(
+            child: TabBarView(
+              physics: const BouncingScrollPhysics(),
+              controller: _tabController,
+              children: [
+                MyRaisedBountyHistory(),
+                MyVouchHistory(),
+                MyHuntsScreen(),
+                // MyOtherVouchesScreen(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
