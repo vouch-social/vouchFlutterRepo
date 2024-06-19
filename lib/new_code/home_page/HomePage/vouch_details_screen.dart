@@ -13,10 +13,6 @@ import 'package:vouch/new_code/backend/models/feeds_model.dart';
 import 'package:vouch/new_code/common_widgets/image_check.dart';
 import 'package:vouch/new_code/common_widgets/myAppBar.dart';
 import 'package:vouch/new_code/home_page/HomePage/controllers/vouch_connect_controller.dart';
-import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
-import 'package:vouch/new_code/home_page/paths_screen/paths_list_view.dart';
-
-import '../../backend/models/paths_model.dart';
 
 class VouchDetailsScreen extends StatefulWidget {
   final  vouch;
@@ -73,15 +69,16 @@ class _VouchDetailsScreenState extends State<VouchDetailsScreen> {
                     SizedBox(
                       height: 12.0.h,
                     ),
-                    AutoSizeText(
-                      widget.vouch.message,
-                      style: FlutterFlowTheme.of(context).buttonText.override(
+                AutoSizeText(
+                    widget.vouch.message,
+                    maxLines: 10,
+                    style: FlutterFlowTheme.of(context).buttonText.override(
                         useGoogleFonts: false,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
-                          color: FlutterFlowTheme.of(context).fixedBlack
-                      )
-                    ),
+                        color: FlutterFlowTheme.of(context).fixedBlack
+                    )
+                ),
                   ],
                 ),
               ),

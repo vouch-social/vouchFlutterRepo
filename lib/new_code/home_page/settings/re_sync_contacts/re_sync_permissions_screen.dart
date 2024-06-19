@@ -75,9 +75,13 @@ class _ReSyncPermissionsScreenState extends State<ReSyncPermissionsScreen> {
     var status = await Permission.contacts.request();
     if (status.isGranted) {
       List<Contact> allContacts = await myGetContacts();
-      setState(() {
-        _contacts = allContacts.toList();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        setState(() {
+          _contacts = allContacts.toList();
+        });
       });
+
     }
   }
 
@@ -211,7 +215,7 @@ class _ReSyncPermissionsScreenState extends State<ReSyncPermissionsScreen> {
                         width: 8.0.w,
                       ),
                       AutoSizeText(
-                        'Total contacts synced is ${prefs?.getInt(contactsAdded)}',
+                        'Total contacts synced is ${prefs?.getInt(contactsAdded) ?? 0}',
                         style: FlutterFlowTheme.of(context).labelSmall,
                       ),
                     ],

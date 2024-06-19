@@ -6,6 +6,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
 import 'package:vouch/new_code/home_page/settings/settings_screen.dart';
 
+import '../../../../../auth/checkAuth.dart';
 import '../../../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../../../main.dart';
 import '../../../../backend/backend_constants.dart';
@@ -23,8 +24,11 @@ class _ReSyncContactUploadSuccessState extends State<ReSyncContactUploadSuccess>
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
-      Get.off( () => const SettingsScreen());
+    Future.delayed( const Duration(milliseconds: 1500), () async {
+      await checkUser();
+      Get.back();
+      Get.back();
+      Get.back();
     });
   }
 

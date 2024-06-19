@@ -11,13 +11,18 @@ class HuntsController extends GetxController {
   final MyHuntsRepository repository = MyHuntsRepository();
 
   Future<MyHuntsModel> getHuntsHistory() async {
-    isLoading(true);
+    // isLoading(true);
     try {
+      isLoading(true);
       BaseResponse<MyHuntsModel> apiResult =
       await repository.getMyHuntsHistory();
       if (apiResult.status) {
         print('Api Result Hunts History : ${apiResult.message}');
+        Future.delayed(Duration(milliseconds: 300), () {
+          isLoading(false);
+        });
         return apiResult.data;
+
       }
       Future.delayed(Duration(milliseconds: 300), () {
         isLoading(false);

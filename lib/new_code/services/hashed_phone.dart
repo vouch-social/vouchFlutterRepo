@@ -16,20 +16,16 @@ import 'package:crypto/crypto.dart';
 String cleanPhoneNumber(String phoneNumber) {
   String formattedPhoneNumber = phoneNumber.replaceAll(RegExp(r'[^\d]'), '');
 
-  if (formattedPhoneNumber.startsWith("0")) {
-    return '91${formattedPhoneNumber.replaceFirst("0", "")}';
-    // if (formattedPhoneNumber.startsWith('91')) {
-    //   return formattedPhoneNumber;
-    // }else{
-    //   return formattedPhoneNumber;
-    // }
-  }else
-    if(formattedPhoneNumber.length == 10){
-    formattedPhoneNumber = '91$formattedPhoneNumber';
-  }else{
+  if (formattedPhoneNumber.length == 12 && formattedPhoneNumber.startsWith("91")) {
     return formattedPhoneNumber;
+  }else
+    if(formattedPhoneNumber.length == 11 && formattedPhoneNumber.startsWith("0")){
+    formattedPhoneNumber = '91${formattedPhoneNumber.replaceFirst("0", "")}';
+    return formattedPhoneNumber;
+  }else if(formattedPhoneNumber.length == 10 ){
+    return "91$formattedPhoneNumber";
   }
-  return formattedPhoneNumber;
+  return "";
 }
 
 extractCountryCode(String phoneNumber) {
@@ -73,11 +69,15 @@ String contactHashedPhone(String? userPhone,String? userPhoneCC)  {
   if (userPhone != null && userPhone.isNotEmpty) {
     userPhone = cleanPhoneNumber(userPhone);
     print("Cleaned Phone $userPhone");
+    var bytes;
+    var hashedPhone;
     // Clean the phone number before hashing
     String phone = userPhone;
+    if(phone != null || phone != ""){
+       bytes = utf8.encode(phone);
+       hashedPhone = sha256.convert(bytes);
+    }
     // Convert the cleaned phone number to bytes and hash it
-    var bytes = utf8.encode(phone);
-    var hashedPhone = sha256.convert(bytes);
 
     return hashedPhone.toString();
   } else {

@@ -14,8 +14,11 @@ import 'package:vouch/new_code/common_widgets/image_check.dart';
 import 'package:vouch/new_code/home_page/paths_screen/final_path_message_screen.dart';
 import 'package:vouch/new_code/home_page/paths_screen/path_success_screen.dart';
 import 'package:vouch/new_code/home_page/paths_screen/paths_controller.dart';
+import 'package:vouch/new_code/onboarding/permissions/permissions_screen.dart';
 
 import '../../../flutter_flow/flutter_flow_theme.dart';
+import '../../../main.dart';
+import '../../backend/backend_constants.dart';
 import '../../backend/models/paths_model.dart';
 import '../../backend/models/paths_model.dart';
 
@@ -113,55 +116,75 @@ class _PathListViewState extends State<PathListView>
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(16.0.h, 0, 16.0.h, 16.0.h),
+                  padding: EdgeInsets.fromLTRB(16.0.w, 0, 16.0.h, 16.0.h),
                   child: FFButtonWidget(
-                      text: "Select Path",
-                      onPressed: () async {
-                        if (_tabController != null) {
-                          final int currentIndex = _tabController!.index;
-                          print(
-                              "currentIndex: $currentIndex,singlePath:  ${widget.allPaths.singlePathList[currentIndex]}");
+                          text: "ReachOut via Path",
+                          onPressed: () async {
+                            if (_tabController != null) {
+                              final int currentIndex = _tabController!.index;
+                              print(
+                                  "currentIndex: $currentIndex,singlePath:  ${widget.allPaths.singlePathList[currentIndex]}");
 
-                          Get.to(() => FinalPathMessageScreen(
-                              goal: widget.goal,
-                              currentIndex: currentIndex,
-                              singlePath: widget
-                                  .allPaths.singlePathList[currentIndex]));
-                        }
-                      },
-                      options: CTAButton(context)),
+                              Get.to(() => FinalPathMessageScreen(
+                                  goal: widget.goal,
+                                  currentIndex: currentIndex,
+                                  singlePath: widget
+                                      .allPaths.singlePathList[currentIndex]));
+                            }
+                          },
+                          options: CTAButton(context))
+
                 )
               ],
             )
-          : Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 36.0.h,
-                ),
-                AutoSizeText(
-                  "No Paths Found!",
-                  style: FlutterFlowTheme.of(context).displayMedium.override(
-                      useGoogleFonts: false,
-                      color: FlutterFlowTheme.of(context).fixedWhite
+          : Padding(
+            padding:  EdgeInsets.fromLTRB(16.0.w, 0, 16.0.h, 16.0.w),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 32.0.h,
                   ),
-                ),
-                AutoSizeText(
-                  "Explore new connections to bridge the gap.",
-                  style: FlutterFlowTheme.of(context).headlineLarge.override(
-                    useGoogleFonts: false,
-                    color: FlutterFlowTheme.of(context).fixedWhite
+                  AutoSizeText(
+                    "No Paths Found!",
+                    style: FlutterFlowTheme.of(context).displayMedium.override(
+                        useGoogleFonts: false,
+                        color: FlutterFlowTheme.of(context).fixedWhite),
                   ),
-                ),
-                SizedBox(
-                  height: 8.0.h,
-                ),
-                Image.asset(
-                  Assets.assetsPaths,
-                  height: 300.0.h,
-                ),
-              ],
-            ),
+                  SizedBox(
+                    height: 8.0.h,
+                  ),
+                  prefs!.getBool(isContactSync)! == true
+                      ? AutoSizeText(
+                          "Explore new connections to bridge the gap.",
+                          style: FlutterFlowTheme.of(context).titleLarge.override(
+                              useGoogleFonts: false,
+                              color: FlutterFlowTheme.of(context).fixedWhite),
+                        )
+                      : AutoSizeText(
+                          "Unable to get paths.. your contacts aren't synced.",
+                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                        useGoogleFonts: false,
+                        color: FlutterFlowTheme.of(context).fixedWhite),
+                                      ),
+                  SizedBox(
+                    height: 8.0.h,
+                  ),
+                  Image.asset(
+                    Assets.assetsPaths,
+                    height: 240.0.h,
+                  ),
+                  prefs!.getBool(isContactSync)! == false ?
+               FFButtonWidget(
+                text: "Sync Contacts",
+                onPressed: () async {
+                  Get.to(() => const PermissionsScreen());
+                },
+                options: CTAButton(context)) : Container(),
+
+                ],
+              ),
+          ),
     );
   }
 }

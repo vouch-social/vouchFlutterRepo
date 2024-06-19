@@ -246,55 +246,173 @@ class _BountyDetailsScreenState extends State<BountyDetailsScreen> {
                                                   width: 1,
                                                 ),
                                               ),
-                                              child: ListTile(
-                                                titleAlignment:
-                                                    ListTileTitleAlignment.center,
-                                                minVerticalPadding: 4.0.h,
-                                                tileColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .textFieldBackground,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(8.0.w),
-                                                ),
-                                                leading: CustomCircleAvatar(
-                                                  imageUrl:
-                                                      hunters[index].user.photourl,
-                                                  radius: 18.0.w,
-                                                ),
-                                                title: AutoSizeText(
-                                                  hunters[index].user.name,
-                                                  style:
-                                                      FlutterFlowTheme.of(context)
-                                                          .titleSmall,
-                                                ),
-                                                subtitle: Column(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    AutoSizeText(
-                                                      hunters[index]
-                                                          .user
-                                                          .localizedheadline,
-                                                      overflow: TextOverflow.ellipsis,
-                                                      maxLines: 1,
-                                                      minFontSize: 10.0,
-                                                      style: FlutterFlowTheme.of(
-                                                              context)
-                                                          .labelExtraSmall
-                                                          .override(
-                                                              fontSize: 10.0,
-                                                              useGoogleFonts: false,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primaryText
-                                                                  .withOpacity(0.5)),
+                                              child: Column(
+                                                children: [
+                                                  ListTile(
+                                                    titleAlignment:
+                                                        ListTileTitleAlignment.center,
+                                                    minVerticalPadding: 4.0.h,
+                                                    tileColor:
+                                                        FlutterFlowTheme.of(context)
+                                                            .textFieldBackground,
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(8.0.w),
                                                     ),
-                                                    SizedBox(height: 4.0.h,),
-                                                    AutoSizeText(
+                                                    leading: CustomCircleAvatar(
+                                                      imageUrl:
+                                                          hunters[index].user.photourl,
+                                                      radius: 18.0.w,
+                                                    ),
+                                                    title: AutoSizeText(
+                                                      hunters[index].user.name,
+                                                      style:
+                                                          FlutterFlowTheme.of(context)
+                                                              .titleSmall,
+                                                    ),
+                                                    subtitle: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        AutoSizeText(
+                                                          hunters[index]
+                                                              .user
+                                                              .localizedheadline,
+                                                          overflow: TextOverflow.ellipsis,
+                                                          maxLines: 1,
+                                                          minFontSize: 10.0,
+                                                          style: FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelExtraSmall
+                                                              .override(
+                                                                  fontSize: 10.0,
+                                                                  useGoogleFonts: false,
+                                                                  color: FlutterFlowTheme
+                                                                          .of(context)
+                                                                      .primaryText
+                                                                      .withOpacity(0.5)),
+                                                        ),
+
+                                                      ],
+                                                    ),
+                                                    trailing: hunters[index]
+                                                                .hunterStatus ==
+                                                            "claim"
+                                                        ? GestureDetector(
+                                                            onTap: () {
+                                                              setState(() {
+                                                                if (isSelected) {
+                                                                  selectedHunters
+                                                                      .remove(
+                                                                          hunters[index]
+                                                                              .id);
+                                                                  if(selectedHunters.length<=0){
+                                                                    isSelectedState = false;
+                                                                  }
+                                                                  print(
+                                                                      "Hunter id:${hunters[index].id}");
+                                                                } else {
+                                                                  selectedHunters.add(
+                                                                      hunters[index]
+                                                                          .id);
+                                                                  isSelectedState = true;
+                                                                  print(
+                                                                      " Selected Hunter id:${hunters[index].id}");
+                                                                }
+                                                              });
+                                                            },
+                                                            child:
+                                                            isSelected
+                                                                ? const Icon(Icons.radio_button_checked)
+                                                                : isSelectedState ?
+                                                            const Icon(Icons.radio_button_off_outlined) :
+
+                                                            Container(
+                                                              padding:
+                                                                  EdgeInsets.symmetric(
+                                                                vertical: 6.0.h,
+                                                                horizontal: 10.0.w,
+                                                              ),
+                                                              decoration: BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            4.0.w),
+                                                                border: Border.all(
+                                                                  color: isSelected
+                                                                      ? FlutterFlowTheme
+                                                                              .of(
+                                                                                  context)
+                                                                          .primary
+                                                                      : FlutterFlowTheme
+                                                                              .of(context)
+                                                                          .primaryText,
+                                                                ),
+                                                              ),
+                                                              child:
+
+
+                                                              AutoSizeText(
+                                                                "Award",
+                                                                minFontSize: 8,
+                                                                style: FlutterFlowTheme
+                                                                        .of(context)
+                                                                    .labelExtraSmall
+                                                                    .override(
+                                                                      useGoogleFonts:
+                                                                          false,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      fontSize: 10.sp,
+                                                                      color: isSelected
+                                                                          ? FlutterFlowTheme.of(
+                                                                                  context)
+                                                                              .primary
+                                                                          : FlutterFlowTheme.of(
+                                                                                  context)
+                                                                              .primaryText,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          )
+                                                        : AutoSizeText(
+                                                            hunters[index]
+                                                                        .hunterStatus ==
+                                                                    "assign"
+                                                                ? "Assigned"
+                                                                : hunters[index]
+                                                                            .hunterStatus ==
+                                                                        "accept"
+                                                                    ? "Accepted"
+                                                                    : hunters[index]
+                                                                                .hunterStatus ==
+                                                                            "ignore"
+                                                                        ? "Ignored"
+                                                                        : hunters[index]
+                                                                                    .hunterStatus ==
+                                                                                "awarded"
+                                                                            ? "Awarded"
+                                                                            : "",
+                                                            minFontSize: 8,
+                                                            style: FlutterFlowTheme.of(
+                                                                    context)
+                                                                .labelExtraSmall
+                                                                .override(
+                                                                  useGoogleFonts: false,
+                                                                  fontWeight:
+                                                                      FontWeight.w400,
+                                                                  fontSize: 10.sp,
+                                                                ),
+                                                          ),
+                                                  ),
+                                                  SizedBox(height: 4.0.h,),
+                                                  Padding(
+                                                    padding:  EdgeInsets.symmetric(vertical: 8.0.w,horizontal: 12.0.w),
+                                                    child: AutoSizeText(
                                                       hunters[index]
                                                           .claimMessage ?? "",
-                                                      overflow: TextOverflow.ellipsis,
-                                                      maxLines: 1,
+                                                      // overflow: TextOverflow.ellipsis,
+                                                      maxLines: 8,
                                                       minFontSize: 10.0,
                                                       style: FlutterFlowTheme.of(
                                                           context)
@@ -307,118 +425,8 @@ class _BountyDetailsScreenState extends State<BountyDetailsScreen> {
                                                               .primaryText
                                                               .withOpacity(0.5)),
                                                     ),
-                                                  ],
-                                                ),
-                                                trailing: hunters[index]
-                                                            .hunterStatus ==
-                                                        "claim"
-                                                    ? GestureDetector(
-                                                        onTap: () {
-                                                          setState(() {
-                                                            if (isSelected) {
-                                                              selectedHunters
-                                                                  .remove(
-                                                                      hunters[index]
-                                                                          .id);
-                                                              if(selectedHunters.length<=0){
-                                                                isSelectedState = false;
-                                                              }
-                                                              print(
-                                                                  "Hunter id:${hunters[index].id}");
-                                                            } else {
-                                                              selectedHunters.add(
-                                                                  hunters[index]
-                                                                      .id);
-                                                              isSelectedState = true;
-                                                              print(
-                                                                  " Selected Hunter id:${hunters[index].id}");
-                                                            }
-                                                          });
-                                                        },
-                                                        child:
-                                                        isSelected
-                                                            ? const Icon(Icons.radio_button_checked)
-                                                            : isSelectedState ?
-                                                        const Icon(Icons.radio_button_off_outlined) :
-
-                                                        Container(
-                                                          padding:
-                                                              EdgeInsets.symmetric(
-                                                            vertical: 6.0.h,
-                                                            horizontal: 10.0.w,
-                                                          ),
-                                                          decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        4.0.w),
-                                                            border: Border.all(
-                                                              color: isSelected
-                                                                  ? FlutterFlowTheme
-                                                                          .of(
-                                                                              context)
-                                                                      .primary
-                                                                  : FlutterFlowTheme
-                                                                          .of(context)
-                                                                      .primaryText,
-                                                            ),
-                                                          ),
-                                                          child:
-
-
-                                                          AutoSizeText(
-                                                            "Award",
-                                                            minFontSize: 8,
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .labelExtraSmall
-                                                                .override(
-                                                                  useGoogleFonts:
-                                                                      false,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  fontSize: 10.sp,
-                                                                  color: isSelected
-                                                                      ? FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primary
-                                                                      : FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primaryText,
-                                                                ),
-                                                          ),
-                                                        ),
-                                                      )
-                                                    : AutoSizeText(
-                                                        hunters[index]
-                                                                    .hunterStatus ==
-                                                                "assign"
-                                                            ? "Assigned"
-                                                            : hunters[index]
-                                                                        .hunterStatus ==
-                                                                    "accept"
-                                                                ? "Accepted"
-                                                                : hunters[index]
-                                                                            .hunterStatus ==
-                                                                        "ignore"
-                                                                    ? "Ignored"
-                                                                    : hunters[index]
-                                                                                .hunterStatus ==
-                                                                            "awarded"
-                                                                        ? "Awarded"
-                                                                        : "",
-                                                        minFontSize: 8,
-                                                        style: FlutterFlowTheme.of(
-                                                                context)
-                                                            .labelExtraSmall
-                                                            .override(
-                                                              useGoogleFonts: false,
-                                                              fontWeight:
-                                                                  FontWeight.w400,
-                                                              fontSize: 10.sp,
-                                                            ),
-                                                      ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ),

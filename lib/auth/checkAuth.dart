@@ -15,17 +15,17 @@ import '../new_code/onboarding/auth_screen/login_screen/components/country_code_
 import '../new_code/onboarding/goals/goals_screen.dart';
 import '../new_code/onboarding/linkdin/linkdin_screen.dart';
 
-Future<bool> isUserLoggedIn() async {
-  if (prefs!.getString(authToken) == null) {
-    return false;
-  } else if (prefs!.getString(authToken)!.isNotEmpty) {
-    if (await checkUser()) {
-      print("CheckUserReturn ${checkUser()}");
-      return true;
-    }
-  }
-  return false;
-}
+// Future<bool> isUserLoggedIn() async {
+//   if (prefs!.getString(authToken) == null) {
+//     return false;
+//   } else if (prefs!.getString(authToken)!.isNotEmpty) {
+//     if (await checkUser()) {
+//       print("CheckUserReturn ${checkUser()}");
+//       return true;
+//     }
+//   }
+//   return false;
+// }
 
 Future<bool> checkUser() async {
   final AuthRepository repository = AuthRepository();

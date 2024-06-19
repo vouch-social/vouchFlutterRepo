@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final allNotificationsModel = allNotificationsModelFromJson(jsonString);
-
 import 'dart:convert';
 
 AllNotificationsModel allNotificationsModelFromJson(String str) => AllNotificationsModel.fromJson(json.decode(str));
@@ -9,18 +5,22 @@ AllNotificationsModel allNotificationsModelFromJson(String str) => AllNotificati
 String allNotificationsModelToJson(AllNotificationsModel data) => json.encode(data.toJson());
 
 class AllNotificationsModel {
-  List<NotificationDatum> notificationData;
+  List<NotificationDatum>? notificationData;
 
   AllNotificationsModel({
     required this.notificationData,
   });
 
   factory AllNotificationsModel.fromJson(Map<String, dynamic> json) => AllNotificationsModel(
-    notificationData: List<NotificationDatum>.from(json["notificationData"].map((x) => NotificationDatum.fromJson(x))),
+    notificationData: json["notificationData"] == null
+        ? null
+        : List<NotificationDatum>.from(json["notificationData"].map((x) => NotificationDatum.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
-    "notificationData": List<dynamic>.from(notificationData.map((x) => x.toJson())),
+    "notificationData": notificationData == null
+        ? null
+        : List<dynamic>.from(notificationData!.map((x) => x.toJson())),
   };
 }
 
@@ -35,14 +35,14 @@ class NotificationDatum {
   dynamic status;
 
   NotificationDatum({
-     this.createdAt,
-     this.updatedAt,
-     this.id,
-     this.userId,
-     this.notificationType,
-     this.title,
-     this.description,
-     this.status,
+    this.createdAt,
+    this.updatedAt,
+    this.id,
+    this.userId,
+    this.notificationType,
+    this.title,
+    this.description,
+    this.status,
   });
 
   factory NotificationDatum.fromJson(Map<String, dynamic> json) => NotificationDatum(

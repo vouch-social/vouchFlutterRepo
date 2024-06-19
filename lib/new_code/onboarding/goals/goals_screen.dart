@@ -1,12 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
-import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
 import '../../../flutter_flow/flutter_flow_widgets.dart';
 import 'goals_controller.dart';
 
@@ -213,13 +210,13 @@ class _GoalsScreenState extends State<GoalsScreen>
           const Spacer(),
           FFButtonWidget(
               onPressed: () async {
-
+                if(_tabController.index == 2 && controller.controller[0].text.isNotEmpty && controller.controller[1].text.isNotEmpty && controller.controller[2].text.isNotEmpty){
+                  await controller.sendUserGoalsController();
+                }
                 if (_tabController.index < 2 ) {
                   _tabController.animateTo(_tabController.index + 1);
                 }
-                if(_tabController.index == 2 && controller.controller[0].text.isNotEmpty && controller.controller[1].text.isNotEmpty && controller.controller[2].text.isNotEmpty){
-                  controller.sendUserGoalsController();
-                }else{
+                else{
                   if(controller.controller[0].text.isEmpty && _tabController.index == 1){
                      Get.snackbar(
                        "Alert",
@@ -242,29 +239,6 @@ class _GoalsScreenState extends State<GoalsScreen>
               text: _currentIndex == 2 ? 'Finish' : 'Next',
               options: CTAButton(context)),
 
-          // _currentIndex == 0 || _currentIndex == 1 ?
-          // Column(
-          //   children: [
-          //     SizedBox(
-          //       height: 16.0.h,
-          //     ),
-          //     Center(
-          //       child: GestureDetector(
-          //         onTap: () {
-          //           Get.to(NewHomePage());
-          //         },
-          //         child: AutoSizeText(
-          //           "Skip for now",
-          //           style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-          //               useGoogleFonts: false,
-          //               decoration: TextDecoration.underline
-          //           ),
-          //         ),
-          //       ),
-          //     ),
-          //   ],
-          // )
-          //     :
           SizedBox(
             height: 28.h,
           )
@@ -280,14 +254,15 @@ class _GoalsScreenState extends State<GoalsScreen>
         _handleChipSelection(label);
       },
       child: Chip(
-        // color: MaterialStateProperty.all(FlutterFlowTheme.of(context).textFieldBackground),
         backgroundColor:
         MediaQuery.of(context).platformBrightness == Brightness.dark ?
-
         FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9):
         FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
         label: AutoSizeText(label,
-
+          maxLines: 2,
+          maxFontSize: 12,
+          minFontSize: 10,
+          overflow: TextOverflow.ellipsis,
           style: FlutterFlowTheme.of(context).labelExtraSmall,
         ),
       ),);

@@ -26,8 +26,16 @@ class _MyHuntsScreenState extends State<MyHuntsScreen> {
   @override
   void initState() {
     super.initState();
-    fetchHuntsHistory();
+    _initializeData();
   }
+
+
+  void _initializeData() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      fetchHuntsHistory();
+    });
+  }
+
 
   Future<void> fetchHuntsHistory() async {
     var fetchedBountyHistory = await controller.getHuntsHistory();
@@ -38,7 +46,6 @@ class _MyHuntsScreenState extends State<MyHuntsScreen> {
     });
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

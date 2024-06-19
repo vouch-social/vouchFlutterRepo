@@ -20,7 +20,7 @@ class AllNotificationsRepo {
   Future<BaseResponse<AllNotificationsModel>> getAllNotifications() async {
     try {
       dio.Response response = await _dioClient.getRequest(
-        endPoint: '/api/notifications/',
+        endPoint: '/api/notifications',
         bearerToken: '${prefs!.getString(authToken)}',
         data: null,
       );
@@ -41,4 +41,55 @@ class AllNotificationsRepo {
       rethrow;
     }
   }
+
+  Future<BaseResponse<AllNotificationsModel>> allNotificationSeen() async {
+    try {
+      dio.Response response = await _dioClient.postRequest(
+        endPoint: '/api/notifications/seen-all',
+        authToken: '${prefs!.getString(authToken)}',
+        data: null,
+      );
+      print('DIO RES Notifications Model $response');
+      if (response.data != null) {
+        BaseResponse<AllNotificationsModel> result =
+        BaseResponse<AllNotificationsModel>.fromJson(
+          response.data,
+          AllNotificationsModel.fromJson,
+        );
+        print("Result Notifications: $result");
+        return result;
+      } else {
+        throw Exception('Response data is null');
+      }
+    } catch (error) {
+      print(error);
+      rethrow;
+    }
+  }
+
+  Future<BaseResponse<AllNotificationsModel>> singleNotificationSeen(dynamic notificationId) async {
+    try {
+      dio.Response response = await _dioClient.postRequest(
+        endPoint: '/api/notifications/seen/$notificationId',
+        authToken: '${prefs!.getString(authToken)}',
+        data: null,
+      );
+      print('DIO RES Notifications Model $response');
+      if (response.data != null) {
+        BaseResponse<AllNotificationsModel> result =
+        BaseResponse<AllNotificationsModel>.fromJson(
+          response.data,
+          AllNotificationsModel.fromJson,
+        );
+        print("Result Notifications: $result");
+        return result;
+      } else {
+        throw Exception('Response data is null');
+      }
+    } catch (error) {
+      print(error);
+      rethrow;
+    }
+  }
+
 }

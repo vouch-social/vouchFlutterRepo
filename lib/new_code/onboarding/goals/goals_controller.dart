@@ -26,7 +26,6 @@ class GoalsController extends GetxController{
       print("DATA : $data");
 
       final response = await repository.sendUserGoals(data);
-
       if (response.status) {
         Get.off(() => const NewHomePage());
       } else {

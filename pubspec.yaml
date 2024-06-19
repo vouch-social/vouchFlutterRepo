@@ -28,7 +28,7 @@ dependencies:
   auto_size_text: 3.0.0
   barcode_widget: 2.0.3
   cached_network_image: 3.3.1
-  cloud_firestore: 4.15.7
+  cloud_firestore:
   cloud_firestore_platform_interface: 6.1.8
   cloud_firestore_web: 3.10.7
   cloud_functions: 4.6.7
@@ -45,10 +45,10 @@ dependencies:
   firebase_app_check: 0.2.1+16
   firebase_app_check_platform_interface: 0.1.0+18
   firebase_app_check_web: 0.1.0+18
-  firebase_auth: 4.17.7
+  firebase_auth:
   firebase_auth_platform_interface: 7.1.7
   firebase_auth_web: 5.9.7
-  firebase_core: 2.26.0
+  firebase_core:
   firebase_core_platform_interface: 5.0.0
   firebase_core_web: 2.11.5
   firebase_crashlytics: 3.4.17
@@ -87,7 +87,7 @@ dependencies:
   image_picker_for_web: 3.0.1
   image_picker_ios: 0.8.8+2
   image_picker_platform_interface: 2.9.1
-  intl: 0.18.1
+  intl: 0.19.0
   json_path: 0.6.2
   lottie: 2.7.0
   mime_type: 1.0.0
@@ -149,12 +149,16 @@ dependencies:
   date_time_format: ^2.0.1
   flutter_local_notifications:
   uni_links:
+  qr_code_scanner:
+  flutter_app_badger:
+
 
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
+  badges: ^3.1.2
 
 dependency_overrides:
   http: 1.2.0

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,8 +13,8 @@ import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../main.dart';
 import '../../common_widgets/myAppBar.dart';
 
-class AttributesListItem extends StatelessWidget {
-  final int serialNumber;
+class AttributesListItem extends StatefulWidget {
+  final dynamic serialNumber;
   final String text;
   final IconData icon;
   final VoidCallback onIconTap;
@@ -21,45 +22,52 @@ class AttributesListItem extends StatelessWidget {
 
   const AttributesListItem({
     super.key,
-    required this.serialNumber,
+     this.serialNumber,
     required this.text,
     required this.icon,
     required this.onIconTap,
-    this.showIcon = true,  // Default is to show the icon
+    this.showIcon = true,
   });
 
   @override
+  State<AttributesListItem> createState() => _AttributesListItemState();
+}
+
+class _AttributesListItemState extends State<AttributesListItem> {
+  @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 4.0),
-      padding: EdgeInsets.all(8.0),
+      margin: EdgeInsets.symmetric(vertical: 4.0.w),
+      padding: widget.serialNumber != null ? EdgeInsets.all(16.0.w) : EdgeInsets.all(8.0.w),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).textFieldBackground,
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(8.0.w),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
-            '$serialNumber.',
-            style: FlutterFlowTheme.of(context).labelSmall,
-          ),
+          widget.serialNumber != null ?
+          AutoSizeText(widget.serialNumber.toString(),style: FlutterFlowTheme.of(context).labelMedium.override(
+            useGoogleFonts: false,
+            color: FlutterFlowTheme.of(context).secondaryBackground
+          ),) : Container(),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                text,
+              padding:  widget.serialNumber != null ? EdgeInsets.symmetric(horizontal: 8.0.w) : const EdgeInsets.symmetric(horizontal: 0.0),
+              child: AutoSizeText(
+                widget.text,
                 style: FlutterFlowTheme.of(context).labelSmall,
                 textAlign: TextAlign.left,
               ),
             ),
           ),
-          if (showIcon)
+          if (widget.showIcon)
             GestureDetector(
-              onTap: onIconTap,
+              onTap: widget.onIconTap,
               child: Icon(
-                icon,
-                size: 16.0,
+                widget.icon,
+                size: 16.0.w,
+                color: FlutterFlowTheme.of(context).secondaryBackground,
               ),
             ),
         ],
@@ -90,7 +98,7 @@ class _AttributesListState extends State<AttributesList> {
   @override
   void initState() {
     super.initState();
-    _items = widget.items!;
+    _items = widget.items != null ? List.of(widget.items!) : [];
     fetchRecommendations();
   }
 
@@ -124,7 +132,7 @@ class _AttributesListState extends State<AttributesList> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: "Add Attributes",
         showBackButton: true,
         showProfileButton: false,
@@ -139,6 +147,7 @@ class _AttributesListState extends State<AttributesList> {
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ListView.builder(
                     shrinkWrap: true,
@@ -157,7 +166,8 @@ class _AttributesListState extends State<AttributesList> {
                     controller: _textEditingController,
                     addItem: _addItem,
                   ),
-
+                  SizedBox(height: 16.0.h),
+                  AutoSizeText("Suggestions :",style: FlutterFlowTheme.of(context).bodyLarge,),
                   SizedBox(height: 16.0.h),
                   ListView.builder(
                     shrinkWrap: true,
@@ -182,7 +192,7 @@ class _AttributesListState extends State<AttributesList> {
                              () => Skeletonizer(
                                enabled: _controller.isLoading.value,
                                child: AttributesListItem(
-                                serialNumber: index + 1,
+                                // serialNumber: index + 1,
                                 text: recommendationsData[index],
                                 icon: widget.icon,
                                 onIconTap: () {},
@@ -204,7 +214,7 @@ class _AttributesListState extends State<AttributesList> {
         child: FFButtonWidget(
           text: "Save Attributes",
           onPressed: () async{
-            print("Attributes ${_items}");
+            print("Attributes $_items");
             prefs?.setStringList(attributes, _items);
             await _controller.sendUserAttributesController(_items);
             Get.back();
@@ -222,8 +232,7 @@ class CustomTextField extends StatelessWidget {
   final int? maxLines;
   final void Function(String) addItem;
 
-  const CustomTextField({
-    Key? key,
+  const CustomTextField({super.key,
     this.controller,
     this.initialValue,
     this.maxLines,
@@ -236,7 +245,7 @@ class CustomTextField extends StatelessWidget {
       height: 56.0.h,
       width: double.infinity,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(8.0.w),
           color: FlutterFlowTheme.of(context).textFieldBackground,
           border: Border.all(
             color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
@@ -255,10 +264,10 @@ class CustomTextField extends StatelessWidget {
               decoration: InputDecoration(
                 alignLabelWithHint: true,
                 labelStyle: FlutterFlowTheme.of(context).titleSmall,
-                enabledBorder: OutlineInputBorder(
+                enabledBorder: const OutlineInputBorder(
                     borderSide: BorderSide.none
                 ),
-                focusedBorder: OutlineInputBorder(
+                focusedBorder: const OutlineInputBorder(
                     borderSide: BorderSide.none
                 ),
               ),
@@ -267,17 +276,15 @@ class CustomTextField extends StatelessWidget {
           SizedBox(width: 8.0.w),
           GestureDetector(
             child: Container(
-              // height: 20.h,
-              // width: 20.w,
-              padding: EdgeInsets.all(8.0),
+              padding:  EdgeInsets.all(8.0.w),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20.0.w),
                 color: FlutterFlowTheme.of(context).ffButton,
               ),
               child: Icon(
-                Icons.send,
+                Icons.add,
                 color: FlutterFlowTheme.of(context).secondaryText,
-                size: 16.0.h,
+                size: 20.0.h,
               ),
             ),
             onTap: () {

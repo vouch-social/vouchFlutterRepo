@@ -8,9 +8,10 @@ import 'package:vouch/new_code/home_page/notifications/notifications_screen.dart
 
 import '../../flutter_flow/flutter_flow_theme.dart';
 import '../../generated/assets.dart';
+import '../../main.dart';
 import '../home_page/settings/settings_screen.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final bool showBackButton;
   final bool showProfileButton;
   final String title;
@@ -18,10 +19,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showHistoryButton;
   final bool showNotificationButton;
   final Function()? onSettingsButtonPressed;
-  final Function()? onBackButtonPressed; // New optional parameter
+  final Function()? onBackButtonPressed;
 
   const CustomAppBar({
-    super.key,
+    Key? key,
     this.showBackButton = false,
     this.title = "",
     this.backgroundColor = Colors.transparent,
@@ -29,19 +30,48 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onSettingsButtonPressed,
     this.showHistoryButton = true,
     this.showNotificationButton = true,
-    this.onBackButtonPressed, // Initialize the new parameter
-  });
+    this.onBackButtonPressed,
+  }) : super(key: key);
+
+  @override
+  _CustomAppBarState createState() => _CustomAppBarState();
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+class _CustomAppBarState extends State<CustomAppBar> {
+   int _cartBadgeAmount = 0;
+  late bool _showCartBadge;
+
+   Future<void> fecthCount() async {
+     var fetchedCount = prefs?.getInt('badgeCount') ?? 0;
+     WidgetsBinding.instance.addPostFrameCallback((_) {
+       if (!mounted) return;
+       setState(() {
+         _cartBadgeAmount = fetchedCount;
+       });
+     });
+   }
+
+  @override
+  void initState() {
+    super.initState();
+    notificationServices.initLocalNotifications();
+    notificationServices.setupInteractMessage(context);
+    fecthCount();
+  }
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: backgroundColor == Colors.transparent
+      backgroundColor: widget.backgroundColor == Colors.transparent
           ? FlutterFlowTheme.of(context).primaryBackground
-          : backgroundColor,
+          : widget.backgroundColor,
       elevation: 0,
-      leading: showBackButton
+      leading: widget.showBackButton
           ? GestureDetector(
-              onTap: onBackButtonPressed ??
+              onTap: widget.onBackButtonPressed ??
                   () {
                     Get.back();
                   },
@@ -53,8 +83,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 child: Center(
                   child: Icon(Icons.arrow_back,
-                      color: FlutterFlowTheme.of(context)
-                          .alternate), // Replace with your icon
+                      color: FlutterFlowTheme.of(context).alternate),
                 ),
               ),
             )
@@ -62,11 +91,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: FlutterFlowTheme.of(context).headlineLarge),
+          Text(widget.title, style: FlutterFlowTheme.of(context).headlineLarge),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              showNotificationButton
+              widget.showNotificationButton
                   ? GestureDetector(
                       onTap: () {
                         Get.to(
@@ -74,21 +103,37 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                           transition: Transition.upToDown,
                           duration: const Duration(milliseconds: 500),
                         );
+                        notificationServices.resetBadgeCount();
+                        setState(() {
+                          _cartBadgeAmount = 0;
+                        });
                       },
                       child: Container(
-                          width: 40.w,
-                          height: 40.h,
-                          padding: EdgeInsets.all(8.0.w),
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
+                        width: 40.w,
+                        height: 40.h,
+                        padding: EdgeInsets.all(8.0.w),
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: Badge(
+                          alignment: Alignment.topRight,
+                          isLabelVisible: _cartBadgeAmount > 0,
+                          label: Text(
+                            _cartBadgeAmount.toString(),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 10.0,
+                            ),
                           ),
                           child: Icon(
                             Icons.notifications,
                             color: FlutterFlowTheme.of(context).alternate,
-                          )),
+                          ),
+                        ),
+                      ),
                     )
                   : Container(),
-              showHistoryButton
+              widget.showHistoryButton
                   ? GestureDetector(
                       onTap: () {
                         Get.to(
@@ -98,19 +143,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         );
                       },
                       child: Container(
-                          width: 40.w,
-                          height: 40.h,
-                          padding: EdgeInsets.all(8.0.w),
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.history_rounded,
-                            color: FlutterFlowTheme.of(context).alternate,
-                          )),
+                        width: 40.w,
+                        height: 40.h,
+                        padding: EdgeInsets.all(8.0.w),
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(
+                          Icons.history_rounded,
+                          color: FlutterFlowTheme.of(context).alternate,
+                        ),
+                      ),
                     )
                   : Container(),
-              showProfileButton
+              widget.showProfileButton
                   ? GestureDetector(
                       onTap: () {
                         Get.to(
@@ -120,18 +166,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         );
                       },
                       child: Container(
-                          width: 40.w,
-                          height: 40.h,
-                          padding: EdgeInsets.all(8.0.w),
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: SvgPicture.asset(
-                            Assets.assetsUserIcon,
-                            height: 20.h,
-                            width: 20.w,
-                            color: FlutterFlowTheme.of(context).alternate,
-                          )),
+                        width: 40.w,
+                        height: 40.h,
+                        padding: EdgeInsets.all(8.0.w),
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: SvgPicture.asset(
+                          Assets.assetsUserIcon,
+                          height: 20.h,
+                          width: 20.w,
+                          color: FlutterFlowTheme.of(context).alternate,
+                        ),
+                      ),
                     )
                   : Container(),
             ],
@@ -140,7 +187,4 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

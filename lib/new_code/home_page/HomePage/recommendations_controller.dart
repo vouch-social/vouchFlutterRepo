@@ -1,11 +1,7 @@
 import 'package:get/get.dart';
 import 'package:vouch/new_code/backend/models/recommendations_model.dart';
-import 'package:vouch/new_code/home_page/paths_screen/paths_screen.dart';
-
 import '../../backend/models/base_response.dart';
 import '../../backend/models/new_recommendations_model.dart';
-import '../../backend/models/paths_model.dart';
-import '../../backend/repos/paths_recommendations_repo.dart';
 import '../../backend/repos/recommendations_repo.dart';
 
 class RecommendationsController extends GetxController {

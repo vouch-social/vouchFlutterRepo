@@ -109,17 +109,17 @@ class _OtpScreenState extends State<OtpScreen> {
                     obscureText: false,
                     hintCharacter: 'x',
                     hintStyle: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                      color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.3),
-                      useGoogleFonts: false
+                        color: FlutterFlowTheme.of(context).primaryText.withOpacity(0.3),
+                        useGoogleFonts: false
                     ),
                     keyboardType: TextInputType.number,
-    // backgroundColor: FlutterFlowTheme.of(context).textFieldBackground,
+                    // backgroundColor: FlutterFlowTheme.of(context).textFieldBackground,
                     pinTheme: PinTheme(
                       fieldHeight: 52.0.h,
                       fieldWidth: 52.0.w,
                       borderWidth: 0.0,
                       borderRadius:  BorderRadius.circular(8.0.w),
-    activeBorderWidth: 0,
+                      activeBorderWidth: 0,
                       disabledBorderWidth: 0,
                       errorBorderWidth: 0,
                       inactiveBorderWidth: 0,
@@ -192,10 +192,10 @@ class _OtpScreenState extends State<OtpScreen> {
                                   .bodySmall,
                             ),
                             Text('s',
-                            style:
+                              style:
                               FlutterFlowTheme.of(context)
                                   .bodySmall
-                                  ,
+                              ,
                             )
                           ],
                         ),
@@ -255,23 +255,23 @@ class _OtpScreenState extends State<OtpScreen> {
                                   useGoogleFonts: false,
                                   decoration: TextDecoration.underline,
                                 )
-                                    ,
+                                ,
                               ),
                             ),
                           ],
                         ),
                       GestureDetector(
-                      onTap: () => Get.back(),
-                      child: AutoSizeText(
-                          'Wrong mobile number?',
-                          textAlign: TextAlign.center,
-                          style: FlutterFlowTheme.of(context)
-                              .bodySmall
-                              .override(
-                           decoration: TextDecoration.underline,
-                            useGoogleFonts: false,
-                          ),
-                      )
+                          onTap: () => Get.back(),
+                          child: AutoSizeText(
+                            'Wrong mobile number?',
+                            textAlign: TextAlign.center,
+                            style: FlutterFlowTheme.of(context)
+                                .bodySmall
+                                .override(
+                              decoration: TextDecoration.underline,
+                              useGoogleFonts: false,
+                            ),
+                          )
                       ),
                     ],
                   )
@@ -284,7 +284,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 onPressed: () async {
                   logFirebaseEvent('OTP_PAGE_VERIFY_O_T_P_BTN_ON_TAP');
                   logFirebaseEvent('Button_auth');
-                 // GoRouter.of(context).prepareAuthEvent();
+                  // GoRouter.of(context).prepareAuthEvent();
                   final smsCodeVal = _model.pinCodeController!.text;
                   if (smsCodeVal.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -303,11 +303,8 @@ class _OtpScreenState extends State<OtpScreen> {
                   }
 
                   logFirebaseEvent('Button_navigate_to');
-                   _model.sendUserData(
+                  _model.sendUserData(
                       countryCode: widget.countryCode, phoneWOCC: widget.mobileWOCC);
-
-                  //Get.offAll(() =>  PermissionsScreen(mobileWOCC: widget.mobileWOCC,countryCode: widget.countryCode,));
-                  //context.goNamedAuth('Permissions', context.mounted);
                 },
                 text: 'Submit OTP',
                 options: CTAButton(context),

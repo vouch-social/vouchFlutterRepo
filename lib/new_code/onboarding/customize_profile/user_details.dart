@@ -11,9 +11,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:vouch/auth/checkAuth.dart';
 import 'package:vouch/generated/assets.dart';
 import 'package:vouch/new_code/backend/backend_constants.dart';
 import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
+import 'package:vouch/new_code/home_page/search_screen/search_screen.dart';
 import 'package:vouch/new_code/onboarding/customize_profile/attributes_screen.dart';
 import 'package:vouch/new_code/onboarding/customize_profile/tags_screen.dart';
 import 'package:vouch/new_code/onboarding/customize_profile/user_details_controller.dart';
@@ -34,19 +36,27 @@ class _UserDetailsState extends State<UserDetails> {
   final _controller = Get.put(UserDetailsController());
 
   File? _imageFile;
-  String? _base64Image;
+  dynamic _base64Image;
 
   Future<void> _getImageFromGallery() async {
     final pickedFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
+
     if (pickedFile != null) {
       final File imageFile = File(pickedFile.path);
-      setState(() {
-        _imageFile = imageFile;
-        _base64Image = base64Encode(imageFile.readAsBytesSync());
-        _controller.imageController.text = _base64Image!.toString();
-        print(_controller.imageController.text);
-      });
+      final int fileSizeInBytes = imageFile.lengthSync();
+      print("File Size : $fileSizeInBytes");
+      if(fileSizeInBytes > 1572864){
+        Get.snackbar("Alert", "Please upload image of size less than 1.5 MB");
+      }else{
+        setState(() {
+          _imageFile = imageFile;
+          _base64Image = base64Encode(imageFile.readAsBytesSync());
+          _controller.imageController.text = _base64Image!;
+          print("Base64 Gallery : ${_controller.imageController.text}");
+        });
+      }
+
     }
   }
 
@@ -55,55 +65,25 @@ class _UserDetailsState extends State<UserDetails> {
         await ImagePicker().pickImage(source: ImageSource.camera);
     if (pickedFile != null) {
       final File imageFile = File(pickedFile.path);
-      setState(() {
-        _imageFile = imageFile;
-        _base64Image = base64Encode(imageFile.readAsBytesSync());
-        _controller.imageController.text = _base64Image!.toString();
-        print("Base 64 : ${_controller.imageController.text}");
-      });
+      final int fileSizeInBytes = imageFile.lengthSync();
+      print("File Size : $fileSizeInBytes");
+      if(fileSizeInBytes > 1572864){
+        Get.snackbar("Alert", "Please upload image of size less than 1.5 MB");
+      }else{
+        setState(() {
+          _imageFile = imageFile;
+          _base64Image = base64Encode(imageFile.readAsBytesSync());
+          _controller.imageController.text = _base64Image!;
+          print("Base 64 : ${_controller.imageController.text}");
+        });
+      }
+
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    const mockResults = <Tags>[
-      Tags(
-        'John Doe',
-      ),
-      Tags(
-        'Paul',
-      ),
-      Tags(
-        'Fred',
-      ),
-      Tags(
-        'Brian',
-      ),
-      Tags(
-        'John',
-      ),
-      Tags(
-        'Thomas',
-      ),
-      Tags(
-        'Nelly',
-      ),
-      Tags(
-        'Marie',
-      ),
-      Tags(
-        'Charlie',
-      ),
-      Tags(
-        'Diana',
-      ),
-      Tags(
-        'Ernie',
-      ),
-      Tags(
-        'Gina',
-      ),
-    ];
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -313,7 +293,7 @@ class _UserDetailsState extends State<UserDetails> {
                   const Spacer(),
                   GestureDetector(
                     onTap: (){
-                      Get.to(() => AttributesList(
+                      Get.to(() =>  AttributesList(
                         items: [],
                       ));
                     },
@@ -347,16 +327,21 @@ class _UserDetailsState extends State<UserDetails> {
                         message: "Please fill the Headline",
                       );
                       print("Null Data is There");
+                    }
+                    else if (_controller.imageController.text.isEmpty) {
+                      const GetSnackBar(
+                        title: "Alert",
+                        message: "Please upload your image",
+                      );
+                      print("Null Data is There");
                     }else if(prefs!.getStringList(attributes)!.isEmpty){
-                      Get.to(const AttributesList());
+                      Get.to( const AttributesList());
                     }
                       else if (_controller.nameController.text.isNotEmpty &&
                         _controller.headlineController.text.isNotEmpty && _controller.imageController.text.isNotEmpty) {
                       await _controller.saveUserController();
-                      // if(prefs?.getStringList(goals) != null){
-                      //   Get.to(() => NewHomePage());
-                      // }else{
-                        Get.to(() => const GoalsScreen());
+                      // await checkUser();
+                      //   Get.to(() => const SearchScreen());
                       // }
                     }
                   },
@@ -366,7 +351,7 @@ class _UserDetailsState extends State<UserDetails> {
                 height: 12.0.h,
               ),
               GestureDetector(
-                onTap: () => Get.to(() => const LinkedinScreen()),
+                onTap: () => Get.off(() => const LinkedinScreen()),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -379,7 +364,7 @@ class _UserDetailsState extends State<UserDetails> {
                       width: 8.0.w,
                     ),
                     AutoSizeText(
-                      'Go back and update LinkedIn',
+                      'Update LinkedIn Instead',
                       style: FlutterFlowTheme.of(context).labelExtraSmall.override(
                         useGoogleFonts: false,
                         decoration: TextDecoration.underline
@@ -387,7 +372,8 @@ class _UserDetailsState extends State<UserDetails> {
                     )
                   ],
                 ),
-              )
+              ),
+              SizedBox(height: 16.0.h,)
             ],
           ),
         ),
@@ -419,8 +405,6 @@ class CustomTextField extends StatelessWidget {
         controller: controller,
         cursorColor: FlutterFlowTheme.of(context).secondaryBackground,
         decoration: InputDecoration(
-          // filled: true,
-          // fillColor: FlutterFlowTheme.of(context).textFieldBackground,
           alignLabelWithHint: true,
           labelText: label,
           floatingLabelStyle: FlutterFlowTheme.of(context).titleSmall,

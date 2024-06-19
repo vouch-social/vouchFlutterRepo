@@ -32,4 +32,39 @@ class NotificationsController extends GetxController{
     }
   }
 
+  Future<void> allNotificationsSeen() async {
+    try {
+      BaseResponse<AllNotificationsModel> apiResult =
+      await repository.allNotificationSeen();
+      if (apiResult.status) {
+        print('Api Result Notifications Seen Controller: ${apiResult.message}');
+        Future.delayed(const Duration(milliseconds: 300), () {
+        });
+        return apiResult.data;
+      }
+      return apiResult.data;
+    } catch (error) {
+      print("Error Notifications : $error");
+      rethrow;
+    } finally{
+
+    }
+  }
+
+  Future<void> singleNotificationSeen(dynamic notificationId) async {
+    try {
+      BaseResponse<AllNotificationsModel> apiResult =
+      await repository.singleNotificationSeen(notificationId);
+      if (apiResult.status) {
+        print('Api Result Notifications Seen Controller: ${apiResult.message}');
+        return apiResult.data;
+      }
+      return apiResult.data;
+    } catch (error) {
+      print("Error Notifications : $error");
+      rethrow;
+    } finally{
+
+    }
+  }
 }

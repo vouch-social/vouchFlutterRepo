@@ -26,7 +26,7 @@ class VouchConnectController extends GetxController {
           String url = apiResult.data.urlForWhatsapp.toString();
           print('Attempting to launch URL: $url');
           await _launchURL(url);
-          Get.off(() => NewHomePage());
+          Get.off(() => const NewHomePage());
         }
         isLoading(false);
         return apiResult.data;

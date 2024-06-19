@@ -10,7 +10,7 @@ class CustomCircleAvatar extends StatelessWidget {
   dynamic imageUrl;
   final double radius;
 
-  CustomCircleAvatar({
+  CustomCircleAvatar({super.key,
      this.imageUrl,
     this.radius = 18.0,
   });

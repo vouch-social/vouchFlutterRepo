@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -8,8 +9,8 @@ import '../../../flutter_flow/flutter_flow_theme.dart';
 import '../../common_widgets/myAppBar.dart';
 import 'edit_profile/edit_profile_controller.dart';
 
-class EditAttributesListItem extends StatelessWidget {
-  final int serialNumber;
+class EditAttributesListItem extends StatefulWidget {
+  final dynamic serialNumber;
   final String text;
   final IconData icon;
   final VoidCallback onIconTap;
@@ -17,7 +18,7 @@ class EditAttributesListItem extends StatelessWidget {
 
   const EditAttributesListItem({
     super.key,
-    required this.serialNumber,
+     this.serialNumber,
     required this.text,
     required this.icon,
     required this.onIconTap,
@@ -25,37 +26,44 @@ class EditAttributesListItem extends StatelessWidget {
   });
 
   @override
+  State<EditAttributesListItem> createState() => _EditAttributesListItemState();
+}
+
+class _EditAttributesListItemState extends State<EditAttributesListItem> {
+  @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 4.0),
-      padding: EdgeInsets.all(8.0),
+      margin: EdgeInsets.symmetric(vertical: 4.0.w),
+      padding: widget.serialNumber != null ? EdgeInsets.all(16.0.w) : EdgeInsets.all(8.0.w),
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).textFieldBackground,
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(8.0.w),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
-            '$serialNumber.',
-            style: FlutterFlowTheme.of(context).labelSmall,
-          ),
+          widget.serialNumber != null ?
+          AutoSizeText(widget.serialNumber.toString(),style: FlutterFlowTheme.of(context).labelMedium.override(
+              useGoogleFonts: false,
+              color: FlutterFlowTheme.of(context).secondaryBackground
+          ),) : Container(),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                text,
+              padding:  widget.serialNumber != null ? EdgeInsets.symmetric(horizontal: 8.0.w) : const EdgeInsets.symmetric(horizontal: 0.0),
+              child: AutoSizeText(
+                widget.text,
                 style: FlutterFlowTheme.of(context).labelSmall,
                 textAlign: TextAlign.left,
               ),
             ),
           ),
-          if (showIcon)
+          if (widget.showIcon)
             GestureDetector(
-              onTap: onIconTap,
+              onTap: widget.onIconTap,
               child: Icon(
-                icon,
-                size: 16.0,
+                widget.icon,
+                size: 16.0.w,
+                color: FlutterFlowTheme.of(context).secondaryBackground,
               ),
             ),
         ],
@@ -137,6 +145,7 @@ class _EditAttributesListState extends State<EditAttributesList> {
             child: Padding(
               padding: EdgeInsets.all(16.0.w),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ListView.builder(
                     shrinkWrap: true,
@@ -155,6 +164,8 @@ class _EditAttributesListState extends State<EditAttributesList> {
                     controller: _textEditingController,
                     addItem: _addItem,
                   ),
+                  SizedBox(height: 16.0.h),
+                  AutoSizeText("Suggestions :",style: FlutterFlowTheme.of(context).bodyLarge,),
                   SizedBox(height: 16.0.h),
                   Obx(() {
                     return _controller.isLoading.value
@@ -185,7 +196,7 @@ class _EditAttributesListState extends State<EditAttributesList> {
                               : Skeletonizer(
                             enabled: _controller.isLoading.value,
                             child: EditAttributesListItem(
-                              serialNumber: index + 1,
+                              serialNumber: null,
                               text: recommendationsData[index],
                               icon: widget.icon,
                               onIconTap: () {},

@@ -27,7 +27,9 @@ class _ContactUploadSuccessState extends State<ContactUploadSuccess> {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () async{
       await checkUser();
-      Get.off(() => navigateToPage());
+      Get.back();
+      Get.back();
+      Get.back();
     });
   }
 
@@ -75,7 +77,7 @@ class _ContactUploadSuccessState extends State<ContactUploadSuccess> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AutoSizeText(
-                    "${prefs?.getInt(contactsAdded)} ",
+                    "${prefs?.getInt(contactsAdded) ?? 0} ",
                     style: FlutterFlowTheme.of(context).headlineLarge
                   ),
                       AutoSizeText(

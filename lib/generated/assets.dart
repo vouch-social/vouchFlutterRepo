@@ -11,10 +11,12 @@ class Assets {
   static const String assetsImage951 = 'assets/image951.png';
   static const String assetsLinkdinSvg = 'assets/linkdin_svg.svg';
   static const String assetsLock = 'assets/lock.svg';
+  static const String assetsNoGoalsFound = 'assets/no_goals_found.svg';
   static const String assetsOutreach = 'assets/Outreach.png';
   static const String assetsPaths = 'assets/Paths.png';
   static const String assetsPathsEmptyState = 'assets/paths_empty_state.svg';
   static const String assetsRecommendationsEmptyState = 'assets/recommendations_empty_state.svg';
+  static const String assetsSplashImage = 'assets/splash_image.png';
   static const String assetsUserIcon = 'assets/user_icon.svg';
   static const String assetsWelcomeLogo = 'assets/welcomeLogo.svg';
   static const String audiosFavicon = 'assets/audios/favicon.png';

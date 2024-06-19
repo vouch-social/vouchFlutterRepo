@@ -1,14 +1,10 @@
-import 'dart:convert';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:vouch/auth/checkAuth.dart';
 import 'package:vouch/flutter_flow/flutter_flow_theme.dart';
 import 'package:vouch/flutter_flow/flutter_flow_widgets.dart';
-import 'package:vouch/generated/assets.dart';
 import 'package:vouch/main.dart';
 import 'package:vouch/new_code/backend/backend_constants.dart';
 import 'package:vouch/new_code/common_widgets/image_check.dart';
@@ -17,7 +13,6 @@ import 'package:vouch/new_code/home_page/settings/edit_goals/edit_goals_screen.d
 import 'package:vouch/new_code/home_page/settings/edit_profile/edit_profile_screen.dart';
 import 'package:vouch/new_code/home_page/settings/re_sync_contacts/re_sync_permissions_screen.dart';
 import 'package:vouch/new_code/onboarding/linkdin/linkdin_screen.dart';
-import 'package:vouch/new_code/onboarding/permissions/permissions_screen.dart';
 import 'package:vouch/new_code/onboarding/welcome_screen/welcome_screen.dart';
 import '../../common_widgets/myAppBar.dart';
 import 'edit_attributes_screen.dart';
@@ -34,7 +29,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   void initState() {
     super.initState();
-    checkUser();
+    _initializeData();
+  }
+
+  void _initializeData() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
+      await checkUser();
+    });
   }
 
   @override
@@ -58,9 +60,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
-                child: CustomCircleAvatar(
-                  radius: 64.0.w,
-                  imageUrl: prefs?.getString(imageUrl)
+                child:  Container(
+                  padding: EdgeInsets.all(1.0.w),
+                  decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      borderRadius: BorderRadius.circular(64.0.w)
+                  ),
+                  child: CustomCircleAvatar(
+                      radius: 64.0.w,
+                      imageUrl: prefs?.getString(imageUrl)
+                  ),
                 )
               ),
               SizedBox(
@@ -75,6 +84,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SizedBox(
                 height: 8.0.h,
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AutoSizeText("+ 91 - ",style: FlutterFlowTheme.of(context).labelSmall),
+                  AutoSizeText(
+                    "${prefs?.getString(phone)}",
+                    style: FlutterFlowTheme.of(context).labelSmall,
+                  ),
+                ],
+              ),
+              SizedBox(height: 8.0.h,),
               Center(
                 child: AutoSizeText(
                   "${prefs?.getString(headline)}",
@@ -87,7 +107,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Center(
                 child: GestureDetector(
                   onTap: () {
-                    Get.to(() => EditProfileScreen());
+                    Get.to(() => const EditProfileScreen());
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(
@@ -344,8 +364,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   )),
               const Spacer(),
               FFButtonWidget(
-                  text: 'Logout', onPressed: () {
-                    prefs?.setString(authToken, '');
+                  text: 'Logout', onPressed: () async{
+                   await prefs?.setString(authToken, '');
                     Get.offAll(() => const WelcomeScreen());
               }, options: CTAButton(context))
             ],

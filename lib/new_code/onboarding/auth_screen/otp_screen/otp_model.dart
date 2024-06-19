@@ -15,6 +15,7 @@ import '../../../backend/models/base_response.dart';
 import '../../../backend/models/check_user_model.dart';
 import '../../../backend/models/user_data_model.dart';
 import '../../../backend/repos/auth_repo.dart';
+import '../../../services/refresh_token_send_controller.dart';
 import '../../permissions/permissions_screen.dart';
 import '../login_screen/components/country_code_remover.dart';
 import 'otp_screen.dart';
@@ -42,9 +43,11 @@ class OtpModel extends FlutterFlowModel<OtpScreen> {
   FlutterFlowTimerController timerController =
   FlutterFlowTimerController(StopWatchTimer(mode: StopWatchMode.countDown));
 
+  final controller = Get.put(FcmTokenController());
 
   final AuthRepository repository = AuthRepository();
 
+  var isLoading = false;
   Future<void> sendUserData({String? phoneWOCC, String? countryCode}) async {
     var data = {
       'phone': phoneWOCC,
@@ -54,6 +57,7 @@ class OtpModel extends FlutterFlowModel<OtpScreen> {
       'fcm_token':prefs?.getString(fcmToken)
     };
     try {
+      isLoading = true;
       if (currentUserReference != null && data['firebaseid'] != null) {
         BaseResponse<UserModel> apiResult = await repository.sendUser(
           data['firebaseid']!,
@@ -67,13 +71,17 @@ class OtpModel extends FlutterFlowModel<OtpScreen> {
           print("Auth Tokennn: ${apiResult.data!.data.accessToken}");
           prefs?.setString(authToken, apiResult.data!.data.accessToken);
           print("Auth Tokennn: ${prefs?.getString(authToken)}");
-          sendToken();
+           sendToken();
+           controller.saveUserController(
+            prefs?.getString(fcmToken)
+           );
+          isLoading = false;
         }
       } else {
         print('CurrentUserReference or firebaseId is null');
       }
     } catch (error) {
-      print("MY Error : ${error}");
+      print("MY Error : $error");
     }
   }
 
@@ -86,6 +94,7 @@ class OtpModel extends FlutterFlowModel<OtpScreen> {
       await repository.sendTokenToServer(data['phone']!);
       if (apiResult.status) {
         print('Api Result : ${apiResult.message}');
+
        await checkUser();
         Get.off(() => navigateToPage());
       } else {

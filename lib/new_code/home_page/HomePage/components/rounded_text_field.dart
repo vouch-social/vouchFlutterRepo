@@ -27,7 +27,6 @@ class RoundedTextField extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30.0.w),
               color: FlutterFlowTheme.of(context).textFieldBackground,
-              //border: Border.all(color: FlutterFlowTheme.of(context).textFieldBackground),
             ),
             child: Align(
               alignment: Alignment.centerLeft,

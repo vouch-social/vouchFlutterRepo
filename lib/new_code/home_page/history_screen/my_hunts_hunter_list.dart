@@ -23,7 +23,7 @@ class _MyHuntsOtherHuntersListState extends State<MyHuntsOtherHuntersList> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         showBackButton: true,
       ),
       body: SafeArea(
@@ -72,7 +72,8 @@ class _MyHuntsOtherHuntersListState extends State<MyHuntsOtherHuntersList> {
                               style: FlutterFlowTheme.of(context).labelExtraSmall,
                             ),
                             trailing: AutoSizeText(
-                              widget.hunters[index].hunterStatus,
+                              widget.hunters[index].hunterStatus == 'assign' ?
+                             'Assigned': widget.hunters[index].hunterStatus == 'accept' ? 'Hunting' : widget.hunters[index].hunterStatus == 'awarded' ? "Awarded" : "Claimed",
                               minFontSize: 8,
                               style: FlutterFlowTheme.of(context)
                                   .labelExtraSmall

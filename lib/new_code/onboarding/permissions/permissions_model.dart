@@ -19,7 +19,7 @@ class ContactsModel extends FlutterFlowModel<PermissionsScreen> {
 
   final unfocusNode = FocusNode();
   // Stores action output result for [Backend Call - API (updateUser)] action in Permissions widget.
-  ApiCallResponse? newUserID;
+  // ApiCallResponse? newUserID;
   //late SharedPreferences prefs;
 
 

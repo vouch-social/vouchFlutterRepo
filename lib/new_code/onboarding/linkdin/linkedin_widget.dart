@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
+import 'package:vouch/new_code/home_page/search_screen/search_screen.dart';
 import 'package:vouch/new_code/onboarding/customize_profile/user_details.dart';
 import 'package:vouch/new_code/onboarding/goals/goals_screen.dart';
 import 'package:vouch/new_code/onboarding/waterfall_model.dart';
@@ -80,7 +81,7 @@ class _LinkedinWidgetState extends State<LinkedinWidget> {
           ) {
             logFirebaseEvent('Linkedin_navigate_to');
 
-            Get.off(() => GoalsScreen());
+            Get.off(() => const SearchScreen());
 
             logFirebaseEvent('Linkedin_stop_periodic_action');
             _model.instantTimer?.cancel();

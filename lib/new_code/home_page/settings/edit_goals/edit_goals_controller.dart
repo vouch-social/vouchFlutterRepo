@@ -13,7 +13,15 @@ class EditGoalsController extends GetxController{
   final AttributesGoalsRepo repository = AttributesGoalsRepo();
   final GetGoalsAttributesRepo getRepository = GetGoalsAttributesRepo();
   var isLoading = false.obs;
-  List<TextEditingController> controller = List.generate(3, (index) => TextEditingController(text: prefs!.getStringList(goals)?[index].toString()));
+  List<TextEditingController> controller = List.generate(3, (index) {
+    final goalsList = prefs!.getStringList(goals);
+    if (goalsList != null && index < goalsList.length) {
+      return TextEditingController(text: goalsList[index]);
+    } else {
+      return TextEditingController();
+    }
+  });
+
 
 
   Future<void> sendUserEditedGoalsController() async {
@@ -31,7 +39,7 @@ class EditGoalsController extends GetxController{
 
       if (response.status) {
         print('Edit Goals response : ${response.data}');
-        Get.back();
+         Get.back();
       } else {
         print('Status is false');
       }
