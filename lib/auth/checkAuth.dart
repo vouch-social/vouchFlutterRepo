@@ -1,31 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vouch/new_code/onboarding/permissions/contacts_call_logs/import_screen.dart';
-import 'package:vouch/new_code/onboarding/permissions/permissions_screen.dart';
-import 'package:vouch/new_code/onboarding/welcome_screen/welcome_screen.dart';
-import '../new_code/onboarding/waterfall_model.dart';
+import 'dart:convert';
 import 'firebase_auth/auth_util.dart';
 import '../main.dart';
 import '../new_code/backend/backend_constants.dart';
 import '../new_code/backend/models/base_response.dart';
 import '../new_code/backend/models/check_user_model.dart';
 import '../new_code/backend/repos/auth_repo.dart';
-import '../new_code/home_page/HomePage/new_home_page.dart';
 import '../new_code/onboarding/auth_screen/login_screen/components/country_code_remover.dart';
-import '../new_code/onboarding/goals/goals_screen.dart';
-import '../new_code/onboarding/linkdin/linkdin_screen.dart';
 
-// Future<bool> isUserLoggedIn() async {
-//   if (prefs!.getString(authToken) == null) {
-//     return false;
-//   } else if (prefs!.getString(authToken)!.isNotEmpty) {
-//     if (await checkUser()) {
-//       print("CheckUserReturn ${checkUser()}");
-//       return true;
-//     }
-//   }
-//   return false;
-// }
+
 
 Future<bool> checkUser() async {
   final AuthRepository repository = AuthRepository();
@@ -34,8 +16,8 @@ Future<bool> checkUser() async {
   };
   try {
     BaseResponse<CheckUserModel> apiResult =
-        await repository.sendTokenToServer(data['phone']!);
-    print("Api REsult Status :${apiResult.status}");
+    await repository.sendTokenToServer(data['phone']!);
+    print("Api Result Status :${apiResult.status}");
     if (apiResult.status) {
       print("User Id :${apiResult.data!.data.user.id}");
       prefs?.setInt(userId, apiResult.data!.data.user.id);
@@ -46,39 +28,64 @@ Future<bool> checkUser() async {
       print("imageUrl: ${prefs?.getString(imageUrl)}");
       prefs?.setString(
           headline, apiResult.data!.data.user.localizedheadline ?? 'null');
-      print("HealdLine : ${prefs?.getString(headline)}");
+      print("Headline : ${prefs?.getString(headline)}");
       prefs?.setString(
           loggedInUserHashedPhone, apiResult.data!.data.user.hashedphone);
-      print("HasedPhone : ${prefs?.getString(loggedInUserHashedPhone)}");
+      print("HashedPhone : ${prefs?.getString(loggedInUserHashedPhone)}");
       prefs?.setBool(isLinkedinSync, apiResult.data!.data.linkedinSync);
       print("Linkedin : ${prefs?.get(isLinkedinSync)}");
       print("IsContact: ${apiResult.data!.data.contactsSync!}");
       prefs?.setBool(isContactSync, apiResult.data!.data.contactsSync);
-// Ensure prefs and apiResult.data are not null
+
       if (prefs != null && apiResult.data != null) {
         List<String> userGoals = [];
         if (apiResult.data.data.user.goals.isNotEmpty) {
           var firstGoalEntry = apiResult.data.data.user.goals[0].goals;
-          if (firstGoalEntry is List<String>) {
-            userGoals = firstGoalEntry;
+          if (firstGoalEntry is List) {
+            userGoals = firstGoalEntry.map((goal) => goal.toString()).toList();
           }
         }
         prefs?.setStringList(goals, userGoals);
       }
+
       if (prefs != null && apiResult.data != null) {
         List<String> userAttributes = [];
         if (apiResult.data.data.user.attributes.isNotEmpty) {
           var firstAttributes = apiResult.data.data.user.attributes[0].attributes;
-          if (firstAttributes is List<String>) {
-            userAttributes = firstAttributes;
+          if (firstAttributes is List) {
+            userAttributes = firstAttributes.map((attribute) => attribute.toString()).toList();
           }
         }
         prefs?.setStringList(attributes, userAttributes);
       }
       print("Attributes : ${prefs?.getStringList(attributes)}");
+
+      List<AttributesNew> attributesNewList = apiResult.data!.data.user.attributesNew ?? [];
+
+      print("New Attributes Print:");
+      attributesNewList.forEach((attributeNew) {
+        print("Created At: ${attributeNew.createdAt}");
+        print("Updated At: ${attributeNew.updatedAt}");
+        print("ID: ${attributeNew.id}");
+        print("User ID: ${attributeNew.userId}");
+        print("Attribute: ${attributeNew.attribute}");
+        print("Score: ${attributeNew.score}");
+        print("");
+      });
+
+      // Serialize the list of AttributesNew objects to a JSON string
+      String attributesNewJson = jsonEncode(attributesNewList.map((attributeNew) => attributeNew.toJson()).toList());
+
+      // Save the JSON string to shared preferences
       prefs?.setString(phone, apiResult.data!.data.user.phone.toString());
       print("Phone : ${apiResult.data!.data.user.phone}");
       prefs?.setString(countryCode, apiResult.data!.data.user.countryCode.toString());
+      print("Auth Token :${prefs?.getString(authToken)}");
+      prefs?.setString(attributesNew, attributesNewJson);
+      print("New Attributes JSON: ${prefs?.getString(attributesNew)}");
+
+
+      accessAttributesNewElements();
     }
     return apiResult.status;
   } catch (error) {
@@ -87,35 +94,3 @@ Future<bool> checkUser() async {
   return false;
 }
 
-// Widget newCustomNav() {
-//   final AuthRepository repository = AuthRepository();
-//   Future<String> pageName() async {
-//     var data = {
-//       'phone': cleanPhone(currentPhoneNumber),
-//     };
-//     try {
-//       BaseResponse<CheckUserModel> apiResult =
-//           await repository.sendTokenToServer(data['phone']!);
-//       print("apiResponseCustomNav : ${apiResult.data.data}");
-//       if (apiResult.data.data.contactsSync == false) {
-//         return "callLogsPending";
-//       } else if (!apiResult.data.data.linkedinSync) {
-//         return "linkedInPending";
-//       }
-//     } catch (error) {
-//       print(error);
-//     }
-//     return "";
-//   }
-//
-//   return FutureBuilder<String>(
-//       future: pageName(),
-//       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-//         if (snapshot.data == 'callLogsPending') {
-//           return PermissionsScreen();
-//         } else if (snapshot.data == "linkedInPending") {
-//           return LinkedinScreen();
-//         }
-//         return navigateToPage(context);
-//       });
-// }

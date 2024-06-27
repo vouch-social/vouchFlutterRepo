@@ -9,18 +9,18 @@ VouchStatusUpdateModel vouchStatusUpdateModelFromJson(String str) => VouchStatus
 String vouchStatusUpdateModelToJson(VouchStatusUpdateModel data) => json.encode(data.toJson());
 
 class VouchStatusUpdateModel {
-  String createdAt;
-  String updatedAt;
-  int id;
-  String vouchStatusUpdateModelCreatedAt;
-  String message;
-  String status;
-  int pathlength;
-  String startnode;
-  String endnode;
+  dynamic createdAt;
+  dynamic updatedAt;
+  dynamic id;
+  dynamic vouchStatusUpdateModelCreatedAt;
+  dynamic message;
+  dynamic status;
+  dynamic pathlength;
+  dynamic startnode;
+  dynamic endnode;
   dynamic activenode;
   dynamic activenodeStatus;
-  int userId;
+  dynamic userId;
   PathData pathData;
 
   VouchStatusUpdateModel({
@@ -74,8 +74,8 @@ class VouchStatusUpdateModel {
 
 class PathData {
   List<Path> path;
-  int length;
-  int strength;
+  dynamic length;
+  dynamic strength;
 
   PathData({
     required this.path,
@@ -97,13 +97,13 @@ class PathData {
 }
 
 class Path {
-  String name;
+  dynamic name;
   String? image;
-  String heading;
+  dynamic heading;
   List<Attribute> attributes;
   bool isRegistered;
   dynamic strengthToNext;
-  String contactHashedPhone;
+  dynamic contactHashedPhone;
 
   Path({
     required this.name,
@@ -137,11 +137,11 @@ class Path {
 }
 
 class Attribute {
-  int id;
-  int userId;
-  String createdAt;
-  String updatedAt;
-  List<String> attributes;
+  dynamic id;
+  dynamic userId;
+  dynamic createdAt;
+  dynamic updatedAt;
+  List<dynamic> attributes;
 
   Attribute({
     required this.id,

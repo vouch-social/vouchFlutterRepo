@@ -141,11 +141,10 @@ class _MyVouchCardState extends State<MyVouchCard> {
                         SizedBox(
                           width: 8.0.w,
                         ),
-                        widget. vouch.activenode == widget.vouch.endnode && widget.vouch.status != 'close' && widget.vouch.activenodeStatus != 'pending'?
+                        widget.vouch.activenode == widget.vouch.endnode && widget.vouch.status != 'cancel' && widget.vouch.activenodeStatus == 'accept' ?
                         CustomButton(text: 'Connect', onTap: () async{
                           await Get.to(() => MyVouchDetailsScreen(vouch: widget.vouch));
                         },
-
                         )
                             :
                         widget. vouch.status == 'close' ?

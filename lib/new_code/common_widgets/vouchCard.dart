@@ -16,14 +16,14 @@ import 'outline_button_widget.dart';
 class FeedsVouchCard extends StatefulWidget {
   final feedModelVouch;
   final Function refreshFeeds;
-  const FeedsVouchCard({super.key, this.feedModelVouch, required this.refreshFeeds});
+  const FeedsVouchCard(
+      {super.key, this.feedModelVouch, required this.refreshFeeds});
 
   @override
   State<FeedsVouchCard> createState() => _FeedsVouchCardState();
 }
 
 class _FeedsVouchCardState extends State<FeedsVouchCard> {
-
   bool _isVisible = true;
 
   void hideCard() {
@@ -69,8 +69,12 @@ class _FeedsVouchCardState extends State<FeedsVouchCard> {
                   scrollDirection: Axis.horizontal,
                   itemCount: widget.feedModelVouch.pathData.length,
                   itemBuilder: (context, index) {
-                    return vouchPath(context, revList[index], index,
-                        widget.feedModelVouch.pathData.length, widget.feedModelVouch.activenode);
+                    return vouchPath(
+                        context,
+                        revList[index],
+                        index,
+                        widget.feedModelVouch.pathData.length,
+                        widget.feedModelVouch.activenode);
                   },
                 ),
               ),
@@ -81,10 +85,10 @@ class _FeedsVouchCardState extends State<FeedsVouchCard> {
                 minFontSize: 0.0,
                 '${widget.feedModelVouch.message}',
                 style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                  useGoogleFonts: false,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w400,
-                ),
+                      useGoogleFonts: false,
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w400,
+                    ),
               ),
               SizedBox(
                 height: 16.0.h,
@@ -107,60 +111,78 @@ class _FeedsVouchCardState extends State<FeedsVouchCard> {
                       AutoSizeText(
                         DateTimeFormat.relative(
                             relativeTo: DateTime.now(),
-                            DateTime.fromMillisecondsSinceEpoch(timestamp * 1000),
+                            DateTime.fromMillisecondsSinceEpoch(
+                                timestamp * 1000),
                             ifNow: "Just Now..",
                             appendIfAfter: 'ago...'),
                         style: FlutterFlowTheme.of(context)
                             .labelExtraSmall
                             .override(
-                            useGoogleFonts: false,
-                            fontWeight: FontWeight.w400,
-                            color: FlutterFlowTheme.of(context)
-                                .primaryText
-                                .withOpacity(0.3)),
+                                useGoogleFonts: false,
+                                fontWeight: FontWeight.w400,
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryText
+                                    .withOpacity(0.3)),
                       ),
                     ],
                   ),
-                   Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        OutlineButtonWidget(
-                          text: 'Ignore',
-                          onTap: () async{
-                            await controller.sendVouchStatus(widget.feedModelVouch.id, "reject");
-                            print("Calling refresh callback");
-                            await widget.refreshFeeds();
-                            showCard();
-                            print("Refresh callback executed");
-                          },
-                        ),
-                        SizedBox(
-                          width: 8.0.w,
-                        ),
-                        widget.feedModelVouch.activenodeStatus == 'accept' &&
-                            widget.feedModelVouch.activenode == widget.feedModelVouch.endnode
-                            ?  CustomButton(
-                          text: "Connect",
-                          onTap: () async {
-                            await Get.to(() => VouchDetailsScreen(
-                              vouch: widget.feedModelVouch,
-                            ));
-                            print("Calling refresh callback");
-                            await widget.refreshFeeds();
-                            print("Refresh callback executed");
-                          },
-                        )
-                            : CustomButton(text: 'Vouch',  onTap: () async {
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      OutlineButtonWidget(
+                        text: 'Ignore',
+                        onTap: () async {
                           await controller.sendVouchStatus(
-                              widget.feedModelVouch.id, "accept");
+                              widget.feedModelVouch.id, "reject");
                           print("Calling refresh callback");
-                          showCard();
                           await widget.refreshFeeds();
+                          showCard();
                           print("Refresh callback executed");
                         },
-                        ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(
+                        width: 8.0.w,
+                      ),
+                      widget.feedModelVouch.activenodeStatus == 'accept' &&
+                              widget.feedModelVouch.activenode ==
+                                  widget.feedModelVouch.endnode
+                          ? CustomButton(
+                              text: "Connect",
+                              onTap: () async {
+                                await Get.to(() => VouchDetailsScreen(
+                                      vouch: widget.feedModelVouch,
+                                    ));
+                                print("Calling refresh callback");
+                                await widget.refreshFeeds();
+                                print("Refresh callback executed");
+                              },
+                            )
+                          : widget.feedModelVouch.activenode ==
+                                  widget.feedModelVouch.endnode
+                              ? CustomButton(
+                                  text: 'Accept',
+                                  onTap: () async {
+                                    await controller.sendVouchStatus(
+                                        widget.feedModelVouch.id, "accept");
+                                    print("Calling refresh callback");
+                                    showCard();
+                                    await widget.refreshFeeds();
+                                    print("Refresh callback executed");
+                                  },
+                                )
+                              : CustomButton(
+                                  text: 'Vouch',
+                                  onTap: () async {
+                                    await controller.sendVouchStatus(
+                                        widget.feedModelVouch.id, "accept");
+                                    print("Calling refresh callback");
+                                    showCard();
+                                    await widget.refreshFeeds();
+                                    print("Refresh callback executed");
+                                  },
+                                ),
+                    ],
+                  ),
                 ],
               )
             ],
@@ -170,4 +192,3 @@ class _FeedsVouchCardState extends State<FeedsVouchCard> {
     );
   }
 }
-

@@ -8,6 +8,7 @@ import '../../../auth/checkAuth.dart';
 import '../../../main.dart';
 import '../../backend/models/base_response.dart';
 import '../../backend/repos/get_goals_attributes_repo.dart';
+import '../../backend/repos/new_attributes_repo.dart';
 import '../../backend/repos/save_attributes_goals_repo.dart';
 import '../../home_page/search_screen/search_screen.dart';
 
@@ -19,6 +20,7 @@ class UserDetailsController extends GetxController {
   RxList<Tags> tagsController = <Tags>[].obs;
   final headlineController = TextEditingController();
   var isLoading = false.obs;
+  final NewAttributesRepo newAttributeRepo = NewAttributesRepo();
 
   Future<void> saveUserController() async {
     try {
@@ -84,6 +86,24 @@ class UserDetailsController extends GetxController {
     }
   }
 
+  Future<void> sendNewAttributesController(String attribute) async {
+    try {
+      var data = {
+        "attribute_name": attribute
+      };
+      print("DATA : $data");
+
+      final response = await newAttributeRepo.addAttribute(data);
+
+      if (response.status) {
+        print("Attributes added Successfully");
+      } else {
+        print('Status is false');
+      }
+    } catch (error) {
+      print('Error9: $error');
+    }
+  }
 
 
 }

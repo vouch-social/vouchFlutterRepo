@@ -1,22 +1,20 @@
 import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:uni_links/uni_links.dart';
+import 'package:upgrader/upgrader.dart';
 import 'package:vouch/new_code/backend/backend_constants.dart';
+import 'app_links.dart';
 import 'auth/firebase_auth/firebase_user_provider.dart';
 import 'auth/firebase_auth/auth_util.dart';
-import './backend/push_notifications/push_notifications_util.dart';
 import './backend/firebase/firebase_config.dart';
+import 'new_code/connectivity/connectivity_controller.dart';
 import 'new_code/onboarding/waterfall_model.dart';
 import 'new_code/services/firebase_option.dart';
 import 'flutter_flow/flutter_flow_util.dart';
@@ -33,6 +31,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  AppLinksDeepLink.instance.onInit();
+  await Upgrader.clearSavedSettings();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   Future<void> initSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
@@ -43,6 +43,7 @@ void main() async {
 
   await initFirebase();
   await initSharedPreferences();
+  await initializeUpgrader();
 
   /// for linkdin login url
   usePathUrlStrategy();
@@ -56,13 +57,16 @@ void main() async {
     create: (context) => appState,
     child: MyApp(),
   ));
+  Get.put(InternetController(), permanent: true);
 }
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
 }
-
+Future<void> initializeUpgrader() async {
+  Upgrader().initialize();
+}
 NotificationServices notificationServices = NotificationServices();
 
 class MyApp extends StatefulWidget {
@@ -82,7 +86,7 @@ class _MyAppState extends State<MyApp> {
 
   late AppStateNotifier _appStateNotifier;
   late GoRouter _router;
-
+  final AppLinksDeepLink _appLinksDeepLink = AppLinksDeepLink.instance;
   Uri? _initialUri;
   Uri? _latestUri;
   Object? _err;
@@ -104,13 +108,11 @@ class _MyAppState extends State<MyApp> {
     notificationServices.initLocalNotifications();
     notificationServices.firebaseInit(context);
     notificationServices.setupInteractMessage(context);
-    // notificationServices.resetBadgeCount();
     notificationServices.isTokenRefresh();
     notificationServices.getDeviceToken();
-    _handleIncomingLinks();
-    _handleInitialUri();
     notificationServices.checkForNotificationPayload(context);
     notificationServices.clearNotificationPayload();
+    _appLinksDeepLink.initDeepLinks();
   }
 
   @override
@@ -130,82 +132,79 @@ class _MyAppState extends State<MyApp> {
         _themeMode = mode;
       });
 
-  void _handleIncomingLinks() {
-    if (!kIsWeb) {
-      _sub = uriLinkStream.listen((Uri? uri) {
-        if (!mounted) return;
-        setState(() {
-          _latestUri = uri;
-          _err = null;
-        });
-      }, onError: (Object err) {
-        if (!mounted) return;
-        setState(() {
-          _latestUri = null;
-          if (err is FormatException) {
-            _err = err;
-          } else {
-            _err = null;
-          }
-        });
-      });
-    }
-  }
-
-  Future<void> _handleInitialUri() async {
-    if (!_initialUriIsHandled) {
-      _initialUriIsHandled = true;
-      try {
-        final uri = await getInitialUri();
-        if (uri == null) {
-          print('no initial uri');
-        } else {
-          print('got initial uri: $uri');
-        }
-        if (!mounted) return;
-        setState(() => _initialUri = uri);
-      } on PlatformException {
-        print('failed to get initial uri');
-      } on FormatException catch (err) {
-        if (!mounted) return;
-        setState(() => _err = err);
-      }
-    }
-  }
 
   @override
-  Widget build(BuildContext context) => ScreenUtilInit(
-        designSize: const Size(390, 844),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        ensureScreenSize: true,
-        builder: (context, _) => GetMaterialApp(
-            title: 'Vouch',
-            debugShowCheckedModeBanner: false,
-            localizationsDelegates: const [
-              FFLocalizationsDelegate(),
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            locale: _locale,
-            supportedLocales: const [
-              Locale('en'),
-            ],
-            theme: ThemeData(
-              brightness: Brightness.light,
-              useMaterial3: false,
-            ),
-
-            themeMode: _themeMode,
-            builder: (_, child) => DynamicLinksHandler(
-                  router: _router,
-                  child: child!,
-                ),
-            home: prefs?.getString(authToken) == null || prefs?.getString(authToken) == ''
-                ? const WelcomeScreen()
-                : navigateToPage()
-
+  Widget build(BuildContext context) {
+    _appLinksDeepLink.initDeepLinks();
+    return ScreenUtilInit(
+      designSize: const Size(390, 844),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      ensureScreenSize: true,
+      builder: (context, _) => GetMaterialApp(
+        title: 'Vouch',
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: const [
+          FFLocalizationsDelegate(),
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        locale: _locale,
+        supportedLocales: const [
+          Locale('en'),
+        ],
+        theme: ThemeData(
+          brightness: Brightness.light,
+          useMaterial3: false,
         ),
-      );
+        themeMode: _themeMode,
+        builder: (_, child) => DynamicLinksHandler(
+          router: _router,
+          child: child!,
+        ),
+        home: prefs?.getString(authToken) == null ||
+                prefs?.getString(authToken) == ''
+            ? UpgradeAlert(
+                onIgnore: onIgnore,
+                onLater: onLater,
+                onUpdate: onUpdate,
+                dialogStyle: UpgradeDialogStyle.material,
+                upgrader: Upgrader(
+                  debugDisplayAlways: true,
+                  debugLogging: true,
+                  minAppVersion: "1.0.1",
+                  durationUntilAlertAgain: const Duration(days: 1),
+                ),
+                child: const WelcomeScreen())
+            : UpgradeAlert(
+                onIgnore: onIgnore,
+                onLater: onLater,
+                onUpdate: onUpdate,
+                dialogStyle: UpgradeDialogStyle.material,
+                upgrader: Upgrader(
+                  debugDisplayAlways: true,
+                  debugLogging: true,
+                  minAppVersion: "1.0.1",
+                  durationUntilAlertAgain: const Duration(days: 1),
+                ),
+                child: navigateToPage()),
+      ),
+    );
+  }
+
+  bool onIgnore() {
+    print('Update ignored by the user.');
+    return true;
+  }
+
+  bool onLater() {
+    print('User chose to update later.');
+    return true;
+  }
+
+  bool onUpdate() {
+    print('User chose to update the app.');
+    return true;
+  }
 }

@@ -259,6 +259,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             minLines: 1,
                             maxLines: 4,
                             autofocus: true,
+                            textInputAction: TextInputAction.done,
                             cursorColor: FlutterFlowTheme.of(context).primaryText,
                             onChanged: (text) {
                               setState(() {

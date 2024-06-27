@@ -40,15 +40,15 @@ class _UserDetailsState extends State<UserDetails> {
 
   Future<void> _getImageFromGallery() async {
     final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+        await ImagePicker().pickImage(source: ImageSource.gallery,
+          imageQuality: 10,
+        );
 
     if (pickedFile != null) {
       final File imageFile = File(pickedFile.path);
       final int fileSizeInBytes = imageFile.lengthSync();
       print("File Size : $fileSizeInBytes");
-      if(fileSizeInBytes > 1572864){
-        Get.snackbar("Alert", "Please upload image of size less than 1.5 MB");
-      }else{
+      {
         setState(() {
           _imageFile = imageFile;
           _base64Image = base64Encode(imageFile.readAsBytesSync());
@@ -62,22 +62,19 @@ class _UserDetailsState extends State<UserDetails> {
 
   Future<void> _getImageFromCamera() async {
     final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.camera);
+        await ImagePicker().pickImage(source: ImageSource.camera,
+          imageQuality: 10,
+        );
     if (pickedFile != null) {
       final File imageFile = File(pickedFile.path);
       final int fileSizeInBytes = imageFile.lengthSync();
       print("File Size : $fileSizeInBytes");
-      if(fileSizeInBytes > 1572864){
-        Get.snackbar("Alert", "Please upload image of size less than 1.5 MB");
-      }else{
         setState(() {
           _imageFile = imageFile;
           _base64Image = base64Encode(imageFile.readAsBytesSync());
           _controller.imageController.text = _base64Image!;
           print("Base 64 : ${_controller.imageController.text}");
         });
-      }
-
     }
   }
 
@@ -184,107 +181,6 @@ class _UserDetailsState extends State<UserDetails> {
               SizedBox(
                 height: 16.0.h,
               ),
-              // Hero(
-              //   tag: "Tags",
-              //   child: Material(
-              //     color: Colors.transparent,
-              //     child: Stack(children: [
-              //       Container(
-              //           height: 72.0,
-              //           width: double.infinity,
-              //           decoration: BoxDecoration(
-              //             borderRadius: BorderRadius.circular(8.0),
-              //           ),
-              //           child: ChipsInput(
-              //             initialValue: _controller.tagsController,
-              //             textStyle: FlutterFlowTheme.of(context).labelExtraSmall,
-              //             decoration: InputDecoration(
-              //               // filled: true,
-              //               // fillColor: FlutterFlowTheme.of(context)
-              //               //     .textFieldBackground,
-              //               labelText: "Tags",
-              //               floatingLabelStyle:
-              //                   FlutterFlowTheme.of(context).bodyLarge,
-              //               labelStyle: FlutterFlowTheme.of(context).bodyLarge,
-              //               floatingLabelBehavior: FloatingLabelBehavior.always,
-              //               enabledBorder: OutlineInputBorder(
-              //                 borderSide: BorderSide(
-              //                   color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
-              //                   width: 1.0,
-              //                 ),
-              //                 borderRadius: BorderRadius.circular(8.0),
-              //               ),
-              //               // focusedBorder: OutlineInputBorder(
-              //               //   borderSide: BorderSide(
-              //               //     color: FlutterFlowTheme.of(context).ffButton.withOpacity(0.3),
-              //               //     width: 1.0,
-              //               //   ),
-              //               //   borderRadius: BorderRadius.circular(8.0),
-              //               // ),
-              //             ),
-              //             findSuggestions: (String query) {
-              //               if (query.isNotEmpty) {
-              //                 var lowercaseQuery = query.toLowerCase();
-              //                 final results = mockResults.where((profile) {
-              //                   return profile.tags
-              //                       .toLowerCase()
-              //                       .contains(query.toLowerCase());
-              //                 }).toList(growable: false)
-              //                   ..sort((a, b) => a.tags
-              //                       .toLowerCase()
-              //                       .indexOf(lowercaseQuery)
-              //                       .compareTo(b.tags
-              //                           .toLowerCase()
-              //                           .indexOf(lowercaseQuery)));
-              //                 return results;
-              //               }
-              //               return mockResults;
-              //             },
-              //             onChanged: (List<Tags> tags) {
-              //               _controller.tagsController.value = tags;
-              //               print("Tags : ${_controller.tagsController}");
-              //             },
-              //             chipBuilder: (context, state, Tags profile) {
-              //               return InputChip(
-              //                 backgroundColor: MediaQuery.of(context).platformBrightness == Brightness.dark ?
-              //                 FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9):
-              //                 FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
-              //                 labelStyle: FlutterFlowTheme.of(context).labelSmall,
-              //                 key: ObjectKey(profile),
-              //                 label: Text(profile.tags),
-              //                 onDeleted: () => state.deleteChip(profile),
-              //                 materialTapTargetSize:
-              //                     MaterialTapTargetSize.shrinkWrap,
-              //               );
-              //             },
-              //             suggestionBuilder: (context, state, Tags profile) {
-              //               return Wrap(children: [
-              //                 InputChip(
-              //                   backgroundColor: MediaQuery.of(context).platformBrightness == Brightness.dark ?
-              //                   FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.9):
-              //                   FlutterFlowTheme.of(context).secondaryBackground.withOpacity(0.1),
-              //                   labelStyle: FlutterFlowTheme.of(context).labelSmall,
-              //                   elevation: 0,
-              //                   key: ObjectKey(profile),
-              //                   label: Text(profile.tags),
-              //                   onPressed: () =>
-              //                       state.selectSuggestion(profile),
-              //                 ),
-              //               ]);
-              //             },
-              //           )),
-              //       GestureDetector(
-              //         onTap: () {
-              //           Get.to(() => TagsScreen());
-              //         },
-              //         child: Container(
-              //           height: 72,
-              //           color: Colors.transparent,
-              //         ),
-              //       ),
-              //     ]),
-              //   ),
-              // ),
               Row(
                 children: [
                   AutoSizeText("Attributes (${prefs?.getStringList(attributes)?.length})",
@@ -293,7 +189,7 @@ class _UserDetailsState extends State<UserDetails> {
                   const Spacer(),
                   GestureDetector(
                     onTap: (){
-                      Get.to(() =>  AttributesList(
+                      Get.to(() =>  const AttributesList(
                         items: [],
                       ));
                     },
@@ -351,7 +247,7 @@ class _UserDetailsState extends State<UserDetails> {
                 height: 12.0.h,
               ),
               GestureDetector(
-                onTap: () => Get.off(() => const LinkedinScreen()),
+                onTap: () => Get.to(() => const LinkedinScreen()),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -385,7 +281,6 @@ class _UserDetailsState extends State<UserDetails> {
 class CustomTextField extends StatelessWidget {
   final String label;
   final controller;
-
   const CustomTextField({
     super.key,
     required this.label,
@@ -395,7 +290,6 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 56.0,
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
@@ -403,6 +297,8 @@ class CustomTextField extends StatelessWidget {
       child: TextFormField(
         style: FlutterFlowTheme.of(context).headlineSmall,
         controller: controller,
+        maxLines: 2,
+        minLines: 1,
         cursorColor: FlutterFlowTheme.of(context).secondaryBackground,
         decoration: InputDecoration(
           alignLabelWithHint: true,

@@ -54,9 +54,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   // }
 
   Future<void> _getImageFromGallery() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery,
+      imageQuality: 10,
+    );
     if (pickedFile != null) {
       final File imageFile = File(pickedFile.path);
+      final int fileSizeInBytes = imageFile.lengthSync();
+      print("File Size : $fileSizeInBytes");
       setState(() {
         _imageFile = imageFile;
         _base64Image = base64Encode(imageFile.readAsBytesSync());
@@ -67,7 +71,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   Future<void> _getImageFromCamera() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera,
+      imageQuality: 10,
+    );
     if (pickedFile != null) {
       final File imageFile = File(pickedFile.path);
       setState(() {
@@ -78,131 +84,128 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       });
     }
   }
-  Future<bool> _onWillPop() async {
-    return false;
-  }
+
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: _onWillPop,
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
 
-        appBar: const CustomAppBar(
-          showNotificationButton: false,
-          showHistoryButton: false,
-          showBackButton: true,
-          title: "Profile",
-          showProfileButton: false,
+      appBar: const CustomAppBar(
+        showNotificationButton: false,
+        showHistoryButton: false,
+        showBackButton: true,
+        title: "Profile",
+        showProfileButton: false,
+      ),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.all(16.0.w),
+        child: FFButtonWidget(
+          onPressed: () async {
+            if (_controller.nameController.text.isEmpty) {
+              Get.snackbar("Alert", "Please fill your Name",
+                  // backgroundColor: Colors.grey,
+                  animationDuration: const Duration(milliseconds: 500),
+                  colorText: FlutterFlowTheme.of(context).primaryText
+              );
+            } else if (_controller.headlineController.text.isEmpty) {
+              Get.snackbar("Alert", "Please fill the Headline");
+              print("Null Data is There");
+            } else if (_controller.nameController.text.isNotEmpty &&
+                _controller.headlineController.text.isNotEmpty) {
+              await _controller.saveUserController();
+              await checkUser();
+              Get.to(() => const SettingsScreen());
+            }
+          },
+          text: 'Update Your Profile',
+          options: CTAButton(context),
         ),
-        body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.all(16.0.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 36.0.h),
-                Center(
-                  child: Stack(
-                    alignment: Alignment.bottomRight,
-                    children: [
-                      Container(
-                        height: 128.h,
-                        width: 128.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(64.w),
-                          color: FlutterFlowTheme.of(context).ffButton,
-                          border: Border.all(
-                            style: BorderStyle.solid,
-                            color: FlutterFlowTheme.of(context).textFieldBackground,
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(16.0.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 36.0.h),
+              Center(
+                child: Stack(
+                  alignment: Alignment.bottomRight,
+                  children: [
+                    Container(
+                      height: 128.h,
+                      width: 128.w,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(64.w),
+                        color: FlutterFlowTheme.of(context).ffButton,
+                        border: Border.all(
+                          style: BorderStyle.solid,
+                          color: FlutterFlowTheme.of(context).textFieldBackground,
+                        ),
+                      ),
+                      child: Center(
+                        child: _imageFile != null
+                            ? ClipOval(
+                          child: Image.file(
+                            _imageFile!,
+                            fit: BoxFit.cover,
+                            height: 128.h,
+                            width: 128.w,
                           ),
+                        )
+                            : CustomCircleAvatar(
+                          radius: 64.0.w,
+                          imageUrl: prefs?.getString(imageUrl),
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CustomImageSourceDialog(
+                              onGalleryTap: _getImageFromGallery,
+                              onCameraTap: _getImageFromCamera,
+                            );
+                          },
+                        );
+                      },
+                      child: Container(
+                        margin: EdgeInsets.all(4.0.w),
+                        height: 32.0.h,
+                        width: 32.0.h,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16.0.w),
+                          color: FlutterFlowTheme.of(context).ffButton,
                         ),
                         child: Center(
-                          child: _imageFile != null
-                              ? ClipOval(
-                            child: Image.file(
-                              _imageFile!,
-                              fit: BoxFit.cover,
-                              height: 128.h,
-                              width: 128.w,
-                            ),
-                          )
-                              : CustomCircleAvatar(
-                            radius: 64.0.w,
-                            imageUrl: prefs?.getString(imageUrl),
+                          child: Icon(
+                            size: 20.0,
+                            Icons.camera_alt_rounded,
+                            color: FlutterFlowTheme.of(context).secondaryText,
                           ),
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return CustomImageSourceDialog(
-                                onGalleryTap: _getImageFromGallery,
-                                onCameraTap: _getImageFromCamera,
-                              );
-                            },
-                          );
-                        },
-                        child: Container(
-                          margin: EdgeInsets.all(4.0.w),
-                          height: 32.0.h,
-                          width: 32.0.h,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16.0.w),
-                            color: FlutterFlowTheme.of(context).ffButton,
-                          ),
-                          child: Center(
-                            child: Icon(
-                              size: 20.0,
-                              Icons.camera_alt_rounded,
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 64.0.h),
-                CustomTextField(
-                  label: "Full Name",
-                  controller: _controller.nameController,
-                  maxLines: 1,
-                ),
-                SizedBox(height: 16.0.h),
-                CustomTextField(
-                  label: "Headline",
-                  controller: _controller.headlineController,
-                  maxLines: 2,
-                ),
-                const Spacer(),
-                FFButtonWidget(
-                  onPressed: () async {
-                    if (_controller.nameController.text.isEmpty) {
-                      Get.snackbar("Alert", "Please fill your Name",
-                      // backgroundColor: Colors.grey,
-                        animationDuration: Duration(milliseconds: 500),
-                        colorText: FlutterFlowTheme.of(context).primaryText
-                      );
-                    } else if (_controller.headlineController.text.isEmpty) {
-                      Get.snackbar("Alert", "Please fill the Headline");
-                      print("Null Data is There");
-                    } else if (_controller.nameController.text.isNotEmpty &&
-                        _controller.headlineController.text.isNotEmpty) {
-                      await _controller.saveUserController();
-                      await checkUser();
-                      Get.to(() => SettingsScreen());
-                    }
-                  },
-                  text: 'Update Your Profile',
-                  options: CTAButton(context),
-                ),
-              ],
-            ),
+              ),
+              SizedBox(height: 64.0.h),
+              CustomTextField(
+                label: "Full Name",
+                controller: _controller.nameController,
+                minLines: 1,
+              ),
+              SizedBox(height: 16.0.h),
+              CustomTextField(
+                label: "Headline",
+                controller: _controller.headlineController,
+                minLines: 1,
+              ),
+            ],
           ),
         ),
       ),
@@ -213,13 +216,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 class CustomTextField extends StatelessWidget {
   final String label;
   final TextEditingController controller;
-  final int? maxLines;
+  final int? minLines;
 
   const CustomTextField({
     super.key,
     required this.label,
     required this.controller,
-    this.maxLines,
+    this.minLines,
   });
 
   @override
@@ -231,10 +234,11 @@ class CustomTextField extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: TextFormField(
-        minLines: maxLines,
+        minLines: minLines,
         maxLines: 5,
         style: FlutterFlowTheme.of(context).headlineSmall,
         controller: controller,
+        textInputAction: TextInputAction.done,
         cursorColor: FlutterFlowTheme.of(context).secondaryBackground,
         decoration: InputDecoration(
           alignLabelWithHint: true,

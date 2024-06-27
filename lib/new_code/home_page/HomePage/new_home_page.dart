@@ -71,9 +71,6 @@ class _NewHomePageState extends State<NewHomePage> {
       sendContactsData(_contacts);
     }
   }
-
-
-
   Future<void> sendContactsData(List<Contact> contacts) async {
     List<Map<String, dynamic>> myContactListToJson(List<Contact> contacts) {
       return contacts.map((contact) {
@@ -158,9 +155,7 @@ class _NewHomePageState extends State<NewHomePage> {
 
   Future<void> fetchHunts() async {
     var fetchedHunts = await huntsController.getHuntsHistory();
-
     List<MyHunt> claimedHunts = fetchedHunts.myHunts.where((hunt) => hunt.hunterStatus == "accept").toList();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       setState(() {
@@ -168,7 +163,6 @@ class _NewHomePageState extends State<NewHomePage> {
       });
     });
   }
-
 
   Future<void> fetchFeeds() async {
     var fetchedFeeds = await feedsController.getHomePageFeeds();

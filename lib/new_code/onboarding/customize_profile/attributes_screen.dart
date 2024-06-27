@@ -140,84 +140,107 @@ class _AttributesListState extends State<AttributesList> {
         showHistoryButton: false,
       ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.all(16.0.w),
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: _items.length,
-                    itemBuilder: (context, index) {
-                      return AttributesListItem(
-                        serialNumber: index + 1,
-                        text: _items[index],
-                        icon: widget.icon,
-                        onIconTap: () => _removeItem(index),
-                      );
-                    },
-                  ),
-                  SizedBox(height: 16.0.h,),
-                  CustomTextField(
-                    controller: _textEditingController,
-                    addItem: _addItem,
-                  ),
-                  SizedBox(height: 16.0.h),
-                  AutoSizeText("Suggestions :",style: FlutterFlowTheme.of(context).bodyLarge,),
-                  SizedBox(height: 16.0.h),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: recommendationsData.length,
-                    itemBuilder: (context, index) {
-                      return
-                         GestureDetector(
-                           onTap: (){
-                             setState(() {
-                               _textEditingController.text = recommendationsData[index];
-                             });
-                           },
-                           child:
-                           recommendationsData.isEmpty ?
-                           Center(
-                             child: CircularProgressIndicator(
-                               color: FlutterFlowTheme.of(context).secondaryBackground,
-                             ),
-                           ):
+      body: RefreshIndicator(
+    onRefresh: () async {
+    await fetchRecommendations();
+    },
+        child: SingleChildScrollView(
+          child: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.all(16.0.w),
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: _items.length,
+                      itemBuilder: (context, index) {
+                        return AttributesListItem(
+                          serialNumber: index + 1,
+                          text: _items[index],
+                          icon: widget.icon,
+                          onIconTap: () => _removeItem(index),
+                        );
+                      },
+                    ),
+                    SizedBox(height: 16.0.h,),
+                    CustomTextField(
+                      controller: _textEditingController,
+                      addItem: _addItem,
+                      maxLines: 3,
+                    ),
+                    SizedBox(height: 16.0.h),
+                    AutoSizeText("Suggestions :",style: FlutterFlowTheme.of(context).bodyLarge,),
+                    SizedBox(height: 16.0.h),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: recommendationsData.length,
+                      itemBuilder: (context, index) {
+                        return
+                           GestureDetector(
+                             onTap: (){
+                               setState(() {
+                                 _textEditingController.text = recommendationsData[index];
+                               });
+                             },
+                             child:
+                             recommendationsData.isEmpty ?
+                             Center(
+                               child: CircularProgressIndicator(
+                                 color: FlutterFlowTheme.of(context).secondaryBackground,
+                               ),
+                             ):
 
-                           Obx(
-                             () => Skeletonizer(
-                               enabled: _controller.isLoading.value,
-                               child: AttributesListItem(
-                                // serialNumber: index + 1,
-                                text: recommendationsData[index],
-                                icon: widget.icon,
-                                onIconTap: () {},
-                                 showIcon: false,
-                                                     ),
+                             Obx(
+                               () => Skeletonizer(
+                                 enabled: _controller.isLoading.value,
+                                 child: AttributesListItem(
+                                  // serialNumber: index + 1,
+                                  text: recommendationsData[index],
+                                  icon: widget.icon,
+                                  onIconTap: () {},
+                                   showIcon: false,
+                                                       ),
+                               ),
                              ),
-                           ),
-                         );
-                    },
-                  ),
-                ],
+                           );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.only(left: 16.0.w,right: 16.0.w,bottom: 16.0.w),
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.only(
+            left: 16.0.w, right: 16.0.w, bottom: 16.0.w),
         child: FFButtonWidget(
-          text: "Save Attributes",
-          onPressed: () async{
-            print("Attributes $_items");
-            prefs?.setStringList(attributes, _items);
-            await _controller.sendUserAttributesController(_items);
-            Get.back();
+          text: "Update Attributes",
+          onPressed: () async {
+            if (_items.isNotEmpty) {
+              List<String> itemsCopy = List.from(_items);
+              for (var item in itemsCopy) {
+                if (item.isNotEmpty) {
+                  try {
+                    print("Sending item: $item");
+                    await _controller.sendNewAttributesController(item);
+
+                    Get.back();
+                  } catch (e) {
+                    print("Error sending item: $e");
+                  }
+                } else {
+                  print("Skipped a null or empty item");
+                }
+              }
+            } else {
+              print("No items to send");
+            }
           },
           options: CTAButton(context),
         ),
@@ -242,7 +265,6 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 56.0.h,
       width: double.infinity,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0.w),
@@ -258,8 +280,10 @@ class CustomTextField extends StatelessWidget {
               minLines: 1,
               maxLines: maxLines,
               initialValue: initialValue,
-              style: FlutterFlowTheme.of(context).labelExtraSmall,
+              textInputAction: TextInputAction.done,
+              style: FlutterFlowTheme.of(context).labelSmall,
               controller: controller,
+              autofocus: true,
               cursorColor: FlutterFlowTheme.of(context).secondaryBackground,
               decoration: InputDecoration(
                 alignLabelWithHint: true,

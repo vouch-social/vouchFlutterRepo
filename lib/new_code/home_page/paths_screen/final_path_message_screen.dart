@@ -65,6 +65,39 @@ class _FinalPathMessageScreenState extends State<FinalPathMessageScreen> {
       appBar: const CustomAppBar(
         showBackButton: true,
       ),
+      bottomNavigationBar: Padding(
+        padding:  EdgeInsets.all(16.0.w),
+        child: FFButtonWidget(
+            text: "Start ReachOut",
+            onPressed: () async {
+              if (controller.contextController.text != '') {
+                await MyListView(
+                  paths: widget.singlePath,
+                  totalCount: widget.singlePath.length,
+                  index: widget.currentIndex,
+                  onPressed: (data) async {
+                    List<Map<String, dynamic>> pathNodes = reversedPathNodes.reversed.toList();
+                    print("PathList : $reversedPathNodes");
+                    print(
+                        'Button pressed in tab ${widget.currentIndex} with data: ${jsonEncode(reversedPathNodes)}');
+                    print(
+                        'Button pressed in tab ${widget.currentIndex} with strength: ${widget.singlePath.strength}');
+                    print(
+                        'Button pressed in tab ${widget.currentIndex} with length: ${widget.singlePath.length}');
+                    await controller.sendPath(
+                      pathList: pathNodes,
+                      strength: widget.singlePath.strength ?? 0,
+                      length:widget.singlePath.length,
+                    );
+                    setState(() {
+                      controller.contextController.clear();
+                    });
+                  },
+                ).onPressed(data[0]);
+              }
+            },
+            options: CTAButton(context)),
+      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(16.0.w),
@@ -124,6 +157,7 @@ class _FinalPathMessageScreenState extends State<FinalPathMessageScreen> {
                 maxLines: 8,
                 cursorColor: FlutterFlowTheme.of(context).primaryText,
                 style: FlutterFlowTheme.of(context).labelSmall,
+                textInputAction: TextInputAction.done,
                 decoration: InputDecoration(
                   filled: true,
                   fillColor: FlutterFlowTheme.of(context).textFieldBackground,
@@ -143,37 +177,7 @@ class _FinalPathMessageScreenState extends State<FinalPathMessageScreen> {
                 style: FlutterFlowTheme.of(context).labelExtraSmall.override(
                     useGoogleFonts: false, fontWeight: FontWeight.w400),
               ),
-              const Spacer(),
-              FFButtonWidget(
-                  text: "Start ReachOut",
-                  onPressed: () async {
-                    if (controller.contextController.text != '') {
-                      await MyListView(
-                        paths: widget.singlePath,
-                        totalCount: widget.singlePath.length,
-                        index: widget.currentIndex,
-                        onPressed: (data) async {
-                          List<Map<String, dynamic>> pathNodes = reversedPathNodes.reversed.toList();
-                          print("PathList : $reversedPathNodes");
-                          print(
-                              'Button pressed in tab ${widget.currentIndex} with data: ${jsonEncode(reversedPathNodes)}');
-                          print(
-                              'Button pressed in tab ${widget.currentIndex} with strength: ${widget.singlePath.strength}');
-                          print(
-                              'Button pressed in tab ${widget.currentIndex} with length: ${widget.singlePath.length}');
-                          await controller.sendPath(
-                            pathList: pathNodes,
-                            strength: widget.singlePath.strength ?? 0,
-                            length:widget.singlePath.length,
-                          );
-                          setState(() {
-                            controller.contextController.clear();
-                          });
-                        },
-                      ).onPressed(data[0]);
-                    }
-                  },
-                  options: CTAButton(context)),
+
             ],
           ),
         ),

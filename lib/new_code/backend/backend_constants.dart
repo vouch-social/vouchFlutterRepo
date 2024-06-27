@@ -2,6 +2,9 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../main.dart';
+import 'models/check_user_model.dart';
+
 const String contentType = "application/json";
 const String authorizationHeaderKey = "Authorization";
 const String authorizationHeaderTag = "Authorization";
@@ -27,6 +30,37 @@ const dynamic contactsUpdated = 'contactsUpdated';
 const dynamic contactsCreated = 'contactsCreated';
 const dynamic deviceContacts = 'deviceContacts';
 const String fcmToken = "fcmToken";
+const dynamic attributesNew = "attributesNew";
+// Function to get the attributesNew list from SharedPreferences
+Future<List<AttributesNew>> getAttributesNewList() async {
+  final String? attributesNewJson = prefs?.getString(attributesNew);
+  if (attributesNewJson != null && attributesNewJson.isNotEmpty) {
+    List<dynamic> jsonList = jsonDecode(attributesNewJson);
+    List<AttributesNew> attributesNewList = jsonList.map((json) => AttributesNew.fromJson(json)).toList();
+    return attributesNewList;
+  }
+  return [];
+}
 
+// Function to access elements index-wise
+void accessAttributesNewElements() async {
+  List<AttributesNew> attributesNewList = await getAttributesNewList();
+
+  if (attributesNewList.isNotEmpty) {
+    for (int i = 0; i < attributesNewList.length; i++) {
+      AttributesNew attributeNew = attributesNewList[i];
+      print("Element $i:");
+      print("Created At: ${attributeNew.createdAt}");
+      print("Updated At: ${attributeNew.updatedAt}");
+      print("ID: ${attributeNew.id}");
+      print("User ID: ${attributeNew.userId}");
+      print("Attribute: ${attributeNew.attribute}");
+      print("Score: ${attributeNew.score}");
+      print("");
+    }
+  } else {
+    print("No attributes found.");
+  }
+}
 
 

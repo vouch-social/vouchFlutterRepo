@@ -16,6 +16,7 @@ class PathsRepository {
   factory PathsRepository() => _instance;
 
   Future<BaseResponse<AllPaths>> getPaths(dynamic data) async {
+    print("Path Hasedphone: $data");
     try {
       dio.Response response = await _dioClient.postRequest(
         endPoint: '/api/pathnodes/search-path',

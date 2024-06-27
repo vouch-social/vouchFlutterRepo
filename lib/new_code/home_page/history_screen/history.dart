@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:vouch/new_code/home_page/history_screen/my_hunt_history.dart';
 import '../../../flutter_flow/flutter_flow_theme.dart';
@@ -59,21 +60,21 @@ class _HistoryScreenState extends State<HistoryScreen> with TickerProviderStateM
             tabs: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
+                child: AutoSizeText(
                   "Bounty",
                   style: FlutterFlowTheme.of(context).titleSmall,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
+                child: AutoSizeText(
                   "ReachOut",
                   style: FlutterFlowTheme.of(context).titleSmall,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
+                child: AutoSizeText(
                   "Hunts",
                   style: FlutterFlowTheme.of(context).titleSmall,
                 ),

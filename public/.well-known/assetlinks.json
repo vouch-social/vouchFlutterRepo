@@ -4,6 +4,7 @@
     "namespace": "android_app",
     "package_name": "social.vouch.relayt",
     "sha256_cert_fingerprints":
-    ["F2:62:C8:6B:FA:01:2E:93:68:7F:42:F7:1C:5D:DB:52:B0:B1:89:75:18:7B:CB:06:BF:CB:3E:C2:DF:C3:88:1E"]
+    ["F2:62:C8:6B:FA:01:2E:93:68:7F:42:F7:1C:5D:DB:52:B0:B1:89:75:18:7B:CB:06:BF:CB:3E:C2:DF:C3:88:1E",
+      "0D:11:63:E4:AC:69:7A:E3:77:87:27:6B:5D:B4:C9:49:87:5E:75:DA:EF:77:A5:B7:FC:A9:47:40:9A:B6:4F:DB"]
   }
 }]

@@ -57,13 +57,44 @@ class _GoalsScreenState extends State<GoalsScreen>
      });
    }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.all(16.0.w),
+        child: FFButtonWidget(
+            onPressed: () async {
+              if(_tabController.index == 2 && controller.controller[0].text.isNotEmpty && controller.controller[1].text.isNotEmpty && controller.controller[2].text.isNotEmpty){
+                await controller.sendUserGoalsController();
+              }
+              if (_tabController.index < 2 ) {
+                _tabController.animateTo(_tabController.index + 1);
+              }
+              else{
+                if(controller.controller[0].text.isEmpty && _tabController.index == 1){
+                  Get.snackbar(
+                    "Alert",
+                    "Please fill your goal 01",
+                  );
+                }else if(controller.controller[1].text.isEmpty && _tabController.index == 2){
+                  Get.snackbar(
+                    "Alert",
+                    "Please fill your goal 02",
+                  );
+                }else if(controller.controller[2].text.isEmpty && _tabController.index == 2){
+                  Get.snackbar(
+                    "Alert",
+                    "Please fill your goal 03",
+                  );
+                }
+              }
+        
+            },
+            text: _currentIndex == 2 ? 'Finish' : 'Next',
+            options: CTAButton(context)),
+      ), 
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,6 +199,8 @@ class _GoalsScreenState extends State<GoalsScreen>
               minLines: 3,
               maxLines: 5,
               style: FlutterFlowTheme.of(context).labelSmall,
+              autofocus: true,
+              textInputAction: TextInputAction.next,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: FlutterFlowTheme.of(context).textFieldBackground,
@@ -207,37 +240,7 @@ class _GoalsScreenState extends State<GoalsScreen>
             ),
           ),
 
-          const Spacer(),
-          FFButtonWidget(
-              onPressed: () async {
-                if(_tabController.index == 2 && controller.controller[0].text.isNotEmpty && controller.controller[1].text.isNotEmpty && controller.controller[2].text.isNotEmpty){
-                  await controller.sendUserGoalsController();
-                }
-                if (_tabController.index < 2 ) {
-                  _tabController.animateTo(_tabController.index + 1);
-                }
-                else{
-                  if(controller.controller[0].text.isEmpty && _tabController.index == 1){
-                     Get.snackbar(
-                       "Alert",
-                      "Please fill your goal 01",
-                    );
-                  }else if(controller.controller[1].text.isEmpty && _tabController.index == 2){
-                     Get.snackbar(
-                       "Alert",
-                       "Please fill your goal 02",
-                    );
-                  }else if(controller.controller[2].text.isEmpty && _tabController.index == 2){
-                    Get.snackbar(
-                       "Alert",
-                       "Please fill your goal 03",
-                    );
-                  }
-                }
-
-              },
-              text: _currentIndex == 2 ? 'Finish' : 'Next',
-              options: CTAButton(context)),
+          
 
           SizedBox(
             height: 28.h,

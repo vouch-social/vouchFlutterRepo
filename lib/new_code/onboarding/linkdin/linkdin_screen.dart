@@ -36,6 +36,61 @@ class _LinkedinScreenState extends State<LinkedinScreen> {
         showBackButton: true,
       ),
       backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.all(8.0.w),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            FFButtonWidget(
+                onPressed: () async {
+                  logFirebaseEvent(
+                      'PERMISSIONS_START_BUILDING_NETWORK_BTN_O');
+                  logFirebaseEvent('Button_request_permissions');
+                  logFirebaseEvent('Button_navigate_to');
+
+                  Get.to(() => const LinkedinWidget());
+                },
+                text: 'Sync Linkedin',
+                options: CTAButton(context)
+            ),
+            SizedBox(
+              height: 16.0.h,
+            ),
+            GestureDetector(
+              onTap: () {
+                Get.to(() => const UserDetails());
+              },
+              child: Center(
+                child: AutoSizeText(
+                    'I want to customise profile my self',
+                    style: FlutterFlowTheme.of(context).labelExtraSmall.override(
+                      useGoogleFonts: false,
+                      decoration: TextDecoration.underline,
+                    )
+                ),
+              ),
+            ),
+            SizedBox(height: 16.0.h,)
+
+            // : GestureDetector(
+            //   onTap: () {
+            //     Get.to(() => NewHomePage());
+            //   },
+            //   child: Center(
+            //     child: AutoSizeText(
+            //         'Skip for now !',
+            //         style: FlutterFlowTheme.of(context).labelExtraSmall.override(
+            //           useGoogleFonts: false,
+            //           decoration: TextDecoration.underline,
+            //         )
+            //     ),
+            //   ),
+            // )
+
+
+          ],
+        ),
+      ),
       body: Padding(
         padding: EdgeInsets.all(16.0.w),
         child: Column(
@@ -47,7 +102,7 @@ class _LinkedinScreenState extends State<LinkedinScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 80.0.h,
+                  height: 40.0.h,
                 ),
                 Center(
                   child: Container(
@@ -121,61 +176,6 @@ class _LinkedinScreenState extends State<LinkedinScreen> {
                     ),
                   ],
                 ),
-              ],
-            ),
-            SizedBox(
-              height: 32.0.h,
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                FFButtonWidget(
-                    onPressed: () async {
-                      logFirebaseEvent(
-                          'PERMISSIONS_START_BUILDING_NETWORK_BTN_O');
-                      logFirebaseEvent('Button_request_permissions');
-                      logFirebaseEvent('Button_navigate_to');
-
-                      Get.to(() => LinkedinWidget());
-                    },
-                    text: 'Sync Linkedin',
-                    options: CTAButton(context)
-                ),
-                SizedBox(
-                  height: 16.0.h,
-                ),
-                GestureDetector(
-                  onTap: () {
-                      Get.to(() => const UserDetails());
-                  },
-                  child: Center(
-                    child: AutoSizeText(
-                        'I want to customise profile my self',
-                        style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                          useGoogleFonts: false,
-                          decoration: TextDecoration.underline,
-                        )
-                    ),
-                  ),
-                ),
-                SizedBox(height: 16.0.h,)
-
-                // : GestureDetector(
-                //   onTap: () {
-                //     Get.to(() => NewHomePage());
-                //   },
-                //   child: Center(
-                //     child: AutoSizeText(
-                //         'Skip for now !',
-                //         style: FlutterFlowTheme.of(context).labelExtraSmall.override(
-                //           useGoogleFonts: false,
-                //           decoration: TextDecoration.underline,
-                //         )
-                //     ),
-                //   ),
-                // )
-                ,
-
               ],
             ),
           ],

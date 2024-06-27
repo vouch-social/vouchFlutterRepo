@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
-
+import 'package:get/get.dart' as GetX;
+import 'package:vouch/blocked_page.dart';
+import '../../../maintenance_mode_screen.dart';
 import '../backend_constants.dart';
 import 'exception.dart';
 import 'interceptor.dart';
@@ -14,12 +15,12 @@ class DioClient {
 
   DioClient._internal() {
     dio = Dio(
-        BaseOptions(baseUrl: baseUrl, responseType: ResponseType.json, contentType: contentType));
+      BaseOptions(baseUrl: baseUrl, responseType: ResponseType.json, contentType: contentType),
+    );
     dio.interceptors.add(CustomInterceptor());
   }
 
-
-  Future<Response> getRequest({
+  Future<Response<dynamic>> getRequest({
     required String endPoint,
     required dynamic data,
     Options? options,
@@ -38,19 +39,28 @@ class DioClient {
         queryParameters: data,
         options: options ?? Options(headers: headers),
       );
+
       return response;
     } on DioError catch (de) {
+      if (de.response?.statusCode == 403) {
+        print("Your Account has been blocked. Please contact admin or mail on info@vouch.social.");
+        GetX.Get.offAll(() => const BlockedPage());
+      }else if(de.response?.statusCode == 503){
+        print("Server Under Maintenance");
+        GetX.Get.offAll(() => const MaintenanceModeScreen());
+      }
+      print("DioError: ${de.message}");
       throw BaseApiException.fromDioError(de);
     } on Exception catch (e) {
+      print("Exception: ${e.toString()}");
       throw Exception(e.toString());
     } catch (err) {
+      print("Unexpected Error: $err");
       rethrow;
     }
   }
 
-
-
- Future<Response> postRequest({
+  Future<Response<dynamic>> postRequest({
     required String endPoint,
     required dynamic data,
     Options? myOptions,
@@ -63,33 +73,49 @@ class DioClient {
       if (authToken != null && requiresAuthorizationHeader) {
         headers['Authorization'] = 'Bearer $authToken';
       }
-      return await dio.post(
+
+      final response = await dio.post(
         endPoint,
         data: data,
         options: myOptions ?? Options(headers: headers),
       );
-    } on DioException catch (err) {
-      print("DioException");
-      throw BaseApiException.fromDioError(err);
+
+      return response;
+    } on DioError catch (de) {
+      if (de.response?.statusCode == 403) {
+        print("Your Account has been blocked. Please contact admin or mail on info@vouch.social.");
+        GetX.Get.offAll(() => const BlockedPage());
+      }else if(de.response?.statusCode == 503){
+        print("Server Under Maintenance");
+        GetX.Get.offAll(() => const MaintenanceModeScreen());
+      }
+      print("DioError: ${de.message}");
+      throw BaseApiException.fromDioError(de);
     } on Exception catch (e) {
-      print("Exception");
+      print("Exception: ${e.toString()}");
       throw Exception(e.toString());
     } catch (error) {
-      print("error");
+      print("Unexpected Error: $error");
       rethrow;
     }
   }
 
-
-  Future<Response> patchRequest(
-      {required String endPoint,
-      required dynamic data,
-      bool requiresAuthorizationHeader = false}) async {
+  Future<Response<dynamic>> patchRequest({
+    required String endPoint,
+    required dynamic data,
+    bool requiresAuthorizationHeader = false,
+  }) async {
     try {
-      return await dio.patch(endPoint,
-          data: data,
-          options: Options(headers: {authorizationHeaderKey: requiresAuthorizationHeader}));
-    } on DioException catch (err) {
+      return await dio.patch(
+        endPoint,
+        data: data,
+        options: Options(headers: {authorizationHeaderKey: requiresAuthorizationHeader}),
+      );
+    } on DioError catch (err) {
+      if (err.response?.statusCode == 403) {
+        print("Your Account has been blocked. Please contact admin or mail on info@vouch.social.");
+        GetX.Get.offAll(() => const BlockedPage());
+      }
       throw BaseApiException.fromDioError(err);
     } on Exception catch (e) {
       throw Exception(e.toString());
@@ -98,15 +124,22 @@ class DioClient {
     }
   }
 
-  Future<Response> putRequest(
-      {required String endPoint,
-      required dynamic data,
-      bool requiresAuthorizationHeader = false}) async {
+  Future<Response<dynamic>> putRequest({
+    required String endPoint,
+    required dynamic data,
+    bool requiresAuthorizationHeader = false,
+  }) async {
     try {
-      return await dio.put(endPoint,
-          data: data,
-          options: Options(headers: {authorizationHeaderKey: requiresAuthorizationHeader}));
-    } on DioException catch (err) {
+      return await dio.put(
+        endPoint,
+        data: data,
+        options: Options(headers: {authorizationHeaderKey: requiresAuthorizationHeader}),
+      );
+    } on DioError catch (err) {
+      if (err.response?.statusCode == 403) {
+        print("Your Account has been blocked. Please contact admin or mail on info@vouch.social.");
+        GetX.Get.offAll(() => const BlockedPage());
+      }
       throw BaseApiException.fromDioError(err);
     } on Exception catch (e) {
       throw Exception(e.toString());
@@ -115,15 +148,22 @@ class DioClient {
     }
   }
 
-  Future<Response> deleteRequest(
-      {required String endPoint,
-      required dynamic data,
-      bool requiresAuthorizationHeader = false}) async {
+  Future<Response<dynamic>> deleteRequest({
+    required String endPoint,
+    required dynamic data,
+    bool requiresAuthorizationHeader = false,
+  }) async {
     try {
-      return await dio.delete(endPoint,
-          data: data,
-          options: Options(headers: {authorizationHeaderKey: requiresAuthorizationHeader}));
-    } on DioException catch (err) {
+      return await dio.delete(
+        endPoint,
+        data: data,
+        options: Options(headers: {authorizationHeaderKey: requiresAuthorizationHeader}),
+      );
+    } on DioError catch (err) {
+      if (err.response?.statusCode == 403) {
+        print("Your Account has been blocked. Please contact admin or mail on info@vouch.social.");
+        GetX.Get.offAll(() => const BlockedPage());
+      }
       throw BaseApiException.fromDioError(err);
     } on Exception catch (e) {
       throw Exception(e.toString());

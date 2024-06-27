@@ -5,6 +5,7 @@ import '../../../backend/models/attributes_response_model.dart';
 import '../../../backend/models/base_response.dart';
 import '../../../backend/models/save_user_model.dart';
 import '../../../backend/repos/get_goals_attributes_repo.dart';
+import '../../../backend/repos/new_attributes_repo.dart';
 import '../../../backend/repos/save_attributes_goals_repo.dart';
 
 class EditProfileController extends GetxController{
@@ -13,6 +14,7 @@ class EditProfileController extends GetxController{
   final headlineController = TextEditingController();
   final AttributesGoalsRepo repository = AttributesGoalsRepo();
   final GetGoalsAttributesRepo getRepository = GetGoalsAttributesRepo();
+  final NewAttributesRepo newAttributeRepo = NewAttributesRepo();
   var isLoading = false.obs;
 
 
@@ -80,6 +82,40 @@ class EditProfileController extends GetxController{
       print('Edit attributes: $error');
       isLoading(false);
       return AttributesResponseModel(attributes: []);
+    }
+  }
+
+  Future<void> sendNewAttributesController(String attribute) async {
+    try {
+      var data = {
+        "attribute_name": attribute
+      };
+      print("DATA : $data");
+
+      final response = await newAttributeRepo.addAttribute(data);
+
+      if (response.status) {
+        print("Attributes added Successfully");
+      } else {
+        print('Status is false');
+      }
+    } catch (error) {
+      print('Error9: $error');
+    }
+  }
+  Future<void> deleteNewAttributesController(dynamic attributeId) async {
+    try {
+      print("DATA : $attributeId");
+
+      final response = await newAttributeRepo.deleteAttribute(attributeId);
+
+      if (response.status) {
+        print("Attributes deleted Successfully");
+      } else {
+        print('Status is false');
+      }
+    } catch (error) {
+      print('Error9: $error');
     }
   }
 

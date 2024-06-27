@@ -74,6 +74,7 @@ class User {
   dynamic deletedAt;
   List<Attribute> attributes;
   List<Goal> goals;
+  List<AttributesNew> attributesNew;
 
   User({
      this.photourl,
@@ -97,6 +98,7 @@ class User {
      this.deletedAt,
     required this.attributes,
     required this.goals,
+    required this.attributesNew
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -120,6 +122,7 @@ class User {
     countryCode: json["country_code"],
     deletedAt: json["deletedAt"],
     attributes: List<Attribute>.from(json["attributes"].map((x) => Attribute.fromJson(x))),
+    attributesNew: List<AttributesNew>.from(json["attributes_new"].map((x) => AttributesNew.fromJson(x))),
     goals: List<Goal>.from(json["goals"].map((x) => Goal.fromJson(x))),
   );
 
@@ -145,6 +148,44 @@ class User {
     "deletedAt": deletedAt,
     "attributes": List<dynamic>.from(attributes.map((x) => x.toJson())),
     "goals": List<dynamic>.from(goals.map((x) => x.toJson())),
+    "attributes_new": List<dynamic>.from(attributesNew.map((x) => x.toJson())),
+  };
+}
+
+class AttributesNew {
+  String createdAt;
+  String updatedAt;
+  int id;
+  int userId;
+  String attribute;
+  int score;
+
+  AttributesNew({
+    required this.createdAt,
+    required this.updatedAt,
+    required this.id,
+    required this.userId,
+    required this.attribute,
+    required this.score,
+  });
+
+  factory AttributesNew.fromJson(Map<String, dynamic> json) => AttributesNew(
+    createdAt: json["createdAt"],
+    updatedAt: json["updatedAt"],
+    id: json["id"],
+    userId: json["user_id"],
+    attribute: json["attribute"],
+    score: json["score"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "createdAt": createdAt,
+    "updatedAt": updatedAt,
+    "id": id,
+    "user_id": userId,
+    "attribute": attribute,
+    "score": score,
+
   };
 }
 

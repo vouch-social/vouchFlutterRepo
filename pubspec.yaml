@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 1.0.1+1
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -29,73 +29,37 @@ dependencies:
   barcode_widget: 2.0.3
   cached_network_image: 3.3.1
   cloud_firestore:
-  cloud_firestore_platform_interface: 6.1.8
-  cloud_firestore_web: 3.10.7
   cloud_functions: 4.6.7
-  cloud_functions_platform_interface: 5.5.18
-  cloud_functions_web: 4.7.1
   collection: 1.18.0
   dropdown_button2: 2.3.9
-  easy_debounce: 2.0.1
   equatable: 2.0.5
   file_picker: 6.1.1
   firebase_analytics: 10.8.8
-  firebase_analytics_platform_interface: 3.9.8
-  firebase_analytics_web: 0.5.5+20
   firebase_app_check: 0.2.1+16
-  firebase_app_check_platform_interface: 0.1.0+18
-  firebase_app_check_web: 0.1.0+18
   firebase_auth:
-  firebase_auth_platform_interface: 7.1.7
-  firebase_auth_web: 5.9.7
   firebase_core:
-  firebase_core_platform_interface: 5.0.0
-  firebase_core_web: 2.11.5
   firebase_crashlytics: 3.4.17
-  firebase_crashlytics_platform_interface: 3.6.24
   firebase_dynamic_links: 5.4.16
-  firebase_dynamic_links_platform_interface: 0.2.6+24
   firebase_messaging: 14.7.18
-  firebase_messaging_platform_interface: 4.5.26
-  firebase_messaging_web: 3.6.7
   firebase_performance: 0.9.3+16
-  firebase_performance_platform_interface: 0.1.4+24
-  firebase_performance_web: 0.1.4+24
   firebase_storage: 11.6.8
-  firebase_storage_platform_interface: 5.1.11
-  firebase_storage_web: 3.7.2
-  floating_bottom_navigation_bar: 1.5.2
   flutter_animate: 4.1.1+1
   flutter_barcode_scanner:
     git:
       url: https://github.com/FlutterFlow/flutter_barcode_scanner
   flutter_cache_manager: 3.3.1
-  flutter_native_splash: 2.3.1
   flutter_plugin_android_lifecycle: 2.0.17
   font_awesome_flutter: 10.6.0
   from_css_color: 2.0.0
   go_router: 7.1.1
   google_fonts: 6.1.0
-  google_sign_in: 6.1.5
-  google_sign_in_android: 6.1.20
-  google_sign_in_ios: 5.6.4
-  google_sign_in_platform_interface: 2.4.2
-  google_sign_in_web: 0.12.1
   http: 1.2.0
   image_picker: 1.0.4
-  image_picker_android: 0.8.8
-  image_picker_for_web: 3.0.1
-  image_picker_ios: 0.8.8+2
-  image_picker_platform_interface: 2.9.1
   intl: 0.19.0
   json_path: 0.6.2
   lottie: 2.7.0
   mime_type: 1.0.0
   page_transition: 2.1.0
-  path_provider: 2.0.14
-  path_provider_android: 2.0.25
-  path_provider_foundation: 2.2.2
-  path_provider_platform_interface: 2.0.6
   percent_indicator: 4.2.2
   permission_handler: 10.0.0
   pin_code_fields: 8.0.1
@@ -105,13 +69,6 @@ dependencies:
   rxdart: 0.27.7
   share_plus: 7.2.1
   shared_preferences: 2.2.2
-  shared_preferences_android: 2.2.1
-  shared_preferences_foundation: 2.3.4
-  shared_preferences_platform_interface: 2.3.1
-  shared_preferences_web: 2.2.1
-  sign_in_with_apple: 4.3.0
-  sign_in_with_apple_platform_interface: 1.0.0
-  sign_in_with_apple_web: 1.0.1
   smooth_page_indicator: 1.1.0
   sqflite: 2.2.6
   stop_watch_timer: 3.0.2
@@ -119,19 +76,9 @@ dependencies:
   timeago: 3.2.2
   universal_io: 2.2.2
   url_launcher: 6.2.5
-  url_launcher_android: 6.3.0
-  url_launcher_ios: 6.2.5
-  url_launcher_platform_interface: 2.3.2
   uuid: ^4.0.0
   video_player: 2.8.1
-  video_player_android: 2.4.10
-  video_player_avfoundation: 2.5.1
-  video_player_platform_interface: 6.2.1
-  video_player_web: 2.1.2
   webview_flutter: 4.7.0
-  webview_flutter_android: 3.15.0
-  webview_flutter_platform_interface: 2.10.0
-  webview_flutter_wkwebview: 3.12.0
   webviewx_plus: 0.5.0
   xml: 6.3.0
   flutter_contacts: ^1.1.7+1
@@ -141,7 +88,6 @@ dependencies:
   flutter_screenutil: ^5.9.0
   dio:
   pretty_dio_logger:
-  intl_phone_field:
   intl_phone_number_input: ^0.7.4
   choose_input_chips: ^1.1.3
   dotted_line: ^3.2.2
@@ -151,6 +97,9 @@ dependencies:
   uni_links:
   qr_code_scanner:
   flutter_app_badger:
+  app_links:
+  connectivity_plus:
+  upgrader: ^10.3.0
 
 
 

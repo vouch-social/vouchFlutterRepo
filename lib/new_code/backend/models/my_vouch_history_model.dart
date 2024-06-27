@@ -25,15 +25,15 @@ class MyVouchHistoryModel {
 }
 
 class MySelectedPathListDatum {
-  String createdAt;
-  String updatedAt;
+  dynamic createdAt;
+  dynamic updatedAt;
   int id;
-  String vouchCreatedAt;
-  String message;
-  String status;
+  dynamic vouchCreatedAt;
+  dynamic message;
+  dynamic status;
   int pathlength;
-  String startnode;
-  String endnode;
+  dynamic startnode;
+  dynamic endnode;
   dynamic activenode;
   dynamic activenodeStatus;
   int userId;
@@ -113,13 +113,13 @@ class PathData {
 }
 
 class Path {
-  String name;
+  dynamic name;
   String? image;
-  String heading;
+  dynamic heading;
   List<Attribute> attributes;
   bool isRegistered;
   dynamic strengthToNext;
-  String contactHashedPhone;
+  dynamic contactHashedPhone;
   bool hasVouched;
 
   Path({

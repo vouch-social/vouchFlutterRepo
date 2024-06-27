@@ -51,11 +51,10 @@ Widget vouchPath(context, pathItem, index, length, activenode) {
                   (MediaQuery.of(context).size.width - 56.0.w - (length * 64.0.h)) /
                       (length - 1),
                   8.0.w,),
-                color: index == length - 2
-                    ? FlutterFlowTheme.of(context).primary
-                    : (pathItem.hasVouched
-                    ? FlutterFlowTheme.of(context).primary
-                    : FlutterFlowTheme.of(context)
+                color:
+                 (pathItem.hasVouched ?
+                     FlutterFlowTheme.of(context).primary
+      : FlutterFlowTheme.of(context)
                     .primaryText
                     .withOpacity(0.3)),
               ),

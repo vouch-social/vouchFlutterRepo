@@ -4,7 +4,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import '../../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 
-const _kDynamicLinksUrl = 'https://firstvouch.page.link';
+const _kDynamicLinksUrl = 'https://vouch.social';
 const _kAppBundleId = 'social.vouch.relayt';
 const _kIosAppId = '6477752377';
 
