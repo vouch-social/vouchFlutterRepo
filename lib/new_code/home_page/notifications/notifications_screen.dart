@@ -9,6 +9,7 @@ import 'package:vouch/new_code/common_widgets/myAppBar.dart';
 import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
 import 'package:vouch/new_code/home_page/history_screen/history.dart';
 import 'package:vouch/new_code/home_page/notifications/notification_controller.dart';
+import 'package:vouch/new_code/home_page/settings/attributes_validation/attributes_validation.dart';
 import 'dart:async';
 
 import '../../services/notification_services.dart';
@@ -122,8 +123,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                 () => const HistoryScreen(
                               index: 2,
                             ))
-                            : Get.to(
+                            : notifications.notificationType ==
+                            "ATTR_VALIDATION" ? Get.to(() => const AttributesValidation()) : Get.to(
                                 () => const NewHomePage());
+
                       },
                       child: Container(
                         decoration: BoxDecoration(

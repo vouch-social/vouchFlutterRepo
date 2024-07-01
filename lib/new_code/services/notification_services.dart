@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 import 'package:vouch/new_code/home_page/HomePage/new_home_page.dart';
 import 'package:vouch/new_code/home_page/history_screen/history.dart';
+import 'package:vouch/new_code/home_page/settings/attributes_validation/attributes_validation.dart';
 import 'package:vouch/new_code/services/refresh_token_send_controller.dart';
 import '../../main.dart';
 import '../backend/backend_constants.dart';
@@ -154,7 +155,16 @@ class NotificationServices {
     } else if (payload == "CLAIM_AWARDED") {
       Get.to(() => const HistoryScreen(index: 2,));
       clearNotificationPayload();
-    } else {
+    }
+    else if (payload == "ATTR_VALIDATION") {
+      Get.to(() => const AttributesValidation());
+      clearNotificationPayload();
+    }else if (payload == "BOUNTY_RAISED") {
+      Get.to(() => const NewHomePage());
+      clearNotificationPayload();
+    }
+
+    else {
       Get.to(() => const NewHomePage());
       clearNotificationPayload();
     }
@@ -185,7 +195,15 @@ class NotificationServices {
       Get.to(() => const HistoryScreen(index: 0,));
     } else if (message.data['type'] == "CLAIM_AWARDED") {
       Get.to(() => const HistoryScreen(index: 2,));
-    } else {
+    }
+    else if (message.data['type'] == "ATTR_VALIDATION") {
+      Get.to(() => const AttributesValidation());
+    }
+    else if (message.data['type'] == "BOUNTY_RAISED") {
+      Get.to(() => const NewHomePage());
+      clearNotificationPayload();
+    }
+    else {
       Get.to(() => const NewHomePage());
     }
     // Clear notification payload after handling
@@ -263,7 +281,16 @@ class NotificationServices {
     } else if (payload == "CLAIM_AWARDED") {
       Get.to(() => const HistoryScreen(index: 2,));
       clearNotificationPayload();
-    } else {
+    }else if (payload == "ATTR_VALIDATION") {
+      Get.to(() => const AttributesValidation());
+      clearNotificationPayload();
+    }
+    else if (payload == "BOUNTY_RAISED") {
+      Get.to(() => const NewHomePage());
+      clearNotificationPayload();
+    }
+
+    else {
       Get.to(() => const NewHomePage());
       clearNotificationPayload();
     }

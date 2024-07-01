@@ -39,7 +39,13 @@ class _PathsScreenState extends State<PathsScreen> {
   var isLoading = false;
 
   void fetchPaths() async {
-    var fetchedPaths = await controller.getPathsList(widget.hashedPhone);
+    var fetchedPaths;
+    if (Get.arguments != null && Get.arguments['hashedPhone'] != null) {
+      fetchedPaths = await controller.getPathsList(Get.arguments['hashedPhone']);
+    } else {
+      fetchedPaths = await controller.getPathsList(widget.hashedPhone);
+    }
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (!mounted) return;
       setState(() {
@@ -51,6 +57,7 @@ class _PathsScreenState extends State<PathsScreen> {
       });
     });
   }
+
 
   void _initializeData() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -144,7 +151,7 @@ class _PathsScreenState extends State<PathsScreen> {
                       Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).pastelTint,
+                          color: widget.goals == '' || widget.goals == null ? Colors.transparent : FlutterFlowTheme.of(context).pastelTint,
                           borderRadius: BorderRadius.circular(0.0.w),
                         ),
                         padding: EdgeInsets.all(4.0.w),
@@ -175,7 +182,7 @@ class _PathsScreenState extends State<PathsScreen> {
                       Container(
                         width: double.infinity - 32.0.w,
                         decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).pastelBlue,
+                          color: widget.reason == '' || widget.reason == null ? FlutterFlowTheme.of(context).fixedWhite :FlutterFlowTheme.of(context).pastelBlue,
                           borderRadius: BorderRadius.circular(4.0.w),
                         ),
                         padding: EdgeInsets.all(4.0.w),

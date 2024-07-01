@@ -465,58 +465,63 @@ class _NewHomePageState extends State<NewHomePage> {
                                       },
                                     ),
                                   )
-                                : Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SvgPicture.asset(
-                                        Assets.assetsNoGoalsFound,
-                                        height: 120.0.h,
-                                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                                      ),
-                                      SizedBox(
-                                        width: 24.0.w,
-                                      ),
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          SizedBox(
-                                            width: 120.0.w,
-                                            child: AutoSizeText(
-                                              "No Recommendations available as your goals are empty!",
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelExtraSmall,
+                                : Visibility(
+                              visible: recommendationsController
+                                  .isLoading.value == false,
+                                  child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(
+                                          Assets.assetsNoGoalsFound,
+                                          height: 120.0.h,
+                                          color: FlutterFlowTheme.of(context).secondaryBackground,
+                                        ),
+                                        SizedBox(
+                                          width: 24.0.w,
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              width: 120.0.w,
+                                              child: AutoSizeText(
+                                                "No Recommendations available as your goals are empty!",
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelExtraSmall,
+                                              ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: 8.0.h,
-                                          ),
-                                          GestureDetector(
-                                            onTap: (){
-                                              Get.off(() => const GoalsScreen());
-                                            },
-                                            child: AutoSizeText(
-                                              "Update Goals Now",
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .titleSmall
-                                                  .override(
-                                                      useGoogleFonts: false,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                      decoration: TextDecoration
-                                                          .underline),
+                                            SizedBox(
+                                              height: 8.0.h,
                                             ),
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
+                                            GestureDetector(
+                                              onTap: (){
+                                                prefs!.getStringList(goals)!.isNotEmpty ? Get.to(() => const EditGoalsScreen()):
+                                                Get.to(() => const GoalsScreen());
+                                              },
+                                              child: AutoSizeText(
+                                                "Update Goals Now",
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .titleSmall
+                                                    .override(
+                                                        useGoogleFonts: false,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                        decoration: TextDecoration
+                                                            .underline),
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                ),
                           ),
                           SizedBox(height: 12.0.h),
                           Visibility(

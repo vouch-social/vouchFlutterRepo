@@ -122,7 +122,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     SizedBox(width: 8.0.w,),
                     Expanded(
                       child: AutoSizeText(
-                        'Search the world for people you want to connect',
+                        'Search for the people you want to connect with.',
                         style: FlutterFlowTheme.of(context)
                             .bodySmall
 
@@ -142,7 +142,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     SizedBox(width: 8.0.w,),
                     Expanded(
                       child: AutoSizeText(
-                        'Discover new friends, and uncover new \nconnection paths',
+                        'Discover the paths that link you to them.',
                         textAlign: TextAlign.start,
                         style: FlutterFlowTheme.of(context)
                             .bodySmall
@@ -161,7 +161,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     SizedBox(width: 8.0.w,),
                     Expanded(
                       child: AutoSizeText(
-                        'Know your network, Grow your network!',
+                        'Connect effortlessly and grow your network.',
                         style: FlutterFlowTheme.of(context)
                             .bodySmall
                       ),

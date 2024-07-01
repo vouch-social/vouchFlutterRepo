@@ -106,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 16.0.h,
                       ),
                       AutoSizeText(
-                        'OTP will be sent to your mobile number for \nverification',
+                        "To verify your number, we'll send you an OTP",
                         textAlign: TextAlign.start,
                         style: FlutterFlowTheme.of(context).titleSmall,
                       ),

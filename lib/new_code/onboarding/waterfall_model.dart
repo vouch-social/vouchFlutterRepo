@@ -14,7 +14,7 @@ import '../../main.dart';
 
 
   Widget navigateToPage() {
-    if (prefs?.getString(authToken) == null ) {
+    if (prefs?.getString(authToken) == null ||  prefs?.getString(authToken) == '') {
    return const WelcomeScreen();
     }
     else if(prefs?.getString(userName) == "null"){

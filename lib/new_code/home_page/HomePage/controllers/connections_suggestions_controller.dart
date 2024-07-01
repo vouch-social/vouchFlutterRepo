@@ -28,7 +28,7 @@ class ConnectionsSuggestionsController extends GetxController {
       print("Error Recommendations: $error");
       rethrow;
     } finally {
-      Future.delayed(const Duration(milliseconds: 300), () {
+      Future.delayed(const Duration(milliseconds: 100), () {
         isLoading(false);
       });
     }

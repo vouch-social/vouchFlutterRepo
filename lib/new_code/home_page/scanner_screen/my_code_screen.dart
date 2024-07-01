@@ -86,7 +86,7 @@ class _MyCodeScreenState extends State<MyCodeScreen> {
                     barcode: Barcode.qrCode(
                       errorCorrectLevel: BarcodeQRCorrectionLevel.high,
                     ),
-                    data: 'https://qr.vouch.social/hashedPhone=${prefs?.getString(loggedInUserHashedPhone)}',
+                    data: 'https://vouch.social/path/hashedPhone=${prefs?.getString(loggedInUserHashedPhone)}',
                     width: 200.0.w,
                     height: 200.0.h,
                   ),

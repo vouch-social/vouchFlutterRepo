@@ -15,7 +15,7 @@ class RecommendationsController extends GetxController {
       await repository.getRecommendations();
       if (apiResult.status) {
         print('Api Result Recommendations : ${apiResult.message}');
-        Future.delayed(const Duration(milliseconds: 300), () {
+        Future.delayed(const Duration(milliseconds: 100), () {
           isLoading(false);
         });
         // return apiResult.data;
@@ -28,7 +28,7 @@ class RecommendationsController extends GetxController {
       print("Error Recommendations: $error");
       rethrow;
     } finally {
-      Future.delayed(const Duration(milliseconds: 300), () {
+      Future.delayed(const Duration(milliseconds: 100), () {
         isLoading(false);
       });
     }

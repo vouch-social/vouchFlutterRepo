@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'package:app_links/app_links.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:vouch/new_code/home_page/search_screen/search_screen.dart';
-import 'package:vouch/new_code/home_page/settings/settings_screen.dart';
+
+import 'main.dart';
+import 'new_code/backend/backend_constants.dart';
 
 class AppLinksDeepLink extends GetxController {
   AppLinksDeepLink._privateConstructor();
@@ -20,11 +22,13 @@ class AppLinksDeepLink extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    print("AppLinksDeepLink initialized");
     _appLinks = AppLinks();
     initDeepLinks();
   }
 
   Future<void> initDeepLinks() async {
+    print("initDeepLinks called");
     try {
       final initialUri = await _appLinks.getInitialLink();
       if (initialUri != null) {
@@ -46,8 +50,10 @@ class AppLinksDeepLink extends GetxController {
   }
 
   Future<void> _handleDeepLink(Uri? uri) async {
-    if (!_deepLinkHandled && uri != null) {
-      _deepLinkHandled = true;
+    final prefs = await SharedPreferences.getInstance();
+    bool? isHandled = prefs.getBool('deepLinkHandled') ?? false;
+
+    if (!isHandled && uri != null) {
       print('Handling URI: $uri');
       if (await _isAppInstalled()) {
         print('App is installed, handling deep link: $uri');
@@ -56,23 +62,35 @@ class AppLinksDeepLink extends GetxController {
         print('App is not installed, redirecting to Play Store');
         await _redirectToPlayStore();
       }
+      await prefs.setBool('deepLinkHandled', true);
     }
   }
 
   Future<void> _navigateToPath(Uri uri) async {
     String path = uri.path;
-    Map<String, String> queryParams = uri.queryParameters;
-    print('Navigating to: $path with params: $queryParams');
+    List<String> pathSegments = uri.pathSegments;
+    print('Navigating to: $path with path segments: $pathSegments');
 
-    if (queryParams['param'] == '/settings') {
-      print('Navigating to Settings Screen');
-      Get.off(() => const SettingsScreen());
-    } else {
-      print('Navigating to Search Screen');
-      if (await canLaunch("https://vouch.social")) {
-    await launch("https://vouch.social");
+    // Extract and print the hashedPhone value from path segments
+    String? hashedPhone = pathSegments.length > 1 && pathSegments[0] == 'path' ? pathSegments[1].split('=')[1] : null;
+    print('Extracted hashedPhone: $hashedPhone');
+
+    // Check if the user is authenticated
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.getString(authToken) == null || prefs.getString(authToken) == '') {
+      print('User not authenticated, navigating to Welcome Screen');
+      Get.offAllNamed('/');
+      return;
     }
-      // Get.off(() => const SearchScreen());
+
+    // User is authenticated, handle deep link based on path or hashedPhone
+    if (hashedPhone != null && hashedPhone.isNotEmpty && prefs.getString(userName) != 'null') {
+      print('Redirecting to custom page for hashedPhone');
+      Get.offAllNamed('/pathsScreen', arguments: {'hashedPhone': hashedPhone});
+    }
+    else {
+      print('Navigating to Default Screen');
+      Get.offAllNamed('/');
     }
   }
 

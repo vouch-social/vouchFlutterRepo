@@ -22,7 +22,7 @@ class _BarCodeScannerState extends State<BarCodeScanner> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   qr_scanner.Barcode? qrResult;
   qr_scanner.QRViewController? qrController;
-  // ml_kit.Barcode? imageResult;
+  bool _isInitialized = false;
 
   @override
   void initState() {
@@ -40,7 +40,9 @@ class _BarCodeScannerState extends State<BarCodeScanner> {
       }
     }
     if (status.isGranted) {
-      setState(() {});
+      setState(() {
+        _isInitialized = true;
+      });
     }
   }
 
@@ -59,38 +61,22 @@ class _BarCodeScannerState extends State<BarCodeScanner> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       qrController?.pauseCamera();
-      // final inputImage = ml_kit.InputImage.fromFilePath(pickedFile.path);
-      // final barcodeScanner = ml_kit.GoogleMlKit.vision.barcodeScanner();
-      // final List<ml_kit.Barcode> barcodes =
-      //     await barcodeScanner.processImage(inputImage);
-      //
-      // if (barcodes.isNotEmpty) {
-      //   setState(() {
-      //     imageResult = barcodes.first;
-      //   });
-      // }
-      // await qrController?.resumeCamera();
-      // qrController?.toggleFlash();
-      // await Future.delayed(Duration(microseconds: 1));
-      // qrController?.toggleFlash();
+      // Process the image here
+      await qrController?.resumeCamera();
     }
   }
 
   String? _extractHashedPhone(String? data) {
-    const prefix = "https://qr.vouch.social/hashedPhone=";
+    const prefix = "https://vouch.social/path/hashedPhone=";
     if (data != null && data.startsWith(prefix)) {
       String hashedPhone = data.substring(prefix.length);
       SchedulerBinding.instance.addPostFrameCallback((_) {
-        Get.off(() => PathsScreen(
-          hashedPhone: hashedPhone,
-        ));
+        Get.off(() => PathsScreen(hashedPhone: hashedPhone));
       });
-
       return hashedPhone;
     }
     return null;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +85,7 @@ class _BarCodeScannerState extends State<BarCodeScanner> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(16.0.w),
-          child: Column(
+          child: _isInitialized ? Column(
             children: <Widget>[
               Expanded(
                 flex: 4,
@@ -132,11 +118,6 @@ class _BarCodeScannerState extends State<BarCodeScanner> {
                           'Barcode Type: ${describeEnum(qrResult!.format)}\nData: ${_extractHashedPhone(qrResult!.code) ?? "Wrong QR"}',
                           style: FlutterFlowTheme.of(context).labelExtraSmall,
                         )
-                      // else if (imageResult != null)
-                      //   Text(
-                      //     'Barcode Type: ${describeEnum(imageResult!.type)}\nData Gallery: ${_extractHashedPhone(imageResult!.displayValue) ?? "Wrong QR"}',
-                      //     style: FlutterFlowTheme.of(context).labelExtraSmall,
-                      //   )
                       else
                         Column(
                           children: [
@@ -152,7 +133,7 @@ class _BarCodeScannerState extends State<BarCodeScanner> {
                 ),
               ),
             ],
-          ),
+          ) : Center(child: CircularProgressIndicator()),
         ),
       ),
     );
